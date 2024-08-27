@@ -67,3 +67,33 @@ export const featuresData = [
       "Enjoy speeds around 15 Mbps with a ping less than 900 ms,perfect for seamless browsing and operations.",
   },
 ];
+
+export const plansData = [
+  {
+    price: "15/mth",
+    type: "Basic plan",
+    features: ["feature 1", "feature 2", "feature 3", "feature 4", "feature 5"],
+  },
+  {
+    price: "30/mth",
+    type: "Standard plan",
+    features: [
+      "All in Basic plus",
+      "feature 1",
+      "feature 2",
+      "feature 3",
+      "feature 4",
+    ],
+  },
+  {
+    price: "40/mth",
+    type: "Premium plan",
+    features: [
+      "All in Standard plus",
+      "feature 1",
+      "feature 2",
+      "feature 3",
+      "feature 4",
+    ],
+  },
+];
