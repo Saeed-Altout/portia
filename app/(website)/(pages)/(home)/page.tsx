@@ -3,9 +3,9 @@ import { Map } from "./_components/map";
 
 export default function HomePage() {
   return (
-    <div className="">
+    <main>
       <Hero />
       <Map />
-    </div>
+    </main>
   );
 }
