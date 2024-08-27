@@ -72,8 +72,14 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+}
 
-  .container-section {
-    @apply max-w-7xl mx-auto px-4;
+@layer components {
+  .max-container {
+    @apply max-w-7xl mx-auto w-full px-4 md:px-8;
+  }
+
+  .section {
+    @apply w-full py-10;
   }
 }
