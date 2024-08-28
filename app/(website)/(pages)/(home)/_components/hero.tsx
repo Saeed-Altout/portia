@@ -1,28 +1,27 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
+
+import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   return (
-    <section className="max-container section flex flex-col justify-center items-start gap-y-5">
+    <section className="max-container flex flex-col justify-center items-start gap-y-5 py-20">
       {/* Title  */}
-      <h1 className="max-w-[1000px] text-black-primary font-medium capitalize text-[30px] leading-[44px] md:text-[40px] md:leading-[50px] lg:text-6xl lg:leading-[72px]">
-        Maximize online efficiency with high-quality,
-        <br className="md:hidden" />
-        affordable, worldwide{" "}
+      <h1 className="max-w-[1090px] font-medium capitalize text-[30px] leading-[44px] md:text-[40px] md:leading-[50px] lg:text-6xl lg:leading-[72px]">
+        Maximize online efficiency with high-quality, affordable, worldwide{" "}
         <div className="relative w-fit">
-          <p className="relative z-10">mobile proxies</p>
+          <span className="relative z-10">mobile proxies</span>
           <Image
             src="/images/underline.png"
             alt="Underline"
             width={100}
             height={10}
-            className="w-full absolute top-7 md:top-8 lg:top-[50px] left-0 z-0"
+            className="w-full absolute top-9 md:top-10 lg:top-[60px] left-0 z-0"
           />
         </div>
       </h1>
 
       {/* Description */}
-      <p className="max-w-[580px] capitalize text-gray-primary font-normal text-[18px] leading-[28px] md:text-[19px] md:leading-[29px] lg:text-[20px] lg:leading-[30px]">
+      <p className="max-w-[580px] capitalize  text-[18px] leading-[28px] md:text-[19px] md:leading-[29px] lg:text-[20px] lg:leading-[30px]">
         Get ultra-stable mobile proxies with unlimited data and effortless
         country switching ⎯⎯ perfectly tailored for developers, social media
         managers, E-commerce, and digital marketing professionals.
