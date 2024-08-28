@@ -11,24 +11,20 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { plansData } from "@/app/(website)/constants";
+import { Heading } from "@/app/(website)/_components/heading";
 
 export const Plans = () => {
   return (
-    <section className="max-container section space-y-5">
-      <div className="space-y-1">
-        <h1 className="text-4xl text-black-primary font-medium">
-          Simple, transparent pricing
-        </h1>
-        <p className="text-gray-primary text-base">
-          We believe Portia should be accessible to all people, no matter their
-          usage.
-        </p>
-      </div>
+    <section className="max-container section space-y-10">
+      <Heading
+        title="Simple, transparent pricing"
+        description="We believe Portia should be accessible to all people, no matter their usage."
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {plansData.map(({ price, type, features }, index) => (
           <Card key={index}>
             <CardHeader className="text-center">
-              <CardTitle className="font-medium lg:text-5xl">
+              <CardTitle className="font-medium lg:text-4xl">
                 ${price}
               </CardTitle>
             </CardHeader>
