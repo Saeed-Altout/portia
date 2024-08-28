@@ -7,6 +7,14 @@ import {
   Zap,
 } from "lucide-react";
 
+import {
+  FaFacebook,
+  FaGithub,
+  FaTwitter,
+  FaLinkedinIn,
+  FaTelegram,
+} from "react-icons/fa";
+
 export const statisticData = [
   {
     value: "40k+",
@@ -118,5 +126,112 @@ export const faqsData = [
   {
     question: "How dose billing work?",
     answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+  },
+];
+
+export const footerLinks = [
+  {
+    title: "Company",
+    links: [
+      {
+        label: "Why portia.io?",
+        href: "/",
+      },
+      {
+        label: "Pricing",
+        href: "/",
+      },
+      {
+        label: "Testimonials",
+        href: "/",
+      },
+      {
+        label: "Affiliate program",
+        href: "/",
+      },
+      {
+        label: "Contact us",
+        href: "/",
+      },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      {
+        label: "Blog",
+        href: "/",
+      },
+      {
+        label: "Our Faqs",
+        href: "/",
+      },
+    ],
+  },
+  {
+    title: "Social",
+    links: [
+      {
+        label: "Twitter",
+        href: "/",
+      },
+      {
+        label: "LinkedIn",
+        href: "/",
+      },
+      {
+        label: "Facebook",
+        href: "/",
+      },
+      {
+        label: "Github",
+        href: "/",
+      },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      {
+        label: "Terms",
+        href: "/",
+      },
+      {
+        label: "Privacy",
+        href: "/",
+      },
+      {
+        label: "Licenses",
+        href: "/",
+      },
+    ],
+  },
+];
+
+export const footerIcons = [
+  {
+    name: "Twitter",
+    icon: FaTwitter,
+    href: "/",
+  },
+  {
+    name: "Linkedin",
+    icon: FaLinkedinIn,
+    href: "/",
+  },
+  {
+    name: "Facebook",
+    icon: FaFacebook,
+    href: "/",
+  },
+  {
+    name: "Github",
+    icon: FaGithub,
+    href: "/",
+  },
+  {
+    name: "Telegram",
+    icon: FaTelegram,
+    href: "/",
   },
 ];

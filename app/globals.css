@@ -7,6 +7,7 @@ body,
 :root {
   height: 100%;
 }
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -82,4 +83,24 @@ body,
   .section {
     @apply w-full py-10;
   }
+}
+
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone Trial-Regular.ttf") format("truetype"),
+    url("/fonts/Altone Trial-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone Trial-Bold.ttf") format("truetype"),
+    url("/fonts/Altone Trial-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: "Alton", sans-serif;
 }

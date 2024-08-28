@@ -55,9 +55,11 @@ const config = {
         black: {
           default: "#000",
           primary: "#0A0A0A",
+          secondary: "#17171A",
         },
         gray: {
           primary: "#727282",
+          secondary: "#D8D8E5",
         },
       },
       borderRadius: {

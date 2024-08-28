@@ -1,4 +1,5 @@
 import { Navbar } from "./_layouts/navbar";
+import { Footer } from "./_layouts/footer";
 
 export default function SiteLayout({
   children,
@@ -9,6 +10,7 @@ export default function SiteLayout({
     <>
       <Navbar />
       {children}
+      <Footer />
     </>
   );
 }
