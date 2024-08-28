@@ -17,6 +17,7 @@ export const Plans = () => {
   return (
     <section className="max-container section space-y-10">
       <Heading
+        heading="Pricing"
         title="Simple, transparent pricing"
         description="We believe Portia should be accessible to all people, no matter their usage."
       />
