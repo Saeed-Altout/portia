@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export const Hero = () => {
   return (
@@ -7,7 +8,17 @@ export const Hero = () => {
       <h1 className="max-w-[1000px] text-black-primary font-medium capitalize text-[30px] leading-[44px] md:text-[40px] md:leading-[50px] lg:text-6xl lg:leading-[72px]">
         Maximize online efficiency with high-quality,
         <br className="md:hidden" />
-        affordable, worldwide <span className="underline">mobile proxies</span>
+        affordable, worldwide{" "}
+        <div className="relative w-fit">
+          <p className="relative z-10">mobile proxies</p>
+          <Image
+            src="/images/underline.png"
+            alt="Underline"
+            width={100}
+            height={10}
+            className="w-full absolute top-7 md:top-8 lg:top-[50px] left-0 z-0"
+          />
+        </div>
       </h1>
 
       {/* Description */}
