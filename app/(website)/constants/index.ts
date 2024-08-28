@@ -97,3 +97,26 @@ export const plansData = [
     ],
   },
 ];
+
+export const faqsData = [
+  {
+    question: "Is there a any trial available?",
+    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+  },
+  {
+    question: "Can I change my plan later?",
+    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+  },
+  {
+    question: "What is your cancellation policy?",
+    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+  },
+  {
+    question: "Can other info be added to an invoice?",
+    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+  },
+  {
+    question: "How dose billing work?",
+    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+  },
+];

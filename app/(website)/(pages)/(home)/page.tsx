@@ -3,6 +3,7 @@ import { Map } from "./_components/map";
 import { Statistic } from "./_components/statistic";
 import { Features } from "./_components/features";
 import { Plans } from "./_components/plans";
+import { FAQs } from "./_components/faqs";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <Statistic />
       <Features />
       <Plans />
+      <FAQs />
     </main>
   );
 }
