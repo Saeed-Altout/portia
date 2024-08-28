@@ -109,7 +109,8 @@ export const plansData = [
 export const faqsData = [
   {
     question: "Is there a any trial available?",
-    answer: "Yes. It adheres to the WAI-ARIA design pattern.",
+    answer:
+      "Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can upgrade to one of our plans.",
   },
   {
     question: "Can I change my plan later?",

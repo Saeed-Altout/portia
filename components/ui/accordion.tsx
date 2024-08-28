@@ -30,8 +30,8 @@ const AccordionTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      <CirclePlus className="hidden plus h-4 w-4 shrink-0 transition-transform duration-200" />
-      <CircleMinus className="hidden minus h-4 w-4 shrink-0 transition-transform duration-200" />
+      <CirclePlus className="hidden plus h-4 w-4 shrink-0 transition-transform duration-200 text-gray-primary" />
+      <CircleMinus className="hidden minus h-4 w-4 shrink-0 transition-transform duration-200 text-gray-primary" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
