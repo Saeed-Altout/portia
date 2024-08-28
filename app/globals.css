@@ -71,7 +71,10 @@ body,
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-black-primary;
+  }
+  p {
+    @apply text-gray-primary text-base leading-6;
   }
 }
 
