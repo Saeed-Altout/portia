@@ -3,7 +3,6 @@ import { Check } from "lucide-react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -21,20 +20,18 @@ export const Plans = () => {
         title="Simple, transparent pricing"
         description="We believe Portia should be accessible to all people, no matter their usage."
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {plansData.map(({ price, type, features }, index) => (
           <Card key={index}>
             <CardHeader className="text-center">
-              <CardTitle className="font-medium lg:text-4xl">
+              <CardTitle className="font-semibold text-4xl lg:text-5xl">
                 ${price}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="text-center space-y-2">
-                <h3 className="font-medium text-black-primary text-[18px]">
-                  {type}
-                </h3>
-                <p className="text-gray-primary text-base">who is this for?</p>
+                <h3 className="font-semibold text-xl">{type}</h3>
+                <p>who is this for?</p>
               </div>
               <div className="flex flex-col gap-y-5">
                 {features.map((feature, index) => (
@@ -45,7 +42,7 @@ export const Plans = () => {
                     <span className="bg-[#B5F7F6] h-5 w-5 rounded-full p-[3px] flex justify-center items-center">
                       <Check className="text-[#26A6A4] h-4 w-4" />{" "}
                     </span>
-                    <p className="text-gray-primary text-base">{feature}</p>
+                    <p>{feature}</p>
                   </div>
                 ))}
               </div>
