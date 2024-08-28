@@ -4,18 +4,32 @@ import * as React from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-export const Logo = ({ className }: React.HTMLAttributes<HTMLElement>) => {
+export const Logo = ({
+  dark = false,
+  className,
+}: {
+  dark?: boolean;
+} & React.HTMLAttributes<HTMLElement>) => {
   return (
-    <Link
-      href="/"
-      className={cn(
-        "text-xl text-primary font-semibold tracking-wide",
-        className
+    <Link href="/" className={cn("relative w-[70px] h-[30px]", className)}>
+      {!dark && (
+        <Image
+          src="/images/logo-dark.png"
+          alt="Logo"
+          fill
+          className="object-contain"
+        />
       )}
-    >
-      {/* TODO: Update Logo */}
-      Portia
+      {dark && (
+        <Image
+          src="/images/logo-light.png"
+          alt="Logo"
+          fill
+          className="object-contain"
+        />
+      )}
     </Link>
   );
 };
