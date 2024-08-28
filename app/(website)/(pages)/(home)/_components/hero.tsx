@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   return (
-    <section className="max-container flex flex-col justify-center items-start gap-y-5 py-20">
+    <section className="max-container flex flex-col justify-center items-start gap-y-10 py-20">
       {/* Title  */}
       <h1 className="max-w-[1090px] font-medium capitalize text-[30px] leading-[44px] md:text-[40px] md:leading-[50px] lg:text-6xl lg:leading-[72px]">
         Maximize online efficiency with high-quality, affordable, worldwide{" "}
