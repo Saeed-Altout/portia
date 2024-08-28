@@ -1,10 +1,11 @@
 import { Hero } from "./_components/hero";
 import { Map } from "./_components/map";
 import { Statistic } from "./_components/statistic";
-import { Features } from "./_components/features";
 import { Plans } from "./_components/plans";
-import { FAQs } from "./_components/faqs";
-import { Testimonials } from "./_components/testimonials";
+
+import { Testimonials } from "../../_components/testimonials";
+import { Features } from "../../_components/features";
+import { FAQs } from "../../_components/faqs";
 
 export default function HomePage() {
   return (
