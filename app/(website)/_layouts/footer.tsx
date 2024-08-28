@@ -15,7 +15,9 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
           <div className="col-span-1 sm:col-span-2 space-y-3">
             <Logo dark />
-            <p>Your Gateway to Unlimited Browsing.</p>
+            <p className="text-gray-secondary">
+              Your Gateway to Unlimited Browsing.
+            </p>
           </div>
           {footerLinks.map(({ title, links }, index) => (
             <div className="space-y-3 col-span-1" key={index}>
