@@ -260,3 +260,31 @@ export const testimonials = [
     position: "social media manager",
   },
 ];
+
+export const plansData2 = [
+  {
+    type: "Basic plan",
+    status: "Popular",
+    price: "$15",
+    description:
+      "Basic features for protect browsing usage  with everything you need.",
+    features: ["1", "2", "3", "4", "5"],
+    message: null,
+  },
+  {
+    type: "Standard plan",
+    status: null,
+    price: "$30",
+    description: "Growing teams up to 20 users.",
+    features: ["1", "2", "3", "4", "5"],
+    message: "Everything in Basic plus....",
+  },
+  {
+    type: "Premium plan",
+    status: null,
+    price: "$40",
+    description: "Large teams with unlimited users.",
+    features: ["1", "2", "3", "4", "5"],
+    message: "Everything in Standard plus....",
+  },
+];
