@@ -19,10 +19,8 @@ export const Heading = ({
         <span className="block absolute -top-9 left-0 text-primary font-semibold">
           {heading}
         </span>
-        <h1 className="text-3xl md:text-4xl text-black-primary font-medium">
-          {title}
-        </h1>
-        <p className="text-gray-primary text-sm md:text-base">{description}</p>
+        <h1 className="text-3xl md:text-4xl font-semibold">{title}</h1>
+        <p>{description}</p>
       </div>
       <div>{children}</div>
     </div>
