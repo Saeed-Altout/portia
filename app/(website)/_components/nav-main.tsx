@@ -26,7 +26,7 @@ export const NavMain = () => {
       <NavigationMenu className="hidden md:flex">
         <NavigationMenuList>
           {NAV_LINKS.map(({ label, href, links }, index) => (
-            <>
+            <div key={index}>
               {links ? (
                 <NavigationMenuItem key={index}>
                   <NavigationMenuTrigger
@@ -60,7 +60,7 @@ export const NavMain = () => {
                   active={pathname.startsWith(href)}
                 />
               )}
-            </>
+            </div>
           ))}
         </NavigationMenuList>
       </NavigationMenu>
