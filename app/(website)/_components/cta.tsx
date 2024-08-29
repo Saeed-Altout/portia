@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/app/(website)/_components/heading";
 
-export default function CTA() {
+import React from "react";
+
+export const CTA = () => {
   return (
     <section className="max-container section">
       <Heading
@@ -17,4 +19,4 @@ export default function CTA() {
       </Heading>
     </section>
   );
-}
+};

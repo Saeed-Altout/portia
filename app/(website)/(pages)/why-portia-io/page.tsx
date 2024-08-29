@@ -1,14 +1,10 @@
-import { Plans } from "./_components/plans";
-import { Features } from "../../_components/features";
 import { Testimonials } from "../../_components/testimonials";
 import { FAQs } from "../../_components/faqs";
 import { CTA } from "../../_components/cta";
 
-export default function OurPlans() {
+export default function WhyPortiaIo() {
   return (
     <main>
-      <Plans />
-      <Features />
       <Testimonials />
       <FAQs />
       <CTA />

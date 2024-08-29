@@ -84,23 +84,72 @@ body,
   }
 
   .section {
-    @apply w-full py-36;
+    @apply w-full py-24;
   }
 }
 
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone Trial-Regular.ttf") format("truetype"),
-    url("/fonts/Altone Trial-Regular.ttf") format("truetype");
-  font-weight: 400;
+  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"),
+    url("/fonts/Altone-ExtraBold.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone-Bold.ttf") format("truetype"),
+    url("/fonts/Altone-Bold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone-Bold.ttf") format("truetype"),
+    url("/fonts/Altone-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone-SemiBold.ttf") format("truetype"),
+    url("/fonts/Altone-SemiBold.ttf") format("truetype");
+  font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone Trial-Bold.ttf") format("truetype"),
-    url("/fonts/Altone Trial-Bold.ttf") format("truetype");
-  font-weight: 700;
+  src: url("/fonts/Altone-Medium.ttf") format("truetype"),
+    url("/fonts/Altone-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone-Medium.ttf") format("truetype"),
+    url("/fonts/Altone-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone-Regular.ttf") format("truetype"),
+    url("/fonts/Altone-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone-Light.ttf") format("truetype"),
+    url("/fonts/Altone-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Alton";
+  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"),
+    url("/fonts/Altone-ExtraBold.ttf") format("truetype");
+  font-weight: 200;
   font-style: normal;
 }
 
