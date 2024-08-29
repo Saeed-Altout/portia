@@ -1,9 +1,13 @@
 "use client";
 
+import AutoPlay from "embla-carousel-autoplay";
+
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 import {
@@ -18,9 +22,8 @@ import { testimonials } from "@/app/(website)/constants";
 export const Testimonials = () => {
   return (
     <section className="max-container section">
-      <Carousel>
+      <Carousel plugins={[AutoPlay()]} opts={{ loop: true }}>
         <CarouselContent>
-          {/* TODO: Add some plugins if we need */}
           {testimonials.map(({ rate, name, comment, position }, index) => (
             <CarouselItem key={index}>
               <Card className="border-none shadow-none">
@@ -38,6 +41,10 @@ export const Testimonials = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <div className="w-fit top-[300px] absolute right-10">
+          <CarouselPrevious />
+          <CarouselNext />
+        </div>
       </Carousel>
     </section>
   );
