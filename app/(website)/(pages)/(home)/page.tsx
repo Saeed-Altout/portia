@@ -1,6 +1,6 @@
 import { Hero } from "./_components/hero";
 import { Map } from "./_components/map";
-import { Statistic } from "./_components/statistic";
+import { Statistic } from "../../_components/statistic";
 import { Plans } from "./_components/plans";
 
 import { Testimonials } from "../../_components/testimonials";
