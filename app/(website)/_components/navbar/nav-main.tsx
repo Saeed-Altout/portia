@@ -14,9 +14,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-import { NavItem } from "@/app/(website)/_components/nav-item";
-
-import { NAV_LINKS } from "../config";
+import { NavItem } from "@website/_components/navbar";
+import { navLinks } from "@website/constants";
 
 export const NavMain = () => {
   const pathname = usePathname();
@@ -25,7 +24,7 @@ export const NavMain = () => {
     <div>
       <NavigationMenu className="hidden md:flex">
         <NavigationMenuList>
-          {NAV_LINKS.map(({ label, href, links }, index) => (
+          {navLinks.map(({ label, href, links }, index) => (
             <div key={index}>
               {links ? (
                 <NavigationMenuItem key={index}>

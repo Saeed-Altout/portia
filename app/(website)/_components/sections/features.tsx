@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { featuresData } from "@/app/(website)/constants";
-import { Heading } from "@/app/(website)/_components/heading";
+import { Heading } from "@/app/(website)/_components/common/heading";
 
 export const Features = () => {
   return (

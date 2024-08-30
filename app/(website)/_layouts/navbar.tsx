@@ -1,7 +1,7 @@
 "use client";
 
-import { NavMain } from "@/app/(website)/_components/nav-main";
-import { NavMobile } from "@/app/(website)/_components/nav-mobile";
+import { NavMain } from "@/app/(website)/_components/navbar/nav-main";
+import { NavMobile } from "@/app/(website)/_components/navbar/nav-mobile";
 
 import { Logo } from "@/components/common/Logo";
 

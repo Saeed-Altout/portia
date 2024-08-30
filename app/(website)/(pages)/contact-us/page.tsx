@@ -1,6 +1,6 @@
-import { Heading } from "../../_components/heading";
-import { Statistic } from "../../_components/statistic";
-import { ContactForm } from "./_components/contact-form";
+import { Statistic } from "@website/_components/sections";
+import { Heading } from "@website/_components/common";
+import { ContactForm } from "./_components";
 
 export default function ContactUsPage() {
   return (

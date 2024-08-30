@@ -1,8 +1,10 @@
-import { Plans } from "./_components/plans";
-import { Features } from "../../_components/features";
-import { Testimonials } from "../../_components/testimonials";
-import { FAQs } from "../../_components/faqs";
-import { CTA } from "../../_components/cta";
+import {
+  CTA,
+  FAQs,
+  Features,
+  Testimonials,
+} from "@website/_components/sections";
+import { Plans } from "./_components";
 
 export default function OurPlans() {
   return (
