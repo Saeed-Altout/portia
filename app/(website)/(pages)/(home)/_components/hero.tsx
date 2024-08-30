@@ -13,8 +13,8 @@ export const Hero = () => {
           <Image
             src="/images/underline.png"
             alt="Underline"
-            width={100}
-            height={10}
+            width={1000}
+            height={1000}
             className="w-full absolute top-9 md:top-10 lg:top-[60px] left-0 z-0"
           />
         </div>
