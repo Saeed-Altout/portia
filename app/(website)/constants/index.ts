@@ -317,3 +317,46 @@ export const plansData2 = [
     message: "Everything in Standard plus....",
   },
 ];
+
+export const countriesData = [
+  {
+    name: "United States",
+    users: "1000,000",
+    flagUrl: "/icons/flags/US.svg",
+  },
+  {
+    name: "United Kingdom",
+    users: "1000,000",
+    flagUrl: "/icons/flags/GB.svg",
+  },
+  {
+    name: "Germany",
+    users: "1000,000",
+    flagUrl: "/icons/flags/DE.svg",
+  },
+  {
+    name: "Canada",
+    users: "1000,000",
+    flagUrl: "/icons/flags/CA.svg",
+  },
+  {
+    name: "Italy",
+    users: "1000,000",
+    flagUrl: "/icons/flags/IT.svg",
+  },
+  {
+    name: "Australia",
+    users: "1000,000",
+    flagUrl: "/icons/flags/AU.svg",
+  },
+  {
+    name: "Spain",
+    users: "1000,000",
+    flagUrl: "/icons/flags/ES.svg",
+  },
+  {
+    name: "France",
+    users: "1000,000",
+    flagUrl: "/icons/flags/FR.svg",
+  },
+];
