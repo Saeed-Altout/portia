@@ -165,23 +165,23 @@ export const footerLinks = [
     links: [
       {
         label: "Why portia.io?",
-        href: "/",
+        href: "/why-portia-io",
       },
       {
         label: "Pricing",
-        href: "/",
+        href: "/our-plans",
       },
       {
         label: "Testimonials",
-        href: "/",
+        href: "/testimonials",
       },
       {
         label: "Affiliate program",
-        href: "/",
+        href: "/affiliate-program",
       },
       {
         label: "Contact us",
-        href: "/",
+        href: "/contact-us",
       },
     ],
   },
@@ -190,11 +190,11 @@ export const footerLinks = [
     links: [
       {
         label: "Blog",
-        href: "/",
+        href: "/blog",
       },
       {
         label: "Our Faqs",
-        href: "/",
+        href: "/our-faqs",
       },
     ],
   },
@@ -224,15 +224,15 @@ export const footerLinks = [
     links: [
       {
         label: "Terms",
-        href: "/",
+        href: "/terms",
       },
       {
         label: "Privacy",
-        href: "/",
+        href: "/privacy-policy",
       },
       {
         label: "Licenses",
-        href: "/",
+        href: "/licenses",
       },
     ],
   },
