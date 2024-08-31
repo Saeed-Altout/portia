@@ -5,7 +5,7 @@ export const Map = () => {
     <section className="max-container">
       <div className="relative h-[250px] md:h-[450px] lg:h-[800px]">
         <Image
-          src="/images/map.png"
+          src="/icons/map.svg"
           alt="Map"
           className="w-full h-full object-contain"
           fill
