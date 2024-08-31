@@ -278,14 +278,14 @@ export const testimonials = [
     rate: "⭐⭐⭐",
     comment:
       "Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!",
-    name: "Katherine Moss",
+    name: "Jon Doe",
     position: "social media manager",
   },
   {
     rate: "⭐⭐⭐⭐",
     comment:
       "Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!",
-    name: "Katherine Moss",
+    name: "Portia Founder",
     position: "social media manager",
   },
 ];

@@ -17,6 +17,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { testimonials } from "@website/constants";
 
 export const Testimonials = () => {
@@ -34,18 +35,22 @@ export const Testimonials = () => {
                     {comment}
                   </h3>
                 </CardContent>
-                <CardFooter className="px-0 flex flex-col gap-2 items-start">
-                  <p>{name}</p>
-                  <p className="text-[#8082F2]">{position}</p>
+                <CardFooter className="px-0 flex flex-row gap-2 items-center">
+                  <Avatar className="h-[56px] w-[56px]">
+                    <AvatarImage src="" />
+                    <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col py-[2px] items-start">
+                    <p>{name}</p>
+                    <p className="text-[#8082F2]">{position}</p>
+                  </div>
                 </CardFooter>
               </Card>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="w-fit top-[300px] absolute right-10">
-          <CarouselPrevious />
-          <CarouselNext />
-        </div>
+        <CarouselPrevious />
+        <CarouselNext />
       </Carousel>
     </section>
   );
