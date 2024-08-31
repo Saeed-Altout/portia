@@ -5,14 +5,16 @@ import { ContactForm } from "./_components";
 export default function ContactUsPage() {
   return (
     <main>
-      <section className="max container section">
+      <section className="max-container section">
         <Heading
           title="Get in touch"
           description="Our friendly team would love to hear from you."
         />
         <ContactForm />
       </section>
-      <Statistic />
+      <div className="hidden lg:block">
+        <Statistic />
+      </div>
     </main>
   );
 }
