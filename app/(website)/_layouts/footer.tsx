@@ -2,26 +2,30 @@
 
 import Link from "next/link";
 
-import { Logo } from "@/components/common/Logo";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/common/Logo";
 
-import { footerIcons, footerLinks } from "../constants";
+import { footerIcons, footerLinks } from "@website/constants";
 
 export const Footer = () => {
   return (
-    <footer className="bg-black-secondary py-10 text-gray-secondary">
+    <footer className="bg-black-secondary pt-16 pb-12 text-gray-secondary">
       <div className="max-container">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
           <div className="col-span-1 sm:col-span-2 space-y-3">
-            <Logo dark />
+            <div className="h-[30] w-[100px]">
+              <Logo dark />
+            </div>
             <p className="text-gray-secondary">
               Your Gateway to Unlimited Browsing.
             </p>
           </div>
           {footerLinks.map(({ title, links }, index) => (
             <div className="space-y-3 col-span-1" key={index}>
-              <h3 className="font-semibold text-base text-white">{title}</h3>
+              <h3 className="font-semibold text-sm text-white tracking-wide">
+                {title}
+              </h3>
               <ul className="flex flex-col gap-3">
                 {links.map((link, index) => (
                   <li className="w-full" key={index}>
@@ -47,7 +51,7 @@ export const Footer = () => {
               <Button key={index} variant="link" size="icon" asChild>
                 <Link href={href}>
                   <span className="sr-only">{name}</span>
-                  <Icon className="h-5 w-5 text-[#9C9CAD]" />
+                  <Icon className="h-6 w-6 text-[#9C9CAD]" />
                 </Link>
               </Button>
             ))}
