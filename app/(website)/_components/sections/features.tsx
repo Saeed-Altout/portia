@@ -1,6 +1,6 @@
+import { featuresData } from "@website/constants";
+import { Heading } from "@website/_components/common/heading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { featuresData } from "@/app/(website)/constants";
-import { Heading } from "@/app/(website)/_components/common/heading";
 
 export const Features = () => {
   return (
@@ -10,6 +10,7 @@ export const Features = () => {
         description="We provide a lots of incredible features that you will need!"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* TODO: Update data from API */}
         {featuresData.map(({ icon: Icon, title, description }, index) => (
           <Card key={index} className="shadow-none border-none">
             <CardHeader className="px-0">
