@@ -13,13 +13,13 @@ export const Logo = ({
   dark?: boolean;
 } & React.HTMLAttributes<HTMLElement>) => {
   return (
-    <Link href="/" className={cn("w-[70px] h-[30px]", className)}>
+    <Link href="/" className={cn("w-[92px] h-[28px]", className)}>
       {!dark && (
         <Image
           src="/images/logo-dark.png"
           alt="Logo"
-          width={90}
-          height={30}
+          width={1000}
+          height={1000}
           className="object-contain"
         />
       )}
@@ -27,8 +27,8 @@ export const Logo = ({
         <Image
           src="/images/logo-light.png"
           alt="Logo"
-          width={90}
-          height={30}
+          width={1000}
+          height={1000}
           className="object-contain"
         />
       )}
