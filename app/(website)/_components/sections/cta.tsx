@@ -9,6 +9,8 @@ export const CTA = () => {
       <Heading
         title="Ready To Take Your Online Efficiency to the Next Level ?"
         description="Join over 40,000+ happy clients already growing with portia.io ."
+        titleStyle="lg:text-5xl"
+        descriptionStyle="lg:text-xl lg:p-2"
       >
         <div className="flex items-center justify-center flex-col md:flex-row gap-5">
           <Button variant="outline" className="w-full">
