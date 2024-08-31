@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Heading } from "@/app/(website)/_components/common/heading";
+import { Heading } from "@website/_components/common/heading";
 
 import React from "react";
 
