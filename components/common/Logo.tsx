@@ -16,7 +16,7 @@ export const Logo = ({
     <Link href="/" className={cn("w-[92px] h-[28px]", className)}>
       {!dark && (
         <Image
-          src="/images/logo-dark.png"
+          src="/icons/logo.svg"
           alt="Logo"
           width={1000}
           height={1000}
@@ -25,7 +25,7 @@ export const Logo = ({
       )}
       {dark && (
         <Image
-          src="/images/logo-light.png"
+          src="/icons/logo-dark.svg"
           alt="Logo"
           width={1000}
           height={1000}

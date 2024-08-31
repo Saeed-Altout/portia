@@ -9,17 +9,17 @@ import { Button } from "@/components/ui/button";
 
 export const Navbar = () => {
   return (
-    <header className="shadow-md h-16 w-full flex justify-center items-center">
+    <header className="shadow-md h-20 w-full flex justify-center items-center">
       <div className="max-container flex justify-between items-center">
         <Logo />
         <NavMain />
         <NavMobile />
         <div className="hidden md:flex items-center justify-end gap-x-4">
           {/* TODO: Update function of this buttons */}
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" className="text-gray-primary ">
             Log in
           </Button>
-          <Button size="sm">Get Started</Button>
+          <Button>Get Started</Button>
         </div>
       </div>
     </header>

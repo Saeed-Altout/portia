@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import {
   NavigationMenuItem,
   NavigationMenuLink,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 export const NavItem = ({
@@ -26,7 +25,7 @@ export const NavItem = ({
       <Link href={href} legacyBehavior passHref>
         <NavigationMenuLink
           className={cn(
-            navigationMenuTriggerStyle(),
+            "text-base font-medium",
             active && "text-black",
             "text-muted-foreground/80",
             className
