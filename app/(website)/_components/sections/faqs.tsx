@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
-import { Heading } from "@/app/(website)/_components/common/heading";
-import { faqsData } from "@/app/(website)/constants";
+import { Heading } from "@website/_components/common/heading";
+import { faqsData } from "@website/constants";
 
 export const FAQs = () => {
   return (
     <section className="max-container section">
-      <div className="flex items-start justify-between flex-col md:flex-row gap-10">
-        <div className="flex-1">
+      <div className="flex items-start justify-between flex-col md:flex-row gap-8">
+        <div className="w-[448px]">
           <Heading title="FAQs" />
           <p className="text-gray-primary text-sm md:text-base">
             Here are the most common questions and how we answer them,
@@ -29,8 +29,9 @@ export const FAQs = () => {
           </p>
         </div>
 
-        <div className="basis-2/3 w-full">
+        <div className="flex-1">
           <Accordion type="single" collapsible className="flex flex-col gap-5">
+            {/* TODO: Update data from API */}
             {faqsData.map(({ question, answer }, index) => (
               <AccordionItem key={index} value={`item-${index + 1}`}>
                 <AccordionTrigger>
