@@ -10,11 +10,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { plansData2 } from "@/app/(website)/constants";
+import { plansData2 } from "@website/constants";
 
 export const Plans = () => {
   return (
-    <section className="max-container section space-y-10">
+    <section className="max-container section space-y-16">
       <div className="space-y-5 flex-1 text-center">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
           Pricing plans
@@ -22,22 +22,22 @@ export const Plans = () => {
         <p>Transparent pricing that grows with your needs.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-end">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {plansData2.map(
           ({ price, status, type, message, features, description }, index) => (
-            <Card key={index} className="h-fit">
+            <Card key={index} className="drop-shadow-xl rounded-[16px]">
               <CardHeader className="space-y-5">
                 <div className="flex items-center justify-between">
                   <p>{type}</p>
                   {status && (
-                    <span className="bg-[#D4D4FF] px-3 py-[2px] rounded-full text-sm">
+                    <span className="bg-[#D4D4FF] px-[14px] py-[3px] rounded-full text-sm font-medium">
                       {status}
                     </span>
                   )}
                 </div>
-                <CardTitle className="font-semibold text-4xl lg:text-5xl">
+                <CardTitle className="font-semibold text-4xl md:text-5xl lg:text-6xl">
                   {price}
-                  <span className="text-base font-normal text-gray-primary">
+                  <span className="text-base font-medium text-gray-primary ml-2 tracking-wide">
                     per month
                   </span>
                 </CardTitle>
@@ -79,7 +79,7 @@ export const Plans = () => {
         )}
       </div>
 
-      <div className="flex items-center justify-center w-full">
+      <div className="flex items-center justify-center w-full py-12">
         <p>Need more details about our plans ?</p>
         <Button variant="link" asChild className="px-2 underline" size="sm">
           {/* TODO: Update href link of check compare plans */}
