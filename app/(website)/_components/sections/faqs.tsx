@@ -14,8 +14,8 @@ import { faqsData } from "@website/constants";
 export const FAQs = () => {
   return (
     <section className="max-container section">
-      <div className="flex items-start justify-between flex-col md:flex-row gap-8">
-        <div className="w-[448px]">
+      <div className="flex items-start justify-between flex-col lg:flex-row gap-8">
+        <div className="max-w-[448px]">
           <Heading title="FAQs" />
           <p className="text-gray-primary text-sm md:text-base">
             Here are the most common questions and how we answer them,
@@ -29,7 +29,7 @@ export const FAQs = () => {
           </p>
         </div>
 
-        <div className="flex-1">
+        <div className="flex-1 w-full">
           <Accordion type="single" collapsible className="flex flex-col gap-5">
             {/* TODO: Update data from API */}
             {faqsData.map(({ question, answer }, index) => (

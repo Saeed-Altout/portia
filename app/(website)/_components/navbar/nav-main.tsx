@@ -21,7 +21,7 @@ export const NavMain = () => {
 
   return (
     <div>
-      <NavigationMenu className="hidden md:flex">
+      <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList className="gap-x-8">
           {navLinks.map(({ label, href, links }, index) => (
             <div key={index}>

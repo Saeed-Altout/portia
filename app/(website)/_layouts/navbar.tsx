@@ -1,11 +1,8 @@
 "use client";
 
-import { NavMain } from "@/app/(website)/_components/navbar/nav-main";
-import { NavMobile } from "@/app/(website)/_components/navbar/nav-mobile";
-
-import { Logo } from "@/components/common/Logo";
-
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/common/Logo";
+import { NavMain, NavMobile } from "@website/_components/navbar";
 
 export const Navbar = () => {
   return (
@@ -14,7 +11,7 @@ export const Navbar = () => {
         <Logo />
         <NavMain />
         <NavMobile />
-        <div className="hidden md:flex items-center justify-end gap-x-4">
+        <div className="hidden lg:flex items-center justify-end gap-x-4">
           {/* TODO: Update function of this buttons */}
           <Button variant="ghost" size="sm" className="text-gray-primary ">
             Log in
