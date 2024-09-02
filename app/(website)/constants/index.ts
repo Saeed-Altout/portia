@@ -30,7 +30,6 @@ export const navLinks = [
 		href: '/contact-us',
 	},
 ];
-
 export const statisticData = [
 	{
 		value: '40k+',
@@ -53,7 +52,6 @@ export const statisticData = [
 		description: "We're proud of our 5-star rating with over 200 reviews.",
 	},
 ];
-
 export const featuresData = [
 	{
 		icon: InfinityIcon,
@@ -86,7 +84,6 @@ export const featuresData = [
 		description: 'Enjoy speeds around 15 Mbps with a ping less than 900 ms,perfect for seamless browsing and operations.',
 	},
 ];
-
 export const plansData = [
 	{
 		price: '15/mth',
@@ -104,7 +101,6 @@ export const plansData = [
 		features: ['All in Standard plus', 'feature 1', 'feature 2', 'feature 3', 'feature 4'],
 	},
 ];
-
 export const faqsData = [
 	{
 		question: 'Is there a any trial available?',
@@ -127,7 +123,6 @@ export const faqsData = [
 		answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
 	},
 ];
-
 export const footerLinks = [
 	{
 		title: 'Company',
@@ -206,7 +201,6 @@ export const footerLinks = [
 		],
 	},
 ];
-
 export const footerIcons = [
 	{
 		name: 'Twitter',
@@ -234,7 +228,6 @@ export const footerIcons = [
 		href: '/',
 	},
 ];
-
 export const testimonials = [
 	{
 		rate: '⭐⭐⭐⭐⭐',
@@ -258,7 +251,6 @@ export const testimonials = [
 		position: 'social media manager',
 	},
 ];
-
 export const plansData2 = [
 	{
 		type: 'Basic plan',
@@ -285,7 +277,6 @@ export const plansData2 = [
 		message: 'Everything in Standard plus....',
 	},
 ];
-
 export const countriesData = [
 	{
 		name: 'United States',
@@ -328,7 +319,6 @@ export const countriesData = [
 		flagUrl: '/icons/flags/FR.svg',
 	},
 ];
-
 export const pricingData = [
 	{
 		name: 'Basic',
@@ -424,7 +414,6 @@ export const pricingData = [
 		},
 	},
 ];
-
 export const basicPlan = {
 	name: 'Basic',
 	price: '$15',
@@ -455,7 +444,6 @@ export const basicPlan = {
 		data_history: false,
 	},
 };
-
 export const standardPlan = {
 	name: 'Standard',
 	price: '$30',
@@ -516,3 +504,38 @@ export const premiumPlan = {
 		data_history: true,
 	},
 };
+export const customersData = [
+	{
+		rate: [{ icon: Star }, { icon: Star }, { icon: Star }, { icon: Star }, { Star }],
+		name: 'Alisa Hester',
+		position: 'PM, Hourglass',
+		agency: 'Web Design Agency',
+		comment: '“We’ve really sped up our workflow using Untitled.”',
+		imgUrl: '/images/users/user1.png',
+	},
+	{
+		rate: [{ icon: Star }, { icon: Star }, { icon: Star }, { icon: Star }, { Star }],
+		name: 'Rich Wilson',
+		position: 'COO, Command+R',
+		agency: 'Web Development Agency',
+		comment: '“We’ve really sped up our workflow using Untitled.”',
+		imgUrl: '/images/users/user2.png',
+	},
+
+	{
+		rate: [{ icon: Star }, { icon: Star }, { icon: Star }, { icon: Star }, { Star }],
+		name: 'Johnny Bell',
+		position: 'PM, Sisyphus',
+		agency: 'Machine Learning',
+		comment: '“We’ve really sped up our workflow using Untitled.”',
+		imgUrl: '/images/users/user3.png',
+	},
+	{
+		rate: [{ icon: Star }, { icon: Star }, { icon: Star }, { icon: Star }, { Star }],
+		name: 'Annie Stanley',
+		position: 'Designer, Catalog',
+		agency: 'UX Agency',
+		comment: '“We’ve really sped up our workflow using Untitled.”',
+		imgUrl: '/images/users/user4.png',
+	},
+];
