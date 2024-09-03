@@ -8,12 +8,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 export const Content = () => {
 	return (
 		<section className='max-container section space-y-16'>
-			<Accordion type='single' collapsible className='flex flex-col gap-5 max-w-[768px] mx-auto py-4'>
+			<Accordion type='single' collapsible className='flex flex-col gap-5 max-w-[768px] mx-auto'>
 				{/* TODO: Update data from API */}
 				{freqAQsData.map(({ question, answer }, index) => (
-					<AccordionItem key={index} value={`item-${index + 1}`}>
+					<AccordionItem key={index} value={`item-${index + 1}`} className='py-4'>
 						<AccordionTrigger>
-							<span className='font-medium text-lg p-4'>{question}</span>
+							<span className='font-medium text-lg text-left'>{question}</span>
 						</AccordionTrigger>
 						<AccordionContent className='text-gray-primary text-sm md:text-base'>{answer}</AccordionContent>
 					</AccordionItem>
