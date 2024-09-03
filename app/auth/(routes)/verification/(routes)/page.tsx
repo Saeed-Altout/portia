@@ -26,6 +26,7 @@ export default function VerificationPage() {
 					<Button className='w-full' disabled={isLoading}>
 						Enter code manually
 					</Button>
+
 					<Button variant='link' className='w-full' disabled={isLoading} asChild>
 						<Link href='/auth/login' className='flex items-center justify-center gap-x-2 !text-gray-primary'>
 							<ArrowLeft className='h-4 w-4 ml-2' />
