@@ -17,11 +17,11 @@ export const navLinks = [
 		links: [
 			{
 				label: 'Blogs',
-				href: '/resources/blogs',
+				href: '/blogs',
 			},
 			{
 				label: 'Services',
-				href: '/resources/services',
+				href: '/services',
 			},
 		],
 	},
@@ -154,11 +154,11 @@ export const footerLinks = [
 		links: [
 			{
 				label: 'Blog',
-				href: '/blog',
+				href: '/blogs',
 			},
 			{
 				label: 'Our Faqs',
-				href: '/our-faqs',
+				href: '/faqs',
 			},
 		],
 	},
@@ -539,7 +539,6 @@ export const customersData = [
 		imgUrl: '/images/users/user4.png',
 	},
 ];
-
 export const blogsData = [
 	{
 		published: '20 Jan 2022',
@@ -630,5 +629,44 @@ export const blogsData = [
 		imgUrl: '/images/blogs/blog (9).jpg',
 		isFavorite: false,
 		order: 9,
+	},
+];
+
+export const freqAQsData = [
+	{
+		question: 'Is there a any  trial available?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'Can I change my plan later?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'How many accounts can I run on a single proxy?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'Which sites can I access with your proxies?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'Do you have any blocked sites?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'What is the uptime of your proxies?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'What proxy protocols are you supporting?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'Can I use your proxies on social networks?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
+	},
+	{
+		question: 'Do you have an affiliation program?',
+		answer: 'Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can sub scrip in one of our plans ',
 	},
 ];
