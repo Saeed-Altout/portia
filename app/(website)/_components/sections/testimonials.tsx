@@ -1,55 +1,56 @@
-"use client";
+'use client';
 
-import AutoPlay from "embla-carousel-autoplay";
+import Image from 'next/image';
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { testimonials } from '@website/constants';
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { testimonials } from "@website/constants";
+import { Section } from '@website/_components/ui/section';
+import { Paragraph } from '@website/_components/ui/paragraph';
+import { Container } from '@website/_components/ui/container';
 
 export const Testimonials = () => {
-  return (
-    <section className="max-container section">
-      <Carousel plugins={[AutoPlay()]} opts={{ loop: true }}>
-        <CarouselContent>
-          {/* TODO: Update data from API */}
-          {testimonials.map(({ rate, name, comment, position }, index) => (
-            <CarouselItem key={index}>
-              <Card className="border-none shadow-none">
-                <CardHeader className="px-0">{rate}</CardHeader>
-                <CardContent className="px-0">
-                  <h3 className="text-2xl leading-8 md:text-3xl md:leading-9 lg:text-4xl lg:leading-[44px] font-medium  ">
-                    {comment}
-                  </h3>
-                </CardContent>
-                <CardFooter className="px-0 flex flex-row gap-2 items-center">
-                  <Avatar className="h-[56px] w-[56px]">
-                    <AvatarImage src="" />
-                    <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col py-[2px] items-start">
-                    <p>{name}</p>
-                    <p className="text-[#8082F2]">{position}</p>
-                  </div>
-                </CardFooter>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-    </section>
-  );
+	return (
+		<Section space='wide'>
+			<Container size='wide'>
+				<Carousel>
+					<CarouselContent>
+						{testimonials.map(({ rate, name, comment, position }, index) => (
+							<CarouselItem key={index}>
+								<Card className='border-none shadow-none space-y-12'>
+									<div className='flex items-center justify-start gap-x-1'>
+										{[...Array(rate)].map((_, index) => (
+											<Image src='/icons/star.svg' alt='Star icon' width={20} height={20} key={index} />
+										))}
+									</div>
+									<CardContent className='p-0'>
+										<h3 className='text-2xl leading-8 md:text-3xl md:leading-9 lg:text-4xl lg:leading-[44px] font-medium  '>{comment}</h3>
+									</CardContent>
+									<CardFooter className='p-0 flex flex-row items-center gap-4'>
+										<Avatar className='h-[56px] w-[56px]'>
+											<AvatarImage src='https://github.com/shadcn.png' />
+											<AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
+										</Avatar>
+										<div className='flex flex-col items-start py-2'>
+											<Paragraph size='lg' className='font-medium text-black-primary'>
+												{name}
+											</Paragraph>
+											<Paragraph>{position}</Paragraph>
+										</div>
+									</CardFooter>
+								</Card>
+							</CarouselItem>
+						))}
+					</CarouselContent>
+					<div className='w-fit mr-auto space-x-8 mt-8'>
+						<CarouselPrevious />
+						<CarouselNext />
+					</div>
+				</Carousel>
+			</Container>
+		</Section>
+	);
 };

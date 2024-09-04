@@ -230,23 +230,20 @@ export const footerIcons = [
 ];
 export const testimonials = [
 	{
-		rate: '⭐⭐⭐⭐⭐',
-		comment:
-			'Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!',
+		rate: 5,
+		comment: ' Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!',
 		name: 'Katherine Moss',
 		position: 'social media manager',
 	},
 	{
-		rate: '⭐⭐⭐',
-		comment:
-			'Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!',
+		rate: 2,
+		comment: 'Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!',
 		name: 'Jon Doe',
 		position: 'social media manager',
 	},
 	{
-		rate: '⭐⭐⭐⭐',
-		comment:
-			'Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!',
+		rate: 4,
+		comment: 'Portia.io has the best proxies with unmatched IP rotation, speed, and reliability. Essential for social media professionals!',
 		name: 'Portia Founder',
 		position: 'social media manager',
 	},
