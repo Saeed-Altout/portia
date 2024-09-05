@@ -12,7 +12,7 @@ import { Section } from '@website/_components/ui/section';
 export const Customers = () => {
 	return (
 		<Section space='wide'>
-			<Container size='wide'>
+			<Container size='wide' className='overflow-x-hidden'>
 				<Carousel>
 					<CarouselContent className='space-x-8'>
 						{customersData.map((customer, index) => (
