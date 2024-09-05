@@ -1,15 +1,15 @@
+import { Container } from '@website/_components/ui/container';
+import { Paragraph } from '@website/_components/ui/paragraph';
+import { Section } from '@website/_components/ui/section';
+
 export const Hero = () => {
-  return (
-    <div className="h-[342px] w-full">
-      <div className="space-y-5 flex-1 text-center flex items-center justify-center flex-col h-full max-w-4xl mx-auto">
-        <p className="text-primary font-semibold">Pricing</p>
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
-          Compare our plans and find yours
-        </h1>
-        <p className="text-xl leading-8">
-          Transparent pricing that grows with your needs.
-        </p>
-      </div>
-    </div>
-  );
+	return (
+		<Section space='wide'>
+			<Container size='wide' view='vertical' className='justify-center items-center gap-y-8 md:gap-y-9 lg:gap-y-10 text-center'>
+				<span className='block text-primary font-semibold'>Pricing</span>
+				<h1 className='text-3xl md:text-4xl lg:text-5xl font-semibold'>Compare our plans and find yours</h1>
+				<Paragraph size='lg'>Transparent pricing that grows with your needs.</Paragraph>
+			</Container>
+		</Section>
+	);
 };
