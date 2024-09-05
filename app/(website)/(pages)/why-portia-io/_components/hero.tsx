@@ -4,7 +4,7 @@ import { Section } from '@website/_components/ui/section';
 
 export const Hero = () => {
 	return (
-		<Section space='wide'>
+		<Section space='wide' className='bg-[#F5F5FA]'>
 			<Container size='wide' view='vertical' className='justify-center items-center gap-y-8 md:gap-y-9 lg:gap-y-10 text-center'>
 				<span className='block text-primary font-semibold'>About portia</span>
 				<h1 className='text-3xl md:text-4xl lg:text-5xl font-semibold'>Why To Choose Portia.io?</h1>
