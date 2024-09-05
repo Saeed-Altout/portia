@@ -5,7 +5,7 @@ import { CTA } from '@website/_components/sections/cta';
 
 import { Testimonials } from '@website/_components/sections/testimonials';
 
-export default function WhyPortiaIo() {
+export default function WhyPortiaIoPage() {
 	return (
 		<main>
 			<Hero />
