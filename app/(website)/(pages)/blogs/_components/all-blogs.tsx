@@ -1,107 +1,120 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowUpRight } from 'lucide-react';
+"use client";
 
-import { blogsData } from '@website/constants';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import * as React from "react";
+
+import { blogsData } from "@website/constants";
+
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { BlogCard } from "@website/_components/cards/blog-card";
 
 import {
-	Pagination,
-	PaginationContent,
-	PaginationEllipsis,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
-} from '@/components/ui/pagination';
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
-import { renderStyleCategory } from '@/app/(website)/utils/render-style-category';
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { Separator } from "@/components/ui/separator";
+
+const fetchPaginatedBlogs = (page = 1, limit = 6) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const totalBlogs = blogsData.length;
+      const totalPages = Math.ceil(totalBlogs / limit);
+      const start = (page - 1) * limit;
+      const end = start + limit;
+      const data = blogsData.slice(start, end);
+
+      resolve({
+        data,
+        total: totalBlogs,
+        totalPages,
+        currentPage: page,
+      });
+    }, 500);
+  });
+};
 
 export const AllBlogs = () => {
-	return (
-		<section className='max-container section space-y-5'>
-			<div className='space-y-8 mb-16'>
-				<h3 className='text-xl md:text-2xl font-semibold'>All blog posts</h3>
-				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12'>
-					{blogsData.map((blog, index) => (
-						<>
-							{!blog.isFavorite && (
-								<Card className='overflow-hidden border-none shadow-none rounded-none space-y-6' key={index}>
-									<CardHeader className='p-0'>
-										<Image
-											src={blog.imgUrl}
-											alt={blog.title}
-											className='object-cover max-h-[240px] w-full h-full'
-											width={1000}
-											height={1000}
-										/>
-									</CardHeader>
-									<CardContent className='space-y-3 p-0'>
-										<p className='text-primary font-semibold text-sm'>{blog.published}</p>
-										<div className='flex items-center justify-between'>
-											<h3 className='text-xl md:text-2xl font-semibold'>{blog.title}</h3>
-											<Link href={blog.url}>
-												<ArrowUpRight className='h-6 w-6' />
-											</Link>
-										</div>
-										<p>{blog.description}</p>
-										<div className='space-x-2'>
-											{blog.categories.map((category, index) => (
-												<span
-													className={cn(
-														'px-3 py-1 text-sm font-medium w-fit rounded-full',
-														renderStyleCategory(category)
-													)}
-													key={index}
-												>
-													{category}
-												</span>
-											))}
-										</div>
-									</CardContent>
-								</Card>
-							)}
-						</>
-					))}
-				</div>
-			</div>
-			<Separator />
-			<Pagination className='w-full'>
-				<PaginationContent className='w-full flex items-center justify-between text-gray-primary'>
-					<PaginationItem>
-						<PaginationPrevious href='#' />
-					</PaginationItem>
-					<div className='flex items-center justify-center'>
-						<PaginationItem>
-							<PaginationLink href='#'>1</PaginationLink>
-						</PaginationItem>
-						<PaginationItem className='hidden md:block'>
-							<PaginationLink href='#'>2</PaginationLink>
-						</PaginationItem>
-						<PaginationItem className='hidden lg:block'>
-							<PaginationLink href='#'>3</PaginationLink>
-						</PaginationItem>
-						<PaginationItem>
-							<PaginationEllipsis />
-						</PaginationItem>
-						<PaginationItem className='hidden lg:block'>
-							<PaginationLink href='#'>8</PaginationLink>
-						</PaginationItem>
-						<PaginationItem className='hidden md:block'>
-							<PaginationLink href='#'>9</PaginationLink>
-						</PaginationItem>
-						<PaginationItem>
-							<PaginationLink href='#'>10</PaginationLink>
-						</PaginationItem>
-					</div>
-					<div>
-						<PaginationItem>
-							<PaginationNext href='#' />
-						</PaginationItem>
-					</div>
-				</PaginationContent>
-			</Pagination>
-		</section>
-	);
+  const [blogs, setBlogs] = React.useState<any[]>([]);
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [totalPages, setTotalPages] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    fetchPaginatedBlogs(currentPage).then(({ data, totalPages }: any) => {
+      setBlogs(data);
+      setTotalPages(totalPages);
+    });
+  }, [currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  return (
+    <Section>
+      <Container className="gap-y-8">
+        <h3 className="text-xl md:text-2xl font-semibold">All blog posts</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
+          {blogs.map((blog, index) => (
+            <React.Fragment key={index}>
+              {!blog.isFavorite && <BlogCard initialData={blog} />}
+            </React.Fragment>
+          ))}
+        </div>
+        <Separator />
+        <Pagination className="w-full">
+          <PaginationContent className="w-full flex items-center justify-between">
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+              />
+            </PaginationItem>
+            <div className="flex items-center justify-center">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <PaginationItem key={index}>
+                  <PaginationLink
+                    href="#"
+                    onClick={() => handlePageChange(index + 1)}
+                    className={currentPage === index + 1 ? "font-semibold" : ""}
+                  >
+                    {index + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              {totalPages > 5 && (
+                <>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink
+                      href="#"
+                      onClick={() => handlePageChange(totalPages)}
+                    >
+                      {totalPages}
+                    </PaginationLink>
+                  </PaginationItem>
+                </>
+              )}
+            </div>
+            <div>
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={() =>
+                    handlePageChange(Math.min(currentPage + 1, totalPages))
+                  }
+                />
+              </PaginationItem>
+            </div>
+          </PaginationContent>
+        </Pagination>
+      </Container>
+    </Section>
+  );
 };
