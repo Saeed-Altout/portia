@@ -22,7 +22,7 @@ export const HeadingPage = ({
           {title}
         </h1>
       </div>
-      <Paragraph className="max-w-3xl lg:text-xl">{description}</Paragraph>
+      <Paragraph className="max-w-4xl lg:text-xl">{description}</Paragraph>
     </div>
   );
 };
