@@ -11,6 +11,8 @@ enum Categories {
 	'SOFTWARE_DEVELOPMENT' = 'Software Development',
 	'PRODUCT' = 'Product',
 	'FRAMEWORKS' = 'Frameworks',
+	'ARCHITECTURE' = 'Architecture',
+	'INTERVIEWS' = 'Interviews',
 }
 
 export const renderStyleCategory = (category: string) => {
@@ -27,10 +29,12 @@ export const renderStyleCategory = (category: string) => {
 		case Categories.SAAS:
 		case Categories.TOOLS:
 		case Categories.PRESENTATIONS:
+		case Categories.INTERVIEWS:
 			return 'bg-[#FDF2FA] text-[#C11574]';
 		case Categories.SOFTWARE_DEVELOPMENT:
 			return 'bg-[#D4FFFE] text-[#035E5C]';
 		case Categories.PRODUCT:
+		case Categories.ARCHITECTURE:
 			return 'bg-[#F0F9FF] text-[#026AA2]';
 		case Categories.FRAMEWORKS:
 			return 'bg-[#FFF6ED] text-[#C4320A]';
