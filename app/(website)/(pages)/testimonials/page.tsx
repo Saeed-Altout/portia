@@ -1,12 +1,12 @@
-import { Customers, Hero } from './_components';
-import { CTA } from '@website/_components/sections';
+import { CTA } from "@website/_components/sections";
+import { Customers, Hero } from "./_components";
 
 export default function TestimonialsPage() {
-	return (
-		<main>
-			<Hero />
-			<Customers />
-			<CTA />
-		</main>
-	);
+  return (
+    <main className="w-full">
+      <Hero />
+      <Customers />
+      <CTA />
+    </main>
+  );
 }

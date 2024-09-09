@@ -547,13 +547,7 @@ export const premiumPlan = {
 };
 export const customersData = [
   {
-    rate: [
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { Star },
-    ],
+    rate: 5,
     name: "Alisa Hester",
     position: "PM, Hourglass",
     agency: "Web Design Agency",
@@ -561,13 +555,7 @@ export const customersData = [
     imgUrl: "/images/users/user1.png",
   },
   {
-    rate: [
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { Star },
-    ],
+    rate: 5,
     name: "Rich Wilson",
     position: "COO, Command+R",
     agency: "Web Development Agency",
@@ -576,13 +564,7 @@ export const customersData = [
   },
 
   {
-    rate: [
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { Star },
-    ],
+    rate: 5,
     name: "Johnny Bell",
     position: "PM, Sisyphus",
     agency: "Machine Learning",
@@ -590,13 +572,7 @@ export const customersData = [
     imgUrl: "/images/users/user3.png",
   },
   {
-    rate: [
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { icon: Star },
-      { Star },
-    ],
+    rate: 5,
     name: "Annie Stanley",
     position: "Designer, Catalog",
     agency: "UX Agency",
