@@ -5,8 +5,9 @@ import Link from "next/link";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { FormContactValues, formContactSchema } from "@website/schema";
+import { formContactSchema } from "@website/schema";
 
 import { Section } from "@website/_components/ui/section";
 import { Container } from "@website/_components/ui/container";
@@ -32,6 +33,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+
+export type FormContactValues = z.infer<typeof formContactSchema>;
 
 export const ContactForm = () => {
   const form = useForm<FormContactValues>({

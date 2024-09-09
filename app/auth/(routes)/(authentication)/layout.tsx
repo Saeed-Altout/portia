@@ -1,25 +1,23 @@
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
-import { Sidebar } from './_components/sidebar';
-import { Header } from './_components/header';
+import { Sidebar } from "./_components/sidebar";
 
 export const metadata: Metadata = {
-	title: 'Authentication',
-	description: 'Secure login and authentication page for Portia.io',
+  title: "Authentication",
+  description: "Secure login and authentication page for Portia.io",
 };
 
 export default function AuthLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<div className='flex flex-row min-h-screen w-full'>
-			<Sidebar />
-			<div className='w-full lg:w-1/3 max-w-[400px] mx-auto space-y-8 lg:space-y-0'>
-				<Header />
-				<div className='flex flex-col justify-center items-center lg:h-screen'>{children}</div>
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex flex-row min-h-screen w-full">
+      <Sidebar />
+      <div className="h-screen w-full flex justify-center items-center lg:w-1/3 mx-auto">
+        {children}
+      </div>
+    </div>
+  );
 }

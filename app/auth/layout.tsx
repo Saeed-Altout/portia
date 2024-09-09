@@ -1,14 +1,18 @@
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: 'Authentication',
-	description: 'Secure login and authentication page for Portia.io',
+  title: "Authentication",
+  description: "Secure login and authentication page for Portia.io",
 };
 
 export default function AuthLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return <div className='flex flex-row min-h-screen w-full'>{children}</div>;
+  return (
+    <div className="flex flex-row justify-center items-center min-h-screen w-full">
+      {children}
+    </div>
+  );
 }

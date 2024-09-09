@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/common/Logo";
+import { Logo } from "@/components/logo";
 
 import { footerIcons, footerLinks } from "@website/constants";
 

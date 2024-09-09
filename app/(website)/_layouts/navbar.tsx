@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/common/Logo";
+import { Logo } from "@/components/logo";
 import { NavMain, NavMobile } from "@website/_components/navbar";
 
 export const Navbar = () => {
