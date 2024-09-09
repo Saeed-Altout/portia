@@ -41,7 +41,7 @@ export const Hero = () => {
     <Section>
       <Container className="gap-y-8 lg:gap-y-10">
         <HeadingPage
-          timestamp="Our blog"
+          label="Our blog"
           title="Portia.io blog"
           description="Subscribe to learn about new product features, the latest in technology, solutions, and updates."
         />

@@ -7,7 +7,7 @@ export const Hero = () => {
     <Section>
       <Container>
         <HeadingPage
-          timestamp="Published 13 Jan 2022"
+          label="Published 13 Jan 2022"
           title="A conversation with Lucy Bond"
           description="Lucy Bond is an interior designer who started her career in New Zealand, working for large architectural firms. We chatted to her about design and starting her own studio."
         />

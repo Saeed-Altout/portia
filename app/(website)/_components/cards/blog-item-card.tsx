@@ -6,7 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
-import { Timestamp } from "@/app/(website)/_components/ui/label";
+import { Label } from "@/app/(website)/_components/ui/label";
 import { Paragraph } from "@website/_components/ui/paragraph";
 import { Categories } from "@/app/(website)/_components/ui/categories";
 
@@ -39,7 +39,7 @@ export const BlogItemCard = ({
       />
       <div className="space-y-6 lg:px-6 lg:max-w-[250px]">
         <div className="space-y-3">
-          <Timestamp label={published} />
+          <Label label={published} />
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold">{title}</h3>
             <Link

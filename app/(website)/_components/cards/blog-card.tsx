@@ -6,7 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
-import { Timestamp } from "@/app/(website)/_components/ui/label";
+import { Label } from "@/app/(website)/_components/ui/label";
 import { Paragraph } from "@website/_components/ui/paragraph";
 import { Categories } from "@/app/(website)/_components/ui/categories";
 
@@ -41,7 +41,7 @@ export const BlogCard = ({
       />
       <div className={cn("space-y-6", item && "lg:px-6")}>
         <div className="space-y-3">
-          <Timestamp label={published} />
+          <Label label={published} />
           <div className="flex items-center justify-between">
             <h3 className="text-xl md:text-2xl font-semibold">{title}</h3>
             <Link href={url} aria-label={`Read more about ${title}`}>
