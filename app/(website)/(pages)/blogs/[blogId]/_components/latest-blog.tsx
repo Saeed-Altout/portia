@@ -14,7 +14,7 @@ export const LatestBlog = () => {
     <Section>
       <Container className="gap-y-16">
         <Heading
-          timestamp="Our blog"
+          label="Our blog"
           title="Latest blog posts"
           description="Tool and strategies modern teams need to help their companies grow."
         />
