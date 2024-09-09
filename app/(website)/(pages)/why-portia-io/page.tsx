@@ -1,19 +1,15 @@
-import { Countries, Features, Hero } from './_components';
-
-import { FAQs } from '@website/_components/sections/faqs';
-import { CTA } from '@website/_components/sections/cta';
-
-import { Testimonials } from '@website/_components/sections/testimonials';
+import { FAQs, CTA, Testimonials } from "@website/_components/sections";
+import { Countries, Features, Hero } from "./_components";
 
 export default function WhyPortiaIoPage() {
-	return (
-		<main>
-			<Hero />
-			<Features />
-			<Testimonials />
-			<Countries />
-			<FAQs />
-			<CTA />
-		</main>
-	);
+  return (
+    <main className="w-full">
+      <Hero />
+      <Features />
+      <Testimonials />
+      <Countries />
+      <FAQs />
+      <CTA />
+    </main>
+  );
 }
