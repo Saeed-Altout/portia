@@ -6,7 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
-import { Timestamp } from "@website/_components/ui/timestamp";
+import { Timestamp } from "@/app/(website)/_components/ui/label";
 import { Paragraph } from "@website/_components/ui/paragraph";
 import { Categories } from "@/app/(website)/_components/ui/categories";
 

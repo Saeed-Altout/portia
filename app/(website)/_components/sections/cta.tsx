@@ -12,7 +12,7 @@ export const CTA = () => {
           <h1 className="text-3xl lg:text-4xl font-semibold">
             Ready To Take Your Online Efficiency to the Next Level ?
           </h1>
-          <Paragraph className="max-w-3xl lg:text-xl">
+          <Paragraph size="lg" className="max-w-3xl lg:text-xl">
             Join over 40,000+ happy clients already growing with portia.io.
           </Paragraph>
         </div>

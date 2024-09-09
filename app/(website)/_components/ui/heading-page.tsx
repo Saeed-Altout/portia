@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Timestamp } from "@website/_components/ui/timestamp";
+import { Timestamp } from "@/app/(website)/_components/ui/label";
 import { Paragraph } from "@website/_components/ui/paragraph";
 
 interface HeadingPageProps {

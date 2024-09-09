@@ -1,17 +1,23 @@
-import { Map, Hero, Plans } from './_components';
-import { CTA, FAQs, Features, Statistic, Testimonials } from '@website/_components/sections';
+import {
+  CTA,
+  FAQs,
+  Features,
+  Statistic,
+  Testimonials,
+} from "@website/_components/sections";
+import { Map, Hero, Plans } from "./_components";
 
 export default function HomePage() {
-	return (
-		<main>
-			<Hero />
-			<Map />
-			<Statistic />
-			<Features />
-			<Testimonials />
-			<Plans />
-			<FAQs />
-			<CTA />
-		</main>
-	);
+  return (
+    <main className="w-full">
+      <Hero />
+      <Map />
+      <Statistic />
+      <Features />
+      <Testimonials />
+      <Plans />
+      <FAQs />
+      <CTA />
+    </main>
+  );
 }
