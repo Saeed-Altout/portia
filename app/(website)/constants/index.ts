@@ -294,6 +294,7 @@ export const plansData2 = [
       "Basic features for protect browsing usage  with everything you need.",
     features: ["1", "2", "3", "4", "5"],
     message: null,
+    isPopular: true,
   },
   {
     type: "Standard plan",
@@ -302,6 +303,7 @@ export const plansData2 = [
     description: "Growing teams up to 20 users.",
     features: ["1", "2", "3", "4", "5"],
     message: "Everything in Basic plus....",
+    isPopular: false,
   },
   {
     type: "Premium plan",
@@ -310,6 +312,7 @@ export const plansData2 = [
     description: "Large teams with unlimited users.",
     features: ["1", "2", "3", "4", "5"],
     message: "Everything in Standard plus....",
+    isPopular: false,
   },
 ];
 export const countriesData = [
