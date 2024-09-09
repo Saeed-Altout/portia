@@ -1,23 +1,23 @@
 import * as React from "react";
 
-import { Timestamp } from "@/app/(website)/_components/ui/label";
+import { Label } from "@/app/(website)/_components/ui/label";
 import { Paragraph } from "@website/_components/ui/paragraph";
 
 interface HeadingPageProps {
-  timestamp?: string;
+  label?: string;
   title: string;
   description?: string;
 }
 
 export const HeadingPage = ({
-  timestamp,
+  label,
   title,
   description,
 }: HeadingPageProps & React.HTMLAttributes<HTMLElement>) => {
   return (
     <div className="space-y-6">
       <div className="space-y-3">
-        {timestamp && <Timestamp label={timestamp} />}
+        {label && <Label label={label} />}
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
           {title}
         </h1>
