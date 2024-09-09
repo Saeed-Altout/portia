@@ -1,10 +1,10 @@
-import { Content, Hero } from './_components';
+import { Content, Hero } from "./_components";
 
 export default function FAQsPage() {
-	return (
-		<main>
-			<Hero />
-			<Content />
-		</main>
-	);
+  return (
+    <main className="w-full">
+      <Hero />
+      <Content />
+    </main>
+  );
 }
