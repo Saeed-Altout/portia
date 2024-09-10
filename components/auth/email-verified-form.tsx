@@ -18,6 +18,7 @@ export const EmailVerifiedForm = () => {
       backLabelButton="Back to log in"
       icon={CheckCircle}
       variant="success"
+      redirect
     >
       <Button className="w-full" disabled={isLoading} asChild>
         <Link href="/">Continue</Link>

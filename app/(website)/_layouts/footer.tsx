@@ -2,28 +2,32 @@
 
 import Link from "next/link";
 
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 import { footerIcons, footerLinks } from "@website/constants";
+import { Container } from "../_components/ui/container";
+import { Paragraph } from "../_components/ui/paragraph";
+
+const year = new Date().getFullYear();
 
 export const Footer = () => {
   return (
-    <footer className="bg-black-secondary pt-16 pb-12 text-gray-secondary">
-      <div className="max-container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
-          <div className="col-span-1 sm:col-span-2 space-y-3">
+    <footer className="bg-black-secondary pt-16 pb-12">
+      <Container>
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
+          <div className="sm:col-span-2 space-y-3">
             <div className="h-[30] w-[100px]">
               <Logo dark />
             </div>
-            <p className="text-gray-secondary">
+            <Paragraph variant="secondary">
               Your Gateway to Unlimited Browsing.
-            </p>
+            </Paragraph>
           </div>
           {footerLinks.map(({ title, links }, index) => (
             <div className="space-y-3 col-span-1" key={index}>
-              <h3 className="font-semibold text-sm text-white tracking-wide">
+              <h3 className="font-semibold text-sm text-white tracking-wider">
                 {title}
               </h3>
               <ul className="flex flex-col gap-3">
@@ -31,7 +35,7 @@ export const Footer = () => {
                   <li className="w-full" key={index}>
                     <Link
                       href={link.href}
-                      className="text-sm hover:underline hover:text-gray-secondary/80"
+                      className="text-sm text-gray-secondary hover:underline hover:text-gray-secondary/80"
                     >
                       {link.label}
                     </Link>
@@ -42,10 +46,10 @@ export const Footer = () => {
           ))}
         </div>
         <Separator className="bg-[#4B4B57] mt-[64px] mb-[30px]" />
-        <div className="flex items-start md:items-center justify-between flex-col md:flex-row gap-5">
-          <p className="text-[#9C9CAD]">
-            @ 2024 Portia.io All rights reserved.
-          </p>
+        <div className="w-full flex items-start md:items-center justify-between flex-col md:flex-row gap-5">
+          <Paragraph className="text-[#9C9CAD]">
+            @ {year} Portia.io All rights reserved.
+          </Paragraph>
           <ul className="flex items-center justify-center gap-x-2 -order-1 md:order-1">
             {footerIcons.map(({ name, icon: Icon, href }, index) => (
               <Button key={index} variant="link" size="icon" asChild>
@@ -57,7 +61,7 @@ export const Footer = () => {
             ))}
           </ul>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

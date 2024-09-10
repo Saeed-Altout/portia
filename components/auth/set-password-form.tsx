@@ -102,7 +102,7 @@ export const SetPasswordForm = () => {
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            Reset Password
+            Reset password
           </Button>
         </form>
       </Form>

@@ -5,6 +5,10 @@ import {
   Grid2X2,
   Star,
   Zap,
+  Facebook,
+  Linkedin,
+  Twitter,
+  Github,
 } from "lucide-react";
 
 import {
@@ -31,16 +35,61 @@ export const navLinks = [
       {
         label: "Blogs",
         href: "/blogs",
+        description: "The latest industry news, updates and info.",
       },
       {
-        label: "Services",
-        href: "/services",
+        label: "Faqs",
+        href: "/faqs",
+        description:
+          "Learn & whatch our client questions and how we answer it .",
+      },
+      {
+        label: "Testimonials",
+        href: "/testimonials",
+        description: "Learn how our customers are making big changes.",
       },
     ],
   },
   {
     label: "Contact Us",
     href: "/contact-us",
+  },
+];
+
+export const navbarLinks = [
+  {
+    icon: Facebook,
+    name: "Facebook",
+    href: "/",
+  },
+  {
+    icon: Linkedin,
+    name: "Linkedin",
+    href: "/",
+  },
+  {
+    icon: Twitter,
+    name: "Twitter",
+    href: "/",
+  },
+  {
+    icon: Github,
+    name: "Github",
+    href: "/",
+  },
+];
+export const sidebarLinks = [
+  {
+    name: "Terms",
+    href: "/terms",
+  },
+  {
+    name: "Privacy",
+    href: "/privacy-policy",
+  },
+  {
+    name: "Licenses",
+    href: "/licenses",
   },
 ];
 export const statisticData = [

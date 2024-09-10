@@ -5,11 +5,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { NavMain, NavMobile } from "@website/_components/navbar";
+import { Container } from "../_components/ui/container";
 
 export const Navbar = () => {
   return (
     <header className="shadow-md h-20 w-full flex justify-center items-center">
-      <div className="max-container flex justify-between items-center">
+      <Container className="w-full flex-row justify-between items-center">
         <Logo />
         <NavMain />
         <NavMobile />
@@ -19,7 +20,7 @@ export const Navbar = () => {
           </Button>
           <Button>Get Started</Button>
         </div>
-      </div>
+      </Container>
     </header>
   );
 };

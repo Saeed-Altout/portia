@@ -42,10 +42,10 @@ export const CardMinForm = ({
   children,
 }: CardFormProps) => {
   return (
-    <Card className="w-full max-w-sm border-none shadow-none">
+    <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
       <CardHeader className="flex flex-col items-center justify-center gap-y-3 text-center">
         <Icon variant={variant}>
-          <IconItem className="text-primary h-5 w-5" />
+          <IconItem className="h-5 w-5" />
         </Icon>
         <CardTitle className="text-2xl md:text-3xl font-semibold">
           {title}
@@ -58,7 +58,7 @@ export const CardMinForm = ({
       <CardContent>{children}</CardContent>
       <CardFooter className="flex flex-col items-center justify-center gap-y-8">
         {redirect && (
-          <Paragraph className="text-center">
+          <Paragraph className="text-center" size="sm">
             Didn’t receive the email?
             <Link
               href="/auth/reset"

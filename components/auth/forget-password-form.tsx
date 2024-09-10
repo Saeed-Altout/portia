@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail } from "lucide-react";
+import { Key } from "lucide-react";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -50,7 +50,7 @@ export const ForgetPasswordForm = () => {
       description="No worries, we’ll send you reset instructions."
       backHrefButton="/auth/login"
       backLabelButton="Back to log in"
-      icon={Mail}
+      icon={Key}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -75,7 +75,7 @@ export const ForgetPasswordForm = () => {
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            Reset Password
+            Reset password
           </Button>
         </form>
       </Form>

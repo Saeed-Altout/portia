@@ -17,6 +17,7 @@ export const CheckYourEmailForm = () => {
       backLabelButton="Back to log in"
       email="Jafar_shamma@gmail.com"
       icon={Mail}
+      redirect
     >
       <Button className="w-full" disabled={isLoading}>
         Open email app
