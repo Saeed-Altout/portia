@@ -5,7 +5,7 @@ import { HeadingPage } from "@website/_components/ui/heading-page";
 export const Hero = () => {
   return (
     <Section>
-      <Container>
+      <Container className="items-center justify-center text-center">
         <HeadingPage
           label="Available Locations"
           title="Look at our various providers & Locations"
