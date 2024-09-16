@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-
 import { Section } from "@website/_components/ui/section";
 import { Container } from "@website/_components/ui/container";
 import { HeadingPage } from "@website/_components/ui/heading-page";
+
+import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Hero = () => {
   return (
@@ -14,17 +14,10 @@ export const Hero = () => {
           description="Your privacy is important to us at Portia. We respect your privacy regarding any information we may collect from you across our website."
         />
 
-        <div className="bg-[#E9E9F2] p-1.5 rounded-[8px] space-x-2">
-          <Button variant="ghost" className="bg-white text-lg">
-            Human-friendly
-          </Button>
-          <Button
-            variant="ghost"
-            className="text-gray-primary text-lg bg-transparent hover:bg-transparent"
-          >
-            Legal nonsense
-          </Button>
-        </div>
+        <TabsList className="bg-[#E9E9F2] h-11 p-2">
+          <TabsTrigger value="human-friendly">Human-friendly</TabsTrigger>
+          <TabsTrigger value="legal-nonsense">Legal nonsense</TabsTrigger>
+        </TabsList>
       </Container>
     </Section>
   );
