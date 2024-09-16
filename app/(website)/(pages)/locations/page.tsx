@@ -1,4 +1,4 @@
-import { Hero, Map, Content } from "./_components";
+import { Hero, Map, Content, CTA } from "./_components";
 
 export default function Locations() {
   return (
@@ -6,6 +6,7 @@ export default function Locations() {
       <Hero />
       <Map />
       <Content />
+      <CTA />
     </main>
   );
 }
