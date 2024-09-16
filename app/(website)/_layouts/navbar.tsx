@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { NavMain, NavMobile } from "@website/_components/navbar";
-import { Container } from "../_components/ui/container";
+import { Container } from "@website/_components/ui/container";
 
 export const Navbar = () => {
   return (

@@ -37,7 +37,7 @@ export const NavMobile = () => {
           <span className="sr-only">Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full flex flex-col gap-y-3">
+      <SheetContent className="w-full flex flex-col gap-y-3 overflow-y-auto">
         <SheetHeader>
           <Logo />
         </SheetHeader>
