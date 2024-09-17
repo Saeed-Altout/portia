@@ -52,57 +52,33 @@ export const ChangeProxyAuthenticationsModal = () => {
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Proxy Authentications</FormLabel>
-                <FormControl>
-                  <div className="flex justify-between items-center">
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      className="rounded-r-none"
-                    >
-                      <User className="h-4 w-4" />
-                    </Button>
-                    <Input
-                      placeholder="Username"
-                      className="rounded-l-none flex-1"
-                      {...field}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="flex justify-between items-center">
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      className="rounded-r-none"
-                    >
-                      <Key className="h-4 w-4" />
-                    </Button>
-                    <Input
-                      placeholder="Password"
-                      className="rounded-l-none flex-1"
-                      {...field}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="space-y-5">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Proxy Authentications</FormLabel>
+                  <FormControl>
+                    <Input icon={User} placeholder="Username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input icon={Key} placeholder="Password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <div className="flex justify-between items-center gap-5">
             <Button
