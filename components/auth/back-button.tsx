@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { Paragraph } from "@website/_components/ui/paragraph";
+import { Paragraph } from "@/app/_(website)/_components/ui/paragraph";
 
 interface BackButtonProps {
   label?: string;

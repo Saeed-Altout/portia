@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-import { Paragraph } from "@website/_components/ui/paragraph";
+import { Paragraph } from "@/app/_(website)/_components/ui/paragraph";
 
 import { Logo } from "@/components/logo";
 

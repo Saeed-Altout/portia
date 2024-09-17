@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Paragraph } from "@website/_components/ui/paragraph";
+import { Paragraph } from "@/app/_(website)/_components/ui/paragraph";
 
 import { BackButton } from "@/components/auth/back-button";
 import { HeaderCard } from "./header-card";

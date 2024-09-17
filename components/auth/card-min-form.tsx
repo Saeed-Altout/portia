@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import { Icon } from "@website/_components/ui/icon";
-import { Paragraph } from "@website/_components/ui/paragraph";
+import { Icon } from "@/app/_(website)/_components/ui/icon";
+import { Paragraph } from "@/app/_(website)/_components/ui/paragraph";
 
 interface CardFormProps {
   title: string;
