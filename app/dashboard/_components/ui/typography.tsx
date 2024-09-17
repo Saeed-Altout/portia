@@ -12,7 +12,7 @@ const typographyVariants = cva("tracking-wide", {
       h4: "text-xl !font-medium",
       h5: "text-lg !font-medium",
       h6: "text-base !font-medium",
-      p: "text-base !font-normal",
+      p: "text-base !font-normal !text-gray-primary",
     },
     align: {
       left: "text-left",
