@@ -19,7 +19,6 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@website/*": ["app/_(website)/*"],
       "@dashboard/*": ["./app/dashboard/*"]
     }
   },
