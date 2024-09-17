@@ -6,7 +6,13 @@ import { LucideIcon, Zap } from "lucide-react";
 import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
 import { Typography } from "@dashboard/_components/ui/typography";
 
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface ModalProps {
   icon?: LucideIcon;
@@ -56,12 +62,10 @@ export const Modal = ({
             <Icon icon={icon} theme={theme} />
           </Circle>
           <div>
-            <Typography as="h4" variant="h4">
-              {title}
-            </Typography>
-            <Typography as="p" variant="p" className="text-sm">
+            <DialogTitle className="text-lg font-medium">{title}</DialogTitle>
+            <DialogDescription className="text-sm font-normal">
               {description}
-            </Typography>
+            </DialogDescription>
           </div>
         </DialogHeader>
         <div>{children}</div>
