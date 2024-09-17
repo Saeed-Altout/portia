@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
+import { ArrowUpRight, Key, User } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,15 +25,12 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import { Modal } from "@dashboard/_components/ui/modal";
-
-import { useModal } from "@dashboard/hooks/use-modal";
-import Link from "next/link";
-import { ArrowUpRight, Key, User } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
-const newModalProxySchema = z.object({
+import { Modal } from "@dashboard/_components/ui/modal";
+import { useActivateNewProxyModal } from "@dashboard/hooks/use-modal";
+
+const activateNewProxySchema = z.object({
   package: z.string().min(2),
   plan: z.string().min(2),
   amount: z.string().min(2),
@@ -44,11 +43,11 @@ const newModalProxySchema = z.object({
   password: z.string().min(2),
 });
 
-export const NewModalProxy = () => {
-  const newModalProxy = useModal();
+export const ActivateNewProxyModal = () => {
+  const activateNewProxyModal = useActivateNewProxyModal();
 
-  const form = useForm<z.infer<typeof newModalProxySchema>>({
-    resolver: zodResolver(newModalProxySchema),
+  const form = useForm<z.infer<typeof activateNewProxySchema>>({
+    resolver: zodResolver(activateNewProxySchema),
     defaultValues: {
       package: "",
       plan: "",
@@ -62,15 +61,16 @@ export const NewModalProxy = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof newModalProxySchema>) => {
+  const onSubmit = (values: z.infer<typeof activateNewProxySchema>) => {
     console.log(values);
   };
+
   return (
     <Modal
       title="Activate a new proxy"
       description="New order - 5G mobile proxy"
-      isOpen={newModalProxy.isOpen}
-      onClose={newModalProxy.onClose}
+      isOpen={activateNewProxyModal.isOpen}
+      onClose={activateNewProxyModal.onClose}
       isLoading
     >
       <Form {...form}>

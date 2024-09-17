@@ -1,13 +1,15 @@
 import { create } from "zustand";
 
-interface UseModalProps {
+interface UseActivateNewProxyModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 
-export const useModal = create<UseModalProps>((set) => ({
-  isOpen: true,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
-}));
+export const useActivateNewProxyModal = create<UseActivateNewProxyModalProps>(
+  (set) => ({
+    isOpen: false,
+    onOpen: () => set({ isOpen: true }),
+    onClose: () => set({ isOpen: false }),
+  })
+);
