@@ -32,7 +32,7 @@ export const Banner = () => {
     >
       <p>
         <span className="mr-2 font-medium">
-          We've just launched a new feature!
+          We&apos;ve just launched a new feature!
         </span>
         Check out the
       </p>
