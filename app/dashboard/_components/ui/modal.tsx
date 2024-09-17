@@ -13,8 +13,8 @@ interface ModalProps {
   fill?: any;
   theme?: any;
   title: string;
-  description: string;
-  isLoading: boolean;
+  description?: string;
+  isLoading?: boolean;
   isOpen: boolean;
   onClose: () => void;
 }
