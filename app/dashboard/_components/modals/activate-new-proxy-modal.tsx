@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Modal } from "@dashboard/_components/ui/modal";
-import { useActivateNewProxyModal } from "@dashboard/hooks/use-modal";
+import { useActivateNewProxyModal } from "@/app/dashboard/hooks/use-activate-new-proxy-modal";
 
 const activateNewProxySchema = z.object({
   package: z.string().min(2),
