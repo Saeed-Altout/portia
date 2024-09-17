@@ -16,6 +16,7 @@ interface ModalProps {
   description?: string;
   isLoading?: boolean;
   isOpen: boolean;
+  progress?: number;
   onClose: () => void;
 }
 
@@ -26,6 +27,7 @@ export const Modal = ({
   title,
   description,
   isOpen,
+  progress,
   isLoading,
   onClose,
   children,
@@ -39,6 +41,16 @@ export const Modal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>
       <DialogContent className="sm:max-w-[480px]">
+        {progress && (
+          <div className="absolute top-0 left-0 bg-[#D4D4FF] w-full h-2">
+            <span
+              className="block h-full bg-primary transition-all"
+              style={{
+                width: `${progress}%`,
+              }}
+            ></span>
+          </div>
+        )}
         <DialogHeader className="space-y-5">
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />

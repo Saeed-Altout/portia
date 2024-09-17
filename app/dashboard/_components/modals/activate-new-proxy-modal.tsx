@@ -44,6 +44,7 @@ const activateNewProxySchema = z.object({
 });
 
 export const ActivateNewProxyModal = () => {
+  const [step, setStep] = React.useState(1);
   const activateNewProxyModal = useActivateNewProxyModal();
 
   const form = useForm<z.infer<typeof activateNewProxySchema>>({
@@ -65,50 +66,41 @@ export const ActivateNewProxyModal = () => {
     console.log(values);
   };
 
-  return (
-    <Modal
-      title="Activate a new proxy"
-      description="New order - 5G mobile proxy"
-      isOpen={activateNewProxyModal.isOpen}
-      onClose={activateNewProxyModal.onClose}
-      isLoading
-    >
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-2 gap-4"
-        >
-          <FormField
-            control={form.control}
-            name="package"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Package</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a package" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="basic">Basic</SelectItem>
-                    <SelectItem value="standard">Standard</SelectItem>
-                    <SelectItem value="premium">Premium</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="col-span-2 flex justify-between items-center gap-x-5">
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <>
+            <FormField
+              control={form.control}
+              name="package"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Package</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a package" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="basic">Basic</SelectItem>
+                      <SelectItem value="standard">Standard</SelectItem>
+                      <SelectItem value="premium">Premium</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="plan"
               render={({ field }) => (
-                <FormItem className="basis-2/3">
+                <FormItem>
                   <FormLabel>Plan</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -133,7 +125,7 @@ export const ActivateNewProxyModal = () => {
               control={form.control}
               name="amount"
               render={({ field }) => (
-                <FormItem className="basis-1/3">
+                <FormItem>
                   <FormLabel>Amount</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -154,8 +146,11 @@ export const ActivateNewProxyModal = () => {
                 </FormItem>
               )}
             />
-          </div>
-          <div className="col-span-2">
+          </>
+        );
+      case 2:
+        return (
+          <>
             <FormField
               control={form.control}
               name="provider"
@@ -180,123 +175,147 @@ export const ActivateNewProxyModal = () => {
                 </FormItem>
               )}
             />
-          </div>
-          <FormField
-            control={form.control}
-            name="ipRotation"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Minimum time between IP rotation</FormLabel>
-                <FormControl>
-                  <Input placeholder="IP rotation" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="proxyType"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Proxy Type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+            <FormField
+              control={form.control}
+              name="ipRotation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Minimum time between IP rotation</FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Proxy type" />
-                    </SelectTrigger>
+                    <Input placeholder="IP rotation" {...field} />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value="http-proxy">Http proxy</SelectItem>
-                    <SelectItem value="https-proxy">Https proxy</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="autoRenew"
-            render={({ field }) => (
-              <FormItem className="col-span-2 flex flex-row items-start space-x-3 space-y-0 rounded-md">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Auto Renew</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <div className="flex justify-between items-center">
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      className="rounded-r-none"
-                    >
-                      <User className="h-4 w-4" />
-                    </Button>
-                    <Input
-                      placeholder="Username"
-                      className="rounded-l-none flex-1"
-                      {...field}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <FormField
+              control={form.control}
+              name="proxyType"
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Proxy Type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Proxy type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="http-proxy">Http proxy</SelectItem>
+                      <SelectItem value="https-proxy">Https proxy</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="autoRenew"
+              render={({ field }) => (
+                <FormItem className="col-span-2 flex flex-row items-start space-x-3 space-y-0 rounded-md">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
                     />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Auto Renew</FormLabel>
                   </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <div className="flex justify-between items-center">
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      className="rounded-r-none"
-                    >
-                      <Key className="h-4 w-4" />
-                    </Button>
-                    <Input
-                      placeholder="Password"
-                      className="rounded-l-none flex-1"
-                      {...field}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="col-span-2">
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Proxy Authentications</FormLabel>
+                  <FormControl>
+                    <Input icon={User} placeholder="Username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input icon={Key} placeholder="Password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <p className="text-lg font-semibold">Cost: 0,000$</p>
-          </div>
-          <div className="col-span-2 flex justify-between items-center gap-5">
-            <Button type="button" variant="outline" className="basis-1/2">
-              Cancel
-            </Button>
-            <Button type="submit" variant="default" className="basis-1/2">
-              Activate Proxy
-            </Button>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <Modal
+      title="Activate a new proxy"
+      description="New order - 5G mobile proxy"
+      isOpen={activateNewProxyModal.isOpen}
+      onClose={activateNewProxyModal.onClose}
+      progress={step * 35}
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <div className="space-y-4">{renderStep()}</div>
+
+          <div className="flex flex-col items-center gap-4">
+            {step == 3 && (
+              <Button type="submit" variant="default" className="w-full">
+                Activate Proxy
+              </Button>
+            )}
+            {step !== 3 && (
+              <Button
+                type="button"
+                variant="default"
+                className="w-full"
+                onClick={() => setStep(step + 1)}
+                disabled={step === 3}
+              >
+                Next Step
+              </Button>
+            )}
+            {step !== 1 && (
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() => setStep(step - 1)}
+              >
+                Pervious
+              </Button>
+            )}
+            {step == 1 && (
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={activateNewProxyModal.onClose}
+              >
+                Cancel
+              </Button>
+            )}
           </div>
         </form>
       </Form>
