@@ -1,15 +1,14 @@
 import { create } from "zustand";
 
-interface UseChangeProxyTypeModalProps {
+interface UseChangeProxyAuthenticationsModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 
-export const useChangeProxyTypeModal = create<UseChangeProxyTypeModalProps>(
-  (set) => ({
+export const useChangeProxyAuthenticationsModal =
+  create<UseChangeProxyAuthenticationsModalProps>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),
-  })
-);
+  }));
