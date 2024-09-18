@@ -11,6 +11,7 @@ const circleVariants = cva("flex items-center justify-center rounded-full", {
     fill: {
       default: "bg-[#B5B6F7] border-[#D4D4FF]",
       success: "bg-[#B5F7F6] border-[#D4FFFE]",
+      alert: "bg-[#F7B5BF] border-[#FFD4DA]",
       primary: "bg-primary",
       secondary: "bg-secondary",
       muted: "bg-gray-200",
@@ -40,6 +41,7 @@ const iconVariants = cva("text-primary", {
       primary: "text-primary",
       success: "text-[#11807E]",
       secondary: "text-secondary",
+      alert: "text-[#801121]",
       muted: "text-gray-500",
       danger: "text-red-500",
     },
