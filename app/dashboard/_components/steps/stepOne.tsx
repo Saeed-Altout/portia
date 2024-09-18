@@ -1,92 +1,55 @@
 import * as React from "react";
 
-import { useFormContext } from "react-hook-form";
+import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+interface StepOneProps {
+  isLoading?: boolean;
+}
 
-export const StepOne = () => {
-  const { control } = useFormContext();
+export const StepOne = ({ isLoading }: StepOneProps) => {
+  const packageData = [
+    { value: "basic", label: "Basic" },
+    { value: "standard", label: "Standard" },
+    { value: "premium", label: "Premium" },
+  ];
+
+  const planData = [
+    { value: "hourly", label: "Hourly" },
+    { value: "monthly", label: "Monthly" },
+    { value: "yearly", label: "Yearly" },
+  ];
+
+  const amountData = [
+    { value: "10h", label: "10 h" },
+    { value: "20h", label: "20 h" },
+    { value: "30h", label: "30 h" },
+  ];
 
   return (
     <>
-      <FormField
-        control={control}
+      <CustomField
         name="package"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Package</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a package" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem value="basic">Basic</SelectItem>
-                <SelectItem value="standard">Standard</SelectItem>
-                <SelectItem value="premium">Premium</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
+        label="Package"
+        placeholder="Select a package"
+        type={FiledType.SELECT}
+        options={packageData}
+        isLoading={isLoading}
       />
-      <FormField
-        control={control}
+      <CustomField
         name="plan"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Plan</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a plan" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem value="hourly">Hourly</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-                <SelectItem value="yearly">Yearly</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
+        label="Plan"
+        placeholder="Select a plan"
+        type={FiledType.SELECT}
+        options={planData}
+        isLoading={isLoading}
       />
-      <FormField
-        control={control}
+      <CustomField
         name="amount"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Amount</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Amount" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem value="10h">10 h</SelectItem>
-                <SelectItem value="20g">20 h</SelectItem>
-                <SelectItem value="30">30 h</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
+        label="Amount"
+        placeholder="Select a amount"
+        type={FiledType.SELECT}
+        options={amountData}
+        isLoading={isLoading}
       />
     </>
   );

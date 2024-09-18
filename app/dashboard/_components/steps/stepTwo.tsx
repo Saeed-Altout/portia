@@ -1,59 +1,28 @@
 import * as React from "react";
-import Link from "next/link";
 
-import { ArrowUpRight } from "lucide-react";
-import { useFormContext } from "react-hook-form";
+import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+interface StepTwoProps {
+  isLoading?: boolean;
+}
 
-export const StepTwo = () => {
-  const { control } = useFormContext();
+export const StepTwo = ({ isLoading }: StepTwoProps) => {
   return (
     <>
-      <FormField
-        control={control}
+      <CustomField
         name="provider"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Provider & Location</FormLabel>
-            <FormControl>
-              <div className="flex justify-between items-center">
-                <Input
-                  placeholder="Provider & Location"
-                  className="flex-1 rounded-r-none"
-                  {...field}
-                />
-                <Button size="icon" className="rounded-l-none" asChild>
-                  <Link href="/">
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+        label="Minimum time between IP rotation"
+        placeholder="Provider & Location"
+        type={FiledType.TEXT}
+        href="/dashboard/my-proxies"
+        isLoading={true}
       />
-      <FormField
-        control={control}
+      <CustomField
         name="ipRotation"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Minimum time between IP rotation</FormLabel>
-            <FormControl>
-              <Input placeholder="IP rotation" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+        label="Provider & Location"
+        placeholder="IP rotation"
+        type={FiledType.TEXT}
+        isLoading={isLoading}
       />
     </>
   );

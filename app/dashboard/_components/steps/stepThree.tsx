@@ -3,89 +3,50 @@ import * as React from "react";
 import { Key, User } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
 
-export const StepThree = () => {
+interface StepThreeProps {
+  isLoading?: boolean;
+}
+
+export const StepThree = ({ isLoading }: StepThreeProps) => {
   const { control } = useFormContext();
+
+  const proxyTypeData = [
+    { value: "http-proxy", label: "Http proxy" },
+    { value: "https-proxy", label: "Https proxy" },
+  ];
+
   return (
     <>
-      <FormField
-        control={control}
+      <CustomField
         name="proxyType"
-        render={({ field }) => (
-          <FormItem className="col-span-2">
-            <FormLabel>Proxy Type</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Proxy type" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                <SelectItem value="http-proxy">Http proxy</SelectItem>
-                <SelectItem value="https-proxy">Https proxy</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
+        label="Proxy Type"
+        placeholder="Proxy type"
+        type={FiledType.SELECT}
+        options={proxyTypeData}
+        isLoading={isLoading}
       />
-      <FormField
-        control={control}
+      <CustomField
         name="autoRenew"
-        render={({ field }) => (
-          <FormItem className="col-span-2 flex flex-row items-start space-x-3 space-y-0 rounded-md">
-            <FormControl>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-            </FormControl>
-            <div className="space-y-1 leading-none">
-              <FormLabel>Auto Renew</FormLabel>
-            </div>
-          </FormItem>
-        )}
+        labelCheckbox="Auto Renew"
+        type={FiledType.CHECKBOX}
+        isLoading={isLoading}
       />
-      <FormField
-        control={control}
+      <CustomField
         name="username"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Proxy Authentications</FormLabel>
-            <FormControl>
-              <Input icon={User} placeholder="Username" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+        label="Proxy Authentications"
+        placeholder="Username"
+        icon={User}
+        type={FiledType.TEXT}
+        isLoading={isLoading}
       />
-      <FormField
-        control={control}
+      <CustomField
         name="password"
-        render={({ field }) => (
-          <FormItem>
-            <FormControl>
-              <Input icon={Key} placeholder="Password" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+        placeholder="Password"
+        icon={Key}
+        type={FiledType.TEXT}
+        isLoading={isLoading}
       />
       <p className="text-lg font-semibold">Cost: 0,000$</p>
     </>

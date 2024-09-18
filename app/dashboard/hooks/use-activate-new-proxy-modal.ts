@@ -8,7 +8,7 @@ interface UseActivateNewProxyModalProps {
 
 export const useActivateNewProxyModal = create<UseActivateNewProxyModalProps>(
   (set) => ({
-    isOpen: true,
+    isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),
   })

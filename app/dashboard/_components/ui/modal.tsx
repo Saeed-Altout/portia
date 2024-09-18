@@ -46,9 +46,9 @@ export const Modal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>
-      <DialogContent className="sm:max-w-[480px]">
+      <DialogContent className="max-w-sm sm:max-w-[480px]">
         {progress && (
-          <div className="absolute top-0 left-0 bg-[#D4D4FF] w-full h-2">
+          <div className="absolute top-0 left-0 bg-[#D4D4FF] w-full h-2 overflow-hidden">
             <span
               className="block h-full bg-primary transition-all"
               style={{
@@ -58,7 +58,7 @@ export const Modal = ({
           </div>
         )}
         <DialogHeader className="space-y-5">
-          <Circle fill={fill}>
+          <Circle fill={fill} className="mx-auto sm:mx-0">
             <Icon icon={icon} theme={theme} />
           </Circle>
           <div>

@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { BeatLoader } from "react-spinners";
+import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,6 +32,8 @@ const activateNewProxySchema = z.object({
 
 export const ActivateNewProxyModal = () => {
   const [step, setStep] = React.useState<number>(1);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const activateNewProxyModal = useActivateNewProxyModal();
 
   const form = useForm<z.infer<typeof activateNewProxySchema>>({
@@ -47,18 +51,35 @@ export const ActivateNewProxyModal = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof activateNewProxySchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof activateNewProxySchema>) => {
+    setIsLoading(true);
+    try {
+      setTimeout(() => {
+        onClose();
+        setStep(1);
+        console.log(values);
+        toast.success("Proxy activated successfully");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  const onClose = () => {
+    form.reset();
+    setIsLoading(false);
+    activateNewProxyModal.onClose();
   };
 
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <StepOne />;
+        return <StepOne isLoading={isLoading} />;
       case 2:
-        return <StepTwo />;
+        return <StepTwo isLoading={isLoading} />;
       case 3:
-        return <StepThree />;
+        return <StepThree isLoading={isLoading} />;
       default:
         return null;
     }
@@ -77,7 +98,7 @@ export const ActivateNewProxyModal = () => {
       title="Activate a new proxy"
       description="New order - 5G mobile proxy"
       isOpen={activateNewProxyModal.isOpen}
-      onClose={activateNewProxyModal.onClose}
+      onClose={onClose}
       progress={step * 35}
     >
       <Form {...form}>
@@ -85,8 +106,13 @@ export const ActivateNewProxyModal = () => {
           <div className="space-y-4">{renderStep()}</div>
           <div className="flex flex-col items-center gap-4">
             {step == 3 && (
-              <Button type="submit" variant="default" className="w-full">
-                Activate Proxy
+              <Button
+                type="submit"
+                variant="default"
+                className="w-full"
+                disabled={isLoading}
+              >
+                {isLoading ? <BeatLoader color="#fff" /> : "Activate Proxy"}
               </Button>
             )}
             {step !== 3 && (
@@ -115,7 +141,8 @@ export const ActivateNewProxyModal = () => {
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={activateNewProxyModal.onClose}
+                onClick={onClose}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
