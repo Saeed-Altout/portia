@@ -1,26 +1,19 @@
 "use client";
 
-import Link from "next/link";
 import * as React from "react";
-import { ArrowUpRight } from "lucide-react";
+import { BeatLoader } from "react-spinners";
+import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 import { Modal } from "@dashboard/_components/ui/modal";
+import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
+
 import { useChangeProxyLocationModal } from "@dashboard/hooks/use-change-proxy-location-modal";
 
 const changeProxyLocationSchema = z.object({
@@ -28,6 +21,8 @@ const changeProxyLocationSchema = z.object({
 });
 
 export const ChangeProxyLocationModal = () => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const changeProxyLocationModal = useChangeProxyLocationModal();
 
   const form = useForm<z.infer<typeof changeProxyLocationSchema>>({
@@ -38,54 +33,58 @@ export const ChangeProxyLocationModal = () => {
   });
 
   const onSubmit = (values: z.infer<typeof changeProxyLocationSchema>) => {
-    console.log(values);
+    setIsLoading(true);
+    try {
+      setTimeout(() => {
+        onClose();
+        console.log(values);
+        toast.success("Change my proxy location successfully");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  const onClose = () => {
+    form.reset();
+    setIsLoading(false);
+    changeProxyLocationModal.onClose();
   };
 
   return (
     <Modal
       title="Change my proxy (id:24) location"
       isOpen={changeProxyLocationModal.isOpen}
-      onClose={changeProxyLocationModal.onClose}
+      onClose={onClose}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
+          <CustomField
             name="provider"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Provider & Location</FormLabel>
-                <FormControl>
-                  <div className="flex justify-between items-center">
-                    <Input
-                      placeholder="Provider & Location"
-                      {...field}
-                      className="flex-1 rounded-r-none"
-                      disabled
-                    />
-                    <Button size="icon" className="rounded-l-none" asChild>
-                      <Link href="/">
-                        <ArrowUpRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Provider & Location"
+            placeholder="Provider & Location"
+            type={FiledType.TEXT}
+            href="/dashboard/my-proxies"
+            isLoading={true}
           />
-
           <div className="flex justify-between items-center gap-5">
             <Button
               type="button"
               variant="outline"
               className="basis-1/2"
-              onClick={() => changeProxyLocationModal.onClose()}
+              disabled={isLoading}
+              onClick={() => onClose()}
             >
               Cancel
             </Button>
-            <Button type="submit" variant="default" className="basis-1/2">
-              Update
+            <Button
+              type="submit"
+              variant="default"
+              className="basis-1/2"
+              disabled={isLoading}
+            >
+              {isLoading ? <BeatLoader color="#fff" /> : "Update"}
             </Button>
           </div>
         </form>
