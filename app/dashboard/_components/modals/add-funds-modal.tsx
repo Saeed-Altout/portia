@@ -1,31 +1,19 @@
 "use client";
 
 import * as React from "react";
+import { toast } from "sonner";
 import { CreditCard } from "lucide-react";
+import { BeatLoader } from "react-spinners";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 import { Modal } from "@dashboard/_components/ui/modal";
+import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
 import { useAddFundsModal } from "@dashboard/hooks/use-add-funds";
 
 const addFundsSchema = z.object({
@@ -34,6 +22,8 @@ const addFundsSchema = z.object({
 });
 
 export const AddFundsModal = () => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const addFunds = useAddFundsModal();
 
   const form = useForm<z.infer<typeof addFundsSchema>>({
@@ -45,8 +35,29 @@ export const AddFundsModal = () => {
   });
 
   const onSubmit = (values: z.infer<typeof addFundsSchema>) => {
-    console.log(values);
+    setIsLoading(true);
+    try {
+      setTimeout(() => {
+        onClose();
+        console.log(values);
+        toast.success("Add funds successfully");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
+
+  const onClose = () => {
+    form.reset();
+    setIsLoading(false);
+    addFunds.onClose();
+  };
+
+  const methodData = [
+    { value: "bank", label: "Bank" },
+    { value: "crypto-currency", label: "Crypto Currency" },
+  ];
 
   return (
     <Modal
@@ -58,42 +69,20 @@ export const AddFundsModal = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-5">
-            <FormField
-              control={form.control}
+            <CustomField
               name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Amount" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Amount"
+              placeholder="Amount"
+              type={FiledType.TEXT}
+              isLoading={isLoading}
             />
-            <FormField
-              control={form.control}
+            <CustomField
               name="method"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Payment Method</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a method" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="bank">Bank</SelectItem>
-                      <SelectItem value="standard">Crypto Currency</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Payment Method"
+              placeholder="Select a method"
+              type={FiledType.SELECT}
+              options={methodData}
+              isLoading={isLoading}
             />
           </div>
 
@@ -102,12 +91,18 @@ export const AddFundsModal = () => {
               type="button"
               variant="outline"
               className="basis-1/2"
+              disabled={isLoading}
               onClick={() => addFunds.onClose()}
             >
               Cancel
             </Button>
-            <Button type="submit" variant="default" className="basis-1/2">
-              Add funds
+            <Button
+              type="submit"
+              variant="default"
+              className="basis-1/2"
+              disabled={isLoading}
+            >
+              {isLoading ? <BeatLoader color="#fff" /> : "Add funds"}
             </Button>
           </div>
         </form>
