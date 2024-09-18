@@ -63,7 +63,7 @@ export const AddFundsModal = () => {
     <Modal
       title="Add funds to your account"
       isOpen={addFunds.isOpen}
-      onClose={addFunds.onClose}
+      onClose={onClose}
       icon={CreditCard}
     >
       <Form {...form}>
@@ -92,7 +92,7 @@ export const AddFundsModal = () => {
               variant="outline"
               className="basis-1/2"
               disabled={isLoading}
-              onClick={() => addFunds.onClose()}
+              onClick={() => onClose()}
             >
               Cancel
             </Button>
