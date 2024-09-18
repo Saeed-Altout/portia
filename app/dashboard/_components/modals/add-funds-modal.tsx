@@ -68,7 +68,7 @@ export const AddFundsModal = () => {
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-5">
+          <div className="space-y-4">
             <CustomField
               name="amount"
               label="Amount"
