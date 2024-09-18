@@ -1,29 +1,19 @@
 "use client";
 
 import * as React from "react";
+import { BeatLoader } from "react-spinners";
+import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
 import { Modal } from "@dashboard/_components/ui/modal";
+import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
+
 import { useChangeProxyTypeModal } from "@dashboard/hooks/use-change-proxy-type-modal";
 
 const changeProxyTypeSchema = z.object({
@@ -31,6 +21,8 @@ const changeProxyTypeSchema = z.object({
 });
 
 export const ChangeProxyTypeModal = () => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const changeProxyTypeModal = useChangeProxyTypeModal();
 
   const form = useForm<z.infer<typeof changeProxyTypeSchema>>({
@@ -41,53 +33,63 @@ export const ChangeProxyTypeModal = () => {
   });
 
   const onSubmit = (values: z.infer<typeof changeProxyTypeSchema>) => {
-    console.log(values);
+    setIsLoading(true);
+    try {
+      setTimeout(() => {
+        onClose();
+        console.log(values);
+        toast.success("Change my proxy location successfully");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
+
+  const onClose = () => {
+    form.reset();
+    setIsLoading(false);
+    changeProxyTypeModal.onClose();
+  };
+
+  const proxyTypeData = [
+    { value: "http-proxy", label: "Http proxy" },
+    { value: "https-proxy", label: "Https proxy" },
+  ];
 
   return (
     <Modal
       title="Change my proxy (id:24) Type"
       isOpen={changeProxyTypeModal.isOpen}
-      onClose={changeProxyTypeModal.onClose}
+      onClose={onClose}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
+          <CustomField
             name="proxyType"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Proxy Type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Proxy type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="http-proxy">Http proxy</SelectItem>
-                    <SelectItem value="https-proxy">Https proxy</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Proxy Type"
+            placeholder="Proxy type"
+            type={FiledType.SELECT}
+            options={proxyTypeData}
+            isLoading={isLoading}
           />
-
           <div className="flex justify-between items-center gap-5">
             <Button
               type="button"
               variant="outline"
               className="basis-1/2"
-              onClick={() => changeProxyTypeModal.onClose()}
+              disabled={isLoading}
+              onClick={() => onClose()}
             >
               Cancel
             </Button>
-            <Button type="submit" variant="default" className="basis-1/2">
-              Update
+            <Button
+              type="submit"
+              variant="default"
+              className="basis-1/2"
+              disabled={isLoading}
+            >
+              {isLoading ? <BeatLoader color="#fff" /> : "Update"}
             </Button>
           </div>
         </form>
