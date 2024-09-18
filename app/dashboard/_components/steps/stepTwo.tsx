@@ -11,7 +11,7 @@ export const StepTwo = ({ isLoading }: StepTwoProps) => {
     <>
       <CustomField
         name="provider"
-        label="Minimum time between IP rotation"
+        label="Provider & Location"
         placeholder="Provider & Location"
         type={FiledType.TEXT}
         href="/dashboard/my-proxies"
@@ -19,7 +19,7 @@ export const StepTwo = ({ isLoading }: StepTwoProps) => {
       />
       <CustomField
         name="ipRotation"
-        label="Provider & Location"
+        label="Minimum time between IP rotation"
         placeholder="IP rotation"
         type={FiledType.TEXT}
         isLoading={isLoading}
