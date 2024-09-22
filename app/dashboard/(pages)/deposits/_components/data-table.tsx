@@ -58,7 +58,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="rounded-md w-full border">
       <div className="py-6 px-4">
-        <p className="font-medium text-lg">Your Active Proxies</p>
+        <p className="font-medium text-lg">Your Past Deposits</p>
       </div>
       <Table>
         <TableHeader>
