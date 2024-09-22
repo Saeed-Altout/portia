@@ -4,7 +4,6 @@ import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 
 import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
-import { Typography } from "@dashboard/_components/ui/typography";
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -32,13 +31,9 @@ export const StatisticCard = ({
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />
           </Circle>
-          <Typography as="p" variant="p" weight="medium">
-            {title}
-          </Typography>
+          <h3 className="text-base font-medium text-gray-primary">{title}</h3>
         </div>
-        <Typography as="h1" variant="h1">
-          {content}
-        </Typography>
+        <p className="text-4xl font-semibold">{content}</p>
       </div>
       <Separator />
       <div className="flex items-center justify-end py-2 px-6">
