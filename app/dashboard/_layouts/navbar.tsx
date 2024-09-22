@@ -23,18 +23,18 @@ export const Navbar = () => {
     },
     {
       label: "My Proxies",
-      href: "/my-proxies",
-      active: pathname === "/my-proxies",
+      href: "/dashboard/my-proxies",
+      active: pathname === "/dashboard/my-proxies",
     },
     {
       label: "Pricing Plans",
-      href: "/pricing-plans",
-      active: pathname === "/pricing-plans",
+      href: "/dashboard/pricing-plans",
+      active: pathname === "/dashboard/pricing-plans",
     },
     {
       label: "Deposits",
-      href: "/deposits",
-      active: pathname === "/deposits",
+      href: "/dashboard/deposits",
+      active: pathname === "/dashboard/deposits",
     },
   ];
 
@@ -90,13 +90,17 @@ export const Navbar = () => {
         </SheetContent>
       </Sheet>
       <div className="flex items-center gap-x-2 w-fit ml-auto">
-        <Button size="icon" variant="ghost">
-          <Settings className="h-4 w-4" />
-          <span className="sr-only">Settings</span>
+        <Button size="icon" variant="ghost" asChild>
+          <Link href="/dashboard/settings">
+            <Settings className="h-4 w-4" />
+            <span className="sr-only">Settings</span>
+          </Link>
         </Button>
-        <Button size="icon" variant="ghost">
-          <Bell className="h-4 w-4" />
-          <span className="sr-only">Bell</span>
+        <Button size="icon" variant="ghost" asChild>
+          <Link href="/dashboard/notifications">
+            <Bell className="h-4 w-4" />
+            <span className="sr-only">Bell</span>
+          </Link>
         </Button>
       </div>
     </header>
