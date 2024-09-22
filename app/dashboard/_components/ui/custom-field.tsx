@@ -11,6 +11,7 @@ import {
   FormLabel,
   FormField,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import {
   Select,
@@ -22,6 +23,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface CustomFieldProps {
   name: string;
@@ -29,9 +31,11 @@ interface CustomFieldProps {
   placeholder?: string;
   isLoading?: boolean;
   icon?: LucideIcon;
-  type?: "text" | "select" | "checkbox";
+  type?: FiledType;
   options?: { value: string; label: string }[];
   href?: string;
+  prefix?: string;
+  description?: string;
   labelCheckbox?: string;
 }
 
@@ -39,6 +43,8 @@ export enum FiledType {
   TEXT = "text",
   SELECT = "select",
   CHECKBOX = "checkbox",
+  EMAIL = "email",
+  PASSWORD = "password",
 }
 
 export const CustomField = ({
@@ -47,11 +53,14 @@ export const CustomField = ({
   placeholder,
   icon,
   isLoading = false,
-  type = "text",
+  type = FiledType.TEXT,
   options = [],
   href,
+  description,
   labelCheckbox,
-}: CustomFieldProps) => {
+  className,
+  prefix,
+}: CustomFieldProps & React.HtmlHTMLAttributes<HTMLElement>) => {
   const { control } = useFormContext();
 
   return (
@@ -60,7 +69,7 @@ export const CustomField = ({
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem>
+          <FormItem className={cn(className)}>
             {label && <FormLabel>{label}</FormLabel>}
             {type === FiledType.TEXT && !href && (
               <FormControl>
@@ -68,6 +77,7 @@ export const CustomField = ({
                   placeholder={placeholder}
                   disabled={isLoading}
                   icon={icon}
+                  prefix={prefix}
                   {...field}
                 />
               </FormControl>
@@ -122,6 +132,29 @@ export const CustomField = ({
                 <FormLabel className="mt-1">{labelCheckbox}</FormLabel>
               </div>
             )}
+            {type === FiledType.PASSWORD && (
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder={placeholder}
+                  disabled={isLoading}
+                  icon={icon}
+                  {...field}
+                />
+              </FormControl>
+            )}
+            {type === FiledType.EMAIL && (
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder={placeholder}
+                  disabled={isLoading}
+                  icon={icon}
+                  {...field}
+                />
+              </FormControl>
+            )}
+            {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
         )}
