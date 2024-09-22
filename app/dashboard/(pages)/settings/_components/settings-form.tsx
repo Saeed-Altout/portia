@@ -65,9 +65,9 @@ export const SettingsForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
       >
+        {/* Desktop View */}
         <div className="col-span-1 md:col-span-2 lg:col-span-4 space-y-6 hidden md:block">
-          {/* Name Fields */}
-          <div className="w-full flex border-y py-4 justify-between items-center">
+          <div className="w-full flex border-t pt-6 justify-between items-center">
             <Label className="basis-1/3">Name</Label>
             <div className="flex-1 flex items-center justify-start gap-3">
               <CustomField
@@ -87,8 +87,7 @@ export const SettingsForm = () => {
             </div>
           </div>
 
-          {/* Email Field */}
-          <div className="w-full flex border-y py-4 justify-between items-center">
+          <div className="w-full flex border-y py-6 justify-between items-center">
             <Label className="basis-1/3">Email Address</Label>
             <div className="flex-1 flex items-center justify-start gap-3">
               <CustomField
@@ -103,7 +102,37 @@ export const SettingsForm = () => {
           </div>
         </div>
 
-        {/* Password Fields */}
+        {/* Mobile View */}
+        <div className="space-y-6 block md:hidden">
+          <div className="border-t pt-6 space-y-6">
+            <CustomField
+              name="name.firstName"
+              label="First Name"
+              placeholder="first name"
+              type={FiledType.TEXT}
+              isLoading={isLoading}
+            />
+            <CustomField
+              name="name.lastName"
+              placeholder="last name"
+              label="First Name"
+              type={FiledType.TEXT}
+              isLoading={isLoading}
+            />
+          </div>
+
+          <div className="border-y py-6">
+            <CustomField
+              name="email"
+              label="Email address"
+              placeholder="john.doe@example.com"
+              icon={Mail}
+              type={FiledType.EMAIL}
+              isLoading={isLoading}
+            />
+          </div>
+        </div>
+
         <div className="space-y-6 col-span-1 lg:col-span-2">
           <div className="space-y-2">
             <h3 className="font-medium text-lg">Password</h3>
@@ -135,68 +164,7 @@ export const SettingsForm = () => {
             isLoading={isLoading}
           />
         </div>
-        <div className="space-y-6 block md:hidden">
-          <div className="border-t pt-6 space-y-6">
-            <CustomField
-              name="name.firstName"
-              label="First Name"
-              placeholder="first name"
-              type={FiledType.TEXT}
-              isLoading={isLoading}
-            />
-            <CustomField
-              name="name.lastName"
-              placeholder="last name"
-              label="First Name"
-              type={FiledType.TEXT}
-              isLoading={isLoading}
-            />
-          </div>
 
-          <div className="border-y py-6">
-            <CustomField
-              name="email"
-              label="Email address"
-              placeholder="john.doe@example.com"
-              icon={Mail}
-              type={FiledType.EMAIL}
-              isLoading={isLoading}
-            />
-          </div>
-
-          <div className="space-y-6 lg:col-span-2">
-            <div className="space-y-2">
-              <h3 className="font-medium text-lg">Password</h3>
-              <p className="text-sm text-gray-primary">
-                Please enter your current password to change your password
-              </p>
-            </div>
-            <Separator />
-            <CustomField
-              name="password.currentPassword"
-              label="Current Password"
-              placeholder="******"
-              type={FiledType.PASSWORD}
-              isLoading={isLoading}
-            />
-            <CustomField
-              name="password.newPassword"
-              label="New Password"
-              placeholder="******"
-              type={FiledType.PASSWORD}
-              description="Your new password must be more than 8 characters"
-              isLoading={isLoading}
-            />
-            <CustomField
-              name="password.confirmNewPassword"
-              label="Confirm New Password"
-              placeholder="******"
-              type={FiledType.PASSWORD}
-              isLoading={isLoading}
-            />
-          </div>
-        </div>
-        {/* Affiliate Link Field */}
         <div className="space-y-6 col-span-1 lg:col-span-2">
           <div className="space-y-2">
             <h3 className="font-medium text-lg">Affiliate link</h3>

@@ -92,13 +92,13 @@ export const Navbar = () => {
       <div className="flex items-center gap-x-2 w-fit ml-auto">
         <Button size="icon" variant="ghost" asChild>
           <Link href="/dashboard/settings">
-            <Settings className="h-4 w-4" />
+            <Settings className="h-4 w-4 text-gray-primary" />
             <span className="sr-only">Settings</span>
           </Link>
         </Button>
         <Button size="icon" variant="ghost" asChild>
           <Link href="/dashboard/notifications">
-            <Bell className="h-4 w-4" />
+            <Bell className="h-4 w-4 text-gray-primary" />
             <span className="sr-only">Bell</span>
           </Link>
         </Button>
