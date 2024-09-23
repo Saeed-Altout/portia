@@ -12,7 +12,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-interface StatisticChartCardProps {
+interface DepositCardProps {
   title: string;
   price: string;
   color: string;
@@ -22,12 +22,17 @@ interface StatisticChartCardProps {
   }[];
 }
 
-export const StatisticChartCard = ({
+export const DepositCard = ({
   initialData,
 }: {
-  initialData: StatisticChartCardProps;
+  initialData: DepositCardProps;
 }) => {
   const { title, price, color, data } = initialData;
+  const chartConfig = {
+    deposits: {
+      label: "Deposits",
+    },
+  } satisfies ChartConfig;
 
   return (
     <div className="border rounded-lg">
@@ -40,40 +45,20 @@ export const StatisticChartCard = ({
             <p className="text-sm text-gray-primary">Currently Spending</p>
           </div>
         </div>
-        <Chart data={data} theme={color} />
+        <ChartContainer config={chartConfig} className="w-1/2 h-full">
+          <AreaChart accessibilityLayer data={data}>
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Area
+              dataKey="amount"
+              type="natural"
+              fill={color}
+              fillOpacity={0.2}
+              stroke={color}
+              stackId="a"
+            />
+          </AreaChart>
+        </ChartContainer>
       </div>
     </div>
   );
 };
-
-interface ChartProps {
-  data: {
-    id: number;
-    amount: number;
-  }[];
-  theme: string;
-}
-
-export function Chart({ data, theme }: ChartProps) {
-  const chartConfig = {
-    deposits: {
-      label: "Deposits",
-    },
-  } satisfies ChartConfig;
-
-  return (
-    <ChartContainer config={chartConfig} className="w-1/2 h-full">
-      <AreaChart accessibilityLayer data={data}>
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <Area
-          dataKey="amount"
-          type="natural"
-          fill={theme}
-          fillOpacity={0.2}
-          stroke={theme}
-          stackId="a"
-        />
-      </AreaChart>
-    </ChartContainer>
-  );
-}
