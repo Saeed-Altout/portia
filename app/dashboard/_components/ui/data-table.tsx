@@ -57,16 +57,15 @@ export function DataTable<TData, TValue>({
 
   const totalPages = table.getPageCount();
   const currentPage = table.getState().pagination.pageIndex;
-  const pageRange = 2; // عدد الصفحات قبل وبعد الصفحة الحالية
+  const pageRange = 2;
 
-  // لإنشاء الصفحات بشكل ديناميكي بناءً على الصفحة الحالية
   const generatePageNumbers = () => {
     const pages: number[] = [];
     for (let i = 1; i <= totalPages; i++) {
       if (
-        i === 1 || // الصفحة الأولى
-        i === totalPages || // الصفحة الأخيرة
-        (i >= currentPage - pageRange && i <= currentPage + pageRange) // الصفحات حول الصفحة الحالية
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - pageRange && i <= currentPage + pageRange)
       ) {
         pages.push(i);
       }
