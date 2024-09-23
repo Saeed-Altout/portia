@@ -1,53 +1,46 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import * as React from "react";
 
+import Link from "next/link";
 import { X } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 
+import { useBanner } from "@dashboard/hooks/use-banner";
+
 export const Banner = () => {
-  const [isClose, setIsClose] = useState<boolean>(false);
-
-  const onClose = () => {
-    setIsClose(true);
-    localStorage.setItem("bannerState", "close");
-  };
-
-  useEffect(() => {
-    const bannerState = localStorage.getItem("bannerState");
-    if (bannerState) {
-      setIsClose(true);
-    }
-  }, []);
+  const { isClose, onClose } = useBanner();
 
   return (
     <div
       className={cn(
-        "relative text-white bg-gradient-to-t from-[#03055E] to-[#111280] flex justify-center items-center gap-x-1 h-[52px]",
+        "relative text-white bg-gradient-to-t from-[#03055E] to-[#111280] h-[62px] md:h-[62px] px-4 flex justify-center items-center",
         isClose && "hidden"
       )}
     >
-      <p>
+      <p className="text-sm md:text-base">
         <span className="mr-2 font-medium">
           We&apos;ve just launched a new feature!
         </span>
         Check out the
+        <Link
+          href="/"
+          className="ml-0 md:ml-2 underline underline-offset-4 inline-block"
+        >
+          new dashboard.
+        </Link>
       </p>
-      <Link href="/" className="underline underline-offset-4">
-        new dashboard.
-      </Link>
-
       <Button
         className="!bg-transparent hover:!text-white absolute right-4 top-[50%] translate-y-[-50%]"
         size="icon"
         variant="ghost"
-        onClick={() => onClose()}
+        onClick={onClose}
       >
-        <span className="sr-only">Close Banner</span>
         <X className="h-4 w-4" />
+        <span className="sr-only">Close Banner</span>
       </Button>
     </div>
   );
