@@ -1,13 +1,12 @@
 "use client";
 import * as React from "react";
-
 import { ColumnDef } from "@tanstack/react-table";
-import { Activity } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+
+import { CellActions } from "./cell-actions";
 
 export type Proxy = {
   id: string;
@@ -37,7 +36,7 @@ export const columns: ColumnDef<Proxy>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <div>
+      <React.Fragment>
         {row.original.status ? (
           <span className="text-[#035E5C] bg-[#D4FFFE] font-medium text-xs px-2 py-1 rounded-full leading-none">
             Active
@@ -47,7 +46,7 @@ export const columns: ColumnDef<Proxy>[] = [
             Disabled
           </span>
         )}
-      </div>
+      </React.Fragment>
     ),
   },
   {
@@ -91,19 +90,6 @@ export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end items-center gap-4">
-          <Button
-            size="icon"
-            className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
-          >
-            <Activity className="h-4 w-4" />
-            <span className="sr-only">Activity Icon</span>
-          </Button>
-          <Button>Manage</Button>
-        </div>
-      );
-    },
+    cell: ({ row }) => <CellActions data={row.original} />,
   },
 ];

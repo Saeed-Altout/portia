@@ -3,12 +3,12 @@ import Link from "next/link";
 
 import { LucideIcon } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
 import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
 
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-
-interface StatisticCardProps {
+interface OverviewCardProps {
   icon: LucideIcon;
   title: string;
   content: string;
@@ -18,10 +18,10 @@ interface StatisticCardProps {
   theme: any;
 }
 
-export const StatisticCard = ({
+export const OverviewCard = ({
   initialData,
 }: {
-  initialData: StatisticCardProps;
+  initialData: OverviewCardProps;
 }) => {
   const { icon, title, content, label, href, fill, theme } = initialData;
   return (
@@ -31,9 +31,9 @@ export const StatisticCard = ({
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />
           </Circle>
-          <h3 className="text-base font-medium text-gray-primary">{title}</h3>
+          <h4 className="text-base font-medium text-gray-primary">{title}</h4>
         </div>
-        <p className="text-4xl font-semibold">{content}</p>
+        <h2 className="text-4xl font-semibold">{content}</h2>
       </div>
       <Separator />
       <div className="flex items-center justify-end py-2 px-6">

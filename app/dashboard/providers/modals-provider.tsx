@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 import { AddFundsModal } from "@dashboard/_components/modals/add-funds-modal";
@@ -8,7 +10,17 @@ import { ChangeProxyAuthenticationsModal } from "@dashboard/_components/modals/c
 import { FixingProxyModal } from "@dashboard/_components/modals/fixing-proxy-modal";
 import { LogoutModal } from "@dashboard/_components/modals/logout-modal";
 
-export const ModalsSections = () => {
+export const ModalProviders = () => {
+  const [isMounted, setIsMounted] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <>
       <ActivateNewProxyModal />
