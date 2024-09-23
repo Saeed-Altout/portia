@@ -1076,9 +1076,9 @@ export const depositsTableData = [
   },
 ];
 
-export const plansData = ["Basic", "Standard", "Premium"];
+export const plansData = ["Basic", "Standard", "Premium"] as const;
 
-export const durationsData = ["Hourly", "Monthly", "Yearly"];
+export const durationsData = ["Hourly", "Monthly", "Yearly"] as const;
 
 export const pricingPlanData = {
   Basic: {
