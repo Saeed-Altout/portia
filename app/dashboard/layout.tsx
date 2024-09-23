@@ -1,6 +1,6 @@
 import { Banner } from "./_layouts/banner";
 import { Navbar } from "./_layouts/navbar";
-import { ModalProviders } from "./providers/modals-provider";
+import { ModalProviders } from "./_components/providers/modals-provider";
 
 export default function DashboardLayout({
   children,
