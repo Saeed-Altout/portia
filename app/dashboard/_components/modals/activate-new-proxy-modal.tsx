@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Modal } from "@dashboard/_components/ui/modal";
 import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
 
-import { useActivateNewProxyModal } from "@dashboard/hooks/use-activate-new-proxy-modal";
+import { useStoreModal } from "@/app/dashboard/hooks/use-store-modal";
 import {
   ActivateNewProxySchema,
   activateNewProxySchema,
@@ -23,10 +23,10 @@ import {
 } from "@dashboard/schemas";
 
 export const ActivateNewProxyModal = () => {
+  const storeModal = useStoreModal();
+
   const [step, setStep] = React.useState<number>(1);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  const activateNewProxyModal = useActivateNewProxyModal();
 
   const form = useForm<ActivateNewProxySchema>({
     resolver: zodResolver(activateNewProxySchema),
@@ -51,7 +51,7 @@ export const ActivateNewProxyModal = () => {
   const onClose = () => {
     form.reset();
     setIsLoading(false);
-    activateNewProxyModal.onClose();
+    storeModal.onCloseActivateNewProxy();
   };
 
   const renderStep = () => {
@@ -79,7 +79,7 @@ export const ActivateNewProxyModal = () => {
     <Modal
       title="Activate a new proxy"
       description="New order - 5G mobile proxy"
-      isOpen={activateNewProxyModal.isOpen}
+      isOpen={storeModal.activateNewProxy}
       onClose={onClose}
       progress={step * 35}
     >

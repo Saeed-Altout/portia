@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 
 import { Modal } from "@dashboard/_components/ui/modal";
 import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
-import { useAddFundsModal } from "@dashboard/hooks/use-add-funds";
+import { useStoreModal } from "@/app/dashboard/hooks/use-store-modal";
 
 const addFundsSchema = z.object({
   amount: z.string().min(2),
@@ -22,9 +22,9 @@ const addFundsSchema = z.object({
 });
 
 export const AddFundsModal = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const storeModal = useStoreModal();
 
-  const addFunds = useAddFundsModal();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof addFundsSchema>>({
     resolver: zodResolver(addFundsSchema),
@@ -51,7 +51,7 @@ export const AddFundsModal = () => {
   const onClose = () => {
     form.reset();
     setIsLoading(false);
-    addFunds.onClose();
+    storeModal.onCloseAddFunds();
   };
 
   const methodData = [
@@ -62,7 +62,7 @@ export const AddFundsModal = () => {
   return (
     <Modal
       title="Add funds to your account"
-      isOpen={addFunds.isOpen}
+      isOpen={storeModal.addFunds}
       onClose={onClose}
       icon={CreditCard}
     >

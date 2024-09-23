@@ -14,14 +14,12 @@ import { ProxiesCard } from "@dashboard/_components/cards/proxies-card";
 
 import { Button } from "@/components/ui/button";
 
-import { useAddFundsModal } from "@dashboard/hooks/use-add-funds";
-import { useActivateNewProxyModal } from "@dashboard/hooks/use-activate-new-proxy-modal";
+import { useStoreModal } from "@/app/dashboard/hooks/use-store-modal";
 
 import { proxiesData, proxiesTableData } from "@dashboard/constants";
 
 export default function MyProxiesPage() {
-  const addFundsModal = useAddFundsModal();
-  const activateNewProxyModal = useActivateNewProxyModal();
+  const storeModal = useStoreModal();
 
   const ActiveProxies = proxiesTableData.filter(
     (item) => item.status === true && item
@@ -37,12 +35,12 @@ export default function MyProxiesPage() {
         <div className="flex items-center justify-center gap-3">
           <Button
             variant="outline"
-            onClick={() => activateNewProxyModal.onOpen()}
+            onClick={() => storeModal.onOpenActivateNewProxy()}
           >
             <Plus className="h-4 w-4 mr-2" /> Activate Proxies
           </Button>
 
-          <Button variant="outline" onClick={() => addFundsModal.onOpen()}>
+          <Button variant="outline" onClick={() => storeModal.onOpenAddFunds()}>
             <Plus className="h-4 w-4 mr-2" /> Add Fund
           </Button>
         </div>
