@@ -4,7 +4,6 @@ import * as React from "react";
 import { LucideIcon, Zap } from "lucide-react";
 
 import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
-import { Typography } from "@dashboard/_components/ui/typography";
 
 import {
   Dialog,
