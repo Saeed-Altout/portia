@@ -17,7 +17,7 @@ export const routes = [
     label: "Deposits",
     href: "/dashboard/deposits",
   },
-];
+] as const;
 
 export const overviewData = [
   {
@@ -38,7 +38,7 @@ export const overviewData = [
     theme: "success",
     icon: ChartArea,
   },
-];
+] as const;
 
 export const overviewTableData = [
   {
@@ -431,7 +431,7 @@ export const overviewTableData = [
     isExpired: true,
     usernamePassword: "user30:pass30",
   },
-];
+] as const;
 
 export const proxiesData = [
   {
@@ -455,7 +455,7 @@ export const proxiesData = [
     theme: "secondary",
     icon: Zap,
   },
-];
+] as const;
 
 export const proxiesTableData = [
   {
@@ -848,7 +848,7 @@ export const proxiesTableData = [
     isExpired: true,
     usernamePassword: "user30:pass30",
   },
-];
+] as const;
 
 export const depositsData = [
   {
@@ -887,7 +887,7 @@ export const depositsData = [
       { id: 5, amount: 8046 },
     ],
   },
-];
+] as const;
 
 export const depositsTableData = [
   {
@@ -1074,4 +1074,215 @@ export const depositsTableData = [
     date: "May 6, 2022",
     typeOfPayment: "Crypto",
   },
-];
+] as const;
+
+export const plansData = ["Basic", "Standard", "Premium"] as const;
+
+export const durationsData = ["Hourly", "Monthly", "Yearly"] as const;
+
+export const pricingPlanData = {
+  Basic: {
+    Hourly: [
+      {
+        id: 1,
+        name: "2 Hours/Basic plan",
+        description: "talk about your offer here.",
+        price: "2.00$",
+      },
+      {
+        id: 2,
+        name: "4 Hours/Basic plan",
+        description: "talk about your offer here.",
+        price: "3.50$",
+      },
+      {
+        id: 3,
+        name: "6 Hours/Basic plan",
+        description: "talk about your offer here.",
+        price: "5.00$",
+      },
+      {
+        id: 4,
+        name: "8 Hours/Basic plan",
+        description: "talk about your offer here.",
+        price: "6.50$",
+      },
+    ],
+    Monthly: [
+      {
+        id: 5,
+        name: "1 Month/Basic plan",
+        description: "talk about your offer here.",
+        price: "30.00$",
+      },
+      {
+        id: 6,
+        name: "3 Months/Basic plan",
+        description: "talk about your offer here.",
+        price: "80.00$",
+      },
+      {
+        id: 7,
+        name: "6 Months/Basic plan",
+        description: "talk about your offer here.",
+        price: "150.00$",
+      },
+      {
+        id: 8,
+        name: "12 Months/Basic plan",
+        description: "talk about your offer here.",
+        price: "280.00$",
+      },
+    ],
+    Yearly: [
+      {
+        id: 9,
+        name: "1 Year/Basic plan",
+        description: "talk about your offer here.",
+        price: "300.00$",
+      },
+      {
+        id: 10,
+        name: "2 Years/Basic plan",
+        description: "talk about your offer here.",
+        price: "580.00$",
+      },
+    ],
+  },
+  Standard: {
+    Hourly: [
+      {
+        id: 11,
+        name: "2 Hours/Standard plan",
+        description: "talk about your offer here.",
+        price: "3.00$",
+      },
+      {
+        id: 12,
+        name: "4 Hours/Standard plan",
+        description: "talk about your offer here.",
+        price: "5.50$",
+      },
+      {
+        id: 13,
+        name: "6 Hours/Standard plan",
+        description: "talk about your offer here.",
+        price: "7.50$",
+      },
+      {
+        id: 14,
+        name: "8 Hours/Standard plan",
+        description: "talk about your offer here.",
+        price: "9.00$",
+      },
+    ],
+    Monthly: [
+      {
+        id: 15,
+        name: "1 Month/Standard plan",
+        description: "talk about your offer here.",
+        price: "50.00$",
+      },
+      {
+        id: 16,
+        name: "3 Months/Standard plan",
+        description: "talk about your offer here.",
+        price: "140.00$",
+      },
+      {
+        id: 17,
+        name: "6 Months/Standard plan",
+        description: "talk about your offer here.",
+        price: "270.00$",
+      },
+      {
+        id: 18,
+        name: "12 Months/Standard plan",
+        description: "talk about your offer here.",
+        price: "500.00$",
+      },
+    ],
+    Yearly: [
+      {
+        id: 19,
+        name: "1 Year/Standard plan",
+        description: "talk about your offer here.",
+        price: "500.00$",
+      },
+      {
+        id: 20,
+        name: "2 Years/Standard plan",
+        description: "talk about your offer here.",
+        price: "950.00$",
+      },
+    ],
+  },
+  Premium: {
+    Hourly: [
+      {
+        id: 21,
+        name: "2 Hours/Premium plan",
+        description: "talk about your offer here.",
+        price: "5.00$",
+      },
+      {
+        id: 22,
+        name: "4 Hours/Premium plan",
+        description: "talk about your offer here.",
+        price: "9.50$",
+      },
+      {
+        id: 23,
+        name: "6 Hours/Premium plan",
+        description: "talk about your offer here.",
+        price: "12.50$",
+      },
+      {
+        id: 24,
+        name: "8 Hours/Premium plan",
+        description: "talk about your offer here.",
+        price: "16.00$",
+      },
+    ],
+    Monthly: [
+      {
+        id: 25,
+        name: "1 Month/Premium plan",
+        description: "talk about your offer here.",
+        price: "90.00$",
+      },
+      {
+        id: 26,
+        name: "3 Months/Premium plan",
+        description: "talk about your offer here.",
+        price: "250.00$",
+      },
+      {
+        id: 27,
+        name: "6 Months/Premium plan",
+        description: "talk about your offer here.",
+        price: "450.00$",
+      },
+      {
+        id: 28,
+        name: "12 Months/Premium plan",
+        description: "talk about your offer here.",
+        price: "800.00$",
+      },
+    ],
+    Yearly: [
+      {
+        id: 29,
+        name: "1 Year/Premium plan",
+        description: "talk about your offer here.",
+        price: "800.00$",
+      },
+      {
+        id: 30,
+        name: "2 Years/Premium plan",
+        description: "talk about your offer here.",
+        price: "1500.00$",
+      },
+    ],
+  },
+} as const;
