@@ -39,7 +39,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 flex h-[72px] items-center gap-4 bg-background px-4 md:px-6 z-[10000]">
+    <header className="sticky top-0 flex h-[72px] items-center gap-4 bg-background px-4 md:px-6 z-10">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <Link href="/dashboard" className="relative h-[27px] w-[91px]">
           <Image src="/icons/logo.svg" alt="Logo" fill />
