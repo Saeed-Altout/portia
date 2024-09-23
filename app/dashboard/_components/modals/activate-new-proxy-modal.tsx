@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { BeatLoader } from "react-spinners";
+import { Key, User } from "lucide-react";
 import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,24 +12,15 @@ import * as z from "zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { StepOne } from "../steps/stepOne";
-import { StepTwo } from "../steps/stepTwo";
-import { StepThree } from "../steps/stepThree";
-
 import { Modal } from "@dashboard/_components/ui/modal";
-import { useActivateNewProxyModal } from "@dashboard/hooks/use-activate-new-proxy-modal";
+import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
 
-const activateNewProxySchema = z.object({
-  package: z.string().min(2),
-  plan: z.string().min(2),
-  amount: z.string().min(2),
-  provider: z.string().min(2),
-  ipRotation: z.string().min(2),
-  proxyType: z.string().min(2),
-  autoRenew: z.boolean().default(false),
-  username: z.string().min(2),
-  password: z.string().min(2),
-});
+import { useActivateNewProxyModal } from "@dashboard/hooks/use-activate-new-proxy-modal";
+import {
+  ActivateNewProxySchema,
+  activateNewProxySchema,
+  initialValuesActivateNewProxy,
+} from "@dashboard/schemas";
 
 export const ActivateNewProxyModal = () => {
   const [step, setStep] = React.useState<number>(1);
@@ -36,22 +28,12 @@ export const ActivateNewProxyModal = () => {
 
   const activateNewProxyModal = useActivateNewProxyModal();
 
-  const form = useForm<z.infer<typeof activateNewProxySchema>>({
+  const form = useForm<ActivateNewProxySchema>({
     resolver: zodResolver(activateNewProxySchema),
-    defaultValues: {
-      package: "",
-      plan: "",
-      amount: "",
-      provider: "First available uk network & location",
-      ipRotation: "",
-      proxyType: "",
-      autoRenew: false,
-      username: "",
-      password: "",
-    },
+    defaultValues: initialValuesActivateNewProxy,
   });
 
-  const onSubmit = async (values: z.infer<typeof activateNewProxySchema>) => {
+  const onSubmit = async (values: ActivateNewProxySchema) => {
     setIsLoading(true);
     try {
       setTimeout(() => {
@@ -151,5 +133,130 @@ export const ActivateNewProxyModal = () => {
         </form>
       </Form>
     </Modal>
+  );
+};
+
+interface StepOneProps {
+  isLoading?: boolean;
+}
+
+export const StepOne = ({ isLoading }: StepOneProps) => {
+  const packageData = [
+    { value: "basic", label: "Basic" },
+    { value: "standard", label: "Standard" },
+    { value: "premium", label: "Premium" },
+  ];
+
+  const planData = [
+    { value: "hourly", label: "Hourly" },
+    { value: "monthly", label: "Monthly" },
+    { value: "yearly", label: "Yearly" },
+  ];
+
+  const amountData = [
+    { value: "10h", label: "10 h" },
+    { value: "20h", label: "20 h" },
+    { value: "30h", label: "30 h" },
+  ];
+
+  return (
+    <>
+      <CustomField
+        name="package"
+        label="Package"
+        placeholder="Select a package"
+        type={FiledType.SELECT}
+        options={packageData}
+        isLoading={isLoading}
+      />
+      <CustomField
+        name="plan"
+        label="Plan"
+        placeholder="Select a plan"
+        type={FiledType.SELECT}
+        options={planData}
+        isLoading={isLoading}
+      />
+      <CustomField
+        name="amount"
+        label="Amount"
+        placeholder="Select a amount"
+        type={FiledType.SELECT}
+        options={amountData}
+        isLoading={isLoading}
+      />
+    </>
+  );
+};
+
+interface StepTwoProps {
+  isLoading?: boolean;
+}
+
+export const StepTwo = ({ isLoading }: StepTwoProps) => {
+  return (
+    <>
+      <CustomField
+        name="provider"
+        label="Provider & Location"
+        placeholder="Provider & Location"
+        type={FiledType.TEXT}
+        href="/dashboard/my-proxies"
+        isLoading={true}
+      />
+      <CustomField
+        name="ipRotation"
+        label="Minimum time between IP rotation"
+        placeholder="IP rotation"
+        type={FiledType.TEXT}
+        isLoading={isLoading}
+      />
+    </>
+  );
+};
+
+interface StepThreeProps {
+  isLoading?: boolean;
+}
+
+export const StepThree = ({ isLoading }: StepThreeProps) => {
+  const proxyTypeData = [
+    { value: "http-proxy", label: "Http proxy" },
+    { value: "https-proxy", label: "Https proxy" },
+  ];
+
+  return (
+    <>
+      <CustomField
+        name="proxyType"
+        label="Proxy Type"
+        placeholder="Proxy type"
+        type={FiledType.SELECT}
+        options={proxyTypeData}
+        isLoading={isLoading}
+      />
+      <CustomField
+        name="autoRenew"
+        labelCheckbox="Auto Renew"
+        type={FiledType.CHECKBOX}
+        isLoading={isLoading}
+      />
+      <CustomField
+        name="username"
+        label="Proxy Authentications"
+        placeholder="Username"
+        icon={User}
+        type={FiledType.TEXT}
+        isLoading={isLoading}
+      />
+      <CustomField
+        name="password"
+        placeholder="Password"
+        icon={Key}
+        type={FiledType.TEXT}
+        isLoading={isLoading}
+      />
+      <p className="text-lg font-semibold">Cost: 0,000$</p>
+    </>
   );
 };

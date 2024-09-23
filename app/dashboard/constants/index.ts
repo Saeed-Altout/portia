@@ -33,7 +33,7 @@ export const overviewData = [
     title: "User Balance",
     content: "100$",
     label: "View all deposit",
-    href: "/dashboard/deposit",
+    href: "/dashboard/deposits",
     fill: "success",
     theme: "success",
     icon: ChartArea,
