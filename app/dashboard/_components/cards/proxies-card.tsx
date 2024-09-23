@@ -4,7 +4,7 @@ import { LucideIcon } from "lucide-react";
 
 import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
 
-interface StatisticProxiesCardProps {
+interface ProxiesCardProps {
   icon: LucideIcon;
   title: string;
   content: string;
@@ -12,10 +12,10 @@ interface StatisticProxiesCardProps {
   theme: any;
 }
 
-export const StatisticProxiesCard = ({
+export const ProxiesCard = ({
   initialData,
 }: {
-  initialData: StatisticProxiesCardProps;
+  initialData: ProxiesCardProps;
 }) => {
   const { icon, title, content, fill, theme } = initialData;
   return (

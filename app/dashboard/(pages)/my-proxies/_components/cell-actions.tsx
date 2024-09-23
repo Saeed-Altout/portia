@@ -20,7 +20,9 @@ export const CellActions = ({ row }: CellActionsProps) => {
         onClose={() => setIsOpen(false)}
       />
       <div className="flex justify-end items-center gap-4">
-        <Button onClick={() => setIsOpen(true)}>Renew</Button>
+        <Button size="sm" onClick={() => setIsOpen(true)}>
+          Renew
+        </Button>
       </div>
     </>
   );
