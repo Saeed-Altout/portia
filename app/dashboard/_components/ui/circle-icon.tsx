@@ -13,8 +13,9 @@ const circleVariants = cva("flex items-center justify-center rounded-full", {
       success: "bg-[#B5F7F6] border-[#D4FFFE]",
       alert: "bg-[#F7B5BF] border-[#FFD4DA]",
       secondary: "bg-[#B5B6F7] border-[#D4D4FF]",
-      primary: "bg-primary",
-      muted: "bg-gray-200",
+      primary: "bg-[#B5B6F7] border-[#D4D4FF]",
+      muted: "bg-[#E9E9F2] border-[#F5F5FA]",
+      danger: "bg-[#FFE4E8] border-[#FFF1F3]",
     },
     border: {
       none: "",
@@ -42,8 +43,8 @@ const iconVariants = cva("text-primary", {
       success: "text-[#11807E]",
       secondary: "text-[#111280]",
       alert: "text-[#801121]",
-      muted: "text-gray-500",
-      danger: "text-red-500",
+      muted: "text-[#4B4B57]",
+      danger: "text-[#E31B54]",
     },
     size: {
       sm: "w-4 h-4",
