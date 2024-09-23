@@ -39,6 +39,7 @@ const circleVariants = cva("flex items-center justify-center rounded-full", {
 const iconVariants = cva("text-primary", {
   variants: {
     theme: {
+      default: "text-primary",
       primary: "text-primary",
       success: "text-[#11807E]",
       secondary: "text-[#111280]",
@@ -53,7 +54,7 @@ const iconVariants = cva("text-primary", {
     },
   },
   defaultVariants: {
-    theme: "primary",
+    theme: "default",
     size: "md",
   },
 });
