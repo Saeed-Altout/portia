@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Section } from "@/app/(website)/_components/ui/section";
-import { HeadingPage } from "@/app/(website)/_components/ui/heading-page";
+import { Container } from "@website/_components/ui/container";
+import { Section } from "@website/_components/ui/section";
+import { HeadingPage } from "@website/_components/ui/heading-page";
 
 export const Hero = () => {
   return (

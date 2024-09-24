@@ -1,8 +1,6 @@
-import { customersData } from "@/app/(website)/constants";
-
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { CustomersCard } from "@/app/(website)/_components/cards/customer-card";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { CustomersCard } from "@website/_components/cards/customer-card";
 
 import {
   Carousel,
@@ -11,6 +9,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+
+import { customersData } from "@website/constants";
 
 export const Customers = () => {
   return (

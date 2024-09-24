@@ -1,4 +1,4 @@
-import { CTA } from "@/app/(website)/_components/sections";
+import { CTA } from "@website/_components/sections";
 import { Customers, Hero } from "./_components";
 
 export default function TestimonialsPage() {
