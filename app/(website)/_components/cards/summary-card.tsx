@@ -2,7 +2,6 @@
 
 import * as React from "react";
 
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
 import { Categories } from "@/app/(website)/_components/ui/categories";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -34,10 +33,10 @@ export const SummaryCard = ({
             <AvatarFallback>{author.slice(0, 2)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-start py-2">
-            <Paragraph size="lg" className="font-medium text-black-primary">
+            <p className="text !text-lg font-medium text-black-primary">
               {author}
-            </Paragraph>
-            <Paragraph>{position}</Paragraph>
+            </p>
+            <p className="text">{position}</p>
           </div>
         </div>
         <Categories items={categories} />

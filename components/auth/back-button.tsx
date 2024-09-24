@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
 
 interface BackButtonProps {
   label?: string;
@@ -12,11 +11,11 @@ interface BackButtonProps {
 
 export const BackButton = ({ label, href, message }: BackButtonProps) => {
   return (
-    <Paragraph size="sm">
+    <p className="text !text-sm">
       {message}{" "}
       <Link href={href} className="hover:underline text-primary font-medium">
         {label}
       </Link>
-    </Paragraph>
+    </p>
   );
 };

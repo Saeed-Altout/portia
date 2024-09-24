@@ -5,12 +5,9 @@ import * as React from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
 
 import { BackButton } from "@/components/auth/back-button";
 import { HeaderCard } from "./header-card";

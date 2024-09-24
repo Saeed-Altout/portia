@@ -16,7 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { Icon } from "@/app/(website)/_components/ui/icon";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
 
 interface CardFormProps {
   title: string;
@@ -58,7 +57,7 @@ export const CardMinForm = ({
       <CardContent>{children}</CardContent>
       <CardFooter className="flex flex-col items-center justify-center gap-y-8">
         {redirect && (
-          <Paragraph className="text-center" size="sm">
+          <p className="text !text-sm text-center">
             Didn’t receive the email?
             <Link
               href="/auth/reset"
@@ -66,7 +65,7 @@ export const CardMinForm = ({
             >
               Click to resend
             </Link>
-          </Paragraph>
+          </p>
         )}
         {backHrefButton && (
           <Button variant="link" asChild>

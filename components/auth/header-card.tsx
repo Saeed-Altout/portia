@@ -2,8 +2,6 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-
 import { Logo } from "@/components/shared/logo";
 
 interface HeaderCardProps {
@@ -41,7 +39,7 @@ export const HeaderCard = ({
 
       <div className={cn(showMessage && "hidden lg:block")}>
         <h3 className="text-xl font-semibold">{title}</h3>
-        <Paragraph>{description}</Paragraph>
+        <p className="text">{description}</p>
       </div>
     </div>
   );

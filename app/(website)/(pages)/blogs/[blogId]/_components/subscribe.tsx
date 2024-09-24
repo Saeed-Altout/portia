@@ -6,9 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-import { Section } from "@/app/(website)/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { Section } from "@website/_components/ui/section";
 
 import {
   Form,
@@ -44,9 +43,9 @@ export const Subscribe = () => {
           <h1 className="text-3xl md:text-4xl font-semibold">
             Join 2,000+ subscribers
           </h1>
-          <Paragraph>
+          <p className="text">
             Stay in the loop with everything you need to know.
-          </Paragraph>
+          </p>
         </div>
         <Form {...form}>
           <form

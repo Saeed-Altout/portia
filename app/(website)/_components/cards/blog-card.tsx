@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
 import { Label } from "@/app/(website)/_components/ui/label";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
 import { Categories } from "@/app/(website)/_components/ui/categories";
 
 interface BlogCardProps {
@@ -48,7 +47,7 @@ export const BlogCard = ({
               <ArrowUpRight className="h-6 w-6" />
             </Link>
           </div>
-          <Paragraph>{description}</Paragraph>
+          <p className="text">{description}</p>
         </div>
         <Categories items={categories} />
       </div>
