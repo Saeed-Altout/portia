@@ -631,6 +631,7 @@ export const customersData = [
 ];
 export const blogsData = [
   {
+    id: "1",
     published: "20 Jan 2022",
     title: "UX review presentations",
     url: "/",
@@ -642,6 +643,7 @@ export const blogsData = [
     order: 1,
   },
   {
+    id: "2",
     published: "19 Jan 2022",
     title: "Migrating to Linear 101",
     url: "/",
@@ -653,6 +655,7 @@ export const blogsData = [
     order: 2,
   },
   {
+    id: "3",
     published: "18 Jan 2022",
     title: "Building your API Stack",
     url: "/",
@@ -664,6 +667,7 @@ export const blogsData = [
     order: 3,
   },
   {
+    id: "4",
     published: "17 Jan 2022",
     title: "Bill Walsh leadership lessons",
     url: "/",
@@ -675,6 +679,7 @@ export const blogsData = [
     order: 4,
   },
   {
+    id: "5",
     published: "16 Jan 2022",
     title: "PM mental models",
     url: "/",
@@ -686,6 +691,7 @@ export const blogsData = [
     order: 5,
   },
   {
+    id: "6",
     published: "15 Jan 2022",
     title: "What is Wireframing?",
     url: "/",
@@ -697,6 +703,7 @@ export const blogsData = [
     order: 6,
   },
   {
+    id: "7",
     published: "14 Jan 2022",
     title: "How collaboration makes us better designers",
     url: "/",
@@ -708,6 +715,7 @@ export const blogsData = [
     order: 7,
   },
   {
+    id: "8",
     published: "13 Jan 2022",
     title: "Our top 10 Javascript frameworks to use",
     url: "/",
@@ -719,6 +727,7 @@ export const blogsData = [
     order: 8,
   },
   {
+    id: "9",
     published: "12 Jan 2022",
     title: "Podcast: Creating a better CX Community",
     url: "/",

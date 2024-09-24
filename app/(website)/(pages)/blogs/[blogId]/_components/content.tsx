@@ -1,27 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-import { Section } from "@/app/(website)/_components/ui/section";
-import { SummaryCard } from "@/app/(website)/_components/cards/summary-card";
+import { Container } from "@website/_components/ui/container";
+import { Section } from "@website/_components/ui/section";
+import { SummaryCard } from "@website/_components/cards/summary-card";
 
 import { Separator } from "@/components/ui/separator";
 
-export const Content = () => {
+export const Content = ({ data }: { data: any }) => {
   return (
     <Section>
       <Container className="gap-y-12 max-w-[800px]">
-        <Paragraph size="lg">
+        <p className="text !text-lg">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
           ullamcorper mattis lorem non. Ultrices praesent amet ipsum justo
           massa. Eu dolor aliquet risus gravida nunc at feugiat consequat purus.
           Non massa enim vitae duis mattis. Vel in ultricies vel fringilla.
-        </Paragraph>
+        </p>
         <Separator />
         <div className="space-y-6">
           <Title>Introduction</Title>
-          <Paragraph size="lg">
+          <p className="text !text-lg">
             Mi tincidunt elit, id quisque ligula ac diam, amet. Vel etiam
             suspendisse morbi eleifend faucibus eget vestibulum felis. Dictum
             quis montes, sit sit. Tellus aliquam enim urna, etiam. Mauris
@@ -31,19 +30,19 @@ export const Content = () => {
             auctor. Porttitor fames arcu quis fusce augue enim. Quis at habitant
             diam at. Suscipit tristique risus, at donec. In turpis vel et quam
             imperdiet. Ipsum molestie aliquet sodales id est ac volutpat.
-          </Paragraph>
+          </p>
         </div>
 
         <div className="w-full space-y-2">
           <div className="relative h-[516px] w-full">
-            <Image src="/images/blogs/blog (7).jpg" alt="Blog" fill />
+            <Image src={data.imgUrl} alt="Blog" fill />
           </div>
-          <Paragraph size="sm">
+          <p className="text !text-sm">
             Image courtesy of Mathilde Langevin via{" "}
             <Link href="https://unsplash.com/" className="underline">
               Unsplash
             </Link>
-          </Paragraph>
+          </p>
         </div>
 
         <Quote
@@ -51,7 +50,7 @@ export const Content = () => {
           author="Olivia Rhye, Product Designer"
         />
 
-        <Paragraph size="lg">
+        <p className="text !text-lg">
           Dolor enim eu tortor urna sed duis nulla. Aliquam vestibulum, nulla
           odio nisl vitae. In aliquet pellentesque aenean hac vestibulum turpis
           mi bibendum diam. Tempor integer aliquam in vitae malesuada fringilla.
@@ -69,28 +68,28 @@ export const Content = () => {
           molestie sem tempor. Diam elit, orci, tincidunt aenean tempus. Quis
           velit eget ut tortor tellus. Sed vel, congue felis elit erat nam nibh
           orci.
-        </Paragraph>
+        </p>
 
         <div className="space-y-6">
           <Title>Software and tools</Title>
-          <Paragraph size="lg">
+          <p className="text !text-lg">
             Pharetra morbi libero id aliquam elit massa integer tellus. Quis
             felis aliquam ullamcorper porttitor. Pulvinar ullamcorper sit
             dictumst ut eget a, elementum eu. Maecenas est morbi mattis id in ac
             pellentesque ac.
-          </Paragraph>
+          </p>
         </div>
 
         <div className="space-y-6">
           <Title>Other resources</Title>
-          <Paragraph size="lg">
+          <p className="text !text-lg">
             Sagittis et eu at elementum, quis in. Proin praesent volutpat
             egestas sociis sit lorem nunc nunc sit. Eget diam curabitur mi ac.
             Auctor rutrum lacus malesuada massa ornare et. Vulputate consectetur
             ac ultrices at diam dui eget fringilla tincidunt. Arcu sit dignissim
             massa erat cursus vulputate gravida id. Sed quis auctor vulputate
             hac elementum gravida cursus dis.
-          </Paragraph>
+          </p>
           <ol className="space-y-2" style={{ listStyle: "inside" }}>
             <li className="font-normal leading-6 text-gray-500 text-lg">
               Lectus id duis vitae porttitor enim{" "}
@@ -115,17 +114,17 @@ export const Content = () => {
 
         <div className="w-full space-y-2">
           <div className="relative h-[516px] w-full">
-            <Image src="/images/blogs/blog (2).jpg" alt="Blog" fill />
+            <Image src={data.imgUrl} alt="Blog" fill />
           </div>
-          <Paragraph size="sm">
+          <p className="text !text-sm">
             Image courtesy of Mathilde Langevin via{" "}
             <Link href="https://unsplash.com/" className="underline">
               Unsplash
             </Link>
-          </Paragraph>
+          </p>
         </div>
 
-        <Paragraph size="lg">
+        <p className="text !text-lg">
           Lectus leo massa amet posuere. Malesuada mattis non convallis quisque.
           Libero sit et imperdiet bibendum quisque dictum vestibulum in non.
           Pretium ultricies tempor non est diam. Enim ut enim amet amet integer
@@ -136,7 +135,7 @@ export const Content = () => {
           Aliquam tellus lorem sed ac. Montes, sed mattis pellentesque suscipit
           accumsan. Cursus viverra aenean magna risus elementum faucibus
           molestie pellentesque. Arcu ultricies sed mauris vestibulum.
-        </Paragraph>
+        </p>
 
         <SummaryCard
           title="Conclusion"
@@ -144,7 +143,7 @@ export const Content = () => {
           position="Content Writer"
           categories={["Design", "Architecture", "Interviews"]}
         >
-          <Paragraph size="lg">
+          <p className="text !text-lg">
             Morbi sed imperdiet in ipsum, adipiscing elit dui lectus. Tellus id
             scelerisque est ultricies ultricies. Duis est sit sed leo nisl,
             blandit elit sagittis. Quisque tristique consequat quam sed. Nisl at
@@ -163,7 +162,7 @@ export const Content = () => {
             <LineSeparator />
             Nulla adipiscing erat a erat. Condimentum lorem posuere gravida enim
             posuere cursus diam.
-          </Paragraph>
+          </p>
         </SummaryCard>
       </Container>
     </Section>
@@ -187,7 +186,7 @@ const Quote = ({
   return (
     <div className="space-y-8 border-l-[2px] border-primary pl-5">
       <h3 className="text-2xl font-medium italic text-justify">{`“${label}”`}</h3>
-      <Paragraph>{`— ${author}`}</Paragraph>
+      <p className="text">{`— ${author}`}</p>
     </div>
   );
 };
