@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { Heading } from "@dashboard/_components/ui/heading";
-import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
+import { CustomField, FiledType } from "@/components/ui/custom-field";
 
 import {
   SettingsSchema,

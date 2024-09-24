@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useFormContext } from "react-hook-form";
 import { ArrowUpRight, LucideIcon } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 import {
   FormControl,
   FormItem,
@@ -23,7 +25,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
 interface CustomFieldProps {
   name: string;
@@ -36,6 +38,8 @@ interface CustomFieldProps {
   href?: string;
   prefix?: string;
   description?: string;
+  hrefBackButton?: string;
+  labelBackButton?: string;
   labelCheckbox?: string;
 }
 
@@ -45,6 +49,7 @@ export enum FiledType {
   CHECKBOX = "checkbox",
   EMAIL = "email",
   PASSWORD = "password",
+  TEXTAREA = "textarea",
 }
 
 export const CustomField = ({
@@ -60,6 +65,8 @@ export const CustomField = ({
   labelCheckbox,
   className,
   prefix,
+  hrefBackButton,
+  labelBackButton,
 }: CustomFieldProps & React.HtmlHTMLAttributes<HTMLElement>) => {
   const { control } = useFormContext();
 
@@ -71,6 +78,16 @@ export const CustomField = ({
         render={({ field }) => (
           <FormItem className={cn(className)}>
             {label && <FormLabel>{label}</FormLabel>}
+            {type === FiledType.TEXTAREA && (
+              <FormControl>
+                <Textarea
+                  placeholder={placeholder}
+                  disabled={isLoading}
+                  rows={6}
+                  {...field}
+                />
+              </FormControl>
+            )}
             {type === FiledType.TEXT && !href && (
               <FormControl>
                 <Input
@@ -129,9 +146,17 @@ export const CustomField = ({
                     disabled={isLoading}
                   />
                 </FormControl>
-                <FormLabel className="mt-1">{labelCheckbox}</FormLabel>
+                <FormLabel className="mt-1 text">
+                  {labelCheckbox}{" "}
+                  {hrefBackButton && (
+                    <Link href={hrefBackButton} className="underline">
+                      {labelBackButton}
+                    </Link>
+                  )}
+                </FormLabel>
               </div>
             )}
+
             {type === FiledType.PASSWORD && (
               <FormControl>
                 <Input

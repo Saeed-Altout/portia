@@ -22,3 +22,13 @@ export const formContactSchema = z.object({
     message: "You must agree to our friendly privacy policy.",
   }),
 });
+
+export type FormContactValues = z.infer<typeof formContactSchema>;
+
+export const initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phoneNumber: { country: "", number: "" },
+  agreeToPrivacyPolicy: false,
+};

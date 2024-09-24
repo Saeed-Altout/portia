@@ -13,7 +13,7 @@ import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
 import { Modal } from "@dashboard/_components/ui/modal";
-import { CustomField, FiledType } from "@dashboard/_components/ui/custom-field";
+import { CustomField, FiledType } from "@/components/ui/custom-field";
 
 import { useChangeProxyAuthenticationsModal } from "@dashboard/hooks/use-change-proxy-authentications-modal";
 

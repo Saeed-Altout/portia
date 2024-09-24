@@ -1,4 +1,4 @@
-import { Statistic } from "@/app/(website)/_components/sections";
+import { Statistic } from "@website/_components/sections";
 import { ContactForm } from "./_components";
 
 export default function ContactUsPage() {
