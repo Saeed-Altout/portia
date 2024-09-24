@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface FlagBoxProps {
@@ -19,7 +17,7 @@ export const FlagBox = ({ name, flagUrl, users }: FlagBoxProps) => {
       </Avatar>
       <div>
         <h3 className="font-medium text-lg capitalize">{name}</h3>
-        <Paragraph>{users} IPs</Paragraph>
+        <p className="text">{users} IPs</p>
       </div>
     </div>
   );

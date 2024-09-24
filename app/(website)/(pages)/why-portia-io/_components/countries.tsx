@@ -1,9 +1,9 @@
-import { countriesData } from "@/app/(website)/constants";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { Heading } from "@website/_components/ui/heading";
+import { FlagBox } from "@website/_components/ui/flag-box";
 
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Heading } from "@/app/(website)/_components/ui/heading";
-import { FlagBox } from "@/app/(website)/_components/ui/flag-box";
+import { countriesData } from "@website/constants";
 
 export const Countries = () => {
   return (
