@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Section } from "@/app/(website)/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { Section } from "@website/_components/ui/section";
 
 export const Map = () => {
   return (
@@ -12,6 +12,7 @@ export const Map = () => {
           alt="Map"
           className="w-full h-full object-contain"
           fill
+          priority
         />
       </Container>
     </Section>

@@ -1,6 +1,7 @@
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
+import Link from "next/link";
+
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
 
 import { Button } from "@/components/ui/button";
 
@@ -12,14 +13,14 @@ export const CTA = () => {
           <h1 className="text-3xl lg:text-4xl font-semibold">
             Do you need any help?
           </h1>
-          <Paragraph size="lg" className="max-w-3xl lg:text-xl">
+          <p className="text !text-lg max-w-3xl lg:text-xl">
             Feel free to contact with our team.
-          </Paragraph>
+          </p>
         </div>
 
         <div className="w-full flex flex-col md:flex-row items-center justify-end gap-3 basis-1/3">
           <Button variant="outline" className="w-full md:w-fit">
-            Contact us
+            <Link href="/contact-us">Contact us</Link>
           </Button>
         </div>
       </Container>

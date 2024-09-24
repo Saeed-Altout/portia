@@ -1,6 +1,5 @@
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
 
 import { columns, Location } from "./columns";
 import { DataTable } from "./data-table";
@@ -577,14 +576,14 @@ export const Content = async () => {
     <Section>
       <Container className="gap-y-8">
         <div className="w-full space-y-3 text-center lg:text-left">
-          <Paragraph>Our Available Proxy’s Locations</Paragraph>
+          <p className="text">Our Available Proxy’s Locations</p>
           <h3 className="text-2xl lg:text-3xl font-semibold">
             Choose your location’s needs
           </h3>
-          <Paragraph>
+          <p className="text">
             you can easily filter your results based on country, state, isp,
             rotation by this:
-          </Paragraph>
+          </p>
         </div>
         <DataTable columns={columns} data={data} />
       </Container>
