@@ -1,9 +1,7 @@
 import Link from "next/link";
 
-import { freqAQsData } from "@/app/(website)/constants";
-
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
 
 import {
   Accordion,
@@ -12,7 +10,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
+
+import { freqAQsData } from "@website/constants";
 
 export const Content = () => {
   return (
@@ -33,7 +32,7 @@ export const Content = () => {
                 <h3 className="font-medium text-lg text-left">{question}</h3>
               </AccordionTrigger>
               <AccordionContent>
-                <Paragraph>{answer}</Paragraph>
+                <p className="text">{answer}</p>
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -42,9 +41,9 @@ export const Content = () => {
         <div className="w-full flex items-start justify-between flex-col gap-5 md:flex-row p-8 bg-[#F5F5FA] rounded-[16px]">
           <div className="space-y-2 flex-1 max-w-3xl">
             <h1 className="text-xl font-medium">Still have questions?</h1>
-            <Paragraph>
+            <p className="text">
               Can’t find the answer you’re looking for? Please chat to our team.
-            </Paragraph>
+            </p>
           </div>
           <Button className="w-full md:w-fit" asChild>
             <Link href="/contact-us">Contact us</Link>
