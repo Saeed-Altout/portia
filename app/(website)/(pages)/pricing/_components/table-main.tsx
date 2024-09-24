@@ -1,11 +1,9 @@
 import Link from "next/link";
 
-import { pricingData } from "@/app/(website)/constants";
-
 import { Row } from "./table";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-
 import { Button } from "@/components/ui/button";
+
+import { pricingData } from "@website/constants";
 
 export const TableMain = () => {
   return (
@@ -38,9 +36,7 @@ export const TableMain = () => {
                     per month
                   </span>
                 </h3>
-                <Paragraph size="sm" className="text-left">
-                  {plan.description}
-                </Paragraph>
+                <p className="text !text-sm text-left">{plan.description}</p>
               </div>
               <Button className="w-full" asChild>
                 <Link href={plan.url}>Get started</Link>
