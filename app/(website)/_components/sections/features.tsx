@@ -1,13 +1,26 @@
-import { featuresData } from "@/app/(website)/constants";
+"use client";
 
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Heading } from "@/app/(website)/_components/ui/heading";
-import { FeatureCard } from "@/app/(website)/_components/cards/feature-card";
+import * as React from "react";
+
+import { Section } from "@website/_components/ui/section";
+import { Heading } from "@website/_components/ui/heading";
+import { Container } from "@website/_components/ui/container";
+import { FeatureCard } from "@website/_components/cards/feature-card";
+
+import { useScrollStore } from "@website/hooks/scroll-to";
+
+import { featuresData } from "@website/constants";
 
 export const Features = () => {
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const scrollStore = useScrollStore();
+
+  React.useEffect(() => {
+    scrollStore.setSectionRef(sectionRef);
+  }, []);
+
   return (
-    <Section>
+    <Section ref={sectionRef}>
       <Container className="gap-y-12 md:gap-y-16">
         <Heading
           title="What makes Portia.io Different?"

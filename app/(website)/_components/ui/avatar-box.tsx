@@ -4,8 +4,6 @@ import * as React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-
 interface AvatarBoxProps {
   name: string;
   imgUrl?: string;
@@ -21,7 +19,7 @@ export const AvatarBox = ({ name, imgUrl, position }: AvatarBoxProps) => {
       </Avatar>
       <div className="flex flex-col items-start py-2">
         <h3 className="text-lg font-medium">{name}</h3>
-        <Paragraph>{position}</Paragraph>
+        <p className="text">{position}</p>
       </div>
     </div>
   );

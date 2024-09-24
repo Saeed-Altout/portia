@@ -2,8 +2,6 @@
 
 import * as React from "react";
 
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-
 interface StatisticCardProps {
   value: string;
   name: string;
@@ -11,20 +9,20 @@ interface StatisticCardProps {
 }
 
 export const StatisticCard = ({
-  name,
-  value,
-  description,
-}: StatisticCardProps) => {
+  initialData,
+}: {
+  initialData: StatisticCardProps;
+}) => {
+  const { name, value, description } = initialData;
+
   return (
     <div className="space-y-3 pt-4 sm:pt-0 border-t-2 border-primary sm:border-none">
-      <h3 className="text-primary font-semibold text-5xl lg:text-6xl">
+      <span className="text-primary font-semibold text-5xl lg:text-6xl">
         {value}
-      </h3>
+      </span>
       <div className="space-y-2">
-        <Paragraph size="lg" className="sm:text-black-primary font-medium">
-          {name}
-        </Paragraph>
-        <Paragraph className="hidden sm:block">{description}</Paragraph>
+        <h2 className="text-black-200 text-lg font-medium">{name}</h2>
+        <p className="text hidden sm:block">{description}</p>
       </div>
     </div>
   );

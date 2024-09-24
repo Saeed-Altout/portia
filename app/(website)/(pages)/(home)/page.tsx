@@ -4,7 +4,7 @@ import {
   Features,
   Statistic,
   Testimonials,
-} from "@/app/(website)/_components/sections";
+} from "@website/_components/sections";
 import { Map, Hero, Plans } from "./_components";
 
 export default function HomePage() {

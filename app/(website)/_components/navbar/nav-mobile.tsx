@@ -24,7 +24,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { navbarLinks, navLinks, sidebarLinks } from "@/app/(website)/constants";
 
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/shared/logo";
 
 export const NavMobile = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);

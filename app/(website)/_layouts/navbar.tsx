@@ -3,11 +3,16 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/logo";
-import { NavMain, NavMobile } from "@/app/(website)/_components/navbar";
-import { Container } from "@/app/(website)/_components/ui/container";
+import { Logo } from "@/components/shared/logo";
+
+import { Container } from "@website/_components/ui/container";
+import { NavMain, NavMobile } from "@website/_components/navbar";
+
+import { useScrollStore } from "@website/hooks/scroll-to";
 
 export const Navbar = () => {
+  const scrollStore = useScrollStore();
+
   return (
     <header className="shadow-md h-20 w-full flex justify-center items-center">
       <Container className="w-full flex-row justify-between items-center">
@@ -18,7 +23,7 @@ export const Navbar = () => {
           <Button variant="ghost" className="text-gray-primary" asChild>
             <Link href="/auth/login">Log in</Link>
           </Button>
-          <Button>Get Started</Button>
+          <Button onClick={scrollStore.scrollToSection}>Get Started</Button>
         </div>
       </Container>
     </header>

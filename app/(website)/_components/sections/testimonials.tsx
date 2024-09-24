@@ -2,11 +2,9 @@
 
 import * as React from "react";
 
-import { testimonials } from "@/app/(website)/constants";
-
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { TestimonialCard } from "@/app/(website)/_components/cards/testimonial-card";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { TestimonialCard } from "@website/_components/cards/testimonial-card";
 
 import {
   Carousel,
@@ -16,15 +14,17 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
+import { testimonials } from "@website/constants";
+
 export const Testimonials = () => {
   return (
     <Section>
       <Container>
         <Carousel className="w-full">
           <CarouselContent>
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((item, index) => (
               <CarouselItem key={index}>
-                <TestimonialCard initialData={testimonial} />
+                <TestimonialCard initialData={item} />
               </CarouselItem>
             ))}
           </CarouselContent>

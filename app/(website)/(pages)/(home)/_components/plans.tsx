@@ -1,9 +1,11 @@
-import { plansData } from "@/app/(website)/constants";
+import * as React from "react";
 
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Heading } from "@/app/(website)/_components/ui/heading";
-import { PlanCard } from "@/app/(website)/_components/cards/plan-card";
+import { Section } from "@website/_components/ui/section";
+import { Heading } from "@website/_components/ui/heading";
+import { Container } from "@website/_components/ui/container";
+import { PlanCard } from "@website/_components/cards/plan-card";
+
+import { plansData } from "@website/constants";
 
 export const Plans = () => {
   return (

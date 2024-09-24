@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 
-import { AvatarBox } from "@/app/(website)/_components/ui/avatar-box";
+import { AvatarBox } from "@website/_components/ui/avatar-box";
 
 interface TestimonialCardProps {
   rate: number;

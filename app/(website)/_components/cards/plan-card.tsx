@@ -4,8 +4,6 @@ import * as React from "react";
 import Image from "next/image";
 import { Check } from "lucide-react";
 
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-
 import {
   Card,
   CardContent,
@@ -44,10 +42,8 @@ export const PlanCard = ({ initialData }: { initialData: PlanCardProps }) => {
           {price}
         </CardTitle>
         <div className="text-center space-y-2">
-          <Paragraph className="font-semibold text-black-primary" size="xl">
-            {type}
-          </Paragraph>
-          <Paragraph>who is this for?</Paragraph>
+          <h3 className="font-semibold text-xl">{type}</h3>
+          <p className="text">who is this for?</p>
         </div>
       </CardHeader>
       <CardContent className="space-y-8 p-8">
@@ -60,7 +56,7 @@ export const PlanCard = ({ initialData }: { initialData: PlanCardProps }) => {
               <span className="bg-[#B5F7F6] h-5 w-5 rounded-full p-[3px] flex justify-center items-center">
                 <Check className="text-[#26A6A4] h-4 w-4" />{" "}
               </span>
-              <Paragraph className="capitalize">{feature}</Paragraph>
+              <p className="text capitalize">{feature}</p>
             </div>
           ))}
         </div>

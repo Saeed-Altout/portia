@@ -1,29 +1,26 @@
-"use client";
-
 import Link from "next/link";
 
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { footerIcons, footerLinks } from "@/app/(website)/constants";
-import { Container } from "../_components/ui/container";
-import { Paragraph } from "../_components/ui/paragraph";
+import { Container } from "@website/_components/ui/container";
+import { footerIcons, footerLinks } from "@website/constants";
 
 const year = new Date().getFullYear();
 
 export const Footer = () => {
   return (
-    <footer className="bg-black-secondary pt-16 pb-12">
+    <footer className="bg-black-300 pt-16 pb-12">
       <Container>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
           <div className="sm:col-span-2 space-y-3">
             <div className="h-[30] w-[100px]">
               <Logo dark />
             </div>
-            <Paragraph variant="secondary">
+            <p className="text !text-gray-200">
               Your Gateway to Unlimited Browsing.
-            </Paragraph>
+            </p>
           </div>
           {footerLinks.map(({ title, links }, index) => (
             <div className="space-y-3 col-span-1" key={index}>
@@ -35,7 +32,7 @@ export const Footer = () => {
                   <li className="w-full" key={index}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-secondary hover:underline hover:text-gray-secondary/80"
+                      className="text-sm text-gray-200 hover:text-gray-400 hover:underline hover:text-gray-secondary/80"
                     >
                       {link.label}
                     </Link>
@@ -47,19 +44,19 @@ export const Footer = () => {
         </div>
         <Separator className="bg-[#4B4B57] mt-[64px] mb-[30px]" />
         <div className="w-full flex items-start md:items-center justify-between flex-col md:flex-row gap-5">
-          <Paragraph className="text-[#9C9CAD]">
+          <p className="text !text-gray-400">
             @ {year} Portia.io All rights reserved.
-          </Paragraph>
-          <ul className="flex items-center justify-center gap-x-2 -order-1 md:order-1">
+          </p>
+          <div className="flex items-center justify-center gap-x-2 -order-1 md:order-1">
             {footerIcons.map(({ name, icon: Icon, href }, index) => (
               <Button key={index} variant="link" size="icon" asChild>
                 <Link href={href}>
                   <span className="sr-only">{name}</span>
-                  <Icon className="h-6 w-6 text-[#9C9CAD]" />
+                  <Icon className="h-6 w-6 text-gray-400" />
                 </Link>
               </Button>
             ))}
-          </ul>
+          </div>
         </div>
       </Container>
     </footer>

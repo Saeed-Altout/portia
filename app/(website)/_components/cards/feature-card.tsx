@@ -1,8 +1,7 @@
 import * as React from "react";
 import { LucideIcon } from "lucide-react";
 
-import { Icon } from "@/app/(website)/_components/ui/icon";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
+import { Circle, Icon } from "@/components/shared/circle-icon";
 
 interface FeatureCardProps {
   icon: LucideIcon;
@@ -19,17 +18,12 @@ export const FeatureCard = ({
 
   return (
     <div className="space-y-5">
-      <Icon>
-        <IconItem className="text-primary h-5 w-5" />
-      </Icon>
+      <Circle>
+        <Icon icon={IconItem} />
+      </Circle>
       <div className="space-y-2">
-        <Paragraph
-          size="xl"
-          className="font-medium text-black-primary capitalize"
-        >
-          {title}
-        </Paragraph>
-        <Paragraph>{description}</Paragraph>
+        <h3 className="text-xl font-medium capitalize">{title}</h3>
+        <p className="text">{description}</p>
       </div>
     </div>
   );

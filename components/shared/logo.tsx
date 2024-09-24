@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 export const Logo = ({
   dark = false,
@@ -21,6 +21,7 @@ export const Logo = ({
           width={1000}
           height={1000}
           className="object-contain"
+          priority
         />
       )}
       {dark && (
@@ -30,6 +31,7 @@ export const Logo = ({
           width={1000}
           height={1000}
           className="object-contain"
+          priority
         />
       )}
     </Link>

@@ -1,8 +1,7 @@
 import * as React from "react";
 
-import { Label } from "@/app/(website)/_components/ui/label";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
 import { cn } from "@/lib/utils";
+import { Label } from "@website/_components/ui/label";
 
 interface HeadingProps {
   label?: string;
@@ -22,7 +21,7 @@ export const Heading = ({
         {label && <Label label={label} />}
         <h1 className="text-3xl lg:text-4xl font-semibold">{title}</h1>
       </div>
-      <Paragraph className="max-w-4xl lg:text-xl">{description}</Paragraph>
+      <p className="text max-w-4xl lg:text-xl">{description}</p>
     </div>
   );
 };

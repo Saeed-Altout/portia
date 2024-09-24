@@ -8,7 +8,7 @@ const sectionVariants = cva("h-full w-full", {
   variants: {
     space: {
       default: "py-20",
-      wide: "py-20",
+      wide: "py-24",
       narrow: "py-5",
     },
   },
