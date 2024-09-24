@@ -33,7 +33,7 @@ export const TableMobile = () => {
                 <div className="space-y-4">
                   <h3 className="font-semibold text-5xl text-left">
                     {plan.price}
-                    <span className="text-base font-medium text-gray-primary ml-2 tracking-wide text-nowrap">
+                    <span className="text-base font-medium text-gray-500 ml-2 tracking-wide text-nowrap">
                       per month
                     </span>
                   </h3>
@@ -72,14 +72,14 @@ export const TableMobile = () => {
 
             {/* Users */}
             <Row title="Users">
-              <td className="px-4 text-right flex-1 text-gray-primary">
+              <td className="px-4 text-right flex-1 text-gray-500">
                 {plan.overview.users}
               </td>
             </Row>
 
             {/* Individual Data */}
             <Row title="Individual Data" className="bg-[#F5F5FA]">
-              <td className="px-4 text-right flex-1 text-gray-primary">
+              <td className="px-4 text-right flex-1 text-gray-500">
                 {plan.overview.Individual_data}
               </td>
             </Row>
@@ -133,7 +133,7 @@ export const TableMobile = () => {
 
             {/* Analytics */}
             <Row title="Analytics" className="bg-[#F5F5FA]">
-              <td className="px-4 text-right flex-1 text-gray-primary">
+              <td className="px-4 text-right flex-1 text-gray-500">
                 {plan.analytics.analytics}
               </td>
             </Row>

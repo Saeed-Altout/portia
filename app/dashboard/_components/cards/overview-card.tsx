@@ -31,7 +31,7 @@ export const OverviewCard = ({
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />
           </Circle>
-          <h4 className="text-base font-medium text-gray-primary">{title}</h4>
+          <h4 className="text-base font-medium text-gray-500">{title}</h4>
         </div>
         <h2 className="text-4xl font-semibold">{content}</h2>
       </div>

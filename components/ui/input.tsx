@@ -32,7 +32,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {prefix && (
           <div className="relative flex items-center">
             <span className="absolute left-1 border-r border-input bg-background px-2 py-2">
-              <p className="text-sm text-gray-primary">{prefix}</p>
+              <p className="text-sm text-gray-500">{prefix}</p>
             </span>
             <input
               type={type}

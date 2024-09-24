@@ -3,7 +3,7 @@ import {
   FAQs,
   Features,
   Testimonials,
-} from "@/app/(website)/_components/sections";
+} from "@website/_components/sections";
 import { Hero, Plans } from "./_components";
 
 export default function OurPlansPage() {

@@ -42,7 +42,7 @@ export const DepositCard = ({
           <p className="font-semibold text-3xl">{price}</p>
           <div className="flex items-center justify-start gap-x-2">
             <ArrowUp className="h-5 w-5 text-[#26a6a4]" style={{ color }} />
-            <p className="text-sm text-gray-primary">Currently Spending</p>
+            <p className="text-sm text-gray-500">Currently Spending</p>
           </div>
         </div>
         <ChartContainer config={chartConfig} className="w-1/2 h-full">

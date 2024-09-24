@@ -34,7 +34,7 @@ export const TableMain = () => {
               <div className="space-y-4">
                 <h3 className="font-semibold text-4xl md:text-5xl text-left">
                   {plan.price}
-                  <span className="text-base font-medium text-gray-primary ml-2 tracking-wide text-nowrap">
+                  <span className="text-base font-medium text-gray-500 ml-2 tracking-wide text-nowrap">
                     per month
                   </span>
                 </h3>
@@ -79,7 +79,7 @@ export const TableMain = () => {
         {/* Users */}
         <Row title="Users">
           {pricingData.map((plan, index) => (
-            <td key={index} className="px-6 py-5 text-center text-gray-primary">
+            <td key={index} className="px-6 py-5 text-center text-gray-500">
               {plan.overview.users}
             </td>
           ))}
@@ -88,7 +88,7 @@ export const TableMain = () => {
         {/* Individual Data */}
         <Row title="Individual Data" className="bg-[#F5F5FA]">
           {pricingData.map((plan, index) => (
-            <td key={index} className="px-6 py-5 text-center text-gray-primary">
+            <td key={index} className="px-6 py-5 text-center text-gray-500">
               {plan.overview.Individual_data}
             </td>
           ))}
@@ -152,7 +152,7 @@ export const TableMain = () => {
         {/* Analytics */}
         <Row title="Analytics" className="bg-[#F5F5FA]">
           {pricingData.map((plan, index) => (
-            <td key={index} className="px-6 py-5 text-center text-gray-primary">
+            <td key={index} className="px-6 py-5 text-center text-gray-500">
               {plan.analytics.analytics}
             </td>
           ))}

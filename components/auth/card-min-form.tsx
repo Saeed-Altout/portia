@@ -72,7 +72,7 @@ export const CardMinForm = ({
           <Button variant="link" asChild>
             <Link
               href={backHrefButton}
-              className="flex items-center justify-center !text-gray-primary"
+              className="flex items-center justify-center !text-gray-500"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               {backLabelButton}

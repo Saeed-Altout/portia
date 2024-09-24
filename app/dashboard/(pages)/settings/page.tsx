@@ -125,7 +125,7 @@ export default function SettingsPage() {
         <div className="space-y-6 col-span-1 lg:col-span-2">
           <div className="space-y-2">
             <h3 className="font-medium text-lg">Password</h3>
-            <p className="text-sm text-gray-primary">
+            <p className="text-sm text-gray-500">
               Please enter your current password to change your password
             </p>
           </div>
@@ -157,7 +157,7 @@ export default function SettingsPage() {
         <div className="space-y-6 col-span-1 lg:col-span-2">
           <div className="space-y-2">
             <h3 className="font-medium text-lg">Affiliate link</h3>
-            <p className="text-sm text-gray-primary">
+            <p className="text-sm text-gray-500">
               Share this link to with your friends and network to start
               receiving commission
             </p>
@@ -175,7 +175,7 @@ export default function SettingsPage() {
           <div className="space-y-6 pt-12">
             <div className="space-y-2">
               <h3 className="font-medium text-lg">Export Data</h3>
-              <p className="text-sm text-gray-primary max-w-[551px]">
+              <p className="text-sm text-gray-500 max-w-[551px]">
                 you can easily export all your data by clicking the button below
                 your data will include all your proxies all your deposits
               </p>

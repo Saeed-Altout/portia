@@ -33,7 +33,7 @@ export const PlanCard = ({
         </Circle>
         <div>
           <h4 className="text-sm font-medium">{name}</h4>
-          <p className="text-sm text-gray-primary">{description}</p>
+          <p className="text-sm text-gray-500">{description}</p>
         </div>
       </div>
       <div className="w-full md:w-fit flex flex-row md:flex-col items-center md:items-start justify-start gap-4 md:gap-1">

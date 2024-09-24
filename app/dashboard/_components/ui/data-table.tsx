@@ -155,7 +155,7 @@ export function DataTable<TData, TValue>({
           </div>
 
           <div className="block md:hidden">
-            <p className="text-sm text-gray-primary">
+            <p className="text-sm text-gray-500">
               Page {currentPage + 1} of {totalPages}
             </p>
           </div>

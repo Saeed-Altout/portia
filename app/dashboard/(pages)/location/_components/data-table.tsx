@@ -98,7 +98,7 @@ export function DataTable<TData, TValue>({
             <SelectValue placeholder="Country" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="None" className="text-gray-primary">
+            <SelectItem value="None" className="text-gray-500">
               None
             </SelectItem>
             {["USA", "Germany", "France", "Canada"].map((item, index) => (
@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
             <SelectValue placeholder="State" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="None" className="text-gray-primary">
+            <SelectItem value="None" className="text-gray-500">
               None
             </SelectItem>
             {["NY", "California", "Berlin", "Paris", "Arizona"].map(
@@ -148,7 +148,7 @@ export function DataTable<TData, TValue>({
             <SelectValue placeholder="ISP" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="None" className="text-gray-primary">
+            <SelectItem value="None" className="text-gray-500">
               None
             </SelectItem>
             {["O2/READING", "VODAFONE/FARNBOROUGH", "THREE/SHEFFIELD"].map(
@@ -174,7 +174,7 @@ export function DataTable<TData, TValue>({
             <SelectValue placeholder="IP Rotation" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="None" className="text-gray-primary">
+            <SelectItem value="None" className="text-gray-500">
               None
             </SelectItem>
             {["5 min", "15 min", "30 min", "1 hour"].map((item, index) => (
@@ -271,7 +271,7 @@ export function DataTable<TData, TValue>({
           </div>
 
           <div className="block md:hidden">
-            <p className="text-sm text-gray-primary">
+            <p className="text-sm text-gray-500">
               Page {currentPage + 1} of {totalPages}
             </p>
           </div>

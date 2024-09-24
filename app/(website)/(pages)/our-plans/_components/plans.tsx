@@ -1,11 +1,10 @@
 import Link from "next/link";
 
-import { plansData2 } from "@/app/(website)/constants";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { PlanDetailsCard } from "@website/_components/cards/plan-details-card";
 
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-import { PlanDetailsCard } from "@/app/(website)/_components/cards/plan-details-card";
+import { plansData2 } from "@website/constants";
 
 export const Plans = () => {
   return (
@@ -18,7 +17,7 @@ export const Plans = () => {
         </div>
 
         <div className="flex items-center justify-center w-full pt-28">
-          <Paragraph>Need more details about our plans ?</Paragraph>
+          <p className="text">Need more details about our plans ?</p>
           <Link href="/pricing" className="text-primary underline ml-2">
             check compare plans page
           </Link>
