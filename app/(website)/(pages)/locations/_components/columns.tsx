@@ -1,9 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info } from "lucide-react";
+
+import { CellActions } from "./cell-actions";
 
 export type Location = {
   id: string;
@@ -38,19 +37,6 @@ export const columns: ColumnDef<Location>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => {
-      return (
-        <div className="w-fit ml-auto">
-          <Button
-            className={cn("bg-[#3F41BF]", !row.original.connect && "px-5")}
-            size="sm"
-            disabled={row.original.connect}
-          >
-            {row.original.connect && <Info className="h-3 w-3 mr-2 mb-0.5" />}
-            Continue
-          </Button>
-        </div>
-      );
-    },
+    cell: ({ row }) => <CellActions data={row.original} />,
   },
 ];
