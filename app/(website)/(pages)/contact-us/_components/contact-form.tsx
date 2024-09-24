@@ -18,7 +18,7 @@ import { CustomField, FiledType } from "@/components/ui/custom-field";
 import {
   formContactSchema,
   FormContactValues,
-  initialValues,
+  initialFormContactValues,
 } from "@website/schema";
 import { countriesName } from "@website/constants";
 
@@ -27,7 +27,7 @@ export const ContactForm = () => {
 
   const form = useForm<FormContactValues>({
     resolver: zodResolver(formContactSchema),
-    defaultValues: initialValues,
+    defaultValues: initialFormContactValues,
   });
 
   const onSubmit = (values: FormContactValues) => {

@@ -1,4 +1,4 @@
-import { CTA } from "@/app/(website)/_components/sections";
+import { CTA } from "@website/_components/sections";
 import { AllBlogs, Hero, RecentBlogs } from "./_components";
 
 export default function BlogsPage() {

@@ -25,10 +25,17 @@ export const formContactSchema = z.object({
 
 export type FormContactValues = z.infer<typeof formContactSchema>;
 
-export const initialValues = {
+export const initialFormContactValues = {
   firstName: "",
   lastName: "",
   email: "",
   phoneNumber: { country: "", number: "" },
   agreeToPrivacyPolicy: false,
 };
+
+export const searchByEmailSchema = z.object({
+  email: z.string().email(),
+});
+
+export type SearchByEmailSchema = z.infer<typeof searchByEmailSchema>;
+export const initialSearchByEmailValues = { email: "" };

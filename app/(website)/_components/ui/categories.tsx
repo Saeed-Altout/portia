@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { renderStyleCategory } from "@/app/(website)/utils/render-style-category";
+import { renderStyleCategory } from "@website/utils/render-style-category";
 
 interface CategoriesProps {
   items: string[];

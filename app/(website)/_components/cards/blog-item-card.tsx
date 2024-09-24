@@ -6,9 +6,8 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
-import { Label } from "@/app/(website)/_components/ui/label";
-import { Paragraph } from "@/app/(website)/_components/ui/paragraph";
-import { Categories } from "@/app/(website)/_components/ui/categories";
+import { Label } from "@website/_components/ui/label";
+import { Categories } from "@website/_components/ui/categories";
 
 interface BlogItemCardProps {
   title: string;
@@ -36,6 +35,7 @@ export const BlogItemCard = ({
         className="max-h-[240px] w-full h-full object-cover flex-1"
         width={1000}
         height={1000}
+        priority
       />
       <div className="space-y-6 lg:px-6 lg:max-w-[250px]">
         <div className="space-y-3">
@@ -50,7 +50,7 @@ export const BlogItemCard = ({
               <ArrowUpRight className="h-6 w-6" />
             </Link>
           </div>
-          <Paragraph>{description}</Paragraph>
+          <p className="text">{description}</p>
         </div>
         <Categories items={categories} />
       </div>

@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { HeadingPage } from "@/app/(website)/_components/ui/heading-page";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { HeadingPage } from "@website/_components/ui/heading-page";
 
 import {
   Form,
@@ -21,19 +21,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const formSchema = z.object({
-  email: z.string().email(),
-});
+import {
+  initialSearchByEmailValues,
+  searchByEmailSchema,
+  SearchByEmailSchema,
+} from "@website/schema";
 
 export const Hero = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
+  const form = useForm<SearchByEmailSchema>({
+    resolver: zodResolver(searchByEmailSchema),
+    defaultValues: initialSearchByEmailValues,
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: SearchByEmailSchema) => {
     console.log(values);
   };
 

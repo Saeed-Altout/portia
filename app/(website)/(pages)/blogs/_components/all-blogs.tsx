@@ -2,11 +2,9 @@
 
 import * as React from "react";
 
-import { blogsData } from "@/app/(website)/constants";
-
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { BlogCard } from "@/app/(website)/_components/cards/blog-card";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { BlogCard } from "@website/_components/cards/blog-card";
 
 import {
   Pagination,
@@ -18,6 +16,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Separator } from "@/components/ui/separator";
+
+import { blogsData } from "@website/constants";
 
 const fetchPaginatedBlogs = (page = 1, limit = 6) => {
   return new Promise((resolve) => {

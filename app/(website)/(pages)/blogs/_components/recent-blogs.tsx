@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import { blogsData } from "@/app/(website)/constants";
+import { Section } from "@website/_components/ui/section";
+import { Container } from "@website/_components/ui/container";
+import { BlogCard } from "@website/_components/cards/blog-card";
+import { BlogItemCard } from "@website/_components/cards/blog-item-card";
 
-import { Section } from "@/app/(website)/_components/ui/section";
-import { Container } from "@/app/(website)/_components/ui/container";
-import { BlogCard } from "@/app/(website)/_components/cards/blog-card";
-import { BlogItemCard } from "@/app/(website)/_components/cards/blog-item-card";
+import { blogsData } from "@website/constants";
 
 export const RecentBlogs = () => {
   return (
