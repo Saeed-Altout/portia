@@ -5,12 +5,24 @@ export const loginSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
   isRememberMe: z.boolean().optional(),
 });
+export type LoginFormValues = z.infer<typeof loginSchema>;
+export const initialLoginFormValues = {
+  email: "",
+  password: "",
+  isRememberMe: false,
+};
 
 export const registerSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
+export type RegisterFormValues = z.infer<typeof registerSchema>;
+export const initialRegisterFormValues = {
+  username: "",
+  email: "",
+  password: "",
+};
 
 export const newPasswordSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),

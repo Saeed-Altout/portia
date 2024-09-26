@@ -1,15 +1,14 @@
+import { AxiosError } from "axios";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 import { _axios } from "@/lib/axios";
 
-const faqsKey = "faq";
+const key = ["faq"];
 const endpoint = "/get-faq";
 
 export const useGetFaqsQuery = (
-  options?: UseQueryOptions<FaqsRootObj<Faq[]>, HttpError>
+  options?: UseQueryOptions<FaqsRootObj<Faq[]>, AxiosError<ErrorResponse>>
 ) => {
-  const key = [faqsKey];
-
   return useQuery({
     queryKey: key,
     queryFn: () =>

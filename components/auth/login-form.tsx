@@ -1,16 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 
-import { z } from "zod";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -20,38 +15,37 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import { ShowSocial } from "@/components/auth/show-social";
 import { CardForm } from "@/components/auth/card-form";
+import { ShowSocial } from "@/components/auth/show-social";
 
-import { loginSchema } from "@/schemas";
+import {
+  loginSchema,
+  LoginFormValues,
+  initialLoginFormValues,
+} from "@/schemas";
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+import { useLoginMutation } from "@/hooks/auth/use-login";
 
 export const LoginForm = () => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { mutateAsync: loginMutation, isPending } = useLoginMutation();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      isRememberMe: false,
-    },
+    defaultValues: initialLoginFormValues,
   });
 
-  async function onSubmit(data: LoginFormValues) {
-    setIsLoading(true);
+  const onSubmit = async (data: LoginFormValues) => {
     try {
-      console.log(data);
-      router.push("/");
+      await loginMutation({ email: data.email, password: data.password });
+      toast.success("Login is success");
     } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+      toast.success("Login is failed");
     }
-  }
+  };
 
   return (
     <CardForm
@@ -74,7 +68,7 @@ export const LoginForm = () => {
                     <Input
                       {...field}
                       type="email"
-                      disabled={isLoading}
+                      disabled={isPending}
                       placeholder="Enter your email"
                     />
                   </FormControl>
@@ -94,7 +88,7 @@ export const LoginForm = () => {
                     <Input
                       {...field}
                       type="password"
-                      disabled={isLoading}
+                      disabled={isPending}
                       placeholder="********"
                     />
                   </FormControl>
@@ -132,10 +126,10 @@ export const LoginForm = () => {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full" disabled={isPending}>
               Sign in
             </Button>
-            <ShowSocial isLoading={isLoading} />
+            <ShowSocial isLoading={isPending} />
           </div>
         </form>
       </Form>

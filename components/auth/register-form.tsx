@@ -1,14 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { z } from "zod";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,38 +13,40 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-import { ShowSocial } from "@/components/auth/show-social";
 import { CardForm } from "@/components/auth/card-form";
+import { ShowSocial } from "@/components/auth/show-social";
 
-import { registerSchema } from "@/schemas";
-
-type RegisterFormValues = z.infer<typeof registerSchema>;
+import {
+  initialRegisterFormValues,
+  RegisterFormValues,
+  registerSchema,
+} from "@/schemas";
+import { useRegisterMutation } from "@/hooks/auth/use-register";
 
 export const RegisterForm = () => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { mutateAsync: registerMutation, isPending } = useRegisterMutation();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
+    defaultValues: initialRegisterFormValues,
   });
 
-  async function onSubmit(data: RegisterFormValues) {
-    setIsLoading(true);
+  const onSubmit = async (data: RegisterFormValues) => {
     try {
-      console.log(data);
-      router.push("/");
+      await registerMutation({
+        first_name: data.username.split(" ")[0],
+        last_name: data.username.split(" ")[1],
+        email: data.email,
+        password: data.password,
+      });
+      toast.success("Register is success");
     } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+      toast.success("Register is failed");
     }
-  }
+  };
 
   return (
     <CardForm
@@ -74,7 +71,7 @@ export const RegisterForm = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      disabled={isLoading}
+                      disabled={isPending}
                       placeholder="Enter your name"
                     />
                   </FormControl>
@@ -92,7 +89,7 @@ export const RegisterForm = () => {
                     <Input
                       {...field}
                       type="email"
-                      disabled={isLoading}
+                      disabled={isPending}
                       placeholder="Enter your email"
                     />
                   </FormControl>
@@ -112,7 +109,7 @@ export const RegisterForm = () => {
                     <Input
                       {...field}
                       type="password"
-                      disabled={isLoading}
+                      disabled={isPending}
                       placeholder="Create a password"
                     />
                   </FormControl>
@@ -125,10 +122,10 @@ export const RegisterForm = () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full" disabled={isPending}>
               Create account
             </Button>
-            <ShowSocial isLoading={isLoading} />
+            <ShowSocial isLoading={isPending} />
           </div>
         </form>
       </Form>

@@ -43,7 +43,7 @@ export const HttpResponseInterceptor = () => {
           console.error(
             "Unauthorized: You need to login to access this resource."
           );
-          // Optionally handle token expiration or redirect to login page
+          window.location.href = "/login";
           break;
 
         case 403:

@@ -53,10 +53,9 @@ declare type SetNewPasswordResponse = {
 };
 
 // Handling Error
-declare type HttpError = {
-  message: string;
-  error: string;
-  args?: string[];
+declare type ErrorResponse = {
+  success: boolean;
+  message: string | string[];
 };
 
 // FAQS

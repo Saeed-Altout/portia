@@ -9,8 +9,7 @@ import {
 
 export default function middleware(req: NextRequest) {
   const { nextUrl } = req;
-  // const isLoggedIn = req.cookies.get("accessToken");
-  const isLoggedIn = true;
+  const isLoggedIn = req.cookies.get("accessToken");
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
