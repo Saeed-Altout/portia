@@ -43,6 +43,14 @@ declare type SendEmailToResetPasswordResponse = {
   success: boolean;
   message: string | string[];
 };
+
+declare type SendEmailToResetPasswordBody = {
+  email: string;
+};
+declare type SendEmailToResetPasswordResponse = {
+  success: boolean;
+  message: string | string[];
+};
 declare type SetNewPasswordBody = {
   password: string;
   password_confirmation: string;
