@@ -13,7 +13,6 @@ export default function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("accessToken")?.value || null;
 
   const isLoggedIn = !!accessToken;
-  console.log(accessToken);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
