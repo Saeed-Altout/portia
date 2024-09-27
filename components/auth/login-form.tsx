@@ -29,8 +29,10 @@ import {
 } from "@/schemas";
 
 import { useLoginMutation } from "@/hooks/auth/use-login";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
+  const router = useRouter();
   const { mutateAsync: loginMutation, isPending } = useLoginMutation();
 
   const form = useForm<LoginFormValues>({
@@ -40,8 +42,12 @@ export const LoginForm = () => {
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      await loginMutation({ email: data.email, password: data.password });
-      toast.success("Login is success");
+      const res = await loginMutation({
+        email: data.email,
+        password: data.password,
+      });
+      router.refresh();
+      toast.success(res.message);
     } catch (error) {
       toast.success("Login is failed");
     }

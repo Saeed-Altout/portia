@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
 import { _axios } from "@/lib/axios";
-import { authService } from "@/api/auth-service";
+import { authService } from "@/services/auth-service";
 
 const key = ["register"];
 

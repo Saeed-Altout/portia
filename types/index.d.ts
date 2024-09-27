@@ -79,3 +79,10 @@ declare type Faq = {
   created_at: Date | string;
   updated_at: Date | string;
 };
+
+// User
+declare type User = {
+  id: string;
+  name: string;
+  email: string;
+};

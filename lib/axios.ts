@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import localStorage from "@/services/local-storage";
+import localStorage from "@/services/local-storage-service";
 
 export const _axios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

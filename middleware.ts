@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 import {
   DEFAULT_LOGIN_REDIRECT,
@@ -9,7 +10,10 @@ import {
 
 export default function middleware(req: NextRequest) {
   const { nextUrl } = req;
-  const isLoggedIn = req.cookies.get("accessToken");
+  const accessToken = req.cookies.get("accessToken")?.value || null;
+
+  const isLoggedIn = !!accessToken;
+  console.log(accessToken);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
@@ -26,12 +30,14 @@ export default function middleware(req: NextRequest) {
     return null;
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
-    }
+  if (isAuthRoute && isLoggedIn) {
+    return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  } else if (isAuthRoute && !isLoggedIn) {
+    return null;
+  }
 
+  if (!isLoggedIn && !isPublicRoute) {
+    const callbackUrl = nextUrl.pathname + nextUrl.search;
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
     return Response.redirect(
@@ -39,7 +45,7 @@ export default function middleware(req: NextRequest) {
     );
   }
 
-  return null;
+  return NextResponse.next();
 }
 
 export const config = {
