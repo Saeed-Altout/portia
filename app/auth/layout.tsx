@@ -1,10 +1,3 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Secure login and authentication page for Portia.io",
-};
-
 export default function AuthLayout({
   children,
 }: Readonly<{

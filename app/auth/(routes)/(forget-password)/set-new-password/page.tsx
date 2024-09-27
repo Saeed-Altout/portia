@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { toast } from "sonner";
 import { Key } from "lucide-react";
-
-import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -20,29 +19,34 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardMinForm } from "@/components/auth/card-min-form";
 
-import { newPasswordSchema } from "@/schemas";
+import localStorage from "@/services/local-storage-service";
+import { useSetNewPasswordMutation } from "@/hooks/auth/use-set-new-password";
 
-type NewPasswordFormValues = z.infer<typeof newPasswordSchema>;
+import {
+  setNewPasswordSchema,
+  SetNewPasswordFormValues,
+  initialSetNewPasswordValues,
+} from "@/schemas";
+import { Routes } from "@/config";
 
-export const SetPasswordForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+export default function SetNewPasswordPage() {
+  const router = useRouter();
+  const { mutateAsync: setNewPasswordMutation, isPending } =
+    useSetNewPasswordMutation();
 
-  const form = useForm<NewPasswordFormValues>({
-    resolver: zodResolver(newPasswordSchema),
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
+  const form = useForm<SetNewPasswordFormValues>({
+    resolver: zodResolver(setNewPasswordSchema),
+    defaultValues: initialSetNewPasswordValues,
   });
 
-  async function onSubmit(data: NewPasswordFormValues) {
-    setIsLoading(true);
+  async function onSubmit(data: SetNewPasswordFormValues) {
     try {
-      console.log(data);
+      const res = await setNewPasswordMutation(data);
+      toast.success(res.message);
+      localStorage.removeEmail();
+      router.push(Routes.PASSWORD_RESET);
     } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+      toast.error("Something went wrong!");
     }
   }
 
@@ -50,13 +54,13 @@ export const SetPasswordForm = () => {
     <CardMinForm
       title="Set new password"
       description="Your new password must be different to previously used passwords."
-      backHrefButton="/auth/login"
+      backHrefButton={Routes.LOGIN}
       backLabelButton="Back to log in"
       icon={Key}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-5">
+          <div className="space-y-4">
             <FormField
               control={form.control}
               name="password"
@@ -69,7 +73,7 @@ export const SetPasswordForm = () => {
                     <Input
                       {...field}
                       type="password"
-                      disabled={isLoading}
+                      disabled={isPending}
                       placeholder="*********"
                     />
                   </FormControl>
@@ -82,7 +86,7 @@ export const SetPasswordForm = () => {
             />
             <FormField
               control={form.control}
-              name="confirmPassword"
+              name="password_confirmation"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm font-medium">
@@ -92,7 +96,7 @@ export const SetPasswordForm = () => {
                     <Input
                       {...field}
                       type="password"
-                      disabled={isLoading}
+                      disabled={isPending}
                       placeholder="*********"
                     />
                   </FormControl>
@@ -101,11 +105,11 @@ export const SetPasswordForm = () => {
               )}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full" disabled={isPending}>
             Reset password
           </Button>
         </form>
       </Form>
     </CardMinForm>
   );
-};
+}

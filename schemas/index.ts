@@ -24,22 +24,35 @@ export const initialRegisterFormValues = {
   password: "",
 };
 
-export const newPasswordSchema = z.object({
+export const setNewPasswordSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z
+  password_confirmation: z
     .string()
     .min(8, "Confirm Password must be at least 8 characters"),
 });
+export type SetNewPasswordFormValues = z.infer<typeof setNewPasswordSchema>;
+export const initialSetNewPasswordValues = {
+  password: "",
+  password_confirmation: "",
+};
 
-export const forgetPasswordSchema = z.object({
+export const sendEmailToResetPasswordSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
+export type SendEmailToResetPasswordFormValues = z.infer<
+  typeof sendEmailToResetPasswordSchema
+>;
+export const initialSendEmailToResetPasswordValues = {
+  email: "",
+};
 
-export const codeVerificationSchema = z.object({
+export const confirmVerificationCodeSchema = z.object({
   code: z.string().min(6, "Code is required!"),
 });
 
-export type CodeVerificationFormValues = z.infer<typeof codeVerificationSchema>;
-export const initialCodeVerificationValues = {
+export type ConfirmVerificationCodeFormValues = z.infer<
+  typeof confirmVerificationCodeSchema
+>;
+export const initialConfirmVerificationCodeValues = {
   code: "",
 };

@@ -11,20 +11,20 @@ const sendEmailToResetPasswordEndpoint = "/auth/send-email-to-reset-password";
 const setNewPasswordEndpoint = "/auth/set-new-password";
 
 export const authService = {
-  async register(user: RegisterBody): Promise<RegisterResponse> {
+  async register(data: RegisterBody): Promise<RegisterResponse> {
     try {
       const response: AxiosResponse<RegisterResponse> =
-        await _axios.post<RegisterResponse>(registerEndpoint, user);
+        await _axios.post<RegisterResponse>(registerEndpoint, data);
       return response.data;
     } catch (error) {
       throw error;
     }
   },
 
-  async login(user: LoginBody): Promise<LoginResponse> {
+  async login(data: LoginBody): Promise<LoginResponse> {
     try {
       const response: AxiosResponse<LoginResponse> =
-        await _axios.post<LoginResponse>(loginEndpoint, user);
+        await _axios.post<LoginResponse>(loginEndpoint, data);
       return response.data;
     } catch (error) {
       throw error;
@@ -48,13 +48,13 @@ export const authService = {
   },
 
   async confirmVerificationCode(
-    user: ConfirmVerificationCodeBody
+    data: ConfirmVerificationCodeBody
   ): Promise<ConfirmVerificationCodeResponse> {
     try {
       const response: AxiosResponse<ConfirmVerificationCodeResponse> =
         await _axios.post<ConfirmVerificationCodeResponse>(
           confirmVerificationCodeEndpoint,
-          user
+          data
         );
       return response.data;
     } catch (error) {
@@ -63,13 +63,13 @@ export const authService = {
   },
 
   async resendVerificationCode(
-    user: ResendVerificationCodeBody
+    email: ResendVerificationCodeBody
   ): Promise<ResendVerificationCodeResponse> {
     try {
       const response: AxiosResponse<ResendVerificationCodeResponse> =
         await _axios.post<ResendVerificationCodeResponse>(
           confirmVerificationCodeEndpoint,
-          user
+          email
         );
       return response.data;
     } catch (error) {
@@ -78,13 +78,13 @@ export const authService = {
   },
 
   async sendEmailToResetPassword(
-    user: SendEmailToResetPasswordBody
+    email: SendEmailToResetPasswordBody
   ): Promise<SendEmailToResetPasswordResponse> {
     try {
       const response: AxiosResponse<SendEmailToResetPasswordResponse> =
         await _axios.post<SendEmailToResetPasswordResponse>(
           sendEmailToResetPasswordEndpoint,
-          user
+          email
         );
       return response.data;
     } catch (error) {
@@ -93,11 +93,11 @@ export const authService = {
   },
 
   async setNewPassword(
-    user: SetNewPasswordBody
+    data: SetNewPasswordBody
   ): Promise<SetNewPasswordResponse> {
     try {
       const response: AxiosResponse<SetNewPasswordResponse> =
-        await _axios.post<SetNewPasswordResponse>(setNewPasswordEndpoint, user);
+        await _axios.post<SetNewPasswordResponse>(setNewPasswordEndpoint, data);
       return response.data;
     } catch (error) {
       throw error;

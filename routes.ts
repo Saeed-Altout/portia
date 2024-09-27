@@ -18,7 +18,10 @@ export const authRoutes = [
   "/auth/code-verification",
   "/auth/email-verified",
 
-  "/auth/forget-password",
+  "/auth/send-email-to-reset-password",
+  "/auth/check-your-email",
+  "/auth/set-new-password",
+  "/auth/password-reset",
 ];
 
 /**

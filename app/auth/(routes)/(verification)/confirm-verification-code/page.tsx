@@ -1,13 +1,13 @@
 "use client";
 
+import * as React from "react";
+import { useRouter } from "next/navigation";
+
 import { toast } from "sonner";
 import { Mail } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
 import {
   Form,
@@ -25,38 +25,48 @@ import {
 import { Button } from "@/components/ui/button";
 import { CardMinForm } from "@/components/auth/card-min-form";
 
-import {
-  codeVerificationSchema,
-  CodeVerificationFormValues,
-  initialCodeVerificationValues,
-} from "@/schemas";
-import { useConfirmVerificationCodeMutation } from "@/hooks/auth/use-confirm-verification-code";
 import localStorage from "@/services/local-storage-service";
+import { useConfirmVerificationCodeMutation } from "@/hooks/auth/use-confirm-verification-code";
 
-export const CodeVerificationForm = () => {
+import {
+  confirmVerificationCodeSchema,
+  ConfirmVerificationCodeFormValues,
+  initialConfirmVerificationCodeValues,
+} from "@/schemas";
+import { Routes } from "@/config";
+
+export default function ConfirmVerificationCodePage() {
+  const router = useRouter();
+  const [email, setEmail] = React.useState<string>("");
   const { mutateAsync: confirmVerificationCode, isPending } =
     useConfirmVerificationCodeMutation();
-  const router = useRouter();
 
-  const form = useForm<CodeVerificationFormValues>({
-    resolver: zodResolver(codeVerificationSchema),
-    defaultValues: initialCodeVerificationValues,
+  React.useEffect(() => {
+    const currentEmail = localStorage.getEmail();
+    if (currentEmail) {
+      setEmail(email);
+    } else {
+      router.push(Routes.REGISTER);
+    }
+  }, [router, email]);
+
+  const form = useForm<ConfirmVerificationCodeFormValues>({
+    resolver: zodResolver(confirmVerificationCodeSchema),
+    defaultValues: initialConfirmVerificationCodeValues,
   });
 
-  const onSubmit = async (data: CodeVerificationFormValues) => {
+  const onSubmit = async (data: ConfirmVerificationCodeFormValues) => {
     try {
-      const email = localStorage.getEmail();
-      if (!email) {
-        throw new Error("Email is not found");
-      }
       const res = await confirmVerificationCode({
         code: data.code,
         email: email,
       });
+
+      localStorage.removeEmail();
       toast.success(
         res.message || res.message[0] || "Verification code is valid"
       );
-      router.push("/auth/email-verified");
+      router.push(Routes.EMAIL_VERIFIED);
     } catch (error) {
       toast.error("Verification code is invalid");
     }
@@ -66,15 +76,15 @@ export const CodeVerificationForm = () => {
     <CardMinForm
       title="Check your email"
       description="We sent a password reset link to"
-      backHrefButton="/auth/login"
+      backHrefButton={Routes.LOGIN}
       backLabelButton="Back to log in"
-      email="Jafar_shamma@gmail.com"
+      email={email}
       icon={Mail}
       redirect
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-5 flex justify-center items-center">
+          <div className="flex justify-center items-center gap-y-4">
             <FormField
               control={form.control}
               name="code"
@@ -110,4 +120,4 @@ export const CodeVerificationForm = () => {
       </Form>
     </CardMinForm>
   );
-};
+}
