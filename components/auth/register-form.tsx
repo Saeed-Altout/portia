@@ -2,6 +2,7 @@
 
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -25,9 +26,11 @@ import {
   registerSchema,
 } from "@/schemas";
 import { useRegisterMutation } from "@/hooks/auth/use-register";
+import localStorage from "@/services/local-storage-service";
 
 export const RegisterForm = () => {
   const { mutateAsync: registerMutation, isPending } = useRegisterMutation();
+  const router = useRouter();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -35,14 +38,18 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = async (data: RegisterFormValues) => {
+    const username: string[] = data.username.split(" ");
+
     try {
-      await registerMutation({
-        first_name: data.username.split(" ")[0],
-        last_name: data.username.split(" ")[1],
+      const res = await registerMutation({
+        first_name: username[0],
+        last_name: username[1],
         email: data.email,
         password: data.password,
       });
-      toast.success("Register is success");
+      router.push("/auth/email-verification");
+      localStorage.setEmail(data.email);
+      toast.success(res.message || res.message[0] || "Register is success");
     } catch (error) {
       toast.success("Register is failed");
     }

@@ -13,6 +13,11 @@ export const publicRoutes = [""];
 export const authRoutes = [
   "/auth/login",
   "/auth/register",
+
+  "/auth/email-verification",
+  "/auth/code-verification",
+  "/auth/email-verified",
+
   "/auth/forget-password",
 ];
 

@@ -1,14 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { Mail } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CardMinForm } from "@/components/auth/card-min-form";
 
 export const EmailVerificationForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   return (
     <CardMinForm
       title="Check your email"
@@ -18,8 +16,8 @@ export const EmailVerificationForm = () => {
       email="Jafar_shamma@gmail.com"
       icon={Mail}
     >
-      <Button className="w-full" disabled={isLoading}>
-        Enter code manually
+      <Button className="w-full">
+        <Link href="/auth/code-verification">Enter code manually</Link>
       </Button>
     </CardMinForm>
   );

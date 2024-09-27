@@ -87,6 +87,18 @@ export class LocalStorage {
   public removeUser(): this {
     return this.removeItem("user");
   }
+
+  public setEmail(email: string): this {
+    return this.setItem("email", email);
+  }
+
+  public getEmail(): string | null {
+    return this.getItem<string>("email");
+  }
+
+  public removeEmail(): this {
+    return this.removeItem("email");
+  }
 }
 
 export default LocalStorage.getInstance();

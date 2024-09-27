@@ -38,3 +38,8 @@ export const forgetPasswordSchema = z.object({
 export const codeVerificationSchema = z.object({
   code: z.string().min(6, "Code is required!"),
 });
+
+export type CodeVerificationFormValues = z.infer<typeof codeVerificationSchema>;
+export const initialCodeVerificationValues = {
+  code: "",
+};

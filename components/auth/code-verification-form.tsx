@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { toast } from "sonner";
 import { Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -22,30 +24,43 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { CardMinForm } from "@/components/auth/card-min-form";
-import { codeVerificationSchema } from "@/schemas";
 
-type CodeVerificationFormValues = z.infer<typeof codeVerificationSchema>;
+import {
+  codeVerificationSchema,
+  CodeVerificationFormValues,
+  initialCodeVerificationValues,
+} from "@/schemas";
+import { useConfirmVerificationCodeMutation } from "@/hooks/auth/use-confirm-verification-code";
+import localStorage from "@/services/local-storage-service";
 
 export const CodeVerificationForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { mutateAsync: confirmVerificationCode, isPending } =
+    useConfirmVerificationCodeMutation();
+  const router = useRouter();
 
   const form = useForm<CodeVerificationFormValues>({
     resolver: zodResolver(codeVerificationSchema),
-    defaultValues: {
-      code: "",
-    },
+    defaultValues: initialCodeVerificationValues,
   });
 
-  async function onSubmit(data: CodeVerificationFormValues) {
-    setIsLoading(true);
+  const onSubmit = async (data: CodeVerificationFormValues) => {
     try {
-      console.log(data);
+      const email = localStorage.getEmail();
+      if (!email) {
+        throw new Error("Email is not found");
+      }
+      const res = await confirmVerificationCode({
+        code: data.code,
+        email: email,
+      });
+      toast.success(
+        res.message || res.message[0] || "Verification code is valid"
+      );
+      router.push("/auth/email-verified");
     } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+      toast.error("Verification code is invalid");
     }
-  }
+  };
 
   return (
     <CardMinForm
@@ -66,7 +81,12 @@ export const CodeVerificationForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <InputOTP maxLength={6} {...field}>
+                    <InputOTP
+                      disabled={isPending}
+                      maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+                      {...field}
+                    >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
@@ -83,7 +103,7 @@ export const CodeVerificationForm = () => {
               )}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full" disabled={isPending}>
             Verify email
           </Button>
         </form>

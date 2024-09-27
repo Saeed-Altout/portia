@@ -1,15 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { CheckCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CardMinForm } from "@/components/auth/card-min-form";
 
 export const EmailVerifiedForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   return (
     <CardMinForm
       title="Email verified"
@@ -20,8 +17,8 @@ export const EmailVerifiedForm = () => {
       variant="success"
       redirect
     >
-      <Button className="w-full" disabled={isLoading} asChild>
-        <Link href="/">Continue</Link>
+      <Button className="w-full" asChild>
+        <Link href="/auth/login">Continue</Link>
       </Button>
     </CardMinForm>
   );
