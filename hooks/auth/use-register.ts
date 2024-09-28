@@ -1,23 +1,16 @@
-import { AxiosError } from "axios";
-import { useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { AxiosError } from 'axios';
+import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
-import { _axios } from "@/lib/axios";
-import { authService } from "@/services/auth-service";
-
-const key = ["register"];
+import { _axios } from '@/lib/axios';
+import { QueryKeys } from '@/config';
+import { authService } from '@/services/auth-service';
 
 export const useRegisterMutation = (
-  options?: UseMutationOptions<
-    RegisterResponse,
-    AxiosError<ErrorResponse>,
-    RegisterBody
-  >
+	options?: UseMutationOptions<RegisterResponse, AxiosError<ErrorResponse>, RegisterBody>
 ) => {
-  return useMutation<RegisterResponse, AxiosError<ErrorResponse>, RegisterBody>(
-    {
-      mutationKey: key,
-      mutationFn: (user: RegisterBody) => authService.register(user),
-      ...options,
-    }
-  );
+	return useMutation<RegisterResponse, AxiosError<ErrorResponse>, RegisterBody>({
+		mutationKey: [QueryKeys.REGISTER],
+		mutationFn: (user: RegisterBody) => authService.register(user),
+		...options,
+	});
 };

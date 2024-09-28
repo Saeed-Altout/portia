@@ -73,13 +73,20 @@ body,
   body {
     @apply bg-background text-black-200 scroll-smooth;
   }
+  p {
+    @apply text-base text-gray-500 font-normal leading-normal;
+  }
 }
 
-@layer utilities {
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto w-full h-full px-4 md:px-6 lg:px-8 xl:px-10;
+  }
   .text {
     @apply text-base text-gray-500 font-normal leading-normal;
   }
 }
+
 @font-face {
   font-family: "Alton";
   src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"),
