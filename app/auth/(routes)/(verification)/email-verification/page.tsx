@@ -9,28 +9,15 @@ import { Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CardMinForm } from '@/components/auth/card-min-form';
 
-import localStorage from '@/services/local-storage-service';
 import { Routes } from '@/config';
+import { useEmail } from '@/providers/auth';
 
 export default function EmailVerificationPage() {
 	const router = useRouter();
-	const [email, setEmail] = React.useState<string>('');
-	const [isMounted, setIsMounted] = React.useState<boolean>(false);
+	const { email } = useEmail();
 
-	React.useEffect(() => {
-		const currentEmail = localStorage.getEmail();
-		if (currentEmail) {
-			setEmail(email);
-			setIsMounted(true);
-		} else {
-			router.push(Routes.REGISTER);
-		}
-
-		return () => setIsMounted(false);
-	}, [router, email]);
-
-	if (!isMounted) {
-		return null;
+	if (!email) {
+		router.push(Routes.REGISTER);
 	}
 
 	return (

@@ -23,24 +23,12 @@ import {
 	initialConfirmVerificationCodeValues,
 } from '@/schemas';
 import { Routes } from '@/config';
+import { useEmail } from '@/providers/auth';
 
 export default function ConfirmVerificationCodePage() {
 	const router = useRouter();
-	const [email, setEmail] = React.useState<string>('');
-	const [isMounted, setIsMounted] = React.useState<boolean>(false);
+	const { email } = useEmail();
 	const { mutateAsync: confirmVerificationCode, isPending } = useConfirmVerificationCodeMutation();
-
-	React.useEffect(() => {
-		const currentEmail = localStorage.getEmail();
-		if (currentEmail) {
-			setEmail(email);
-			setIsMounted(true);
-		} else {
-			router.push(Routes.REGISTER);
-		}
-
-		return () => setIsMounted(false);
-	}, [router, email]);
 
 	const form = useForm<ConfirmVerificationCodeFormValues>({
 		resolver: zodResolver(confirmVerificationCodeSchema),
@@ -61,8 +49,8 @@ export default function ConfirmVerificationCodePage() {
 		}
 	};
 
-	if (!isMounted) {
-		return null;
+	if (!email) {
+		router.push(Routes.REGISTER);
 	}
 
 	return (
