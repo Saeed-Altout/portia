@@ -13,11 +13,9 @@ export const publicRoutes = [''];
 export const authRoutes = [
 	'/auth/login',
 	'/auth/register',
-
 	'/auth/verify-email',
 	'/auth/verify-code',
 	'/auth/email-confirmed',
-
 	'/auth/send-reset-email',
 	'/auth/verify-reset-email',
 	'/auth/new-password',
