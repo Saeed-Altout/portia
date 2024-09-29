@@ -9,7 +9,7 @@ import { Container } from '@website/_components/ui/container';
 import { NavMain, NavMobile } from '@website/_components/navbar';
 
 import { useScrollStore } from '@website/hooks/scroll-to';
-import { useAuth } from '@/providers/auth';
+import { useAuth } from '@/app/auth/providers';
 
 export const Navbar = () => {
 	const scrollStore = useScrollStore();

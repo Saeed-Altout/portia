@@ -1,10 +1,11 @@
 'use client';
 
-import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
+import { BeatLoader } from 'react-spinners';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from '@/components/ui/input';
@@ -12,42 +13,38 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import { CardForm } from '@/components/auth/card-form';
-import { ShowSocial } from '@/components/auth/show-social';
+import { CardForm } from '@auth/_components/card-form';
+import { ShowSocial } from '@auth/_components/show-social';
 
-import { useLoginMutation } from '@/hooks/auth/use-login';
+import { Routes } from '@auth/config';
+import { useLoginMutation, useRememberMe } from '@auth/hooks';
+import { loginSchema, LoginFormValues, initialLoginFormValues } from '@auth/schemas';
 
-import { Routes } from '@/config';
-import { loginSchema, LoginFormValues, initialLoginFormValues } from '@/schemas';
 import cookieStorage from '@/services/cookie-storage-service';
 
 export default function LoginPage() {
-	const [isRememberMe, setIsRememberMe] = React.useState<boolean>(false);
+	const router = useRouter();
 	const { mutateAsync: loginMutation, isPending } = useLoginMutation();
-
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: initialLoginFormValues,
 	});
+	const { isRememberMe, setIsRememberMe } = useRememberMe(form);
 
 	const onSubmit = async (data: LoginFormValues) => {
 		try {
 			const res = await loginMutation(data);
-			isRememberMe && cookieStorage.setMemoryUser(data);
-			!isRememberMe && cookieStorage.removeMemoryUser();
-			toast.success(res.message || res.message[0] || 'Login is success.');
+			if (isRememberMe) {
+				cookieStorage.setMemoryUser(data, { days: 30 });
+			} else {
+				cookieStorage.removeMemoryUser();
+			}
+			toast.success(res.message || 'Login is successful.');
+			router.refresh();
 		} catch (error) {
-			toast.success('Login is failed');
+			toast.error('Login failed');
 		}
 	};
-
-	React.useEffect(() => {
-		const currentMemoryUser = cookieStorage.getMemoryUser();
-		if (!!currentMemoryUser) {
-			form.setValue('email', currentMemoryUser.email);
-			form.setValue('password', currentMemoryUser.password);
-		}
-	}, [form]);
 
 	return (
 		<CardForm
@@ -93,13 +90,13 @@ export default function LoginPage() {
 								<p className='text-black-200 font-medium leading-none text-sm mt-1'>Remember for 30 days.</p>
 							</div>
 							<Button size='sm' variant='link' className='px-0'>
-								<Link href={Routes.SEND_EMAIL_TO_RESET_PASSWORD}>Forget Password</Link>
+								<Link href={Routes.SEND_RESET_EMAIL}>Forget Password</Link>
 							</Button>
 						</div>
 					</div>
 					<div className='flex flex-col gap-y-5'>
 						<Button type='submit' disabled={isPending}>
-							Sign in
+							{isPending ? <BeatLoader size={10} color='#fff' /> : 'Sign in'}
 						</Button>
 						<ShowSocial isLoading={isPending} />
 					</div>

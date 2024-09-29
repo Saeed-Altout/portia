@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/config';
 import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/providers/query-provider';
-import { AuthProvider } from '@/providers/auth';
+import { AuthProvider } from '@auth/providers';
 
 export const metadata: Metadata = {
 	title: {

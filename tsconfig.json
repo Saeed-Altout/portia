@@ -20,7 +20,8 @@
     "paths": {
       "@/*": ["./*"],
       "@website/*": ["./app/(website)/*"],
-      "@dashboard/*": ["./app/dashboard/*"]
+      "@dashboard/*": ["./app/dashboard/*"],
+      "@auth/*": ["./app/auth/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

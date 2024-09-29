@@ -1,4 +1,4 @@
-import { EmailProvider } from '@/providers/auth/email-provider';
+import { EmailProvider } from '@auth/providers/email-provider';
 
 export default function AuthLayout({
 	children,

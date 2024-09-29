@@ -2,6 +2,7 @@
 
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
+import { BeatLoader } from 'react-spinners';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -9,13 +10,13 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import { CardForm } from '@/components/auth/card-form';
-import { ShowSocial } from '@/components/auth/show-social';
+import { CardForm } from '@auth/_components/card-form';
+import { ShowSocial } from '@auth/_components/show-social';
 
-import { useRegisterMutation } from '@/hooks/auth/use-register';
+import { Routes } from '@auth/config';
+import { useRegisterMutation } from '@auth/hooks';
+import { initialRegisterFormValues, RegisterFormValues, registerSchema } from '@auth/schemas';
 
-import { Routes } from '@/config';
-import { initialRegisterFormValues, RegisterFormValues, registerSchema } from '@/schemas';
 import localStorage from '@/services/local-storage-service';
 
 export default function RegisterPage() {
@@ -31,8 +32,8 @@ export default function RegisterPage() {
 		try {
 			const res = await register(data);
 			localStorage.setEmail(data.email);
-			toast.success(res.message || res.message[0] || 'Register is success');
-			router.push(Routes.EMAIL_VERIFICATION);
+			toast.success(res.message || 'Register is successful.');
+			router.push(Routes.VERIFY_EMAIL);
 		} catch (error) {
 			toast.success('Register is failed');
 		}
@@ -111,7 +112,7 @@ export default function RegisterPage() {
 					</div>
 					<div className='flex flex-col gap-y-5'>
 						<Button type='submit' disabled={isPending}>
-							Create account
+							{isPending ? <BeatLoader size={10} color='#fff' /> : 'Create account'}
 						</Button>
 						<ShowSocial isLoading={isPending} />
 					</div>
