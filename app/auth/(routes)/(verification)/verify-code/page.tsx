@@ -34,7 +34,7 @@ export default function VerifyCodePage() {
 	const onSubmit = async (data: VerifyCodeFormValues) => {
 		try {
 			const res = await verifyCodeMutation({
-				...data,
+				code: data.code,
 				email: email,
 			});
 			localStorage.removeEmail();
