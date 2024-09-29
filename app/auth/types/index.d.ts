@@ -13,12 +13,12 @@ declare type RegisterResponse = {
 
 declare type LoginBody = {
 	email: string;
-	password: string;
+	password: string | string[];
 };
 
 declare type LoginResponse = {
 	success: boolean;
-	message: string;
+	message: string | string[];
 	access_token: string;
 	token_type: string;
 	expires_in: string;

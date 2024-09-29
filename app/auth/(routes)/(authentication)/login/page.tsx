@@ -25,10 +25,12 @@ import cookieStorage from '@/services/cookie-storage-service';
 export default function LoginPage() {
 	const router = useRouter();
 	const { mutateAsync: loginMutation, isPending } = useLoginMutation();
+
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: initialLoginFormValues,
 	});
+
 	const { isRememberMe, setIsRememberMe } = useRememberMe(form);
 
 	const onSubmit = async (data: LoginFormValues) => {
@@ -39,7 +41,7 @@ export default function LoginPage() {
 			} else {
 				cookieStorage.removeMemoryUser();
 			}
-			toast.success(res.message || 'Login is successful.');
+			toast.success('Login successful');
 			router.refresh();
 		} catch (error) {
 			toast.error('Login failed');

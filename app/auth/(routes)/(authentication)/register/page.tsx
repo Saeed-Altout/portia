@@ -16,6 +16,7 @@ import { ShowSocial } from '@auth/_components/show-social';
 import { Routes } from '@auth/config';
 import { useRegisterMutation } from '@auth/hooks';
 import { initialRegisterFormValues, RegisterFormValues, registerSchema } from '@auth/schemas';
+import { AxiosError } from 'axios';
 
 export default function RegisterPage() {
 	const router = useRouter();
@@ -31,8 +32,15 @@ export default function RegisterPage() {
 			const res = await register(data);
 			toast.success(res.message || 'Register is successful.');
 			router.push(`${Routes.VERIFY_EMAIL}?email=${data.email}`);
-		} catch (error) {
-			toast.success('Register is failed');
+		} catch (error: any) {
+			if (error instanceof AxiosError) {
+				const messages = error?.response?.data?.message || 'Register is failed.';
+				if (Array.isArray(messages)) {
+					messages.forEach((message) => toast.error(message));
+				} else {
+					toast.error(messages);
+				}
+			}
 		}
 	};
 
