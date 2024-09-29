@@ -20,7 +20,7 @@ export default function EmailConfirmedPage() {
 			redirect
 		>
 			<Button className='w-full' asChild>
-				<Link href={Routes.LOGIN}>Continue</Link>
+				<Link href={Routes.DEFAULT_PAGE}>Continue</Link>
 			</Button>
 		</CardMinForm>
 	);

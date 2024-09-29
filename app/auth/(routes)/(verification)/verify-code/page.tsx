@@ -3,7 +3,7 @@
 import { toast } from 'sonner';
 import { Mail } from 'lucide-react';
 import { BeatLoader } from 'react-spinners';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
@@ -15,15 +15,16 @@ import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/comp
 import { CardMinForm } from '@auth/_components/card-min-form';
 
 import { Routes } from '@auth/config';
-import { useEmail } from '@auth/providers';
 import { useVerifyCodeMutation } from '@auth/hooks';
 import { verifyCodeSchema, VerifyCodeFormValues, initialVerifyCodeValues } from '@auth/schemas';
 
 import localStorage from '@/services/local-storage-service';
+import cookieStorage from '@/services/cookie-storage-service';
 
 export default function VerifyCodePage() {
 	const router = useRouter();
-	const { email } = useEmail();
+	const params = useSearchParams();
+	const email = params.get('email');
 	const { mutateAsync: verifyCodeMutation, isPending } = useVerifyCodeMutation();
 
 	const form = useForm<VerifyCodeFormValues>({
@@ -35,9 +36,9 @@ export default function VerifyCodePage() {
 		try {
 			const res = await verifyCodeMutation({
 				code: data.code,
-				email: email,
+				email: email || '',
 			});
-			localStorage.removeEmail();
+			cookieStorage.setAccessToken(res.access_token);
 			toast.success(res.message || 'Code is valid');
 			router.push(Routes.EMAIL_CONFIRMED);
 		} catch (error) {
@@ -45,17 +46,13 @@ export default function VerifyCodePage() {
 		}
 	};
 
-	if (!email) {
-		router.push(Routes.REGISTER);
-	}
-
 	return (
 		<CardMinForm
 			title='Check your email'
 			description='We sent a password reset link to'
 			backHrefButton={Routes.LOGIN}
 			backLabelButton='Back to log in'
-			email={email}
+			email={email || ''}
 			icon={Mail}
 			redirect
 		>

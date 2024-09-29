@@ -6,16 +6,10 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 import { Routes } from '@auth/config';
-import { useEmail } from '@auth/providers';
 import { CardMinForm } from '@auth/_components/card-min-form';
 
 export default function VerifyRestEmailPage() {
 	const router = useRouter();
-	const { email } = useEmail();
-
-	if (!email) {
-		router.push(Routes.REGISTER);
-	}
 
 	return (
 		<CardMinForm
@@ -23,7 +17,7 @@ export default function VerifyRestEmailPage() {
 			description='We sent a password reset link to'
 			backHrefButton={Routes.LOGIN}
 			backLabelButton='Back to log in'
-			email={email}
+			email={''}
 			icon={Mail}
 			redirect
 		>

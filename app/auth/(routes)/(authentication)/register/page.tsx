@@ -17,8 +17,6 @@ import { Routes } from '@auth/config';
 import { useRegisterMutation } from '@auth/hooks';
 import { initialRegisterFormValues, RegisterFormValues, registerSchema } from '@auth/schemas';
 
-import localStorage from '@/services/local-storage-service';
-
 export default function RegisterPage() {
 	const router = useRouter();
 	const { mutateAsync: register, isPending } = useRegisterMutation();
@@ -31,9 +29,8 @@ export default function RegisterPage() {
 	const onSubmit = async (data: RegisterFormValues) => {
 		try {
 			const res = await register(data);
-			localStorage.setEmail(data.email);
 			toast.success(res.message || 'Register is successful.');
-			router.push(Routes.VERIFY_EMAIL);
+			router.push(`${Routes.VERIFY_EMAIL}?email=${data.email}`);
 		} catch (error) {
 			toast.success('Register is failed');
 		}

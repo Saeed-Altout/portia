@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Routes } from '@auth/config';
 import { CardMinForm } from '@auth/_components/card-min-form';
 
-export default function ResetPasswordPage() {
+export default function PasswordResetPage() {
 	return (
 		<CardMinForm
 			title='Password reset'
@@ -19,7 +19,7 @@ export default function ResetPasswordPage() {
 			variant='success'
 		>
 			<Button className='w-full' asChild>
-				<Link href={Routes.LOGIN}>Continue</Link>
+				<Link href={Routes.DEFAULT_PAGE}>Continue</Link>
 			</Button>
 		</CardMinForm>
 	);

@@ -32,6 +32,9 @@ declare type VerifyCodeMutationBody = {
 declare type VerifyCodeMutationResponse = {
 	success: boolean;
 	message: string | string[];
+	access_token: string;
+	token_type: string;
+	expires_in: string;
 };
 
 declare type ResendVerificationCodeBody = {
