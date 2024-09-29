@@ -13,11 +13,12 @@ export const initialLoginFormValues = {
 };
 
 export const registerSchema = z.object({
-	first_name: z.string().min(2, 'First must be at least 2 characters'),
-	last_name: z.string().min(2, 'Last must be at least 2 characters'),
-	email: z.string().email('Invalid email address'),
+	first_name: z.string().min(2, 'First must be at least 2 characters').max(255, { message: '' }),
+	last_name: z.string().min(2, 'Last must be at least 2 characters').max(255, { message: '' }),
+	email: z.string().email('Invalid email address').max(255, { message: '' }),
 	password: z.string().min(8, 'Password must be at least 8 characters'),
 });
+
 export type RegisterFormValues = z.infer<typeof registerSchema>;
 export const initialRegisterFormValues = {
 	first_name: '',

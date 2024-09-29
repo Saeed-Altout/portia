@@ -30,7 +30,7 @@ export default function middleware(req: NextRequest) {
 		return Response.redirect(new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl));
 	}
 
-	return null;
+	return NextResponse.next();
 }
 
 export const config = {
