@@ -46,33 +46,36 @@ export default function VerifyCodePage() {
 			<CardContent>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-						<FormField
-							control={form.control}
-							name='code'
-							render={({ field }) => (
-								<FormItem className='flex justify-center items-center'>
-									<FormControl>
-										<InputOTP
-											disabled={isPending}
-											maxLength={6}
-											pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-											{...field}
-										>
-											<InputOTPGroup>
-												<InputOTPSlot index={0} />
-												<InputOTPSlot index={1} />
-												<InputOTPSlot index={2} />
-												<InputOTPSeparator />
-												<InputOTPSlot index={3} />
-												<InputOTPSlot index={4} />
-												<InputOTPSlot index={5} />
-											</InputOTPGroup>
-										</InputOTP>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<div className='flex justify-center items-center'>
+							<FormField
+								control={form.control}
+								name='code'
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<InputOTP
+												disabled={isPending}
+												maxLength={6}
+												pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+												{...field}
+											>
+												<InputOTPGroup>
+													<InputOTPSlot index={0} />
+													<InputOTPSlot index={1} />
+													<InputOTPSlot index={2} />
+													<InputOTPSeparator />
+													<InputOTPSlot index={3} />
+													<InputOTPSlot index={4} />
+													<InputOTPSlot index={5} />
+												</InputOTPGroup>
+											</InputOTP>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+
 						<SubmitButton label='Verify email' isLoading={isPending} />
 					</form>
 				</Form>

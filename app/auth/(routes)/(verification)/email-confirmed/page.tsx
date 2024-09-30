@@ -22,7 +22,7 @@ export default function EmailConfirmedPage() {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<Button className='w-full'>
+				<Button className='w-full' asChild>
 					<Link href='/'>Continue</Link>
 				</Button>
 			</CardContent>

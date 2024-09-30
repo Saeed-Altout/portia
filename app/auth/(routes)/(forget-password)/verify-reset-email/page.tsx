@@ -28,7 +28,7 @@ export default function VerifyRestEmailPage() {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<Button className='w-full'>
+				<Button className='w-full' asChild>
 					<Link href={`mailto:${email}`} target='_blank'>
 						Open email app
 					</Link>

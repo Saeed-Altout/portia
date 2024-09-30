@@ -78,7 +78,7 @@ export default function LoginPage() {
 										Remember for 30 days.
 									</p>
 								</div>
-								<Button size='sm' variant='link' className='px-0'>
+								<Button type='button' size='sm' variant='link' className='px-0' asChild>
 									<Link href='/auth/send-reset-email'>Forget Password</Link>
 								</Button>
 							</div>

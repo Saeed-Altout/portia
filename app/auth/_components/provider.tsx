@@ -16,7 +16,8 @@ export const Provider = ({ isLoading }: ProviderProps) => {
 
 	async function onSubmit() {
 		try {
-			await loginWithGoogleMutation();
+			const res = await loginWithGoogleMutation();
+			console.log(res);
 		} catch (error) {
 			toast.error('Login with google is failed');
 		}
