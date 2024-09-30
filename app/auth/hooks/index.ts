@@ -26,6 +26,9 @@ import { useLogoutMutation } from './logout/use-logout';
 import { useResendVerificationCodeMutation } from './resend-verification-code/use-resend-verification-code-mutation';
 import { useResendVerificationCode } from './resend-verification-code/use-resend-verification-code';
 
+// Error
+import { useHandleResponse } from './error/use-handle-response';
+
 export {
 	useLoginMutation,
 	useLogin,
@@ -41,4 +44,5 @@ export {
 	useResendVerificationCode,
 	useLoginWithGoogleMutation,
 	useLogoutMutation,
+	useHandleResponse,
 };

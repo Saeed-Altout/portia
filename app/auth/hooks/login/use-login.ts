@@ -1,30 +1,28 @@
-'use client';
-
+import * as z from 'zod';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import * as z from 'zod';
-import { toast } from 'sonner';
-
 import { loginSchema } from '@auth/schemas';
-import { useLoginMutation } from '@auth/hooks';
+import { useHandleResponse, useLoginMutation } from '@auth/hooks';
 
 import cookieStorageService from '@/services/cookie-storage';
 
 export const useLogin = (form: any) => {
 	const router = useRouter();
+	const { handleSuccess, handleError } = useHandleResponse();
+
 	const [isRememberMe, setIsRememberMe] = useState<boolean>(false);
 	const { mutateAsync: loginMutation, isPending } = useLoginMutation();
 
 	const onSubmit = async (data: z.infer<typeof loginSchema>) => {
 		try {
-			await loginMutation(data);
+			const res = await loginMutation(data);
 			isRememberMe && cookieStorageService.setMemoryUser(data, { days: 30 });
 			!isRememberMe && cookieStorageService.removeMemoryUser();
-			toast.success('Login successful');
+			handleSuccess(res.message);
 			router.refresh();
 		} catch (error) {
-			toast.error('Login failed');
+			handleError(error);
 		}
 	};
 
