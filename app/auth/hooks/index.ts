@@ -19,8 +19,8 @@ import { useSetNewPasswordMutation } from './set-new-password/use-set-new-passwo
 import { useSetNewPassword } from './set-new-password/use-set-new-password';
 
 // Login with google
-import { useLoginWithGoogleMutation } from './login-with-google/use-login-with-google';
-import { useLogoutMutation } from './logout/use-logout';
+import { useLoginWithGoogleMutation } from './login-with-google/use-login-with-google-mutation';
+import { useLoginWithGoogle } from './login-with-google/use-login-with-google';
 
 // Resend verification code
 import { useResendVerificationCodeMutation } from './resend-verification-code/use-resend-verification-code-mutation';
@@ -28,6 +28,7 @@ import { useResendVerificationCode } from './resend-verification-code/use-resend
 
 // Error
 import { useHandleResponse } from './error/use-handle-response';
+import { useLogoutMutation } from './logout/use-logout';
 
 export {
 	useLoginMutation,
@@ -43,6 +44,7 @@ export {
 	useResendVerificationCodeMutation,
 	useResendVerificationCode,
 	useLoginWithGoogleMutation,
-	useLogoutMutation,
+	useLoginWithGoogle,
 	useHandleResponse,
+	useLogoutMutation,
 };

@@ -1,14 +1,16 @@
-import { AxiosError } from 'axios';
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { useHandleResponse, useLoginWithGoogleMutation } from '@auth/hooks';
 
-import { _axios } from '@/lib/axios';
+export const useLoginWithGoogle = () => {
+	const { handleError } = useHandleResponse();
+	const { mutateAsync: loginWithGoogleMutation, isPending } = useLoginWithGoogleMutation();
 
-import { authService } from '@auth/services';
+	async function onSubmit() {
+		try {
+			await loginWithGoogleMutation();
+		} catch (error) {
+			handleError(error);
+		}
+	}
 
-export const useLoginWithGoogleMutation = (options?: UseMutationOptions<void, AxiosError<ErrorResponse>, void>) => {
-	return useMutation<void, AxiosError<ErrorResponse>, void>({
-		mutationKey: ['login-with-google'],
-		mutationFn: () => authService.loginWithGoogle(),
-		...options,
-	});
+	return { onSubmit, isPending };
 };

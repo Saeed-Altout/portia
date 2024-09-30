@@ -1,27 +1,16 @@
 'use client';
 
-import { toast } from 'sonner';
 import { FcGoogle } from 'react-icons/fc';
-
 import { Button } from '@/components/ui/button';
 
-import { useLoginWithGoogleMutation } from '@auth/hooks';
+import { useLoginWithGoogle } from '@auth/hooks';
 
 interface ProviderProps {
 	isLoading: boolean;
 }
 
 export const Provider = ({ isLoading }: ProviderProps) => {
-	const { mutateAsync: loginWithGoogleMutation, isPending } = useLoginWithGoogleMutation();
-
-	async function onSubmit() {
-		try {
-			const res = await loginWithGoogleMutation();
-			console.log(res);
-		} catch (error) {
-			toast.error('Login with google is failed');
-		}
-	}
+	const { onSubmit, isPending } = useLoginWithGoogle();
 
 	return (
 		<Button
