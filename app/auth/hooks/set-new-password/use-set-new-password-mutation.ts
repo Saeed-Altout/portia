@@ -10,7 +10,7 @@ export const useSetNewPasswordMutation = (
 ) => {
 	return useMutation<SetNewPasswordResponse, AxiosError<ErrorResponse>, SetNewPasswordBody>({
 		mutationKey: ['set-new-password'],
-		mutationFn: (user: SetNewPasswordBody) => authService.setNewPassword(user),
+		mutationFn: (data: SetNewPasswordBody) => authService.setNewPassword(data),
 		...options,
 	});
 };

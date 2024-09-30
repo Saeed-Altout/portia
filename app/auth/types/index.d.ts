@@ -58,6 +58,7 @@ declare type SendResetEmailResponse = {
 declare type SetNewPasswordBody = {
 	password: string;
 	password_confirmation: string;
+	token: string;
 };
 
 declare type SetNewPasswordResponse = {

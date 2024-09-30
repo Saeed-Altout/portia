@@ -16,7 +16,7 @@ import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '
 
 import { useSendResetEmail } from '@auth/hooks';
 import { sendResetEmailSchema } from '@auth/schemas';
-import { SubmitButton } from '@auth/_components';
+import { SubmitButton, BackButton } from '@auth/_components';
 
 export default function SendResetEmailPage() {
 	const form = useForm<z.infer<typeof sendResetEmailSchema>>({
@@ -58,12 +58,7 @@ export default function SendResetEmailPage() {
 				</Form>
 			</CardContent>
 			<CardFooter>
-				<Button variant='link' className='mx-auto' asChild>
-					<Link href='/auth/login' className='flex items-center justify-center !text-gray-500'>
-						<ArrowLeft className='h-4 w-4 mr-2' />
-						Back to log in
-					</Link>
-				</Button>
+				<BackButton />
 			</CardFooter>
 		</Card>
 	);

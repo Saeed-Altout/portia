@@ -1,6 +1,7 @@
 'use client';
 
 import { Key } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -16,6 +17,10 @@ import { newPasswordSchema } from '@auth/schemas';
 import { BackButton, SubmitButton } from '@auth/_components';
 
 export default function NewPasswordPage() {
+	const params = useSearchParams();
+	const token = params.get('token');
+	console.log(token);
+
 	const form = useForm<z.infer<typeof newPasswordSchema>>({
 		resolver: zodResolver(newPasswordSchema),
 		defaultValues: {
@@ -24,7 +29,7 @@ export default function NewPasswordPage() {
 		},
 	});
 
-	const { onSubmit, isPending } = useSetNewPassword();
+	const { onSubmit, isPending } = useSetNewPassword(token || '');
 
 	return (
 		<Card className='w-full max-w-[360px] border-none shadow-none pt-24'>

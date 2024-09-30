@@ -67,7 +67,12 @@ export const authService = {
 		try {
 			const response: AxiosResponse<SetNewPasswordResponse> = await _axios.post<SetNewPasswordResponse>(
 				process.env.NEXT_PUBLIC_SET_NEW_PASSWORD_ENDPOINT!,
-				data
+				data,
+				{
+					headers: {
+						Authorization: `Bearer ${data.token}`,
+					},
+				}
 			);
 			return response.data;
 		} catch (error) {

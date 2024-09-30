@@ -1,16 +1,24 @@
-import { AxiosError } from 'axios';
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+'use client';
 
-import { _axios } from '@/lib/axios';
+import { useRouter } from 'next/navigation';
 
-import { authService } from '@auth/services';
+import * as z from 'zod';
+import { toast } from 'sonner';
 
-export const useResendVerificationCodeMutation = (
-	options?: UseMutationOptions<ResendVerificationCodeResponse, AxiosError<ErrorResponse>, ResendVerificationCodeBody>
-) => {
-	return useMutation<ResendVerificationCodeResponse, AxiosError<ErrorResponse>, ResendVerificationCodeBody>({
-		mutationKey: ['resend-verification-code'],
-		mutationFn: (user: ResendVerificationCodeBody) => authService.resendVerificationCode(user),
-		...options,
-	});
+import { useResendVerificationCodeMutation } from '@auth/hooks';
+
+export const useResendVerificationCode = () => {
+	const router = useRouter();
+	const { mutateAsync: resendVerificationCodeMutation, isPending } = useResendVerificationCodeMutation();
+
+	const onSubmit = async (email: string) => {
+		try {
+			const res = await resendVerificationCodeMutation({ email });
+			toast.success(res.message);
+		} catch (error) {
+			toast.error('Resend verification code failed');
+		}
+	};
+
+	return { onSubmit, isPending };
 };

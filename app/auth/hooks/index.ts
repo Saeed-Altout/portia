@@ -22,6 +22,10 @@ import { useSetNewPassword } from './set-new-password/use-set-new-password';
 import { useLoginWithGoogleMutation } from './login-with-google/use-login-with-google';
 import { useLogoutMutation } from './logout/use-logout';
 
+// Resend verification code
+import { useResendVerificationCodeMutation } from './resend-verification-code/use-resend-verification-code-mutation';
+import { useResendVerificationCode } from './resend-verification-code/use-resend-verification-code';
+
 export {
 	useLoginMutation,
 	useLogin,
@@ -33,6 +37,8 @@ export {
 	useSendResetEmail,
 	useSetNewPasswordMutation,
 	useSetNewPassword,
+	useResendVerificationCodeMutation,
+	useResendVerificationCode,
 	useLoginWithGoogleMutation,
 	useLogoutMutation,
 };

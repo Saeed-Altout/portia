@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { ArrowLeft, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Circle, Icon } from '@/components/shared/circle-icon';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+
+import { BackButton, ResendButton } from '@auth/_components';
 
 export default function VerifyRestEmailPage() {
 	const params = useSearchParams();
@@ -33,18 +35,8 @@ export default function VerifyRestEmailPage() {
 				</Button>
 			</CardContent>
 			<CardFooter className='flex flex-col gap-y-5'>
-				<p className='text !text-sm text-center'>
-					Didn’t receive the email?
-					<Link href='/auth/reset' className='hover:underline text-primary font-medium text-nowrap ml-2'>
-						Click to resend
-					</Link>
-				</p>
-				<Button variant='link' className='mx-auto' asChild>
-					<Link href='/auth/login' className='flex items-center justify-center !text-gray-500'>
-						<ArrowLeft className='h-4 w-4 mr-2' />
-						Back to log in
-					</Link>
-				</Button>
+				<ResendButton />
+				<BackButton />
 			</CardFooter>
 		</Card>
 	);
