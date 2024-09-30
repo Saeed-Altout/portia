@@ -4,13 +4,14 @@ import { toast } from 'sonner';
 import { FcGoogle } from 'react-icons/fc';
 
 import { Button } from '@/components/ui/button';
-import { useLoginWithGoogleMutation } from '@/app/auth/hooks/use-login-with-google';
 
-interface ShowSocialProps {
+import { useLoginWithGoogleMutation } from '@auth/hooks';
+
+interface ProviderProps {
 	isLoading: boolean;
 }
 
-export const ShowSocial = ({ isLoading }: ShowSocialProps) => {
+export const Provider = ({ isLoading }: ProviderProps) => {
 	const { mutateAsync: loginWithGoogleMutation, isPending } = useLoginWithGoogleMutation();
 
 	async function onSubmit() {

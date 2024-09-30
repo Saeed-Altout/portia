@@ -1,69 +1,56 @@
 'use client';
 
-import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
+
 import { Mail } from 'lucide-react';
-import { BeatLoader } from 'react-spinners';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 
-import { Button } from '@/components/ui/button';
+import * as z from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { Circle, Icon } from '@/components/shared/circle-icon';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
 
-import { CardMinForm } from '@auth/_components/card-min-form';
-
-import { Routes } from '@auth/config';
-import { useVerifyCodeMutation } from '@auth/hooks';
-import { verifyCodeSchema, VerifyCodeFormValues, initialVerifyCodeValues } from '@auth/schemas';
-
-import localStorage from '@/services/local-storage-service';
-import cookieStorage from '@/services/cookie-storage-service';
+import { useVerifyCode } from '@auth/hooks';
+import { verifyCodeSchema } from '@auth/schemas';
+import { BackButton, ResendButton, SubmitButton } from '@auth/_components';
 
 export default function VerifyCodePage() {
-	const router = useRouter();
 	const params = useSearchParams();
 	const email = params.get('email');
-	const { mutateAsync: verifyCodeMutation, isPending } = useVerifyCodeMutation();
 
-	const form = useForm<VerifyCodeFormValues>({
+	const { onSubmit, isPending } = useVerifyCode(email || '');
+
+	const form = useForm<z.infer<typeof verifyCodeSchema>>({
 		resolver: zodResolver(verifyCodeSchema),
-		defaultValues: initialVerifyCodeValues,
+		defaultValues: {
+			code: '',
+		},
 	});
 
-	const onSubmit = async (data: VerifyCodeFormValues) => {
-		try {
-			const res = await verifyCodeMutation({
-				code: data.code,
-				email: email || '',
-			});
-			cookieStorage.setAccessToken(res.access_token);
-			toast.success(res.message || 'Code is valid');
-			router.push(Routes.EMAIL_CONFIRMED);
-		} catch (error) {
-			toast.error('Code is invalid');
-		}
-	};
-
 	return (
-		<CardMinForm
-			title='Check your email'
-			description='We sent a password reset link to'
-			backHrefButton={Routes.LOGIN}
-			backLabelButton='Back to log in'
-			email={email || ''}
-			icon={Mail}
-			redirect
-		>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-					<div className='flex justify-center items-center gap-y-4'>
+		<Card className='w-full max-w-[360px] border-none shadow-none pt-24'>
+			<CardHeader className='flex flex-col items-center justify-center gap-y-3'>
+				<Circle size='lg'>
+					<Icon size='lg' icon={Mail} />
+				</Circle>
+				<CardTitle className='text-2xl md:text-3xl font-semibold text-center'>Check your email</CardTitle>
+				<CardDescription className='text-center'>
+					We sent a password reset link to
+					{email != 'null' && email && <span className='font-medium block'>{email}</span>}
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
 						<FormField
 							control={form.control}
 							name='code'
 							render={({ field }) => (
-								<FormItem>
+								<FormItem className='flex justify-center items-center'>
 									<FormControl>
 										<InputOTP
 											disabled={isPending}
@@ -86,12 +73,14 @@ export default function VerifyCodePage() {
 								</FormItem>
 							)}
 						/>
-					</div>
-					<Button type='submit' className='w-full' disabled={isPending}>
-						{isPending ? <BeatLoader size={10} color='#fff' /> : 'Verify email'}
-					</Button>
-				</form>
-			</Form>
-		</CardMinForm>
+						<SubmitButton label='Verify email' isLoading={isPending} />
+					</form>
+				</Form>
+			</CardContent>
+			<CardFooter className='flex flex-col gap-y-5'>
+				<ResendButton />
+				<BackButton />
+			</CardFooter>
+		</Card>
 	);
 }

@@ -4,24 +4,31 @@ import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { Circle, Icon } from '@/components/shared/circle-icon';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { Routes } from '@auth/config';
-import { CardMinForm } from '@auth/_components/card-min-form';
+import { BackButton } from '@auth/_components';
 
 export default function EmailConfirmedPage() {
 	return (
-		<CardMinForm
-			title='Email verified'
-			description='Your password has been successfully reset. Click below to log in magically.'
-			backHrefButton={Routes.LOGIN}
-			backLabelButton='Back to log in'
-			icon={CheckCircle}
-			variant='success'
-			redirect
-		>
-			<Button className='w-full' asChild>
-				<Link href={Routes.DEFAULT_PAGE}>Continue</Link>
-			</Button>
-		</CardMinForm>
+		<Card className='w-full max-w-[360px] border-none shadow-none pt-24'>
+			<CardHeader className='flex flex-col items-center justify-center gap-y-3'>
+				<Circle size='lg' fill='success'>
+					<Icon size='lg' theme='success' icon={CheckCircle} />
+				</Circle>
+				<CardTitle className='text-2xl md:text-3xl font-semibold text-center'>Email verified</CardTitle>
+				<CardDescription className='text-center'>
+					Your password has been successfully reset. Click below to log in magically.
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<Button className='w-full'>
+					<Link href='/'>Continue</Link>
+				</Button>
+			</CardContent>
+			<CardFooter>
+				<BackButton />
+			</CardFooter>
+		</Card>
 	);
 }

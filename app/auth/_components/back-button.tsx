@@ -1,21 +1,20 @@
-"use client";
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
-import * as React from "react";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
 
 interface BackButtonProps {
-  label?: string;
-  message?: string;
-  href: string;
+	label?: string;
+	href?: string;
 }
 
-export const BackButton = ({ label, href, message }: BackButtonProps) => {
-  return (
-    <p className="text !text-sm">
-      {message}{" "}
-      <Link href={href} className="hover:underline text-primary font-medium">
-        {label}
-      </Link>
-    </p>
-  );
+export const BackButton = ({ label = 'Back to log in', href = '/auth/login' }: BackButtonProps) => {
+	return (
+		<Button variant='link' className='mx-auto' asChild>
+			<Link href={href} className='flex items-center justify-center !text-gray-500'>
+				<ArrowLeft className='h-4 w-4 mr-2' />
+				{label}
+			</Link>
+		</Button>
+	);
 };

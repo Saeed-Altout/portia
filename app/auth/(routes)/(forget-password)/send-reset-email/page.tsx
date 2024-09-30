@@ -1,72 +1,70 @@
 'use client';
 
-import { toast } from 'sonner';
-import { Key } from 'lucide-react';
+import Link from 'next/link';
+
+import { ArrowLeft, Key } from 'lucide-react';
+
+import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-import { BeatLoader } from 'react-spinners';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Circle, Icon } from '@/components/shared/circle-icon';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/ui/form';
 
-import { CardMinForm } from '@auth/_components/card-min-form';
-
-import localStorage from '@/services/local-storage-service';
-
-import { Routes } from '@auth/config';
-import { useSendResetEmailMutation } from '@auth/hooks';
-import { sendResetEmailSchema, SendResetEmailFormValues, initialSendResetEmailValues } from '@auth/schemas';
+import { useSendResetEmail } from '@auth/hooks';
+import { sendResetEmailSchema } from '@auth/schemas';
+import { SubmitButton } from '@auth/_components';
 
 export default function SendResetEmailPage() {
-	const router = useRouter();
-	const { mutateAsync: sendResetEmailMutation, isPending } = useSendResetEmailMutation();
-
-	const form = useForm<SendResetEmailFormValues>({
+	const form = useForm<z.infer<typeof sendResetEmailSchema>>({
 		resolver: zodResolver(sendResetEmailSchema),
-		defaultValues: initialSendResetEmailValues,
+		defaultValues: {
+			email: '',
+		},
 	});
 
-	const onSubmit = async (data: SendResetEmailFormValues) => {
-		try {
-			const res = await sendResetEmailMutation(data);
-			localStorage.setEmail(data.email);
-			toast.success(res.message);
-			router.push(Routes.VERIFY_RESET_EMAIL);
-		} catch (error) {
-			toast.success('Email is invalid.');
-		}
-	};
+	const { onSubmit, isPending } = useSendResetEmail();
 
 	return (
-		<CardMinForm
-			title='Forgot password?'
-			description='No worries, we’ll send you reset instructions.'
-			backHrefButton={Routes.LOGIN}
-			backLabelButton='Back to log in'
-			icon={Key}
-		>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-					<FormField
-						control={form.control}
-						name='email'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className='text-sm font-medium'>Email</FormLabel>
-								<FormControl>
-									<Input {...field} type='email' disabled={isPending} placeholder='Enter your email' />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type='submit' className='w-full' disabled={isPending}>
-						{isPending ? <BeatLoader size={10} color='#fff' /> : 'Reset password'}
-					</Button>
-				</form>
-			</Form>
-		</CardMinForm>
+		<Card className='w-full max-w-[360px] border-none shadow-none pt-24'>
+			<CardHeader className='flex flex-col items-center justify-center gap-y-3'>
+				<Circle size='lg'>
+					<Icon size='lg' icon={Key} />
+				</Circle>
+				<CardTitle className='text-2xl md:text-3xl font-semibold text-center'>Forgot password?</CardTitle>
+				<CardDescription className='text-center'>No worries, we’ll send you reset instructions.</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+						<FormField
+							control={form.control}
+							name='email'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className='text-sm font-medium'>Email</FormLabel>
+									<FormControl>
+										<Input {...field} type='email' disabled={isPending} placeholder='Enter your email' />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<SubmitButton isLoading={isPending} label='Reset password' />
+					</form>
+				</Form>
+			</CardContent>
+			<CardFooter>
+				<Button variant='link' className='mx-auto' asChild>
+					<Link href='/auth/login' className='flex items-center justify-center !text-gray-500'>
+						<ArrowLeft className='h-4 w-4 mr-2' />
+						Back to log in
+					</Link>
+				</Button>
+			</CardFooter>
+		</Card>
 	);
 }

@@ -1,128 +1,122 @@
 'use client';
 
-import { toast } from 'sonner';
+import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { BeatLoader } from 'react-spinners';
-import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import { CardForm } from '@auth/_components/card-form';
-import { ShowSocial } from '@auth/_components/show-social';
-
-import { Routes } from '@auth/config';
-import { useRegisterMutation } from '@auth/hooks';
-import { initialRegisterFormValues, RegisterFormValues, registerSchema } from '@auth/schemas';
-import { AxiosError } from 'axios';
+import { useRegister } from '@auth/hooks';
+import { registerSchema } from '@auth/schemas';
+import { Header, Footer, SubmitButton, Provider } from '@auth/_components';
 
 export default function RegisterPage() {
-	const router = useRouter();
-	const { mutateAsync: register, isPending } = useRegisterMutation();
-
-	const form = useForm<RegisterFormValues>({
+	const form = useForm<z.infer<typeof registerSchema>>({
 		resolver: zodResolver(registerSchema),
-		defaultValues: initialRegisterFormValues,
+		defaultValues: {
+			first_name: '',
+			last_name: '',
+			email: '',
+			password: '',
+		},
 	});
-
-	const onSubmit = async (data: RegisterFormValues) => {
-		try {
-			const res = await register(data);
-			toast.success(res.message || 'Register is successful.');
-			router.push(`${Routes.VERIFY_EMAIL}?email=${data.email}`);
-		} catch (error: any) {
-			if (error instanceof AxiosError) {
-				const messages = error?.response?.data?.message || 'Register is failed.';
-				if (Array.isArray(messages)) {
-					messages.forEach((message) => toast.error(message));
-				} else {
-					toast.error(messages);
-				}
-			}
-		}
-	};
+	const { onSubmit, isPending } = useRegister();
 
 	return (
-		<CardForm
-			title='Sign up'
-			description='Start your journey today.'
-			backButtonMessage='Already have an account?'
-			backLabelButton='Log in'
-			backHrefButton={Routes.LOGIN}
-			showMessage
-		>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-					<div className='space-y-4'>
-						<FormField
-							control={form.control}
-							name='first_name'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className='text-sm font-medium'>First Name*</FormLabel>
-									<FormControl>
-										<Input {...field} disabled={isPending} placeholder='Enter your first name' />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='last_name'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className='text-sm font-medium'>Last Name*</FormLabel>
-									<FormControl>
-										<Input {...field} disabled={isPending} placeholder='Enter your last name' />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='email'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className='text-sm font-medium'>Email*</FormLabel>
-									<FormControl>
-										<Input {...field} type='email' disabled={isPending} placeholder='Enter your email' />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='password'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className='text-sm font-medium'>Password*</FormLabel>
-									<FormControl>
-										<Input
-											{...field}
-											type='password'
-											disabled={isPending}
-											placeholder='Create a password'
-										/>
-									</FormControl>
-									<FormDescription>Must be at least 8 characters.</FormDescription>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-					<div className='flex flex-col gap-y-5'>
-						<Button type='submit' disabled={isPending}>
-							{isPending ? <BeatLoader size={10} color='#fff' /> : 'Create account'}
-						</Button>
-						<ShowSocial isLoading={isPending} />
-					</div>
-				</form>
-			</Form>
-		</CardForm>
+		<Card className='w-full max-w-md border-none shadow-none'>
+			<CardHeader>
+				<Header title='Sign up' description='Start your journey today.' />
+			</CardHeader>
+			<CardContent>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+						<div className='space-y-4'>
+							<FormField
+								control={form.control}
+								name='first_name'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel className='text-sm font-medium'>First Name*</FormLabel>
+										<FormControl>
+											<Input
+												type='text'
+												placeholder='Enter your first name'
+												disabled={isPending}
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='last_name'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel className='text-sm font-medium'>Last Name*</FormLabel>
+										<FormControl>
+											<Input
+												type='text'
+												placeholder='Enter your last name'
+												{...field}
+												disabled={isPending}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='email'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel className='text-sm font-medium'>Email*</FormLabel>
+										<FormControl>
+											<Input
+												type='email'
+												placeholder='Enter your email'
+												disabled={isPending}
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='password'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel className='text-sm font-medium'>Password*</FormLabel>
+										<FormControl>
+											<Input
+												type='password'
+												placeholder='Create a password'
+												disabled={isPending}
+												{...field}
+											/>
+										</FormControl>
+										<FormDescription>Must be at least 8 characters.</FormDescription>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<div className='flex flex-col gap-y-5'>
+							<SubmitButton isLoading={isPending} label='Create account' />
+							<Provider isLoading={isPending} />
+						</div>
+					</form>
+				</Form>
+			</CardContent>
+			<CardFooter>
+				<Footer label='Sign in' href='/auth/login' message='Already have an account?' />
+			</CardFooter>
+		</Card>
 	);
 }

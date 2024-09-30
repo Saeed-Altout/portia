@@ -1,88 +1,81 @@
 'use client';
 
-import { toast } from 'sonner';
 import { Key } from 'lucide-react';
+
+import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-import { BeatLoader } from 'react-spinners';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Circle, Icon } from '@/components/shared/circle-icon';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage, FormDescription } from '@/components/ui/form';
 
-import { CardMinForm } from '@auth/_components/card-min-form';
-
-import { Routes } from '@auth/config';
-import { useSetNewPasswordMutation } from '@auth/hooks';
-import { newPasswordSchema, NewPasswordFormValues, initialNewPasswordValues } from '@auth/schemas';
-
-import localStorage from '@/services/local-storage-service';
+import { useSetNewPassword } from '@auth/hooks';
+import { newPasswordSchema } from '@auth/schemas';
+import { BackButton, SubmitButton } from '@auth/_components';
 
 export default function NewPasswordPage() {
-	const router = useRouter();
-	const { mutateAsync: setNewPasswordMutation, isPending } = useSetNewPasswordMutation();
-
-	const form = useForm<NewPasswordFormValues>({
+	const form = useForm<z.infer<typeof newPasswordSchema>>({
 		resolver: zodResolver(newPasswordSchema),
-		defaultValues: initialNewPasswordValues,
+		defaultValues: {
+			password: '',
+			password_confirmation: '',
+		},
 	});
 
-	async function onSubmit(data: NewPasswordFormValues) {
-		try {
-			const res = await setNewPasswordMutation(data);
-			localStorage.removeEmail();
-			toast.success(res.message);
-			router.push(Routes.RESET_PASSWORD);
-		} catch (error) {
-			toast.error('Something went wrong!');
-		}
-	}
+	const { onSubmit, isPending } = useSetNewPassword();
 
 	return (
-		<CardMinForm
-			title='Set new password'
-			description='Your new password must be different to previously used passwords.'
-			backHrefButton={Routes.LOGIN}
-			backLabelButton='Back to log in'
-			icon={Key}
-		>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-					<div className='space-y-4'>
-						<FormField
-							control={form.control}
-							name='password'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className='text-sm font-medium'>Password</FormLabel>
-									<FormControl>
-										<Input {...field} type='password' disabled={isPending} placeholder='*********' />
-									</FormControl>
-									<FormDescription>Must be at least 8 characters.</FormDescription>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='password_confirmation'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className='text-sm font-medium'>Confirm Password</FormLabel>
-									<FormControl>
-										<Input {...field} type='password' disabled={isPending} placeholder='*********' />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-					<Button type='submit' className='w-full' disabled={isPending}>
-						{isPending ? <BeatLoader size={10} color='#fff' /> : 'Reset password'}
-					</Button>
-				</form>
-			</Form>
-		</CardMinForm>
+		<Card className='w-full max-w-[360px] border-none shadow-none pt-24'>
+			<CardHeader className='flex flex-col items-center justify-center gap-y-3'>
+				<Circle size='lg'>
+					<Icon size='lg' icon={Key} />
+				</Circle>
+				<CardTitle className='text-2xl md:text-3xl font-semibold text-center'>Set new password</CardTitle>
+				<CardDescription className='text-center'>
+					Your new password must be different to previously used passwords.
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+						<div className='space-y-4'>
+							<FormField
+								control={form.control}
+								name='password'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel className='text-sm font-medium'>Password</FormLabel>
+										<FormControl>
+											<Input {...field} type='password' disabled={isPending} placeholder='*********' />
+										</FormControl>
+										<FormDescription>Must be at least 8 characters.</FormDescription>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='password_confirmation'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel className='text-sm font-medium'>Confirm Password</FormLabel>
+										<FormControl>
+											<Input {...field} type='password' disabled={isPending} placeholder='*********' />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<SubmitButton isLoading={isPending} label='Reset password' />
+					</form>
+				</Form>
+			</CardContent>
+			<CardFooter>
+				<BackButton />
+			</CardFooter>
+		</Card>
 	);
 }
