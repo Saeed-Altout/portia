@@ -27,7 +27,9 @@ export default function VerifyRestEmailPage() {
 			</CardHeader>
 			<CardContent>
 				<Button className='w-full'>
-					<Link href={`/auth/verify-code?email=${email}`}>Open email app</Link>
+					<Link href={`mailto:${email}`} target='_blank'>
+						Open email app
+					</Link>
 				</Button>
 			</CardContent>
 			<CardFooter className='flex flex-col gap-y-5'>

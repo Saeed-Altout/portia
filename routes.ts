@@ -3,7 +3,20 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ['/auth/email-confirmed', '/auth/password-reset'];
+export const publicRoutes = [
+	'/',
+	'/blogs',
+	'/contact-us',
+	'/faqs',
+	'/locations',
+	'/our-plans',
+	'/pricing',
+	'privacy-policy',
+	'/testimonials',
+	'/why-portia-io',
+	'/auth/email-confirmed',
+	'/auth/password-reset',
+];
 
 /**
  * An array of routes that are used for authentication

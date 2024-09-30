@@ -16,7 +16,7 @@ export const useSendResetEmail = () => {
 		try {
 			const res = await sendResetEmailMutation(data);
 			toast.success(res.message);
-			router.push(`/verify-reset-email?email=${data.email}`);
+			router.push(`/auth/verify-reset-email?email=${data.email}`);
 		} catch (error) {
 			toast.error('Send reset email is failed!');
 		}
