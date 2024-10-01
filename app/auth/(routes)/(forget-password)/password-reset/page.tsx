@@ -23,11 +23,11 @@ export default function PasswordResetPage() {
 			</CardHeader>
 			<CardContent>
 				<Button className='w-full' asChild>
-					<Link href='/'>Continue</Link>
+					<Link href='/auth/login'>Continue to login</Link>
 				</Button>
 			</CardContent>
 			<CardFooter>
-				<BackButton />
+				<BackButton label='Back to home' href='/' />
 			</CardFooter>
 		</Card>
 	);

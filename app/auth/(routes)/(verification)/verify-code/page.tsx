@@ -40,7 +40,7 @@ export default function VerifyCodePage() {
 				<CardTitle className='text-2xl md:text-3xl font-semibold text-center'>Check your email</CardTitle>
 				<CardDescription className='text-center'>
 					We sent a password reset link to
-					{email != 'null' && email && <span className='font-medium block'>{email}</span>}
+					{email != 'null' && email && <span className='font-medium block text-wrap'>{email}</span>}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

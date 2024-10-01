@@ -38,11 +38,11 @@ export default function EmailConfirmedPage() {
 			</CardHeader>
 			<CardContent>
 				<Button className='w-full' asChild>
-					<Link href='/'>Continue</Link>
+					<Link href='/dashboard'>Continue to dashboard</Link>
 				</Button>
 			</CardContent>
 			<CardFooter>
-				<BackButton />
+				<BackButton label='Back to home' href='/' />
 			</CardFooter>
 		</Card>
 	);

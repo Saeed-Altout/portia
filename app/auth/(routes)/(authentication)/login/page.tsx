@@ -75,7 +75,7 @@ export default function LoginPage() {
 										onCheckedChange={() => setIsRememberMe((prev) => !prev)}
 									/>
 									<p className='text-black-200 font-medium leading-none text-sm mt-1'>
-										Remember for 30 days.
+										Remember for 10 days.
 									</p>
 								</div>
 								<Button type='button' size='sm' variant='link' className='px-0' asChild>
