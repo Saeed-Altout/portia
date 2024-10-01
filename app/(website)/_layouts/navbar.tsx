@@ -9,11 +9,12 @@ import { Container } from '@website/_components/ui/container';
 import { NavMain, NavMobile } from '@website/_components/navbar';
 
 import { useScrollStore } from '@website/hooks/scroll-to';
-import { useAuth } from '@/app/auth/providers';
+import { LogOut } from 'lucide-react';
+import { useSession } from '@/providers/session-provider';
 
 export const Navbar = () => {
 	const scrollStore = useScrollStore();
-	const { isAuthenticated } = useAuth();
+	const { token } = useSession();
 
 	return (
 		<header className='shadow-md h-20 w-full flex justify-center items-center'>
@@ -22,9 +23,15 @@ export const Navbar = () => {
 				<NavMain />
 				<NavMobile />
 				<div className='hidden lg:flex items-center justify-end gap-x-4'>
-					{!isAuthenticated && (
+					{!token && (
 						<Button variant='ghost' className='text-gray-500' asChild>
 							<Link href='/auth/login'>Log in</Link>
+						</Button>
+					)}
+
+					{token && (
+						<Button variant='ghost' size='icon' className='text-gray-500'>
+							<LogOut className='h-4 w-4' />
 						</Button>
 					)}
 					<Button onClick={scrollStore.scrollToSection}>Get Started</Button>

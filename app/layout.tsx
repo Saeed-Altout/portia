@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/config';
 import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/providers/query-provider';
-import { AuthProvider } from '@auth/providers';
+import { SessionProvider } from '@/providers/session-provider';
 
 export const metadata: Metadata = {
 	title: {
@@ -22,10 +22,10 @@ export default function RootLayout({
 		<html lang='en'>
 			<body>
 				<QueryProvider>
-					<AuthProvider>
+					<SessionProvider>
 						{children}
 						<Toaster />
-					</AuthProvider>
+					</SessionProvider>
 				</QueryProvider>
 			</body>
 		</html>
