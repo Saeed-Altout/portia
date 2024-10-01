@@ -11,9 +11,11 @@ import { NavMain, NavMobile } from '@website/_components/navbar';
 import { useScrollStore } from '@website/hooks/scroll-to';
 import { LogOut } from 'lucide-react';
 import { useSession } from '@/providers/session-provider';
+import { useLogout } from '@/app/auth/hooks';
 
 export const Navbar = () => {
 	const scrollStore = useScrollStore();
+	const { onSubmit, isPending } = useLogout();
 	const { token } = useSession();
 
 	return (
@@ -23,18 +25,25 @@ export const Navbar = () => {
 				<NavMain />
 				<NavMobile />
 				<div className='hidden lg:flex items-center justify-end gap-x-4'>
-					{!token && (
+					{!token ? (
 						<Button variant='ghost' className='text-gray-500' asChild>
 							<Link href='/auth/login'>Log in</Link>
 						</Button>
-					)}
-
-					{token && (
-						<Button variant='ghost' size='icon' className='text-gray-500'>
+					) : (
+						<Button
+							disabled={isPending}
+							variant='ghost'
+							size='icon'
+							className='text-gray-500'
+							onClick={() => onSubmit()}
+						>
 							<LogOut className='h-4 w-4' />
 						</Button>
 					)}
-					<Button onClick={scrollStore.scrollToSection}>Get Started</Button>
+
+					<Button disabled={isPending} onClick={scrollStore.scrollToSection}>
+						Get Started
+					</Button>
 				</div>
 			</Container>
 		</header>

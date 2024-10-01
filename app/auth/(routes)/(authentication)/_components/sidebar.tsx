@@ -7,10 +7,10 @@ export const Sidebar = () => {
 
 	return (
 		<div className='hidden lg:flex flex-1 items-center justify-center bg-gradient-to-tr from-[#000019] to-[#111280]'>
-			<div className='max-w-[672px] flex flex-col gap-y-12'>
+			<div className='max-w-[672px] flex flex-col gap-y-12 px-10'>
 				<Image src='/icons/favicon.svg' alt='Logo icon' width={80} height={80} className='h-20 w-20' priority />
 				<div className='space-y-1 lg:space-y-6'>
-					<h1 className='text-white font-medium text-6xl leading-8 lg:leading-[72px]'>
+					<h1 className='text-white font-medium text-[50px] leading-[65px]'>
 						Start turning your Browsing to Unlimited Efficiency.
 					</h1>
 					<p className='text-white font-medium text-xl leading-6 lg:leading-8'>

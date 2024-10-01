@@ -1,14 +1,24 @@
-import { AxiosError } from 'axios';
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useHandleResponse, useLogoutMutation } from '@auth/hooks';
 
-import { _axios } from '@/lib/axios';
+import localStorage from '@/services/local-storage';
+import cookieStorageService from '@/services/cookie-storage';
 
-import { authService } from '@auth/services';
+export const useLogout = () => {
+	const router = useRouter();
+	const { handleError } = useHandleResponse();
+	const { mutateAsync: logoutMutation, isPending } = useLogoutMutation();
 
-export const useLogoutMutation = (options?: UseMutationOptions<void, AxiosError<ErrorResponse>, void>) => {
-	return useMutation<void, AxiosError<ErrorResponse>, void>({
-		mutationKey: ['logout'],
-		mutationFn: () => authService.logout(),
-		...options,
-	});
+	const onSubmit = async () => {
+		try {
+			await logoutMutation();
+			cookieStorageService.clearAll();
+			localStorage.clearAll();
+			router.refresh();
+		} catch (error) {
+			handleError(error);
+		}
+	};
+
+	return { onSubmit, isPending };
 };

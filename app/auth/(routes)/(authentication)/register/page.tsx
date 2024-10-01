@@ -33,42 +33,44 @@ export default function RegisterPage() {
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
 						<div className='space-y-4'>
-							<FormField
-								control={form.control}
-								name='first_name'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className='text-sm font-medium'>First Name*</FormLabel>
-										<FormControl>
-											<Input
-												type='text'
-												placeholder='Enter your first name'
-												disabled={isPending}
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='last_name'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className='text-sm font-medium'>Last Name*</FormLabel>
-										<FormControl>
-											<Input
-												type='text'
-												placeholder='Enter your last name'
-												{...field}
-												disabled={isPending}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<div className='flex flex-row gap-x-4'>
+								<FormField
+									control={form.control}
+									name='first_name'
+									render={({ field }) => (
+										<FormItem className='w-full'>
+											<FormLabel className='text-sm font-medium'>First Name*</FormLabel>
+											<FormControl>
+												<Input
+													type='text'
+													placeholder='Enter your first name'
+													disabled={isPending}
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name='last_name'
+									render={({ field }) => (
+										<FormItem className='w-full'>
+											<FormLabel className='text-sm font-medium'>Last Name*</FormLabel>
+											<FormControl>
+												<Input
+													type='text'
+													placeholder='Enter your last name'
+													{...field}
+													disabled={isPending}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
 							<FormField
 								control={form.control}
 								name='email'

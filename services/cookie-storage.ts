@@ -119,6 +119,14 @@ export class CookieStorage {
 	public removeMemoryUser(): this {
 		return this.removeCookie('memory-user');
 	}
+
+	public clearAll(): this {
+		this.removeCookie('accessToken');
+		this.removeCookie('refreshToken');
+		this.removeCookie('user');
+		this.removeCookie('memory-user');
+		return this;
+	}
 }
 
 export default CookieStorage.getInstance();

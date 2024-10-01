@@ -28,7 +28,10 @@ import { useResendVerificationCode } from './resend-verification-code/use-resend
 
 // Error
 import { useHandleResponse } from './error/use-handle-response';
-import { useLogoutMutation } from './logout/use-logout';
+
+// Logout
+import { useLogoutMutation } from './logout/use-logout-mutation';
+import { useLogout } from './logout/use-logout';
 
 export {
 	useLoginMutation,
@@ -45,6 +48,7 @@ export {
 	useResendVerificationCode,
 	useLoginWithGoogleMutation,
 	useLoginWithGoogle,
-	useHandleResponse,
 	useLogoutMutation,
+	useLogout,
+	useHandleResponse,
 };
