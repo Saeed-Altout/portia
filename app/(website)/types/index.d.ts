@@ -1,4 +1,4 @@
-declare type ContactMessageBody = {
+declare type SendContactMessageBody = {
 	first_name: string;
 	last_name: string;
 	email: string;
@@ -6,7 +6,7 @@ declare type ContactMessageBody = {
 	message: string;
 };
 
-declare type ContactMessageResponse = {
+declare type SendContactMessageResponse = {
 	success: boolean;
 	message: string | string[];
 };

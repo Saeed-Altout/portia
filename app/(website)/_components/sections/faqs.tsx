@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 import { Routes } from '@/config';
 
-import { useGetFaqsQuery } from '@website/hooks/faqs/get-faqs';
+import { useGetFaqsQuery } from '@/app/(website)/hooks/faqs/get-faqs-query';
 import { FaqSkeleton } from '@website/_components/skeletons/faq-skeleton';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const FAQs = () => {
-	const { data: faqs, isLoading, isSuccess } = useGetFaqsQuery();
+	const { data: faqs, isLoading, isError, isSuccess } = useGetFaqsQuery();
 
 	return (
 		<section id='faqs' className='w-full py-20'>
@@ -26,9 +26,9 @@ export const FAQs = () => {
 					</p>
 				</div>
 				<div className='flex-1'>
-					{isLoading && (
+					{(isLoading || isError) && (
 						<div className='w-full flex flex-col gap-2'>
-							{[...Array(3)].map((_, index) => (
+							{[...Array(5)].map((_, index) => (
 								<FaqSkeleton key={index} />
 							))}
 						</div>

@@ -3,12 +3,28 @@ import { AxiosResponse } from 'axios';
 import { _axios } from '@/lib/axios';
 
 export const websiteService = {
-	async sendContactMessage(data: ContactMessageBody): Promise<ContactMessageResponse> {
+	async sendContactMessage(data: SendContactMessageBody): Promise<SendContactMessageResponse> {
 		try {
-			const response: AxiosResponse<ContactMessageResponse> = await _axios.post<ContactMessageResponse>(
+			const response: AxiosResponse<SendContactMessageResponse> = await _axios.post<SendContactMessageResponse>(
 				process.env.NEXT_PUBLIC_CONTACT_MESSAGE_ENDPOINT!,
 				data
 			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getAllFaqs(): Promise<FaqsRootObj<Faq[]>> {
+		try {
+			const response: AxiosResponse<FaqsRootObj<Faq[]>> = await _axios.get(process.env.NEXT_PUBLIC_ALL_FAQ_ENDPOINT!);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getFaqs(): Promise<FaqsRootObj<Faq[]>> {
+		try {
+			const response: AxiosResponse<FaqsRootObj<Faq[]>> = await _axios.get(process.env.NEXT_PUBLIC_FAQ_ENDPOINT!);
 			return response.data;
 		} catch (error) {
 			throw error;
