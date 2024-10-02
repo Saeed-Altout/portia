@@ -5,171 +5,204 @@
 html,
 body,
 :root {
-  height: 100%;
+	height: 100%;
 }
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 239 77% 28%;
-    /* --primary: 222.2 47.4% 11.2%; */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-  }
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 222.2 84% 4.9%;
+		--card: 0 0% 100%;
+		--card-foreground: 222.2 84% 4.9%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 222.2 84% 4.9%;
+		--primary: 239 77% 28%;
+		/* --primary: 222.2 47.4% 11.2%; */
+		--primary-foreground: 210 40% 98%;
+		--secondary: 210 40% 96.1%;
+		--secondary-foreground: 222.2 47.4% 11.2%;
+		--muted: 210 40% 96.1%;
+		--muted-foreground: 215.4 16.3% 46.9%;
+		--accent: 210 40% 96.1%;
+		--accent-foreground: 222.2 47.4% 11.2%;
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 210 40% 98%;
+		--border: 214.3 31.8% 91.4%;
+		--input: 214.3 31.8% 91.4%;
+		--ring: 222.2 84% 4.9%;
+		--radius: 0.5rem;
+		--chart-1: 12 76% 61%;
+		--chart-2: 173 58% 39%;
+		--chart-3: 197 37% 24%;
+		--chart-4: 43 74% 66%;
+		--chart-5: 27 87% 67%;
+	}
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
+	.dark {
+		--background: 222.2 84% 4.9%;
+		--foreground: 210 40% 98%;
+		--card: 222.2 84% 4.9%;
+		--card-foreground: 210 40% 98%;
+		--popover: 222.2 84% 4.9%;
+		--popover-foreground: 210 40% 98%;
+		--primary: 210 40% 98%;
+		--primary-foreground: 222.2 47.4% 11.2%;
+		--secondary: 217.2 32.6% 17.5%;
+		--secondary-foreground: 210 40% 98%;
+		--muted: 217.2 32.6% 17.5%;
+		--muted-foreground: 215 20.2% 65.1%;
+		--accent: 217.2 32.6% 17.5%;
+		--accent-foreground: 210 40% 98%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 40% 98%;
+		--border: 217.2 32.6% 17.5%;
+		--input: 217.2 32.6% 17.5%;
+		--ring: 212.7 26.8% 83.9%;
+		--chart-1: 220 70% 50%;
+		--chart-2: 160 60% 45%;
+		--chart-3: 30 80% 55%;
+		--chart-4: 280 65% 60%;
+		--chart-5: 340 75% 55%;
+	}
 }
 
 @layer base {
-  * {
-    @apply border-border scroll-smooth;
-  }
-  body {
-    @apply bg-background text-black-200 scroll-smooth;
-  }
-  p {
-    @apply text-base text-gray-500 font-normal leading-normal;
-  }
+	* {
+		@apply border-border scroll-smooth;
+	}
+	body {
+		@apply bg-background text-black-200 scroll-smooth;
+	}
+	p {
+		@apply text-base text-gray-500 font-normal leading-normal;
+	}
 }
 
 @layer components {
-  .container {
-    @apply max-w-7xl mx-auto w-full h-full px-4 md:px-6 lg:px-8 xl:px-10;
-  }
-  .text {
-    @apply text-base text-gray-500 font-normal leading-normal;
-  }
+	.container {
+		@apply max-w-7xl mx-auto w-full h-full px-4 md:px-6 lg:px-8 xl:px-10;
+	}
+	.text {
+		@apply text-base text-gray-500 font-normal leading-normal;
+	}
 }
 
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"),
-    url("/fonts/Altone-ExtraBold.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-ExtraBold.ttf') format('truetype'), url('/fonts/Altone-ExtraBold.ttf') format('truetype');
+	font-weight: 900;
+	font-style: normal;
 }
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-Bold.ttf") format("truetype"),
-    url("/fonts/Altone-Bold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-Bold.ttf') format('truetype'), url('/fonts/Altone-Bold.ttf') format('truetype');
+	font-weight: 800;
+	font-style: normal;
 }
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-Bold.ttf") format("truetype"),
-    url("/fonts/Altone-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-Bold.ttf') format('truetype'), url('/fonts/Altone-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
 }
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-SemiBold.ttf") format("truetype"),
-    url("/fonts/Altone-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-SemiBold.ttf') format('truetype'), url('/fonts/Altone-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-Medium.ttf") format("truetype"),
-    url("/fonts/Altone-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-Medium.ttf') format('truetype'), url('/fonts/Altone-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
 }
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-Medium.ttf") format("truetype"),
-    url("/fonts/Altone-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-Medium.ttf') format('truetype'), url('/fonts/Altone-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
 }
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-Regular.ttf") format("truetype"),
-    url("/fonts/Altone-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-Regular.ttf') format('truetype'), url('/fonts/Altone-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
 }
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-Light.ttf") format("truetype"),
-    url("/fonts/Altone-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-Light.ttf') format('truetype'), url('/fonts/Altone-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
 }
 @font-face {
-  font-family: "Alton";
-  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"),
-    url("/fonts/Altone-ExtraBold.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
+	font-family: 'Alton';
+	src: url('/fonts/Altone-ExtraBold.ttf') format('truetype'), url('/fonts/Altone-ExtraBold.ttf') format('truetype');
+	font-weight: 200;
+	font-style: normal;
 }
 
 body {
-  font-family: "Alton", sans-serif;
+	font-family: 'Alton', sans-serif;
 }
 
 @layer base {
-  :root {
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-  }
+	:root {
+		--chart-1: 12 76% 61%;
+		--chart-2: 173 58% 39%;
+		--chart-3: 197 37% 24%;
+		--chart-4: 43 74% 66%;
+		--chart-5: 27 87% 67%;
+	}
 
-  .dark {
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
+	.dark {
+		--chart-1: 220 70% 50%;
+		--chart-2: 160 60% 45%;
+		--chart-3: 30 80% 55%;
+		--chart-4: 280 65% 60%;
+		--chart-5: 340 75% 55%;
+	}
+}
+
+/* phone-input.css */
+.react-international-phone-input-container {
+	@apply h-10 w-full relative;
+}
+
+.react-international-phone-input-container input {
+	@apply h-full w-full rounded-md border border-input bg-background pl-12 pr-10 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.react-international-phone-country-selector {
+	@apply h-full absolute left-3 top-1/2 transform -translate-y-1/2 z-10;
+}
+
+.react-international-phone-country-selector-button {
+	@apply h-full w-full flex items-center justify-center;
+}
+
+.react-international-phone-country-selector-button__flag-emoji {
+	@apply w-6 h-6;
+}
+
+.react-international-phone-country-selector-button__dropdown-arrow {
+	@apply hidden;
+}
+
+.react-international-phone-country-selector-dropdown {
+	@apply z-50 absolute w-72 left-0 top-[120%] bg-white h-72 overflow-y-scroll outline-none border rounded-md shadow-lg;
+}
+
+.react-international-phone-country-selector-dropdown__list-item {
+	@apply flex items-center gap-x-2 px-4 py-2 hover:bg-gray-100 cursor-pointer;
+}
+
+.react-international-phone-country-selector-dropdown__list-item-flag-emoji {
+	@apply w-6 h-6;
+}
+
+.react-international-phone-country-selector-dropdown__list-item-country-name,
+.react-international-phone-country-selector-dropdown__list-item-dial-code {
+	@apply text-gray-500;
 }

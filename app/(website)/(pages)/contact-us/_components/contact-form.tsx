@@ -1,30 +1,28 @@
 'use client';
 
-import * as React from 'react';
-
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+import { BeatLoader } from 'react-spinners';
+import { PhoneInput } from 'react-international-phone';
 
 import { Section } from '@website/_components/ui/section';
 import { Container } from '@website/_components/ui/container';
 import { HeadingPage } from '@website/_components/ui/heading-page';
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { formContactSchema, FormContactValues, initialFormContactValues } from '@website/schema';
-import { countriesName } from '@website/constants';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { BeatLoader } from 'react-spinners';
-import { useSendContactMessage } from '@/app/(website)/hooks';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+
+import { formContactSchema } from '@website/schema';
+import { useSendContactMessage } from '@website/hooks';
 
 export const ContactForm = () => {
 	const { onSubmit, isPending } = useSendContactMessage();
 
-	const form = useForm<FormContactValues>({
+	const form = useForm<z.infer<typeof formContactSchema>>({
 		resolver: zodResolver(formContactSchema),
 		defaultValues: {
 			first_name: '',
@@ -89,13 +87,17 @@ export const ContactForm = () => {
 								<FormItem>
 									<FormLabel>Phone number</FormLabel>
 									<FormControl>
-										<Input type='text' placeholder='+(1) 999 1000 000' {...field} />
+										<PhoneInput
+											disabled={isPending}
+											className='react-international-phone-input-container'
+											defaultCountry='sy'
+											{...field}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
-
 						<FormField
 							control={form.control}
 							name='message'

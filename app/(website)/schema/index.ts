@@ -8,7 +8,7 @@ export const formContactSchema = z.object({
 		message: 'Last Name must be at least 2 characters.',
 	}),
 	email: z.string().email(),
-	phone: z.string().min(9, { message: 'Phone number must be at least 9 numbers.' }),
+	phone: z.string(),
 	message: z.string(),
 });
 
