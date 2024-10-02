@@ -85,8 +85,7 @@ export const authService = {
 
 	async loginWithGoogle(): Promise<void> {
 		try {
-			const response: AxiosResponse<void> = await _axios.get(process.env.NEXT_PUBLIC_LOGIN_WITH_GOOGLE_ENDPOINT!);
-			return response.data;
+			location.href = process.env.NEXT_PUBLIC_API_URL! + process.env.NEXT_PUBLIC_LOGIN_WITH_GOOGLE_ENDPOINT!;
 		} catch (error) {
 			throw error;
 		}

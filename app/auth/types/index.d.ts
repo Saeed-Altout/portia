@@ -72,9 +72,11 @@ declare type ErrorResponse = {
 };
 
 declare type User = {
-	id: string;
-	name: string;
-	email: string;
+	success: boolean;
+	message: string;
+	access_token: string;
+	token_type: string;
+	expires_in: string;
 };
 
 declare type MemoryUser = {

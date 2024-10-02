@@ -19,6 +19,7 @@ export const useHandleResponse = () => {
 		}
 
 		redirectTo && router.push(redirectTo);
+		router.refresh();
 	};
 
 	const handleError = (error: AxiosError | unknown, errorMessage: string = 'Something went wrong!') => {

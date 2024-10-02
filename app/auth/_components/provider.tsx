@@ -1,8 +1,8 @@
 'use client';
 
 import { FcGoogle } from 'react-icons/fc';
-import { Button } from '@/components/ui/button';
 
+import { Button } from '@/components/ui/button';
 import { useLoginWithGoogle } from '@auth/hooks';
 
 interface ProviderProps {
@@ -20,8 +20,8 @@ export const Provider = ({ isLoading }: ProviderProps) => {
 			disabled={isLoading || isPending}
 			onClick={onSubmit}
 		>
-			<FcGoogle className='h-6 w-6' />
-			Sign in with Google
+			<FcGoogle className='w-4 h-4' />
+			<span>Login with Google</span>
 		</Button>
 	);
 };
