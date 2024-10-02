@@ -29,7 +29,7 @@ export default function VerifyRestEmailPage() {
 			</CardHeader>
 			<CardContent>
 				<Button className='w-full' asChild>
-					<Link href={`mailto:${email}`} target='_blank'>
+					<Link href='mailto:admin@portia.pro' target='_blank'>
 						Open email app
 					</Link>
 				</Button>

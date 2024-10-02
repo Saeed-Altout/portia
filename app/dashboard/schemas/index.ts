@@ -1,28 +1,13 @@
 import * as z from 'zod';
 
-export const settingsSchema = z.object({
-	first_name: z.string().min(2, { message: 'First name is required' }),
-	last_name: z.string().min(2, { message: 'Last name is required' }),
-	email: z.string().email('Invalid email address'),
-	current_password: z.string().min(8, 'Current password must be at least 8 characters'),
-	new_password: z.string().min(8, 'New password must be at least 8 characters'),
-	new_password_confirmation: z.string().min(8, 'Confirm password must be at least 8 characters'),
+export const userProfileSchema = z.object({
+	first_name: z.string(),
+	last_name: z.string(),
+	email: z.string(),
+	current_password: z.string(),
+	new_password: z.string(),
+	new_password_confirmation: z.string(),
 });
-
-export type SettingsSchema = z.infer<typeof settingsSchema>;
-export const initialValues = {
-	name: {
-		firstName: '',
-		lastName: '',
-	},
-	email: '',
-	password: {
-		currentPassword: '',
-		newPassword: '',
-		confirmNewPassword: '',
-	},
-	affiliateLink: '',
-};
 
 export const activateNewProxySchema = z.object({
 	package: z.string().min(2),
