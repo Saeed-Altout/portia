@@ -38,7 +38,7 @@ export const ContactForm = () => {
 			<Container className='gap-y-6'>
 				<HeadingPage title='Get in touch' description='Our friendly team would love to hear from you.' />
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5 w-full'>
+					<form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-8'>
 						<div className='grid grid-cols-1 md:grid-cols-2 gap-8 mt-8'>
 							<FormField
 								control={form.control}
@@ -66,56 +66,56 @@ export const ContactForm = () => {
 									</FormItem>
 								)}
 							/>
+							<FormField
+								control={form.control}
+								name='email'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Email</FormLabel>
+										<FormControl>
+											<Input type='email' placeholder='email' {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='phone'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Phone number</FormLabel>
+										<FormControl>
+											<PhoneInput
+												disabled={isPending}
+												className='react-international-phone-input-container'
+												defaultCountry='sy'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='message'
+								render={({ field }) => (
+									<FormItem className='col-span-1 md:col-span-2'>
+										<FormLabel>Message</FormLabel>
+										<FormControl>
+											<Textarea
+												rows={6}
+												placeholder='write here your message'
+												disabled={isPending}
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 						</div>
-						<FormField
-							control={form.control}
-							name='email'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Email</FormLabel>
-									<FormControl>
-										<Input type='email' placeholder='email' {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='phone'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Phone number</FormLabel>
-									<FormControl>
-										<PhoneInput
-											disabled={isPending}
-											className='react-international-phone-input-container'
-											defaultCountry='sy'
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='message'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Message</FormLabel>
-									<FormControl>
-										<Textarea
-											rows={6}
-											placeholder='write here your message'
-											disabled={isPending}
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
 						<Button type='submit' disabled={isPending}>
 							{isPending ? <BeatLoader size={10} color='#fff' /> : 'Send message'}
 						</Button>
