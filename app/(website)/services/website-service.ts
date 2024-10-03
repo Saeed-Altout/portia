@@ -14,17 +14,25 @@ export const websiteService = {
 			throw error;
 		}
 	},
-	async getAllFaqs(): Promise<FaqsRootObj<Faq[]>> {
+	async getAllFaqs(): Promise<RootObj<Faq[]>> {
 		try {
-			const response: AxiosResponse<FaqsRootObj<Faq[]>> = await _axios.get(process.env.NEXT_PUBLIC_ALL_FAQ_ENDPOINT!);
+			const response: AxiosResponse<RootObj<Faq[]>> = await _axios.get(process.env.NEXT_PUBLIC_ALL_FAQ_ENDPOINT!);
 			return response.data;
 		} catch (error) {
 			throw error;
 		}
 	},
-	async getFaqs(): Promise<FaqsRootObj<Faq[]>> {
+	async getFaqs(): Promise<RootObj<Faq[]>> {
 		try {
-			const response: AxiosResponse<FaqsRootObj<Faq[]>> = await _axios.get(process.env.NEXT_PUBLIC_FAQ_ENDPOINT!);
+			const response: AxiosResponse<RootObj<Faq[]>> = await _axios.get(process.env.NEXT_PUBLIC_FAQ_ENDPOINT!);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getOffers(): Promise<RootObj<Offer[]>> {
+		try {
+			const response: AxiosResponse<RootObj<Offer[]>> = await _axios.get(process.env.NEXT_PUBLIC_OFFERS!);
 			return response.data;
 		} catch (error) {
 			throw error;

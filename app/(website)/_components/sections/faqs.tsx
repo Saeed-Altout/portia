@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 import { Routes } from '@/config';
 
-import { useGetFaqsQuery } from '@/app/(website)/hooks/faqs/get-faqs-query';
 import { FaqSkeleton } from '@website/_components/skeletons/faq-skeleton';
-
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+import { useGetFaqsQuery } from '@website/hooks';
 
 export const FAQs = () => {
 	const { data: faqs, isLoading, isError, isSuccess } = useGetFaqsQuery();

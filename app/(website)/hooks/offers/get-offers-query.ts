@@ -2,10 +2,10 @@ import { AxiosError } from 'axios';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { websiteService } from '@website/services';
 
-export const useGetFaqsQuery = (options?: UseQueryOptions<RootObj<Faq[]>, AxiosError<ErrorResponse>>) => {
+export const useOffersQuery = (options?: UseQueryOptions<RootObj<Offer[]>, AxiosError<ErrorResponse>>) => {
 	return useQuery({
-		queryKey: ['get-faqs'],
-		queryFn: () => websiteService.getFaqs(),
+		queryKey: ['get-offers'],
+		queryFn: () => websiteService.getOffers(),
 		...options,
 	});
 };

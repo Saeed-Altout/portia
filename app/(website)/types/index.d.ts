@@ -11,10 +11,11 @@ declare type SendContactMessageResponse = {
 	message: string | string[];
 };
 
-declare type FaqsRootObj<T = any> = {
+declare type RootObj<T = any> = {
 	success: boolean;
 	data: T;
 };
+
 declare type Faq = {
 	id: number;
 	question: string;
@@ -22,3 +23,4 @@ declare type Faq = {
 	created_at: Date | string;
 	updated_at: Date | string;
 };
+declare type Offer = {};
