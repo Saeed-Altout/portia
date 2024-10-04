@@ -85,6 +85,51 @@ body,
 	.text {
 		@apply text-base text-gray-500 font-normal leading-normal;
 	}
+
+	.offer-table {
+		@apply w-full h-full grid grid-cols-4;
+	}
+	.offer-table-column {
+		@apply bg-white;
+	}
+	.offer-table-head {
+		@apply flex flex-col justify-center items-center;
+	}
+	.offer-table-body {
+		@apply bg-white;
+	}
+	.offer-table-group-features {
+		@apply flex flex-col border-b;
+	}
+	.offer-table-cell-head {
+		@apply py-6 px-4 font-medium text-sm odd:bg-white even:bg-[#F5F5FA];
+	}
+	.offer-table-cell-data {
+		@apply py-6 px-4 text-gray-500 text-center text-sm odd:bg-white even:bg-[#F5F5FA];
+	}
+
+	.offer-table-head-info {
+		@apply w-full flex justify-start items-start gap-x-2 py-6 px-4 border-b;
+	}
+	.offer-table-head-info-popular {
+		@apply bg-[#D4D4FF] text-primary px-5 py-1 rounded-full text-sm font-medium;
+	}
+
+	.offer-table-head-info-name {
+		@apply text-xl font-semibold leading-8;
+	}
+	.offer-table-head-content {
+		@apply w-full flex flex-col justify-start items-start gap-y-6 py-6 px-4;
+	}
+	.offer-table-head-content-price {
+		@apply font-semibold text-5xl;
+	}
+	.offer-table-head-content-plan {
+		@apply text-base font-medium text-gray-500 ml-2 tracking-wide text-nowrap;
+	}
+	.offer-table-head-content-description {
+		@apply text-sm;
+	}
 }
 
 @font-face {
