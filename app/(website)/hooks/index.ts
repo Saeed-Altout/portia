@@ -9,4 +9,13 @@ import { useGetFaqsQuery } from './faqs/get-faqs-query';
 // Error
 import { useHandleResponse } from './error/use-handle-response';
 
-export { useSendContactMessageMutation, useSendContactMessage, useGetAllFaqsQuery, useGetFaqsQuery, useHandleResponse };
+import { useGetFeaturesOffersQuery } from './offers/get-features-offers-query';
+
+export {
+	useSendContactMessageMutation,
+	useSendContactMessage,
+	useGetAllFaqsQuery,
+	useGetFeaturesOffersQuery,
+	useGetFaqsQuery,
+	useHandleResponse,
+};

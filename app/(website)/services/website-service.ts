@@ -38,4 +38,12 @@ export const websiteService = {
 			throw error;
 		}
 	},
+	async getFeaturesOffers(): Promise<FeaturesOffers> {
+		try {
+			const response: AxiosResponse<FeaturesOffers> = await _axios.get(process.env.NEXT_PUBLIC_FEATURES_OFFERS!);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
 };
