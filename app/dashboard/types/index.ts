@@ -23,3 +23,26 @@ declare type UserProfile = {
 	last_name: string;
 	email: string;
 };
+
+declare type PricingPlans = {
+	package_name: string;
+	plans: {
+		plan_name: string;
+		offers: {
+			id: number;
+			amount: number;
+			cost: string;
+			is_top: boolean;
+			description: string;
+		}[];
+	}[];
+}[];
+
+declare type CategoryPlan = {
+	id: number;
+	name: string;
+};
+declare type CategoryPackage = {
+	id: number;
+	name: string;
+};

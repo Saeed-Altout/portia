@@ -1,122 +1,82 @@
-"use client";
-import * as React from "react";
+'use client';
 
-import { Heading } from "@dashboard/_components/ui/heading";
-import { PlanCard } from "@dashboard/_components/cards/plan-card";
+import { Fragment, useState } from 'react';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Skeleton } from '@/components/ui/skeleton';
 
-import {
-  pricingPlanData,
-  plansData,
-  durationsData,
-} from "@dashboard/constants";
-import { renderTheme } from "@dashboard/helpers/render-theme";
+import { Heading } from '@dashboard/_components/ui/heading';
+
+import { TabMenu } from './_components/tab-menu';
+import { DropdownMenu } from './_components/dropdown-menu';
+import { OfferCard, OfferCardSkeleton } from './_components/offer-card';
+
+import { useGetCategoriesPackagesQuery, useGetCategoriesPlansQuery, useGetPricingPlansQuery } from '@dashboard/hooks';
 
 export default function PricingPlansPage() {
-  const [plan, setPlan] = React.useState<"Basic" | "Standard" | "Premium">(
-    "Basic"
-  );
-  const [duration, setDuration] = React.useState<
-    "Hourly" | "Monthly" | "Yearly"
-  >("Hourly");
-  return (
-    <>
-      {/* Heading Section */}
-      <Heading title="Welcome back, Jafar" label="Our Pricing plans" />
-      {/* Content Section */}
-      <div>
-        {/* Tabs */}
-        <div>
-          <div className="hidden md:flex items-start justify-start flex-col md:flex-row gap-x-12">
-            <div className="mb-6 flex space-x-4 bg-muted w-fit p-1 rounded-md">
-              {plansData.map((tab) => (
-                <div
-                  role="button"
-                  key={tab}
-                  className={`px-4 py-2 rounded-md text-sm font-medium ${
-                    plan === tab
-                      ? "bg-white text-black-default"
-                      : "bg-transparent text-muted-foreground"
-                  }`}
-                  onClick={() => setPlan(tab)}
-                >
-                  {tab}
-                </div>
-              ))}
-            </div>
-            <div className="mb-6 flex space-x-4 bg-muted w-fit p-1 rounded-md">
-              {durationsData.map((tab) => (
-                <div
-                  role="button"
-                  key={tab}
-                  className={`px-4 py-2 rounded-md text-sm font-medium ${
-                    duration === tab
-                      ? "bg-white text-black-default"
-                      : "bg-transparent text-muted-foreground"
-                  }`}
-                  onClick={() => setDuration(tab)}
-                >
-                  {tab}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col gap-4 md:hidden">
-            <Select
-              defaultValue={plan}
-              onValueChange={(value: "Basic" | "Standard" | "Premium") =>
-                setPlan(value)
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a package" />
-              </SelectTrigger>
-              <SelectContent>
-                {plansData.map((tab) => (
-                  <SelectItem key={tab} value={tab}>
-                    {tab}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select
-              defaultValue={duration}
-              onValueChange={(value: "Hourly" | "Monthly" | "Yearly") =>
-                setDuration(value)
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a Plan" />
-              </SelectTrigger>
-              <SelectContent>
-                {durationsData.map((tab) => (
-                  <SelectItem key={tab} value={tab}>
-                    {tab}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        {/* Content */}
-        <div className="grid gap-4">
-          {pricingPlanData[plan][duration].map((item) => (
-            <PlanCard
-              initialData={item}
-              theme={renderTheme(plan).theme}
-              fill={renderTheme(plan).fill}
-              key={item.id}
-            />
-          ))}
-        </div>
-      </div>
-    </>
-  );
+	const { data, isSuccess, isLoading, isError } = useGetPricingPlansQuery();
+	const {
+		data: categoriesPlans,
+		isLoading: categoriesPlansLoading,
+		isError: categoriesPlansError,
+		isSuccess: categoriesPlansSuccess,
+	} = useGetCategoriesPlansQuery();
+	const {
+		data: categoriesPackages,
+		isLoading: categoriesPackagesLoading,
+		isError: categoriesPackagesError,
+		isSuccess: categoriesPackagesSuccess,
+	} = useGetCategoriesPackagesQuery();
+
+	const [pkgName, setPkgName] = useState<string>('Basic');
+	const [planName, setPlanName] = useState<string>('Hourly');
+
+	const LoadingSkeletons = () => (
+		<div className='flex flex-col lg:flex-row items-center justify-start gap-5'>
+			<Skeleton className='w-full lg:w-[240px] h-11 rounded-md' />
+			<Skeleton className='w-full lg:w-[240px] h-11 rounded-md' />
+		</div>
+	);
+
+	return (
+		<Fragment>
+			<Heading title='Welcome back, Jafar' label='Our Pricing plans' />
+			<div className='flex flex-col gap-y-4'>
+				{(categoriesPackagesLoading || categoriesPackagesError || categoriesPlansLoading || categoriesPlansError) && (
+					<LoadingSkeletons />
+				)}
+
+				{categoriesPackagesSuccess && categoriesPlansSuccess && (
+					<div>
+						<div className='hidden lg:flex items-start justify-start gap-x-12'>
+							<TabMenu items={categoriesPackages?.data} selected={pkgName} onChange={setPkgName} />
+							<TabMenu items={categoriesPlans?.data} selected={planName} onChange={setPlanName} />
+						</div>
+						<div className='lg:hidden flex flex-col gap-5'>
+							<DropdownMenu items={categoriesPackages?.data || []} selected={pkgName} onChange={setPkgName} />
+							<DropdownMenu items={categoriesPlans?.data || []} selected={planName} onChange={setPlanName} />
+						</div>
+					</div>
+				)}
+			</div>
+
+			{(isLoading || isError) && (
+				<div className='grid gap-4'>
+					{[...Array(3)].map((_, index) => (
+						<OfferCardSkeleton key={index} />
+					))}
+				</div>
+			)}
+			{isSuccess && (
+				<div className='grid gap-4'>
+					{data?.data
+						?.filter((pkg) => pkg.package_name === pkgName)
+						?.flatMap((pkg) =>
+							pkg.plans
+								?.filter((plan) => plan.plan_name === planName)
+								?.flatMap((plan) => plan.offers.map((offer, index) => <OfferCard key={index} offer={offer} />))
+						)}
+				</div>
+			)}
+		</Fragment>
+	);
 }
