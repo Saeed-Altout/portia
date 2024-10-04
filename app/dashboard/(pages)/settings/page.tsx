@@ -1,7 +1,10 @@
 'use client';
 
-import * as React from 'react';
 import Link from 'next/link';
+import { useEffect } from 'react';
+
+import { Loader } from 'lucide-react';
+import { BeatLoader } from 'react-spinners';
 
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -14,11 +17,11 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 
 import { Heading } from '@dashboard/_components/ui/heading';
 import { userProfileSchema } from '@dashboard/schemas';
-import { BeatLoader } from 'react-spinners';
-import { useUpdateUserProfile } from '../../hooks';
+import { useGetUserProfileQuery, useUpdateUserProfile } from '@dashboard/hooks';
 
 export default function SettingsPage() {
 	const { onSubmit, isPending } = useUpdateUserProfile();
+	const { data: user, isLoading, isSuccess } = useGetUserProfileQuery();
 
 	const form = useForm<z.infer<typeof userProfileSchema>>({
 		resolver: zodResolver(userProfileSchema),
@@ -32,6 +35,10 @@ export default function SettingsPage() {
 		},
 	});
 
+	useEffect(() => {
+		isSuccess && form.reset({ ...user });
+	}, [isSuccess, user, form]);
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
@@ -41,11 +48,19 @@ export default function SettingsPage() {
 					className='col-span-1 md:col-span-2 lg:col-span-4'
 				>
 					<div className='flex items-center justify-center gap-3'>
-						<Button variant='outline' asChild disabled={isPending}>
+						<Button variant='outline' asChild disabled={isPending || isLoading}>
 							<Link href='/dashboard'>Cancel</Link>
 						</Button>
-						<Button type='submit' variant='default' disabled={isPending}>
-							{isPending ? <BeatLoader size={10} color='#fff' /> : 'Update'}
+						<Button type='submit' variant='default' disabled={isPending || isLoading}>
+							{isPending ? (
+								<BeatLoader size={10} color='#fff' />
+							) : isLoading ? (
+								<span className='flex items-center justify-center gap-x-2'>
+									<Loader className='animate-spin h-4 w-4 text-white' /> Data Fetching
+								</span>
+							) : (
+								'Update'
+							)}
 						</Button>
 					</div>
 				</Heading>
@@ -57,7 +72,7 @@ export default function SettingsPage() {
 						<FormItem>
 							<FormLabel>First Name</FormLabel>
 							<FormControl>
-								<Input type='text' placeholder='first name' disabled={isPending} {...field} />
+								<Input type='text' placeholder='first name' disabled={isPending || isLoading} {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -70,7 +85,7 @@ export default function SettingsPage() {
 						<FormItem>
 							<FormLabel>Last Name</FormLabel>
 							<FormControl>
-								<Input type='text' placeholder='last name' disabled={isPending} {...field} />
+								<Input type='text' placeholder='last name' disabled={isPending || isLoading} {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -83,7 +98,7 @@ export default function SettingsPage() {
 						<FormItem>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input type='email' placeholder='email' disabled={isPending} {...field} />
+								<Input type='email' placeholder='email' disabled={isPending || isLoading} {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -100,7 +115,7 @@ export default function SettingsPage() {
 						<FormItem>
 							<FormLabel>Current Password</FormLabel>
 							<FormControl>
-								<Input type='password' placeholder='********' disabled={isPending} {...field} />
+								<Input type='password' placeholder='********' disabled={isPending || isLoading} {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -113,7 +128,7 @@ export default function SettingsPage() {
 						<FormItem>
 							<FormLabel>New Password</FormLabel>
 							<FormControl>
-								<Input type='password' placeholder='********' disabled={isPending} {...field} />
+								<Input type='password' placeholder='********' disabled={isPending || isLoading} {...field} />
 							</FormControl>
 							<FormDescription>Your new password must be more than 8 characters</FormDescription>
 							<FormMessage />
@@ -127,7 +142,7 @@ export default function SettingsPage() {
 						<FormItem>
 							<FormLabel>New Password Confirmation</FormLabel>
 							<FormControl>
-								<Input type='password' placeholder='********' disabled={isPending} {...field} />
+								<Input type='password' placeholder='********' disabled={isPending || isLoading} {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

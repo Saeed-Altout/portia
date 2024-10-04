@@ -14,4 +14,13 @@ export const dashboardService = {
 			throw error;
 		}
 	},
+
+	async getUserProfile(): Promise<UserProfile> {
+		try {
+			const response: AxiosResponse<UserProfile> = await _axios.get(process.env.NEXT_PUBLIC_USER_DETAILS!);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
 };
