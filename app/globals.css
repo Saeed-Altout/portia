@@ -130,6 +130,24 @@ body,
 	.offer-table-head-content-description {
 		@apply text-sm;
 	}
+
+	.cell {
+		@apply h-[72px] px-4 flex justify-end md:justify-center items-center text-gray-500 text-center text-sm odd:bg-white even:bg-[#F5F5FA];
+	}
+	.cell-check {
+		@apply text-[#26A6A4] bg-[#B5F7F6] block rounded-full w-6 h-6 ml-auto md:mx-auto p-[2px];
+	}
+}
+.feature-item::before {
+	content: attr(data-content);
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 16px;
+	text-wrap: nowrap;
+	font-weight: 500;
+	text-transform: capitalize;
+	color: black;
 }
 
 @font-face {
