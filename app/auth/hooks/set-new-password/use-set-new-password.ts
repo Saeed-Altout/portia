@@ -1,5 +1,4 @@
 import * as z from 'zod';
-
 import { newPasswordSchema } from '@auth/schemas';
 import { useHandleResponse, useSetNewPasswordMutation } from '@auth/hooks';
 

@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation';
 import { useHandleResponse, useLogoutMutation } from '@auth/hooks';
-
 import localStorage from '@/services/local-storage';
 import cookieStorageService from '@/services/cookie-storage';
 

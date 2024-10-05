@@ -1,7 +1,6 @@
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-
 import cookieStorage from '@/services/cookie-storage';
 
 export const useHandleResponse = () => {

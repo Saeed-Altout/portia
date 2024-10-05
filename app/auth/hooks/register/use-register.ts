@@ -1,5 +1,4 @@
 import * as z from 'zod';
-
 import { registerSchema } from '@auth/schemas';
 import { useHandleResponse, useRegisterMutation } from '@auth/hooks';
 

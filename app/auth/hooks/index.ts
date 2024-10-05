@@ -26,12 +26,12 @@ import { useLoginWithGoogle } from './login-with-google/use-login-with-google';
 import { useResendVerificationCodeMutation } from './resend-verification-code/use-resend-verification-code-mutation';
 import { useResendVerificationCode } from './resend-verification-code/use-resend-verification-code';
 
-// Error
-import { useHandleResponse } from './error/use-handle-response';
-
 // Logout
 import { useLogoutMutation } from './logout/use-logout-mutation';
 import { useLogout } from './logout/use-logout';
+
+// Error
+import { useHandleResponse } from './error/use-handle-response';
 
 export {
 	useLoginMutation,
