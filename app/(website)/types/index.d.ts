@@ -85,3 +85,48 @@ declare type Offer = {
 		}[];
 	};
 };
+
+declare type ProxyRootObj<T = any> = {
+	count: number;
+	list: T;
+	has_more: boolean;
+};
+
+declare type proxy = {
+	id: number;
+	http_port: number;
+	socks_port: number;
+	service_provider_city_id: number;
+	service_provider_id: number;
+	service_provider_name: string;
+	country_id: number;
+	country_name: string;
+	city_id: number;
+	city_name: string;
+	rotation_time: number;
+	is_available: true;
+	technology: string;
+	status: string;
+	usage: number;
+};
+
+declare type Package = {
+	id: number;
+	package_name: string;
+}[];
+
+declare type Country = {
+	id: number;
+	country_name: string;
+}[];
+
+declare type City = {
+	id: number;
+	city_name: string;
+	country_id: number;
+}[];
+declare type ServiceProvider = {
+	id: number;
+	city_name: string;
+	service_provider_name: number;
+}[];

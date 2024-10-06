@@ -46,4 +46,55 @@ export const websiteService = {
 			throw error;
 		}
 	},
+
+	async getProxies(): Promise<ProxyRootObj<proxy[]>> {
+		try {
+			const response: AxiosResponse<ProxyRootObj<proxy[]>> = await _axios.get(
+				process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! + process.env.NEXT_PUBLIC_PROXIES!
+			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getPackages(): Promise<Package[]> {
+		try {
+			const response: AxiosResponse<Package[]> = await _axios.get(
+				process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! + process.env.NEXT_PUBLIC_PACKAGES!
+			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getCountries(): Promise<Country[]> {
+		try {
+			const response: AxiosResponse<Country[]> = await _axios.get(
+				process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! + process.env.NEXT_PUBLIC_COUNTRIES!
+			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getCities(): Promise<City[]> {
+		try {
+			const response: AxiosResponse<City[]> = await _axios.get(
+				process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! + process.env.NEXT_PUBLIC_CITIES!
+			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getServiceProvider(): Promise<ServiceProvider[]> {
+		try {
+			const response: AxiosResponse<ServiceProvider[]> = await _axios.get(
+				process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! + process.env.NEXT_PUBLIC_CITIES!
+			);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	},
 };
