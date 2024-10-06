@@ -46,24 +46,6 @@ declare type FeatureGroup = {
 	updated_at: Date | string;
 };
 
-declare type Offer = {
-	id: number;
-	amount: number;
-	cost: string;
-	is_top: boolean;
-	plan: Plan;
-	package: {
-		id: number;
-		name: string;
-		description: string | null;
-		created_at: Date | string;
-		updated_at: Date | string;
-		feature_groups: FeatureGroup[];
-	};
-	created_at: Date | string;
-	updated_at: Date | string;
-};
-
 declare type FeaturesOffers = {
 	success: boolean;
 	message: string;
@@ -77,4 +59,29 @@ declare type FeaturesOffers = {
 			value: string;
 		}[];
 	}[];
+};
+
+declare type Offer = {
+	id: number;
+	amount: number;
+	cost: string;
+	is_top: boolean;
+	plan: string;
+	package: {
+		id: number;
+		name: string;
+		description: string;
+		feature_groups: {
+			id: number;
+			name: string;
+			package_id: number;
+			features: {
+				id: number;
+				feature_group_id: number;
+				name: string;
+				description: string;
+				value: string | null;
+			}[];
+		}[];
+	};
 };

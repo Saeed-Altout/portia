@@ -10,7 +10,7 @@ import { useGetFaqsQuery } from './faqs/get-faqs-query';
 import { useHandleResponse } from './error/use-handle-response';
 
 import { useGetFeaturesOffersQuery } from './offers/get-features-offers-query';
-
+import { useGetOffersQuery } from './offers/get-offers-query';
 export {
 	useSendContactMessageMutation,
 	useSendContactMessage,
@@ -18,4 +18,5 @@ export {
 	useGetFeaturesOffersQuery,
 	useGetFaqsQuery,
 	useHandleResponse,
+	useGetOffersQuery,
 };

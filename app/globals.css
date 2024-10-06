@@ -149,6 +149,17 @@ body,
 	text-transform: capitalize;
 	color: black;
 }
+.featureGroup-item::before {
+	content: attr(data-content);
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 16px;
+	text-wrap: nowrap;
+	font-weight: 500;
+	text-transform: capitalize;
+	color: #03055e;
+}
 
 @font-face {
 	font-family: 'Alton';
