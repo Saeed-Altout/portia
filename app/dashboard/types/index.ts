@@ -46,3 +46,34 @@ declare type CategoryPackage = {
 	id: number;
 	name: string;
 };
+
+declare type EarningsHistory = {
+	current_page: number;
+	data: {
+		id: number;
+		user_id: number;
+		amount: number;
+		created_at: Date | string;
+		updated_at: Date | string;
+	}[];
+	first_page_url: string;
+	from: number;
+	last_page: number;
+	last_page_url: string;
+	links: {
+		url: string | null;
+		label: string;
+		active: boolean;
+	}[];
+	next_page_url: string | null;
+	path: string;
+	per_page: number;
+	prev_page_url: string | null;
+	to: number;
+	total: number;
+};
+declare type EarningsStatistics = {
+	this_month_earnings: number;
+	this_year_earnings: number;
+	total_earnings: number;
+};
