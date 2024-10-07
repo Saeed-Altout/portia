@@ -14,7 +14,7 @@ export const AvatarBox = ({ name, imgUrl, position }: AvatarBoxProps) => {
   return (
     <div className="flex flex-row items-center gap-4">
       <Avatar className="h-[56px] w-[56px]">
-        <AvatarImage src={imgUrl || "https://github.com/shadcn.png"} />
+        <AvatarImage src={imgUrl} />
         <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
       </Avatar>
       <div className="flex flex-col items-start py-2">
