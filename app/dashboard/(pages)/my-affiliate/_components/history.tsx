@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import {
   ChevronLeft,
@@ -16,9 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { useGetAffiliateEarningsHistoryQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
+import localStorage from "@/services/local-storage";
 
 export const History = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
+  const [email, setEmail] = useState<string>("un known");
   const {
     data: history,
     isSuccess,
@@ -30,7 +32,7 @@ export const History = () => {
     ? history?.data.data.map((item) => ({
         id: item.id,
         amount: item.amount,
-        email: "saeedaltout@gmail.com",
+        email: email,
         date: format(new Date(item.created_at), "MMM dd, yyyy"),
       }))
     : [];
@@ -70,6 +72,13 @@ export const History = () => {
 
     return pages;
   };
+
+  useEffect(() => {
+    const email = localStorage.getEmail();
+    if (email) {
+      setEmail(email);
+    }
+  }, []);
 
   return (
     <div className="border rounded-md bg-[#F5F5FA]">
