@@ -26,7 +26,6 @@ declare type Faq = {
 
 declare type Review = {
   id: number;
-  user_id: number;
   user_name: string;
   specialization: string;
   message: string;
