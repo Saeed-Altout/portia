@@ -26,6 +26,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useStoreModal } from "@/app/dashboard/hooks/modals/use-store-modal";
 
 interface CustomFieldProps {
   name: string;
@@ -69,6 +70,7 @@ export const CustomField = ({
   labelBackButton,
 }: CustomFieldProps & React.HtmlHTMLAttributes<HTMLElement>) => {
   const { control } = useFormContext();
+  const storeModal = useStoreModal();
 
   return (
     <>
@@ -109,7 +111,12 @@ export const CustomField = ({
                     className="flex-1 rounded-r-none"
                     {...field}
                   />
-                  <Button size="icon" className="rounded-l-none" asChild>
+                  <Button
+                    size="icon"
+                    className="rounded-l-none"
+                    onClick={() => storeModal.onCloseActivateNewProxy()}
+                    asChild
+                  >
                     <Link href={href}>
                       <ArrowUpRight className="h-4 w-4" />
                       <span className="sr-only">ArrowUpRight Icon</span>
