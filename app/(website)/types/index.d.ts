@@ -101,41 +101,41 @@ declare type ProxyRootObj<T = any> = {
   has_more: boolean;
 };
 
-declare type proxy = {
+declare type ListProxy = {
   id: number;
   http_port: number;
   socks_port: number;
-  service_provider_city_id: number;
-  service_provider_id: number;
   service_provider_name: string;
-  country_id: number;
   country_name: string;
-  city_id: number;
   city_name: string;
   rotation_time: number;
-  is_available: true;
-  technology: string;
-  status: string;
-  usage: number;
+  is_available: boolean;
+};
+
+declare type proxy = {
+  count: number;
+  list: ListProxy[];
+  has_more: boolean;
 };
 
 declare type Package = {
   id: number;
-  package_name: string;
-}[];
+  name: string;
+};
 
 declare type Country = {
   id: number;
   country_name: string;
-}[];
+};
 
 declare type City = {
   id: number;
   city_name: string;
   country_id: number;
-}[];
+};
 declare type ServiceProvider = {
   id: number;
   city_name: string;
-  service_provider_name: number;
-}[];
+  service_provider_name: string;
+};
+declare type IpRotation = string;

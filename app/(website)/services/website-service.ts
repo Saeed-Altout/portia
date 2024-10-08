@@ -58,61 +58,168 @@ export const websiteService = {
     }
   },
 
-  async getProxies(): Promise<ProxyRootObj<proxy[]>> {
+  async getProxies({
+    pkg_id,
+    country_id,
+    city_id,
+    service_provider_id,
+    rotation_time,
+    offset,
+  }: {
+    pkg_id: number;
+    offset: number;
+    country_id?: number;
+    city_id?: number;
+    service_provider_id?: number;
+    rotation_time?: number;
+  }): Promise<RootObj<proxy>> {
+    const params: Record<string, any> = {
+      pkg_id,
+      country_id,
+      city_id,
+      service_provider_id,
+      rotation_time,
+    };
+
+    Object.keys(params).forEach(
+      (key) =>
+        (params[key] === 0 || params[key] === undefined) && delete params[key]
+    );
+
     try {
-      const response: AxiosResponse<ProxyRootObj<proxy[]>> = await _axios.get(
-        process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! +
-          process.env.NEXT_PUBLIC_PROXIES!
+      const response: AxiosResponse<RootObj<proxy>> = await _axios.get(
+        `${process.env.NEXT_PUBLIC_PROXIES_LOCATIONS!}?offset=${offset || 0}`,
+        { params }
       );
       return response.data;
     } catch (error) {
       throw error;
     }
   },
-  async getPackages(): Promise<Package[]> {
+  async getPackages(): Promise<RootObj<Package[]>> {
     try {
-      const response: AxiosResponse<Package[]> = await _axios.get(
-        process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! +
-          process.env.NEXT_PUBLIC_PACKAGES!
+      const response: AxiosResponse<RootObj<Package[]>> = await _axios.get(
+        process.env.NEXT_PUBLIC_PACKAGES!
       );
       return response.data;
     } catch (error) {
       throw error;
     }
   },
-  async getCountries(): Promise<Country[]> {
+
+  async getCountries({
+    pkg_id = 1,
+  }: {
+    pkg_id: number;
+  }): Promise<RootObj<Country[]>> {
+    const params: Record<string, any> = {
+      pkg_id,
+    };
+
+    Object.keys(params).forEach(
+      (key) =>
+        (params[key] === 0 || params[key] === undefined) && delete params[key]
+    );
     try {
-      const response: AxiosResponse<Country[]> = await _axios.get(
-        process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! +
-          process.env.NEXT_PUBLIC_COUNTRIES!
+      const response: AxiosResponse<RootObj<Country[]>> = await _axios.get(
+        process.env.NEXT_PUBLIC_COUNTRIES!,
+        { params }
       );
       return response.data;
     } catch (error) {
       throw error;
     }
   },
-  async getCities(): Promise<City[]> {
+
+  async getCities({
+    pkg_id,
+    country_id,
+  }: {
+    pkg_id: number;
+    country_id: number;
+  }): Promise<RootObj<City[]>> {
+    const params: Record<string, any> = {
+      pkg_id,
+      country_id,
+    };
+
+    Object.keys(params).forEach(
+      (key) =>
+        (params[key] === 0 || params[key] === undefined) && delete params[key]
+    );
     try {
-      const response: AxiosResponse<City[]> = await _axios.get(
-        process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! +
-          process.env.NEXT_PUBLIC_CITIES!
+      const response: AxiosResponse<RootObj<City[]>> = await _axios.get(
+        process.env.NEXT_PUBLIC_CITIES!,
+        { params }
       );
       return response.data;
     } catch (error) {
       throw error;
     }
   },
-  async getServiceProvider(): Promise<ServiceProvider[]> {
+  async getServiceProvider({
+    pkg_id,
+    city_id,
+  }: {
+    pkg_id: number;
+    city_id: number;
+  }): Promise<RootObj<ServiceProvider[]>> {
+    const params: Record<string, any> = {
+      pkg_id,
+      city_id,
+    };
+
+    Object.keys(params).forEach(
+      (key) =>
+        (params[key] === 0 || params[key] === undefined) && delete params[key]
+    );
+
     try {
-      const response: AxiosResponse<ServiceProvider[]> = await _axios.get(
-        process.env.NEXT_PUBLIC_MEGA_PANEL_API_URL! +
-          process.env.NEXT_PUBLIC_CITIES!
+      const response: AxiosResponse<RootObj<ServiceProvider[]>> =
+        await _axios.get(process.env.NEXT_PUBLIC_SERVICE_PROVIDERS!, {
+          params,
+        });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getIpRotations({
+    pkg_id,
+    country_id,
+    city_id,
+    service_provider_id,
+    rotation_time,
+  }: {
+    pkg_id: number;
+    country_id?: number;
+    city_id?: number;
+    service_provider_id?: number;
+    rotation_time?: number;
+  }): Promise<RootObj<string[]>> {
+    const params: Record<string, any> = {
+      pkg_id,
+      country_id,
+      city_id,
+      service_provider_id,
+      rotation_time,
+    };
+
+    Object.keys(params).forEach(
+      (key) => (params[key] === undefined || 0) && delete params[key]
+    );
+    try {
+      const response: AxiosResponse<RootObj<string[]>> = await _axios.get(
+        process.env.NEXT_PUBLIC_IP_ROTATIONS!,
+        { params }
       );
       return response.data;
     } catch (error) {
       throw error;
     }
   },
+
   async getReviews({
     queryKey,
   }: {

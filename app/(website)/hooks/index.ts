@@ -12,6 +12,14 @@ import { useHandleResponse } from "./error/use-handle-response";
 import { useGetFeaturesOffersQuery } from "./offers/get-features-offers-query";
 import { useGetOffersQuery } from "./offers/get-offers-query";
 import { useGetReviewsQuery } from "./reviews/get-reviews-query";
+
+import { useGetPackagesQuery } from "./proxies/get-packages-query";
+import { useGetCitiesQuery } from "./proxies/get-cities-query";
+import { useGetServiceProviderQuery } from "./proxies/get-service-providers-query";
+import { useGetIpRotationsQuery } from "./proxies/get-ip-rotations-query";
+import { useGetProxiesQuery } from "./proxies/get-proxies-query";
+import { useGetCountriesQuery } from "./proxies/get-countries-query";
+
 export {
   useSendContactMessageMutation,
   useSendContactMessage,
@@ -21,4 +29,10 @@ export {
   useHandleResponse,
   useGetOffersQuery,
   useGetReviewsQuery,
+  useGetPackagesQuery,
+  useGetCitiesQuery,
+  useGetCountriesQuery,
+  useGetIpRotationsQuery,
+  useGetProxiesQuery,
+  useGetServiceProviderQuery,
 };

@@ -4,35 +4,22 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { CellActions } from "./cell-actions";
 
-export type Location = {
-  id: string;
-  state: string;
-  country: string;
-  isp: string;
-  connect: boolean;
-  ipRotation: string;
-};
-
-export const columns: ColumnDef<Location>[] = [
+export const columns: ColumnDef<ListProxy>[] = [
   {
     accessorKey: "id",
     header: "#",
   },
   {
-    accessorKey: "country",
+    accessorKey: "country_name",
     header: "Country",
   },
   {
-    accessorKey: "state",
-    header: "State",
+    accessorKey: "city_name",
+    header: "City",
   },
   {
-    accessorKey: "isp",
+    accessorKey: "service_provider_name",
     header: "ISP",
-  },
-  {
-    accessorKey: "ipRotation",
-    header: "IP Rotation",
   },
   {
     accessorKey: "id",
