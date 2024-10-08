@@ -25,9 +25,9 @@ export const ProxiesCard = ({
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />
           </Circle>
-          <h3 className="text-base font-medium">{title}</h3>
+          <p className="font-medium">{title}</p>
         </div>
-        <p className="text-4xl font-semibold">{content}</p>
+        <h3 className="text-4xl font-semibold">{content}</h3>
       </div>
     </div>
   );

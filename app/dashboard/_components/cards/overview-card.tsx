@@ -31,9 +31,9 @@ export const OverviewCard = ({
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />
           </Circle>
-          <h4 className="text-base font-medium text-gray-500">{title}</h4>
+          <p className="font-medium">{title}</p>
         </div>
-        <h2 className="text-4xl font-semibold">{content}</h2>
+        <h3 className="text-4xl font-semibold">{content}</h3>
       </div>
       <Separator />
       <div className="flex items-center justify-end py-2 px-6">
