@@ -25,9 +25,9 @@ export const dashboardService = {
       throw error;
     }
   },
-  async getPricingPlans(): Promise<RootObj<PricingPlans>> {
+  async getPricingPlans(): Promise<RootObj<PricingPlan[]>> {
     try {
-      const response: AxiosResponse<RootObj<PricingPlans>> = await _axios.get(
+      const response: AxiosResponse<RootObj<PricingPlan[]>> = await _axios.get(
         process.env.NEXT_PUBLIC_OFFERS_PLANS!
       );
       return response.data;
