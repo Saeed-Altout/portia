@@ -21,7 +21,7 @@ import { Filter } from "./_components/filter";
 import { DataTable } from "./_components/data-table";
 
 export default function LocationsPage() {
-  const [pkg, setPkg] = useState<number>(0);
+  const [pkg, setPkg] = useState<number>(1);
   const [country, setCountry] = useState<number>(0);
   const [city, setCity] = useState<number>(0);
   const [ipRotation, setIpRotation] = useState<number>(0);

@@ -21,7 +21,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Content = () => {
-  const [pkg, setPkg] = useState<number>(0);
+  const [pkg, setPkg] = useState<number>(1);
   const [country, setCountry] = useState<number>(0);
   const [city, setCity] = useState<number>(0);
   const [ipRotation, setIpRotation] = useState<number>(0);

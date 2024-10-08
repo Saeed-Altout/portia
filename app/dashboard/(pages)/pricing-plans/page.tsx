@@ -15,6 +15,7 @@ import {
   useGetCategoriesPlansQuery,
   useGetPricingPlansQuery,
 } from "@dashboard/hooks";
+import { renderTheme } from "../../helpers/render-theme";
 
 export default function PricingPlansPage() {
   const { data, isSuccess, isLoading, isError } = useGetPricingPlansQuery();
@@ -103,7 +104,24 @@ export default function PricingPlansPage() {
                   ?.filter((plan) => plan.plan_name === planName)
                   ?.flatMap((plan) =>
                     plan.offers.map((offer, index) => (
-                      <OfferCard key={index} offer={offer} />
+                      <OfferCard
+                        key={index}
+                        offer={offer}
+                        fill={
+                          pkgName == "Basic"
+                            ? "primary"
+                            : pkgName == "Standard"
+                            ? "danger"
+                            : "muted"
+                        }
+                        theme={
+                          pkgName == "Basic"
+                            ? "primary"
+                            : pkgName == "Standard"
+                            ? "danger"
+                            : "muted"
+                        }
+                      />
                     ))
                   )
               )
