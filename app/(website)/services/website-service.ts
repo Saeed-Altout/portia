@@ -160,13 +160,16 @@ export const websiteService = {
   async getServiceProvider({
     pkg_id,
     city_id,
+    country_id,
   }: {
     pkg_id: number;
     city_id: number;
+    country_id: number;
   }): Promise<RootObj<ServiceProvider[]>> {
     const params: Record<string, any> = {
       pkg_id,
       city_id,
+      country_id,
     };
 
     Object.keys(params).forEach(

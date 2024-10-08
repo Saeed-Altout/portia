@@ -1,13 +1,11 @@
 "use client";
+import * as React from "react";
+
+import { columns } from "./_components/columns";
+
+import { Heading } from "@dashboard/_components/ui/heading";
 
 import { useEffect, useState } from "react";
-
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
-import { Filter } from "./filter";
-
-import { Section } from "@website/_components/ui/section";
-import { Container } from "@website/_components/ui/container";
 
 import {
   useGetCitiesQuery,
@@ -19,8 +17,10 @@ import {
 } from "@website/hooks";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Filter } from "./_components/filter";
+import { DataTable } from "./_components/data-table";
 
-export const Content = () => {
+export default function LocationsPage() {
   const [pkg, setPkg] = useState<number>(0);
   const [country, setCountry] = useState<number>(0);
   const [city, setCity] = useState<number>(0);
@@ -159,95 +159,88 @@ export const Content = () => {
   }, [pkg, country, city, sp, ipRotation]);
 
   return (
-    <Section>
-      <Container className="gap-y-8">
-        <div className="w-full space-y-3 text-center lg:text-left">
-          <p>Our Available Proxy’s Locations</p>
-          <h3 className="text-2xl lg:text-3xl font-semibold">
-            Choose your location’s needs
-          </h3>
-          <p>
-            you can easily filter your results based on country, state, isp,
-            rotation by this:
-          </p>
-        </div>
-        <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-8">
-          <Filter
-            disabled={pkgs?.data.length === 0 || pkgsIsLoading}
-            onValueChange={(e) => setPkg(Number(e))}
-            placeholder="Package"
-            options={packagesFormatted}
-          />
-          <Filter
-            disabled={
-              pkg === 0 || countries?.data.length == 0 || countriesIsLoading
-            }
-            onValueChange={(e) => setCountry(Number(e))}
-            placeholder="Country"
-            options={countriesFormatted}
-          />
-          <Filter
-            disabled={
-              pkg === 0 ||
-              country === 0 ||
-              cities?.data.length == 0 ||
-              citiesIsLoading
-            }
-            onValueChange={(e) => setCity(Number(e))}
-            placeholder="City"
-            options={citiesFormatted}
-          />
-          <Filter
-            disabled={
-              pkg === 0 ||
-              city === 0 ||
-              servicesProvider?.data.length == 0 ||
-              servicesProviderIsLoading
-            }
-            onValueChange={(e) => setSp(Number(e))}
-            placeholder="SP"
-            options={servicesProviderFormatted}
-          />
-          <Filter
-            disabled={
-              pkg === 0 ||
-              city === 0 ||
-              ipRotations?.data.length === 0 ||
-              ipRotationsIsLoading
-            }
-            onValueChange={(e) => setIpRotation(Number(e))}
-            placeholder="Ip Rotations"
-            options={ipRotationsFormatted}
-          />
-        </div>
-        <DataTable
-          columns={columns}
-          isLoading={isLoading}
-          data={isSuccess ? proxies.data.list : []}
+    <>
+      <Heading
+        label="Our Available Proxy’s Locations"
+        title="Choose your location’s needs"
+        description="you can easily filter your results based on country, state, isp, rotation by this:"
+      />
+      <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-8">
+        <Filter
+          disabled={pkgs?.data.length === 0 || pkgsIsLoading}
+          onValueChange={(e) => setPkg(Number(e))}
+          placeholder="Package"
+          options={packagesFormatted}
         />
+        <Filter
+          disabled={
+            pkg === 0 || countries?.data.length == 0 || countriesIsLoading
+          }
+          onValueChange={(e) => setCountry(Number(e))}
+          placeholder="Country"
+          options={countriesFormatted}
+        />
+        <Filter
+          disabled={
+            pkg === 0 ||
+            country === 0 ||
+            cities?.data.length == 0 ||
+            citiesIsLoading
+          }
+          onValueChange={(e) => setCity(Number(e))}
+          placeholder="City"
+          options={citiesFormatted}
+        />
+        <Filter
+          disabled={
+            pkg === 0 ||
+            city === 0 ||
+            servicesProvider?.data.length == 0 ||
+            servicesProviderIsLoading
+          }
+          onValueChange={(e) => setSp(Number(e))}
+          placeholder="SP"
+          options={servicesProviderFormatted}
+        />
+        <Filter
+          disabled={
+            pkg === 0 ||
+            city === 0 ||
+            ipRotations?.data.length === 0 ||
+            ipRotationsIsLoading
+          }
+          onValueChange={(e) => setIpRotation(Number(e))}
+          placeholder="Ip Rotations"
+          options={ipRotationsFormatted}
+        />
+      </div>
+      <DataTable
+        columns={columns}
+        isLoading={isLoading}
+        data={isSuccess ? proxies.data.list : []}
+      />
 
-        <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5 px-6">
-          <Button
-            variant="outline"
-            onClick={handlePreviousPage}
-            disabled={offset === 1 || !isSuccess}
-          >
-            <ChevronLeft className="h-4 w-4" />
-            <span>Previous</span>
-          </Button>
-          <div className="flex items-center gap-2">{generatePagination()}</div>
-          <Button
-            variant="outline"
-            onClick={handleNextPage}
-            disabled={
-              offset === totalPages || !proxies?.data.has_more || !isSuccess
-            }
-          >
-            <span>Next</span>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </Container>
-    </Section>
+      <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5 px-6">
+        <Button
+          variant="outline"
+          onClick={handlePreviousPage}
+          disabled={offset === 1 || !isSuccess}
+        >
+          <ChevronLeft className="h-4 w-4" />
+          <span>Previous</span>
+        </Button>
+        <div className="flex items-center gap-2">{generatePagination()}</div>
+        <Button
+          variant="outline"
+          onClick={handleNextPage}
+          disabled={
+            offset === totalPages || !proxies?.data.has_more || !isSuccess
+          }
+        >
+          <span>Next</span>
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+    </>
   );
-};
+}
