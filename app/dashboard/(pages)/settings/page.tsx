@@ -58,7 +58,13 @@ export default function SettingsPage() {
   });
 
   useEffect(() => {
-    isSuccess && form.reset({ ...user });
+    if (isSuccess && user) {
+      form.reset({
+        first_name: user.data.first_name || "",
+        last_name: user.data.last_name || "",
+        email: user.data.email || "",
+      });
+    }
   }, [isSuccess, user, form]);
 
   return (

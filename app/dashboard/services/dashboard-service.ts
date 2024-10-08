@@ -15,9 +15,9 @@ export const dashboardService = {
     }
   },
 
-  async getUserProfile(): Promise<UserProfile> {
+  async getUserProfile(): Promise<RootObj<UserProfile>> {
     try {
-      const response: AxiosResponse<UserProfile> = await _axios.get(
+      const response: AxiosResponse<RootObj<UserProfile>> = await _axios.get(
         process.env.NEXT_PUBLIC_USER_DETAILS!
       );
       return response.data;
