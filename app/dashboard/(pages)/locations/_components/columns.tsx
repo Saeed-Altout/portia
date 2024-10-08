@@ -22,6 +22,11 @@ export const columns: ColumnDef<ListProxy>[] = [
     header: "ISP",
   },
   {
+    accessorKey: "rotation_time",
+    header: "Ip Rotation",
+    cell: ({ row }) => <span>{row.original.rotation_time} min</span>,
+  },
+  {
     accessorKey: "id",
     header: "",
     cell: ({ row }) => <CellActions data={row.original} />,
