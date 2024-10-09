@@ -25,11 +25,7 @@ export type Proxy = {
   usernamePassword: string;
 };
 
-export const columnsActiveProxies: ColumnDef<Proxy>[] = [
-  {
-    accessorKey: "id",
-    header: "#",
-  },
+export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "renew",
     header: "Renew",
@@ -110,11 +106,7 @@ export const columnsActiveProxies: ColumnDef<Proxy>[] = [
   },
 ];
 
-export const columnsExpiredProxies: ColumnDef<Proxy>[] = [
-  {
-    accessorKey: "id",
-    header: "#",
-  },
+export const expiredColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "status",
     header: "Status",

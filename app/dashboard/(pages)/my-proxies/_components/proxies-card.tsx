@@ -1,7 +1,4 @@
-import * as React from "react";
-
 import { LucideIcon } from "lucide-react";
-
 import { Circle, Icon } from "@/components/dashboard/circle-icon";
 
 interface ProxiesCardProps {
@@ -20,14 +17,14 @@ export const ProxiesCard = ({
   const { icon, title, content, fill, theme } = initialData;
   return (
     <div className="border rounded-lg">
-      <div className="p-6 flex justify-start items-start flex-col gap-y-6">
+      <div className="p-6 space-y-5">
         <div className="flex items-center justify-start gap-x-2">
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />
           </Circle>
           <p className="font-medium">{title}</p>
         </div>
-        <h3 className="text-4xl font-semibold">{content}</h3>
+        <h4 className="text-4xl font-semibold">{content}</h4>
       </div>
     </div>
   );
