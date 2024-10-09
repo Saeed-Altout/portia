@@ -5,7 +5,7 @@ import { Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
+import { Circle, Icon } from "@/components/dashboard/circle-icon";
 
 interface PlanCardProps {
   id: number;

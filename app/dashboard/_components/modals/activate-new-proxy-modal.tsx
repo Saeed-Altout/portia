@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Modal } from "@dashboard/_components/ui/modal";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
 
-import { useStoreModal } from "@/app/dashboard/hooks/modals/use-store-modal";
+import { useStoreModal } from "@/hooks/use-store-modal";
 import {
   ActivateNewProxySchema,
   activateNewProxySchema,

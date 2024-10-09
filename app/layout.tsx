@@ -1,33 +1,33 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { siteConfig } from '@/config';
-import { Toaster } from '@/components/ui/sonner';
-import { QueryProvider } from '@/providers/query-provider';
-import { SessionProvider } from '@/providers/session-provider';
+import "./globals.css";
+import type { Metadata } from "next";
+import { siteConfig } from "@/config";
+import { Toaster } from "@/components/ui/sonner";
+import { QueryProvider } from "@/providers/query-provider";
+import SessionProvider from "@/components/providers/session-provider";
 
 export const metadata: Metadata = {
-	title: {
-		default: siteConfig.name,
-		template: `%s - ${siteConfig.name}`,
-	},
-	description: siteConfig.description,
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang='en'>
-			<body>
-				<QueryProvider>
-					<SessionProvider>
-						{children}
-						<Toaster />
-					</SessionProvider>
-				</QueryProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body>
+        <QueryProvider>
+          <SessionProvider>
+            {children}
+            <Toaster />
+          </SessionProvider>
+        </QueryProvider>
+      </body>
+    </html>
+  );
 }

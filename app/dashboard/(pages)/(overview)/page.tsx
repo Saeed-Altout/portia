@@ -1,45 +1,34 @@
-'use client';
-import * as React from 'react';
+"use client";
 
-import { Plus } from 'lucide-react';
+import { Table } from "./_components/table";
+import { columns } from "./_components/columns";
+import { OverviewCard } from "./_components/overview-card";
 
-import { columns } from './_components/columns';
+import { Heading } from "@/components/dashboard/heading";
+import { Loader } from "@/components/dashboard/loader";
 
-import { Heading } from '@dashboard/_components/ui/heading';
-import { DataTable } from '@dashboard/_components/ui/data-table';
-import { OverviewCard } from '@dashboard/_components/cards/overview-card';
-
-import { Button } from '@/components/ui/button';
-
-import { useStoreModal } from '@/app/dashboard/hooks/modals/use-store-modal';
-
-import { overviewData, overviewTableData } from '@dashboard/constants';
+import { useSession } from "@/hooks/use-session";
 
 export default function OverviewPage() {
-	const storeModal = useStoreModal();
+  const { session, isLoading } = useSession();
 
-	return (
-		<>
-			{/* Heading Section */}
-			<Heading title='Welcome back, Jafar'>
-				<div className='flex items-center justify-center gap-3'>
-					<Button variant='outline' onClick={() => storeModal.onOpenActivateNewProxy()}>
-						<Plus className='h-4 w-4 mr-2' /> Activate Proxies
-					</Button>
+  if (isLoading) {
+    return <Loader />;
+  }
 
-					<Button variant='outline' onClick={() => storeModal.onOpenAddFunds()}>
-						<Plus className='h-4 w-4 mr-2' /> Add Fund
-					</Button>
-				</div>
-			</Heading>
-			{/* Statistic Section */}
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-				{overviewData.map((item, index) => (
-					<OverviewCard key={index} initialData={item} />
-				))}
-			</div>
-			{/* Table Section */}
-			<DataTable data={overviewTableData} columns={columns} />
-		</>
-	);
+  return (
+    <>
+      <Heading
+        title={`Welcome back, ${session?.first_name} ${session?.last_name}`}
+        newProxy
+        addFunds
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[].map((item, index) => (
+          <OverviewCard key={index} initialData={item} />
+        ))}
+      </div>
+      <Table title="All Proxies Available" columns={columns} />
+    </>
+  );
 }

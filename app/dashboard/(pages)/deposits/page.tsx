@@ -11,7 +11,7 @@ import { DepositCard } from "@dashboard/_components/cards/deposit-card";
 
 import { Button } from "@/components/ui/button";
 
-import { useStoreModal } from "@/app/dashboard/hooks/modals/use-store-modal";
+import { useStoreModal } from "@/hooks/use-store-modal";
 
 import { depositsData, depositsTableData } from "@dashboard/constants";
 

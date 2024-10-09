@@ -1,12 +1,9 @@
-import * as React from "react";
 import Link from "next/link";
-
 import { LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-
-import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
+import { Circle, Icon } from "@/components/dashboard/circle-icon";
 
 interface OverviewCardProps {
   icon: LucideIcon;
@@ -26,14 +23,14 @@ export const OverviewCard = ({
   const { icon, title, content, label, href, fill, theme } = initialData;
   return (
     <div className="border rounded-lg">
-      <div className="p-6 flex justify-start items-start flex-col gap-y-6">
+      <div className="p-6 space-y-5">
         <div className="flex items-center justify-start gap-x-2">
           <Circle fill={fill}>
             <Icon icon={icon} theme={theme} />
           </Circle>
           <p className="font-medium">{title}</p>
         </div>
-        <h3 className="text-4xl font-semibold">{content}</h3>
+        <h4 className="text-4xl font-semibold">{content}</h4>
       </div>
       <Separator />
       <div className="flex items-center justify-end py-2 px-6">

@@ -26,7 +26,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useStoreModal } from "@/app/dashboard/hooks/modals/use-store-modal";
+import { useStoreModal } from "@/hooks/use-store-modal";
 
 interface CustomFieldProps {
   name: string;

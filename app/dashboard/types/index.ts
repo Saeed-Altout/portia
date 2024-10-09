@@ -22,6 +22,7 @@ declare type UserProfile = {
   first_name: string;
   last_name: string;
   email: string;
+  code: string;
 };
 
 declare type PricingPlan = {

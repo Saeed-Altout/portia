@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { LucideIcon } from "lucide-react";
 
-import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
+import { Circle, Icon } from "@/components/dashboard/circle-icon";
 
 interface ProxiesCardProps {
   icon: LucideIcon;

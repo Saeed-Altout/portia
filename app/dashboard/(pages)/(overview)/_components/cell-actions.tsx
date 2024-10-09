@@ -1,12 +1,9 @@
-import * as React from "react";
-
 import { Activity } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Proxy } from "./columns";
 
 interface CellActionsProps {
-  data: Proxy;
+  data: any;
 }
 
 export const CellActions = ({ data }: CellActionsProps) => {

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -23,10 +24,6 @@ export type Proxy = {
 };
 
 export const columns: ColumnDef<Proxy>[] = [
-  {
-    accessorKey: "id",
-    header: "#",
-  },
   {
     accessorKey: "renew",
     header: "Renew",

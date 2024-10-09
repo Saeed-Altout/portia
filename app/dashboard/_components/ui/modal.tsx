@@ -3,7 +3,7 @@
 import * as React from "react";
 import { LucideIcon, Zap } from "lucide-react";
 
-import { Circle, Icon } from "@dashboard/_components/ui/circle-icon";
+import { Circle, Icon } from "@/components/dashboard/circle-icon";
 
 import {
   Dialog,
