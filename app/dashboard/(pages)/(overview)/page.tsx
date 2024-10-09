@@ -19,7 +19,7 @@ export default function OverviewPage() {
   return (
     <>
       <Heading
-        title={`Welcome back, ${session?.first_name} ${session?.last_name}`}
+        title={`Welcome back, ${session?.first_name}`}
         newProxy
         addFunds
       />
