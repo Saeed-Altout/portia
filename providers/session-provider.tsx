@@ -1,49 +1,72 @@
-'use client';
+"use client";
 
-import { useState, useEffect, createContext, useContext } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+  FC,
+} from "react";
+import { useSession } from "@/hooks/use-session";
+import { useGetUserProfileQuery } from "@dashboard/hooks";
+import cookieStorage from "@/services/cookie-storage";
 
-import cookieStorage from '@/services/cookie-storage';
-
-export interface User {
-	id: string;
-	name: string;
-	email: string;
+interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  code: string;
 }
 
-export interface SessionContextProps {
-	token: string | null;
+interface SessionContextProps {
+  user: User | null;
+  isLoading: boolean;
 }
 
-export const SessionContext = createContext<SessionContextProps>({
-	token: null,
+const SessionContext = createContext<SessionContextProps>({
+  user: null,
+  isLoading: false,
 });
-
 interface SessionProviderProps {
-	children: React.ReactNode;
+  children: ReactNode;
 }
 
-export const SessionProvider = ({ children }: SessionProviderProps) => {
-	const [token, setToken] = useState<string | null>(null);
-	const [isMounted, setIsMounted] = useState<boolean>(false);
+export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const { data: user, isLoading, isSuccess } = useGetUserProfileQuery();
+  const setSession = useSession((state) => state.setSession);
+  const setIsLoading = useSession((state) => state.setIsLoading);
 
-	const setSession = (token: string | null) => {
-		if (token) {
-			setToken(token);
-		} else {
-			setToken(null);
-		}
-	};
+  useEffect(() => {
+    setIsLoading(isLoading);
+    if (isSuccess && user?.data) {
+      setSession(user.data);
+    }
+    setIsMounted(true);
+  }, [user, isLoading, isSuccess, setSession, setIsLoading]);
 
-	useEffect(() => {
-		const accessToken = cookieStorage.getAccessToken();
-		setSession(accessToken);
-		setIsMounted(true);
-	}, []);
+  if (!isMounted) {
+    return null;
+  }
 
-	if (!isMounted) {
-		return null;
-	}
-
-	return <SessionContext.Provider value={{ token }}>{children}</SessionContext.Provider>;
+  return (
+    <SessionContext.Provider
+      value={{
+        user: user?.data || null,
+        isLoading,
+      }}
+    >
+      {children}
+    </SessionContext.Provider>
+  );
 };
-export const useSession = () => useContext(SessionContext);
+
+export const useSessionContext = (): SessionContextProps => {
+  const context = useContext(SessionContext);
+  if (!context) {
+    throw new Error("useSessionContext must be used within a SessionProvider");
+  }
+  return context;
+};

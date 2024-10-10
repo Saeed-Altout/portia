@@ -10,14 +10,18 @@ export interface Session {
 
 interface UseSessionProps {
   session: Session | null;
+  token: string | null;
   isLoading: boolean;
   setSession: (session: Session | null) => void;
+  setToken: (token: string | null) => void;
   setIsLoading: (isLoading: boolean) => void;
 }
 
 export const useSession = create<UseSessionProps>((set) => ({
   session: null,
   isLoading: true,
+  token: null,
   setSession: (session: Session | null) => set({ session, isLoading: false }),
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
+  setToken: (token: string | null) => set({ token }),
 }));
