@@ -1,48 +1,34 @@
 "use client";
-import * as React from "react";
 
-import { Plus } from "lucide-react";
-
+import { Table } from "./_components/table";
 import { columns } from "./_components/columns";
+import { DepositCard } from "./_components/deposit-card";
 
-import { Heading } from "@dashboard/_components/ui/heading";
-import { DataTable } from "@dashboard/_components/ui/data-table";
-import { DepositCard } from "@dashboard/_components/cards/deposit-card";
+import { Loader } from "@/components/dashboard/loader";
+import { Heading } from "@/components/dashboard/heading";
 
-import { Button } from "@/components/ui/button";
-
-import { useStoreModal } from "@/hooks/use-store-modal";
-
-import { depositsData, depositsTableData } from "@dashboard/constants";
+import { useSessionContext } from "@/providers/session-provider";
 
 export default function DepositsPage() {
-  const storeModal = useStoreModal();
+  const { session, isLoading } = useSessionContext();
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
-      {/* Heading Section */}
-      <Heading title="Welcome back, Jafar">
-        <div className="flex items-center justify-center gap-3">
-          <Button
-            variant="outline"
-            onClick={() => storeModal.onOpenActivateNewProxy()}
-          >
-            <Plus className="h-4 w-4 mr-2" /> Activate Proxies
-          </Button>
-
-          <Button variant="outline" onClick={() => storeModal.onOpenAddFunds()}>
-            <Plus className="h-4 w-4 mr-2" /> Add Fund
-          </Button>
-        </div>
-      </Heading>
-      {/* Statistic Section */}
+      <Heading
+        title={`Welcome back, ${session?.first_name}`}
+        newProxy
+        addFunds
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {depositsData.map((item, index) => (
+        {[].map((item, index) => (
           <DepositCard key={index} initialData={item} />
         ))}
       </div>
-      {/* Table Section */}
-      <DataTable data={depositsTableData} columns={columns} />
+      <Table title="All my deposit" columns={columns} />
     </>
   );
 }

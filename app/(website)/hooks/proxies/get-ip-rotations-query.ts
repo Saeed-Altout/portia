@@ -31,7 +31,9 @@ export const useGetIpRotationsQuery = ({
         service_provider_id,
       }),
     enabled:
-      (pkg_id !== 0 && city_id !== 0 && country_id !== 0) ||
+      pkg_id !== 0 ||
+      city_id !== 0 ||
+      country_id !== 0 ||
       service_provider_id !== 0,
 
     ...options,

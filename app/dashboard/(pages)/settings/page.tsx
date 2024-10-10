@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
-import { Copy, Loader } from "lucide-react";
+import { Copy } from "lucide-react";
 import { BeatLoader } from "react-spinners";
 
 import { z } from "zod";
@@ -28,10 +28,12 @@ import { userProfileSchema } from "@dashboard/schemas";
 import { useGetUserProfileQuery, useUpdateUserProfile } from "@dashboard/hooks";
 import { useOrigin } from "@/hooks/use-origin";
 import { toast } from "sonner";
+import { useSessionContext } from "@/providers/session-provider";
+import { Loader } from "@/components/dashboard/loader";
 
 export default function SettingsPage() {
   const { onSubmit, isPending } = useUpdateUserProfile();
-  const { data: user, isLoading, isSuccess } = useGetUserProfileQuery();
+  const { session, isLoading } = useSessionContext();
   const inputRef = useRef(null);
   const origin = useOrigin();
   const [http, host] = origin.split("://");
@@ -48,9 +50,9 @@ export default function SettingsPage() {
   const form = useForm<z.infer<typeof userProfileSchema>>({
     resolver: zodResolver(userProfileSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
+      first_name: session?.first_name || "",
+      last_name: session?.last_name || "",
+      email: session?.email || "",
       current_password: "",
       new_password: "",
       new_password_confirmation: "",
@@ -58,15 +60,18 @@ export default function SettingsPage() {
   });
 
   useEffect(() => {
-    if (isSuccess && user) {
+    if (!isLoading) {
       form.reset({
-        first_name: user.data.first_name || "",
-        last_name: user.data.last_name || "",
-        email: user.data.email || "",
+        first_name: session?.first_name || "",
+        last_name: session?.last_name || "",
+        email: session?.email || "",
       });
     }
-  }, [isSuccess, user, form]);
+  }, [form, isLoading, session]);
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -88,8 +93,7 @@ export default function SettingsPage() {
                 <BeatLoader size={10} color="#fff" />
               ) : isLoading ? (
                 <span className="flex items-center justify-center gap-x-2">
-                  <Loader className="animate-spin h-4 w-4 text-white" /> Data
-                  Fetching
+                  Data Fetching
                 </span>
               ) : (
                 "Update"
@@ -223,7 +227,7 @@ export default function SettingsPage() {
                 prefix={`${http}://`}
                 type="text"
                 name="url"
-                value={`${host}/auth/register?code=9rOcrU`}
+                value={`${host}/auth/register?code=${session?.referred_code}`}
               />
             </div>
             <Button

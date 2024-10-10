@@ -18,11 +18,12 @@ export const Filter = ({
   options: { value: string; label: string }[];
 }) => {
   return (
-    <Select disabled={disabled} onValueChange={onValueChange}>
+    <Select disabled={disabled} defaultValue="-1" onValueChange={onValueChange}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
+        <SelectItem value="-1">None</SelectItem>
         {options.map((option) => (
           <SelectItem key={option.value} value={option.value.toString()}>
             {option.label}

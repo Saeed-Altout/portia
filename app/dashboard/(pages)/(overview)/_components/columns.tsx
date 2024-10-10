@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { cn } from "@/lib/utils";
@@ -33,7 +32,7 @@ export const columns: ColumnDef<Proxy>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <React.Fragment>
+      <>
         {row.original.status ? (
           <span className="text-[#035E5C] bg-[#D4FFFE] font-medium text-xs px-2 py-1 rounded-full leading-none">
             Active
@@ -43,7 +42,7 @@ export const columns: ColumnDef<Proxy>[] = [
             Disabled
           </span>
         )}
-      </React.Fragment>
+      </>
     ),
   },
   {

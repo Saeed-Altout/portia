@@ -1,11 +1,7 @@
 "use client";
-import * as React from "react";
-
-import { columns } from "./_components/columns";
-
-import { Heading } from "@dashboard/_components/ui/heading";
 
 import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 import {
   useGetCitiesQuery,
@@ -15,18 +11,25 @@ import {
   useGetProxiesQuery,
   useGetServiceProviderQuery,
 } from "@website/hooks";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
 import { Filter } from "./_components/filter";
-import { DataTable } from "./_components/data-table";
+import { columns } from "./_components/columns";
+
+import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/dashboard/loader";
+import { DataTable } from "@/components/dashboard/data-table";
+
+import { Heading } from "@dashboard/_components/ui/heading";
+
+import { formatObjectArray, formatStringArray } from "@/utils/formatters";
 
 export default function LocationsPage() {
-  const [pkg, setPkg] = useState<number>(1);
-  const [country, setCountry] = useState<number>(0);
-  const [city, setCity] = useState<number>(0);
-  const [ipRotation, setIpRotation] = useState<number>(0);
   const [sp, setSp] = useState<number>(0);
-  const [offset, setOffset] = useState<number>(1);
+  const [pkg, setPkg] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const [city, setCity] = useState<number>(0);
+  const [country, setCountry] = useState<number>(0);
+  const [ipRotation, setIpRotation] = useState<number>(0);
 
   const {
     data: pkgs,
@@ -39,13 +42,12 @@ export default function LocationsPage() {
     isLoading,
   } = useGetProxiesQuery({
     pkg_id: pkg,
-    offset: offset,
+    offset: page,
     country_id: country,
     city_id: city,
     service_provider_id: sp,
     rotation_time: ipRotation,
   });
-
   const {
     data: countries,
     isSuccess: countriesIsSuccess,
@@ -79,84 +81,32 @@ export default function LocationsPage() {
     service_provider_id: sp,
   });
 
-  const totalPages = isSuccess ? Math.ceil(proxies.data.count / 10) : 1;
+  const totalPages = isSuccess ? Math.floor(proxies.data.count / 10) : 1;
 
-  const handleNextPage = () =>
-    setOffset((prev) => Math.min(prev + 1, totalPages));
-  const handlePreviousPage = () => setOffset((prev) => Math.max(prev - 1, 1));
-
-  const generatePagination = () => {
-    const maxVisiblePages = 5;
-    const pages = [];
-
-    const startPage = Math.max(1, offset - Math.floor(maxVisiblePages / 2));
-    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <Button
-          key={i}
-          variant={offset === i ? "outline" : "ghost"}
-          onClick={() => setOffset(i)}
-        >
-          {i}
-        </Button>
-      );
-    }
-
-    if (endPage < totalPages) {
-      pages.push(
-        <MoreHorizontal key="more" className="h-4 w-4 mx-1 text-gray-500" />
-      );
-    }
-
-    return pages;
-  };
-
+  // Format data for filters
   const packagesFormatted = pkgsIsSuccess
-    ? pkgs?.data.map((pkg) => {
-        return {
-          value: pkg.id.toString(),
-          label: pkg.name,
-        };
-      })
+    ? formatObjectArray(pkgs?.data, "id", "name")
     : [];
   const countriesFormatted = countriesIsSuccess
-    ? countries?.data.map((country) => {
-        return {
-          value: country.id.toString(),
-          label: country.country_name,
-        };
-      })
+    ? formatObjectArray(countries?.data, "id", "country_name")
     : [];
   const citiesFormatted = citiesIsSuccess
-    ? cities?.data.map((city) => {
-        return {
-          value: city.id.toString(),
-          label: city.city_name,
-        };
-      })
+    ? formatObjectArray(cities?.data, "id", "city_name")
     : [];
   const servicesProviderFormatted = servicesProviderIsSuccess
-    ? servicesProvider?.data.map((serviceProvider) => {
-        return {
-          value: serviceProvider.id.toString(),
-          label: serviceProvider.service_provider_name,
-        };
-      })
+    ? formatObjectArray(servicesProvider?.data, "id", "service_provider_name")
     : [];
   const ipRotationsFormatted = ipRotationsIsSuccess
-    ? ipRotations?.data.map((ipRotation) => {
-        return {
-          value: ipRotation,
-          label: ipRotation,
-        };
-      })
+    ? formatStringArray(ipRotations?.data)
     : [];
 
   useEffect(() => {
-    setOffset(1);
+    setPage(1);
   }, [pkg, country, city, sp, ipRotation]);
+
+  if (!pkgsIsSuccess) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -165,81 +115,121 @@ export default function LocationsPage() {
         title="Choose your location’s needs"
         description="you can easily filter your results based on country, state, isp, rotation by this:"
       />
-      <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-8">
-        <Filter
-          disabled={pkgs?.data.length === 0 || pkgsIsLoading}
-          onValueChange={(e) => setPkg(Number(e))}
-          placeholder="Package"
-          options={packagesFormatted}
-        />
-        <Filter
-          disabled={
-            pkg === 0 || countries?.data.length == 0 || countriesIsLoading
-          }
-          onValueChange={(e) => setCountry(Number(e))}
-          placeholder="Country"
-          options={countriesFormatted}
-        />
-        <Filter
-          disabled={
-            pkg === 0 ||
-            country === 0 ||
-            cities?.data.length == 0 ||
-            citiesIsLoading
-          }
-          onValueChange={(e) => setCity(Number(e))}
-          placeholder="City"
-          options={citiesFormatted}
-        />
-        <Filter
-          disabled={
-            pkg === 0 ||
-            city === 0 ||
-            servicesProvider?.data.length == 0 ||
-            servicesProviderIsLoading
-          }
-          onValueChange={(e) => setSp(Number(e))}
-          placeholder="SP"
-          options={servicesProviderFormatted}
-        />
-        <Filter
-          disabled={
-            pkg === 0 ||
-            city === 0 ||
-            ipRotations?.data.length === 0 ||
-            ipRotationsIsLoading
-          }
-          onValueChange={(e) => setIpRotation(Number(e))}
-          placeholder="Ip Rotations"
-          options={ipRotationsFormatted}
-        />
-      </div>
-      <DataTable
-        columns={columns}
-        isLoading={isLoading}
-        data={isSuccess ? proxies.data.list : []}
-      />
 
-      <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5 px-6">
-        <Button
-          variant="outline"
-          onClick={handlePreviousPage}
-          disabled={offset === 1 || !isSuccess}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span>Previous</span>
-        </Button>
-        <div className="flex items-center gap-2">{generatePagination()}</div>
-        <Button
-          variant="outline"
-          onClick={handleNextPage}
-          disabled={
-            offset === totalPages || !proxies?.data.has_more || !isSuccess
-          }
-        >
-          <span>Next</span>
-          <ChevronRight className="h-4 w-4" />
-        </Button>
+      <div className="border rounded-md">
+        <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 rounded-t-md py-6 px-4">
+          <Filter
+            disabled={
+              !pkgsIsSuccess || pkgsIsLoading || packagesFormatted.length == 0
+            }
+            onValueChange={(e) => setPkg(Number(e))}
+            placeholder="Package"
+            options={packagesFormatted}
+          />
+          <Filter
+            disabled={
+              !pkgsIsSuccess ||
+              !countriesIsSuccess ||
+              countriesIsLoading ||
+              countriesFormatted.length == 0
+            }
+            onValueChange={(e) => setCountry(Number(e))}
+            placeholder="Country"
+            options={countriesFormatted}
+          />
+          <Filter
+            disabled={
+              !pkgsIsSuccess ||
+              !countriesIsSuccess ||
+              !citiesIsSuccess ||
+              citiesIsLoading ||
+              citiesFormatted.length == 0
+            }
+            onValueChange={(e) => setCity(Number(e))}
+            placeholder="City"
+            options={citiesFormatted}
+          />
+          <Filter
+            disabled={
+              !pkgsIsSuccess ||
+              !citiesIsSuccess ||
+              !servicesProviderIsSuccess ||
+              servicesProviderIsLoading ||
+              servicesProviderFormatted.length == 0
+            }
+            onValueChange={(e) => setSp(Number(e))}
+            placeholder="SP"
+            options={servicesProviderFormatted}
+          />
+          <Filter
+            disabled={
+              !pkgsIsSuccess ||
+              !ipRotationsIsSuccess ||
+              ipRotationsIsLoading ||
+              ipRotationsFormatted.length == 0
+            }
+            onValueChange={(e) => setIpRotation(Number(e))}
+            placeholder="Ip Rotations"
+            options={ipRotationsFormatted}
+          />
+        </div>
+
+        <DataTable
+          columns={columns}
+          data={isSuccess ? proxies?.data.list : []}
+        />
+
+        <div className="w-full flex justify-between items-center rounded-b-md py-6 px-4">
+          <Button
+            variant="outline"
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            <ChevronLeft className="h-4 w-4" />
+            <span>Previous</span>
+          </Button>
+          <div className="flex justify-center items-center gap-x-2">
+            {page >= 2 && (
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setPage(page - 1)}
+              >
+                {page - 1}
+              </Button>
+            )}
+            <Button
+              size="icon"
+              variant="ghost"
+              className="bg-secondary"
+              onClick={() => setPage(page)}
+            >
+              {page}
+            </Button>
+            {totalPages >= 4 && page >= 4 && page - 1 != totalPages && (
+              <Button size="icon" variant="ghost">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            )}
+            {page <= totalPages && (
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setPage(page + 1)}
+              >
+                {page + 1}
+              </Button>
+            )}
+          </div>
+          <Button
+            variant="outline"
+            disabled={page - 1 === totalPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            <span>Next</span>
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </>
   );

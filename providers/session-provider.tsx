@@ -1,62 +1,48 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-  FC,
-} from "react";
-import { useSession } from "@/hooks/use-session";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useGetUserProfileQuery } from "@dashboard/hooks";
 
-interface User {
+interface Session {
   id: number;
   first_name: string;
   last_name: string;
   email: string;
-  code: string;
+  referred_code: string;
 }
 
 interface SessionContextProps {
-  user: User | null;
+  session: Session | null;
   isLoading: boolean;
 }
 
 const SessionContext = createContext<SessionContextProps>({
-  user: null,
+  session: null,
   isLoading: false,
 });
 interface SessionProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
+export const SessionProvider = ({ children }: SessionProviderProps) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [session, setSession] = useState<Session | null>(null);
+
   const { data: user, isLoading, isSuccess } = useGetUserProfileQuery();
-  const setSession = useSession((state) => state.setSession);
-  const setIsLoading = useSession((state) => state.setIsLoading);
 
   useEffect(() => {
-    setIsLoading(isLoading);
     if (isSuccess && user?.data) {
       setSession(user.data);
     }
     setIsMounted(true);
-  }, [user, isLoading, isSuccess, setSession, setIsLoading]);
+  }, [isSuccess, user]);
 
   if (!isMounted) {
     return null;
   }
 
   return (
-    <SessionContext.Provider
-      value={{
-        user: user?.data || null,
-        isLoading,
-      }}
-    >
+    <SessionContext.Provider value={{ session, isLoading }}>
       {children}
     </SessionContext.Provider>
   );

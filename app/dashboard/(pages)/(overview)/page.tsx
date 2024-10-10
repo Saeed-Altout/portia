@@ -7,10 +7,10 @@ import { OverviewCard } from "./_components/overview-card";
 import { Heading } from "@/components/dashboard/heading";
 import { Loader } from "@/components/dashboard/loader";
 
-import { useSession } from "@/hooks/use-session";
+import { useSessionContext } from "@/providers/session-provider";
 
 export default function OverviewPage() {
-  const { session, isLoading } = useSession();
+  const { session, isLoading } = useSessionContext();
 
   if (isLoading) {
     return <Loader />;

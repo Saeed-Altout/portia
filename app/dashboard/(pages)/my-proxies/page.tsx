@@ -9,10 +9,10 @@ import { ProxiesCard } from "./_components/proxies-card";
 import { Heading } from "@/components/dashboard/heading";
 import { Loader } from "@/components/dashboard/loader";
 
-import { useSession } from "@/hooks/use-session";
+import { useSessionContext } from "@/providers/session-provider";
 
 export default function MyProxiesPage() {
-  const { session, isLoading } = useSession();
+  const { session, isLoading } = useSessionContext();
 
   if (isLoading) {
     return <Loader />;
