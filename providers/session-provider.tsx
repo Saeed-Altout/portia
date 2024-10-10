@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useSession } from "@/hooks/use-session";
 import { useGetUserProfileQuery } from "@dashboard/hooks";
-import cookieStorage from "@/services/cookie-storage";
 
 interface User {
   id: number;

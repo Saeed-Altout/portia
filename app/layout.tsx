@@ -4,7 +4,6 @@ import { siteConfig } from "@/config";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/providers/query-provider";
 import { AuthProvider } from "@/providers/auth-provider";
-import { SessionProvider } from "@/providers/session-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -24,10 +23,8 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <AuthProvider>
-            <SessionProvider>
-              {children}
-              <Toaster />
-            </SessionProvider>
+            {children}
+            <Toaster />
           </AuthProvider>
         </QueryProvider>
       </body>
