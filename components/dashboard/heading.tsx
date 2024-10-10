@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Plus } from "lucide-react";
+import { ChartColumn, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useStoreModal } from "@/hooks/use-store-modal";
@@ -12,6 +12,7 @@ interface HeadingProps extends React.HTMLAttributes<HTMLElement> {
   label?: string;
   newProxy?: boolean;
   addFunds?: boolean;
+  drawEarning?: boolean;
 }
 
 export const Heading = ({
@@ -20,6 +21,7 @@ export const Heading = ({
   label,
   newProxy = false,
   addFunds = false,
+  drawEarning = false,
   children,
 }: HeadingProps) => {
   const storeModal = useStoreModal();
@@ -43,6 +45,12 @@ export const Heading = ({
         {addFunds && (
           <Button variant="outline" onClick={() => storeModal.onOpenAddFunds()}>
             <Plus className="h-4 w-4 mr-2" /> Add Fund
+          </Button>
+        )}
+        {drawEarning && (
+          <Button variant="outline">
+            <ChartColumn className="h-4 w-4 mr-2" />
+            <span>Draw My Earning</span>
           </Button>
         )}
         {children}
