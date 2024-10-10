@@ -25,7 +25,7 @@ import { formatObjectArray, formatStringArray } from "@/utils/formatters";
 
 export default function LocationsPage() {
   const [sp, setSp] = useState<number>(0);
-  const [pkg, setPkg] = useState<number>(0);
+  const [pkg, setPkg] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
   const [city, setCity] = useState<number>(0);
   const [country, setCountry] = useState<number>(0);
@@ -81,7 +81,7 @@ export default function LocationsPage() {
     service_provider_id: sp,
   });
 
-  const totalPages = isSuccess ? Math.floor(proxies.data.count / 10) : 1;
+  const totalPages = isSuccess ? Math.ceil(proxies.data.count / 10) : 1;
 
   // Format data for filters
   const packagesFormatted = pkgsIsSuccess
@@ -206,12 +206,12 @@ export default function LocationsPage() {
             >
               {page}
             </Button>
-            {totalPages >= 4 && page >= 4 && page - 1 != totalPages && (
+            {totalPages >= 4 && page >= 4 && (
               <Button size="icon" variant="ghost">
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             )}
-            {page <= totalPages && (
+            {page <= totalPages && totalPages > 1 && (
               <Button
                 size="icon"
                 variant="ghost"
@@ -223,7 +223,7 @@ export default function LocationsPage() {
           </div>
           <Button
             variant="outline"
-            disabled={page - 1 === totalPages}
+            disabled={!proxies?.data.has_more}
             onClick={() => setPage((prev) => prev + 1)}
           >
             <span>Next</span>

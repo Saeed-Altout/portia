@@ -18,7 +18,11 @@ export const Filter = ({
   options: { value: string; label: string }[];
 }) => {
   return (
-    <Select disabled={disabled} defaultValue="-1" onValueChange={onValueChange}>
+    <Select
+      disabled={disabled}
+      defaultValue={placeholder === "Package" ? "1" : "-1"}
+      onValueChange={onValueChange}
+    >
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
