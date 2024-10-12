@@ -1,11 +1,9 @@
 "use client";
 
-import * as React from "react";
-
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 
+import { usePathname } from "next/navigation";
 import { Bell, Menu, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -20,13 +18,10 @@ export const Navbar = () => {
 
   return (
     <header className="sticky top-0 flex h-[72px] items-center gap-4 bg-background px-4 md:px-6 z-10">
-      {/* Main navbar  */}
       <nav className="hidden md:flex flex-row items-center gap-6">
-        {/* Logo */}
         <Link href="/dashboard" className="relative h-[27px] w-[91px]">
-          <Image src="/icons/logo.svg" alt="Logo" fill />
+          <Image src="/icons/logo.svg" alt="Logo" fill priority />
         </Link>
-        {/* Routes */}
         <div className="flex justify-start items-center gap-x-2">
           {routes.map(({ label, href }, index) => (
             <Button
@@ -43,7 +38,6 @@ export const Navbar = () => {
           ))}
         </div>
       </nav>
-      {/* Mobile navbar */}
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -52,11 +46,9 @@ export const Navbar = () => {
           </Button>
         </SheetTrigger>
         <SheetContent side="right" className="overflow-y-auto">
-          {/* Logo */}
           <Link href="/dashboard" className="relative h-[27px] w-[91px] block">
-            <Image src="/icons/logo.svg" alt="Logo" fill />
+            <Image src="/icons/logo.svg" alt="Logo" fill priority />
           </Link>
-          {/* Routes */}
           <div className="w-full mt-10 flex flex-col justify-start items-center gap-y-5">
             {routes.map(({ label, href }, index) => (
               <Button
@@ -78,7 +70,6 @@ export const Navbar = () => {
         </SheetContent>
       </Sheet>
 
-      {/* Icons navbar */}
       <div className="flex items-center gap-x-2 w-fit ml-auto">
         <Button size="icon" variant="ghost" asChild>
           <Link href="/dashboard/settings">

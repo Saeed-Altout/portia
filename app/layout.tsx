@@ -1,9 +1,9 @@
 import "./globals.css";
+
 import type { Metadata } from "next";
 import { siteConfig } from "@/config";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/providers/query-provider";
-import { AuthProvider } from "@/providers/auth-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -22,10 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <QueryProvider>
-          <AuthProvider>
-            {children}
-            <Toaster />
-          </AuthProvider>
+          {children}
+          <Toaster />
         </QueryProvider>
       </body>
     </html>

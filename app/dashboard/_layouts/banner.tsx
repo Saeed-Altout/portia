@@ -1,34 +1,49 @@
 "use client";
 
-import * as React from "react";
-
 import Link from "next/link";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-
 import { Button } from "@/components/ui/button";
 
-import { useBanner } from "@dashboard/hooks/use-banner";
-
 export const Banner = () => {
-  const { isClose, onClose } = useBanner();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  const onClose = () => {
+    setIsOpen(false);
+    localStorage.setItem("bannerState", "close");
+  };
+
+  useEffect(() => {
+    setIsMounted(true);
+    const bannerState = localStorage.getItem("bannerState");
+    if (bannerState) {
+      setIsOpen(false);
+    }
+    return () => setIsMounted(false);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div
       className={cn(
         "relative text-white bg-gradient-to-t from-[#03055E] to-[#111280] h-[62px] md:h-[62px] px-4 flex justify-center items-center",
-        isClose && "hidden"
+        !isOpen && "hidden"
       )}
     >
-      <p className="text-sm md:text-base">
+      <p className="text-sm md:text-base text-white">
         <span className="mr-2 font-medium">
           We&apos;ve just launched a new feature!
         </span>
         Check out the
         <Link
           href="/"
-          className="ml-0 md:ml-2 underline underline-offset-4 inline-block"
+          className="ml-0 md:ml-2 underline underline-offset-4 inline-block text-white"
         >
           new dashboard.
         </Link>

@@ -1,7 +1,5 @@
 import { Banner } from "./_layouts/banner";
 import { Navbar } from "./_layouts/navbar";
-import { ModalProviders } from "./_components/providers/modals-provider";
-import { SessionProvider } from "@/providers/session-provider";
 
 export default function DashboardLayout({
   children,
@@ -9,15 +7,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionProvider>
-      <div className="flex min-h-screen w-full flex-col">
-        <Banner />
-        <Navbar />
-        <ModalProviders />
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-          <div className="w-full space-y-8">{children}</div>
-        </main>
-      </div>
-    </SessionProvider>
+    <div className="flex min-h-screen w-full flex-col">
+      <Banner />
+      <Navbar />
+      <main className="flex flex-1 flex-col py-6 px-4 md:px-6">
+        <div className="w-full space-y-8">{children}</div>
+      </main>
+    </div>
   );
 }

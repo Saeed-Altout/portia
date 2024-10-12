@@ -2,13 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-export type Earning = {
-  id: number;
-  amount: number;
-  email: string;
-  date: Date | string;
-};
-
 export const columns: ColumnDef<Earning>[] = [
   {
     accessorKey: "date",

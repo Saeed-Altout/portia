@@ -78,3 +78,10 @@ declare type EarningsStatistics = {
   this_year_earnings: number;
   total_earnings: number;
 };
+
+declare type Earning = {
+  id: number;
+  amount: number;
+  email: string;
+  date: Date | string;
+};
