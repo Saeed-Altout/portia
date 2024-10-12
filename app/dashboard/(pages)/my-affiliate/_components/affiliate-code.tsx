@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Copy } from "lucide-react";
 
 import { useOrigin } from "@/hooks/use-origin";
@@ -9,18 +9,14 @@ import { onCopy } from "@/utils/on-copy";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetUserProfileQuery } from "@/app/dashboard/hooks";
 
 export const AffiliateCode = () => {
   const inputRef = useRef(null);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
   const [http, host] = useOrigin().split("://");
+  const { data, isLoading, isError, isSuccess } = useGetUserProfileQuery();
 
-  useEffect(() => {
-    setIsMounted(true);
-    return () => setIsMounted(false);
-  }, []);
-
-  if (!isMounted)
+  if (isLoading || isError || !isSuccess)
     return (
       <div className="max-w-2xl space-y-2">
         <div className="flex items-center justify-between gap-2 w-full">
@@ -44,7 +40,7 @@ export const AffiliateCode = () => {
             type="text"
             name="url"
             readOnly
-            value={`${host}/auth/register?code=`}
+            value={`${host}/auth/register?code=${data?.data.referred_code}`}
           />
         </div>
         <Button
