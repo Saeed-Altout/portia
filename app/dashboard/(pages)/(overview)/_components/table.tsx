@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/dashboard/data-table";
+import { DataTable } from "@/components/ui/data-table";
 
 interface TableProps {
   title: string;

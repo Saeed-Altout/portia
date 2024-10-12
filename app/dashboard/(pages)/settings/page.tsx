@@ -26,7 +26,7 @@ import {
 import { Heading } from "@dashboard/_components/ui/heading";
 import { userProfileSchema } from "@dashboard/schemas";
 import { useGetUserProfileQuery, useUpdateUserProfile } from "@dashboard/hooks";
-import { useOrigin } from "@/hooks/use-origin";
+import { useOrigin } from "@/app/dashboard/hooks/use-origin";
 import { toast } from "sonner";
 import { useSessionContext } from "@/providers/session-provider";
 import { Loader } from "@/components/dashboard/loader";

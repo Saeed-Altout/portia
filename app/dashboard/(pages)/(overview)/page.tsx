@@ -4,7 +4,7 @@ import { Table } from "./_components/table";
 import { columns } from "./_components/columns";
 import { OverviewCard } from "./_components/overview-card";
 
-import { Heading } from "@/components/dashboard/heading";
+import { Heading } from "@/app/dashboard/_components/heading";
 import { Loader } from "@/components/dashboard/loader";
 
 import { useSessionContext } from "@/providers/session-provider";

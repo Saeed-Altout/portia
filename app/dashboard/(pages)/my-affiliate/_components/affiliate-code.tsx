@@ -3,12 +3,12 @@
 import { useRef } from "react";
 import { Copy } from "lucide-react";
 
-import { useOrigin } from "@/hooks/use-origin";
-import { onCopy } from "@/utils/on-copy";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+
+import { onCopy } from "@/app/dashboard/utils/on-copy";
+import { useOrigin } from "@/app/dashboard/hooks/use-origin";
 import { useGetUserProfileQuery } from "@/app/dashboard/hooks";
 
 export const AffiliateCode = () => {

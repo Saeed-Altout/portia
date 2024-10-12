@@ -5,7 +5,7 @@ import { columns } from "./_components/columns";
 import { DepositCard } from "./_components/deposit-card";
 
 import { Loader } from "@/components/dashboard/loader";
-import { Heading } from "@/components/dashboard/heading";
+import { Heading } from "@/app/dashboard/_components/heading";
 
 import { useSessionContext } from "@/providers/session-provider";
 

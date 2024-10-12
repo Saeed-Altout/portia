@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "./skeleton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

@@ -6,12 +6,9 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import { Pagination } from "./pagination";
 
-import {
-  DataTable,
-  DataTableSkeleton,
-} from "@/components/dashboard/data-table";
-
 import localStorage from "@/services/local-storage";
+import { DataTable, DataTableSkeleton } from "@/components/ui/data-table";
+
 import { useGetAffiliateEarningsHistoryQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
 
 export const Table = () => {

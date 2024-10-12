@@ -6,7 +6,7 @@ import { ExpiredTable } from "./_components/expired-table";
 import { ActiveTable } from "./_components/active-table";
 import { ProxiesCard } from "./_components/proxies-card";
 
-import { Heading } from "@/components/dashboard/heading";
+import { Heading } from "@/app/dashboard/_components/heading";
 import { Loader } from "@/components/dashboard/loader";
 
 import { useSessionContext } from "@/providers/session-provider";

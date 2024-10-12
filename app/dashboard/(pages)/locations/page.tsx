@@ -17,11 +17,14 @@ import { columns } from "./_components/columns";
 
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/dashboard/loader";
-import { DataTable } from "@/components/dashboard/data-table";
+import { DataTable } from "@/components/ui/data-table";
 
 import { Heading } from "@dashboard/_components/ui/heading";
 
-import { formatObjectArray, formatStringArray } from "@/utils/formatters";
+import {
+  formatObjectArray,
+  formatStringArray,
+} from "@/app/dashboard/utils/formatters";
 
 export default function LocationsPage() {
   const [sp, setSp] = useState<number>(0);

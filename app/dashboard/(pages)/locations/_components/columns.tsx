@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { CellActions } from "./cell-actions";
-import { formatTime } from "@/utils/formatters";
+import { formatTime } from "@/app/dashboard/utils/formatters";
 
 export const columns: ColumnDef<ListProxy>[] = [
   {
