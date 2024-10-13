@@ -20,14 +20,14 @@ export const Filter = ({
   return (
     <Select
       disabled={disabled}
-      defaultValue={placeholder === "Package" ? "1" : "-1"}
+      defaultValue={placeholder === "Package" ? "1" : ""}
       onValueChange={onValueChange}
     >
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="-1">None</SelectItem>
+        <SelectItem value={"-1"}>None</SelectItem>
         {options.map((option) => (
           <SelectItem key={option.value} value={option.value.toString()}>
             {option.label}
