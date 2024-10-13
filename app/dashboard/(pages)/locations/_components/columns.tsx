@@ -1,8 +1,7 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-
 import { CellActions } from "./cell-actions";
+import { ColumnDef } from "@tanstack/react-table";
 import { formatTime } from "@/app/dashboard/utils/formatters";
 
 export const columns: ColumnDef<ListProxy>[] = [

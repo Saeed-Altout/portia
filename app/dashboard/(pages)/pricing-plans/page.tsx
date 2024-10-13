@@ -1,135 +1,84 @@
 "use client";
 
-import { Fragment, useState } from "react";
-
-import { Skeleton } from "@/components/ui/skeleton";
-
-import { Heading } from "@dashboard/_components/ui/heading";
-
-import { TabMenu } from "./_components/tab-menu";
-import { DropdownMenu } from "./_components/dropdown-menu";
-import { OfferCard, OfferCardSkeleton } from "./_components/offer-card";
+import { useState } from "react";
 
 import {
-  useGetCategoriesPackagesQuery,
-  useGetCategoriesPlansQuery,
   useGetPricingPlansQuery,
+  useGetUserProfileQuery,
 } from "@dashboard/hooks";
-import { renderTheme } from "../../helpers/render-theme";
+import { Table } from "./_components/table";
+import { FiltersSection } from "./_components/filters-section";
+
+import { Skeleton } from "@/components/ui/skeleton";
+import { Heading } from "@/app/dashboard/_components/heading";
+interface Filter {
+  pkgName: string;
+  planName: string;
+}
 
 export default function PricingPlansPage() {
-  const { data, isSuccess, isLoading, isError } = useGetPricingPlansQuery();
-  const {
-    data: categoriesPlans,
-    isLoading: categoriesPlansLoading,
-    isError: categoriesPlansError,
-    isSuccess: categoriesPlansSuccess,
-  } = useGetCategoriesPlansQuery();
-  const {
-    data: categoriesPackages,
-    isLoading: categoriesPackagesLoading,
-    isError: categoriesPackagesError,
-    isSuccess: categoriesPackagesSuccess,
-  } = useGetCategoriesPackagesQuery();
+  const { data, isLoading, isSuccess } = useGetPricingPlansQuery();
+  const userQuery = useGetUserProfileQuery();
+  const [filter, setFilter] = useState<Filter>({
+    pkgName: "Basic",
+    planName: "Hourly",
+  });
 
-  const [pkgName, setPkgName] = useState<string>("Basic");
-  const [planName, setPlanName] = useState<string>("Hourly");
-
-  const LoadingSkeletons = () => (
-    <div className="flex flex-col lg:flex-row items-center justify-start gap-5">
-      <Skeleton className="w-full lg:w-[240px] h-11 rounded-md" />
-      <Skeleton className="w-full lg:w-[240px] h-11 rounded-md" />
-    </div>
-  );
-
-  return (
-    <Fragment>
-      <Heading title="Welcome back, Jafar" label="Our Pricing plans" />
-      <div className="flex flex-col gap-y-4">
-        {(categoriesPackagesLoading ||
-          categoriesPackagesError ||
-          categoriesPlansLoading ||
-          categoriesPlansError) && <LoadingSkeletons />}
-
-        {categoriesPackagesSuccess && categoriesPlansSuccess && (
-          <div>
-            <div className="hidden lg:flex items-start justify-start gap-x-12">
-              <TabMenu
-                items={categoriesPackages?.data}
-                selected={pkgName}
-                onChange={setPkgName}
-              />
-              <TabMenu
-                items={categoriesPlans?.data}
-                selected={planName}
-                onChange={setPlanName}
-              />
-            </div>
-            <div className="lg:hidden flex flex-col gap-5">
-              <DropdownMenu
-                items={categoriesPackages?.data || []}
-                selected={pkgName}
-                onChange={setPkgName}
-              />
-              <DropdownMenu
-                items={categoriesPlans?.data || []}
-                selected={planName}
-                onChange={setPlanName}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-
-      {(isLoading || isError) && (
+  if (isLoading || !isSuccess) {
+    return (
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col lg:flex-row items-center justify-start gap-5">
+          <Skeleton className="w-full lg:w-[240px] h-11 rounded-md" />
+          <Skeleton className="w-full lg:w-[240px] h-11 rounded-md" />
+        </div>
         <div className="grid gap-4">
           {[...Array(3)].map((_, index) => (
-            <OfferCardSkeleton key={index} />
+            <div
+              key={index}
+              className="flex items-start md:items-center justify-between flex-col md:flex-row p-4 border rounded-lg gap-4"
+            >
+              <div className="w-full flex items-center gap-x-4">
+                <Skeleton className="w-10 h-10 rounded-full" />
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="w-24 h-4" />
+                  <Skeleton className="w-36 h-3" />
+                </div>
+              </div>
+              <div className="w-full md:w-fit flex flex-row md:flex-col items-center md:items-start justify-start gap-4 md:gap-1">
+                <Skeleton className="w-12 h-4" />
+                <Skeleton className="w-full h-8 md:w-24" />
+              </div>
+            </div>
           ))}
         </div>
-      )}
-      {isSuccess && (
-        <div className="grid gap-4">
-          {data?.data?.some(
-            (pkg) =>
-              pkg.name === pkgName &&
-              pkg.plans.some(
-                (plan) => plan.plan_name === planName && plan.offers.length > 0
-              )
-          ) ? (
-            data?.data
-              ?.filter((pkg) => pkg.name === pkgName)
-              ?.flatMap((pkg) =>
-                pkg.plans
-                  ?.filter((plan) => plan.plan_name === planName)
-                  ?.flatMap((plan) =>
-                    plan.offers.map((offer, index) => (
-                      <OfferCard
-                        key={index}
-                        offer={offer}
-                        fill={
-                          pkgName == "Basic"
-                            ? "primary"
-                            : pkgName == "Standard"
-                            ? "danger"
-                            : "muted"
-                        }
-                        theme={
-                          pkgName == "Basic"
-                            ? "primary"
-                            : pkgName == "Standard"
-                            ? "danger"
-                            : "muted"
-                        }
-                      />
-                    ))
-                  )
-              )
-          ) : (
-            <p>No offers available for this plan.</p>
-          )}
-        </div>
-      )}
-    </Fragment>
+      </div>
+    );
+  }
+
+  const packages = data?.data.map((item, index) => ({
+    id: index,
+    name: item.name,
+  }));
+
+  const plans = data?.data[0].plans.map((item, index) => ({
+    id: index,
+    name: item.plan_name,
+  }));
+
+  return (
+    <>
+      <Heading
+        title={`Welcome back ${userQuery.data?.data.first_name} `}
+        label="Our Pricing plans"
+        isLoading={userQuery.isLoading || !userQuery.isSuccess}
+      />
+      <FiltersSection
+        filter={filter}
+        setFilter={setFilter}
+        packages={packages}
+        plans={plans}
+      />
+      <Table filter={filter} data={data.data} />
+    </>
   );
 }
