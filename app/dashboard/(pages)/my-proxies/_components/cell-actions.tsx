@@ -1,17 +1,15 @@
 "use client";
 
-import * as React from "react";
-
 import { Button } from "@/components/ui/button";
-
 import { RenewExpiredProxiesModal } from "@dashboard/_components/modals/renew-expired-proxies-modal";
+import { useState } from "react";
 
 interface CellActionsProps {
   row: any;
 }
 
 export const CellActions = ({ row }: CellActionsProps) => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <>
