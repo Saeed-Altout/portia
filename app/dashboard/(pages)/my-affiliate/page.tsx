@@ -1,7 +1,7 @@
 "use client";
 
 import { Table } from "./_components/table";
-import { AffiliateCode } from "./_components/affiliate-code";
+import { AffiliateCode } from "../../_components/affiliate-code";
 import { StatisticsSection } from "./_components/statistics-section";
 
 import { useGetUserProfileQuery } from "@/app/dashboard/hooks";

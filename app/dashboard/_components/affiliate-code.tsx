@@ -14,9 +14,9 @@ import { useGetUserProfileQuery } from "@/app/dashboard/hooks";
 export const AffiliateCode = () => {
   const inputRef = useRef(null);
   const [http, host] = useOrigin().split("://");
-  const { data, isLoading, isError, isSuccess } = useGetUserProfileQuery();
+  const { data, isLoading, isSuccess } = useGetUserProfileQuery();
 
-  if (isLoading || isError || !isSuccess)
+  if (isLoading || !isSuccess)
     return (
       <div className="max-w-2xl space-y-2">
         <div className="flex items-center justify-between gap-2 w-full">
@@ -46,6 +46,7 @@ export const AffiliateCode = () => {
         <Button
           size="icon"
           variant="outline"
+          type="button"
           onClick={() => onCopy(inputRef, http)}
         >
           <Copy className="h-4 w-4" />

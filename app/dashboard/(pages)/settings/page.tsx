@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-
-import { Copy } from "lucide-react";
+import { useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 
 import { z } from "zod";
@@ -26,33 +24,18 @@ import {
 import { Heading } from "@dashboard/_components/ui/heading";
 import { userProfileSchema } from "@dashboard/schemas";
 import { useGetUserProfileQuery, useUpdateUserProfile } from "@dashboard/hooks";
-import { useOrigin } from "@/app/dashboard/hooks/use-origin";
-import { toast } from "sonner";
-import { useSessionContext } from "@/providers/session-provider";
-import { Loader } from "@/components/dashboard/loader";
+import { AffiliateCode } from "@dashboard/_components/affiliate-code";
 
 export default function SettingsPage() {
   const { onSubmit, isPending } = useUpdateUserProfile();
-  const { session, isLoading } = useSessionContext();
-  const inputRef = useRef(null);
-  const origin = useOrigin();
-  const [http, host] = origin.split("://");
-
-  const onCopy = () => {
-    if (inputRef.current) {
-      navigator.clipboard.writeText(
-        `${http}://${(inputRef.current as HTMLInputElement).value}`
-      );
-      toast.success("Affiliate link copied to clipboard.");
-    }
-  };
+  const userQuery = useGetUserProfileQuery();
 
   const form = useForm<z.infer<typeof userProfileSchema>>({
     resolver: zodResolver(userProfileSchema),
     defaultValues: {
-      first_name: session?.first_name || "",
-      last_name: session?.last_name || "",
-      email: session?.email || "",
+      first_name: "",
+      last_name: "",
+      email: "",
       current_password: "",
       new_password: "",
       new_password_confirmation: "",
@@ -60,18 +43,15 @@ export default function SettingsPage() {
   });
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!userQuery.isLoading) {
       form.reset({
-        first_name: session?.first_name || "",
-        last_name: session?.last_name || "",
-        email: session?.email || "",
+        first_name: userQuery.data?.data.first_name || "",
+        last_name: userQuery.data?.data.last_name || "",
+        email: userQuery.data?.data.email || "",
       });
     }
-  }, [form, isLoading, session]);
+  }, [form, userQuery]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -81,23 +61,19 @@ export default function SettingsPage() {
           className="col-span-1 md:col-span-2 lg:col-span-4"
         >
           <div className="flex items-center justify-center gap-3">
-            <Button variant="outline" asChild disabled={isPending || isLoading}>
+            <Button
+              variant="outline"
+              asChild
+              disabled={isPending || userQuery.isLoading}
+            >
               <Link href="/dashboard">Cancel</Link>
             </Button>
             <Button
               type="submit"
               variant="default"
-              disabled={isPending || isLoading}
+              disabled={isPending || userQuery.isLoading}
             >
-              {isPending ? (
-                <BeatLoader size={10} color="#fff" />
-              ) : isLoading ? (
-                <span className="flex items-center justify-center gap-x-2">
-                  Data Fetching
-                </span>
-              ) : (
-                "Update"
-              )}
+              {isPending ? <BeatLoader size={10} color="#fff" /> : "Update"}
             </Button>
           </div>
         </Heading>
@@ -112,7 +88,7 @@ export default function SettingsPage() {
                 <Input
                   type="text"
                   placeholder="first name"
-                  disabled={isPending || isLoading}
+                  disabled={isPending || userQuery.isLoading}
                   {...field}
                 />
               </FormControl>
@@ -130,7 +106,7 @@ export default function SettingsPage() {
                 <Input
                   type="text"
                   placeholder="last name"
-                  disabled={isPending || isLoading}
+                  disabled={isPending || userQuery.isLoading}
                   {...field}
                 />
               </FormControl>
@@ -148,7 +124,7 @@ export default function SettingsPage() {
                 <Input
                   type="email"
                   placeholder="email"
-                  disabled={isPending || isLoading}
+                  disabled={isPending || userQuery.isLoading}
                   {...field}
                 />
               </FormControl>
@@ -158,7 +134,7 @@ export default function SettingsPage() {
         />
         <div className="space-y-2">
           <h3 className="font-medium text-lg">Password</h3>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm">
             Please enter your current password to change your password
           </p>
         </div>
@@ -172,7 +148,7 @@ export default function SettingsPage() {
                 <Input
                   type="password"
                   placeholder="********"
-                  disabled={isPending || isLoading}
+                  disabled={isPending || userQuery.isLoading}
                   {...field}
                 />
               </FormControl>
@@ -190,7 +166,7 @@ export default function SettingsPage() {
                 <Input
                   type="password"
                   placeholder="********"
-                  disabled={isPending || isLoading}
+                  disabled={isPending || userQuery.isLoading}
                   {...field}
                 />
               </FormControl>
@@ -211,7 +187,7 @@ export default function SettingsPage() {
                 <Input
                   type="password"
                   placeholder="********"
-                  disabled={isPending || isLoading}
+                  disabled={isPending || userQuery.isLoading}
                   {...field}
                 />
               </FormControl>
@@ -219,32 +195,7 @@ export default function SettingsPage() {
             </FormItem>
           )}
         />
-        <div className="max-w-2xl space-y-2 pt-8">
-          <div className="flex items-center justify-between gap-2 w-full">
-            <div className="w-full">
-              <Input
-                ref={inputRef}
-                prefix={`${http}://`}
-                type="text"
-                name="url"
-                value={`${host}/auth/register?code=${session?.referred_code}`}
-              />
-            </div>
-            <Button
-              size="icon"
-              type="button"
-              variant="outline"
-              onClick={onCopy}
-            >
-              <Copy className="h-4 w-4" />
-              <span className="sr-only">Copy</span>
-            </Button>
-          </div>
-          <p className="text-sm">
-            10% of all paid payments. from referred users. Over 60 days are
-            credited into your balance.
-          </p>
-        </div>
+        <AffiliateCode />
 
         <div className="space-y-6 pt-12">
           <div className="space-y-2">
