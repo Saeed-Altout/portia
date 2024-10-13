@@ -106,3 +106,11 @@ declare type Deposits = {
   date: string;
   typeOfPayment: string;
 };
+
+declare type FiltersProps = {
+  service_provider_id: number;
+  pkg_id: number;
+  city_id: number;
+  country_id: number;
+  rotation_time: number;
+};
