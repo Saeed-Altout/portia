@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { useGetUserProfileQuery } from "../hooks";
-import { Loader } from "@/components/dashboard/loader";
+import { Loader } from "@/components/ui/loader";
 
 const initialUserProfile = {
   id: 1,

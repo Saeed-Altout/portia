@@ -5,30 +5,13 @@ import { Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
 
 import { onCopy } from "@/utils/on-copy";
 import { useOrigin } from "@/app/dashboard/hooks/use-origin";
-import { useGetUserProfileQuery } from "@/app/dashboard/hooks";
 
-export const AffiliateCode = () => {
+export const AffiliateCode = ({ code }: { code?: string }) => {
   const inputRef = useRef(null);
   const [http, host] = useOrigin().split("://");
-  const { data, isLoading, isSuccess } = useGetUserProfileQuery();
-
-  if (isLoading || !isSuccess)
-    return (
-      <div className="max-w-2xl space-y-2">
-        <div className="flex items-center justify-between gap-2 w-full">
-          <Skeleton className="h-11 w-full" />
-          <Skeleton className="h-11 w-11" />
-        </div>
-        <div className="space-y-2">
-          <Skeleton className="h-5 w-full" />
-          <Skeleton className="h-5 w-[60%]" />
-        </div>
-      </div>
-    );
 
   return (
     <div className="max-w-2xl space-y-2">
@@ -40,7 +23,7 @@ export const AffiliateCode = () => {
             type="text"
             name="url"
             readOnly
-            value={`${host}/auth/register?code=${data?.data.referred_code}`}
+            value={`${host}/auth/register?code=${code}`}
           />
         </div>
         <Button
