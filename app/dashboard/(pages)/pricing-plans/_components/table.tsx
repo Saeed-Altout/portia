@@ -23,13 +23,6 @@ export const Table = ({ filter, data }: { filter: any; data: any[] }) => {
                   <OfferCard
                     key={index}
                     offer={offer}
-                    fill={
-                      filter.pkgName == "Basic"
-                        ? "primary"
-                        : filter.pkgName == "Standard"
-                        ? "danger"
-                        : "muted"
-                    }
                     theme={
                       filter.pkgName == "Basic"
                         ? "primary"

@@ -1,33 +1,19 @@
 import { Zap } from "lucide-react";
+
 import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 import { Circle, Icon } from "@/components/shared/circle-icon";
 
-export const OfferCard = ({
-  offer,
-  theme,
-  fill,
-}: {
-  offer?: any;
-  theme?: any;
-  fill?:
-    | "muted"
-    | "default"
-    | "secondary"
-    | "success"
-    | "alert"
-    | "primary"
-    | "danger"
-    | null;
-}) => (
+export const OfferCard = ({ offer, theme }: { offer?: any; theme?: any }) => (
   <div className="flex items-start md:items-center justify-between flex-col md:flex-row p-4 border rounded-lg gap-4">
     <div className="w-full flex items-center gap-x-4">
-      <Circle fill={fill || "primary"}>
+      <Circle fill={theme || "primary"}>
         <Icon icon={Zap} theme={theme || "primary"} />
       </Circle>
       <div>
         <h4 className="text-sm font-medium">{offer.name}</h4>
-        <p className="text-sm text-gray-500">{offer.description}</p>
+        <p className="text-sm">{offer.description}</p>
       </div>
     </div>
     <div className="w-full md:w-fit flex flex-row md:flex-col items-center md:items-start justify-start gap-4 md:gap-1">
