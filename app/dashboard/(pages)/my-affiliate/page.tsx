@@ -1,22 +1,21 @@
 "use client";
 
 import { Table } from "./_components/table";
-import { AffiliateCode } from "../../_components/affiliate-code";
 import { StatisticsSection } from "./_components/statistics-section";
 
-import { useGetUserProfileQuery } from "@/app/dashboard/hooks";
-import { Heading } from "@/app/dashboard/_components/heading";
+import { Heading } from "@dashboard/_components/heading";
+import { AffiliateCode } from "@dashboard/_components/affiliate-code";
+import { useStoreContext } from "@dashboard/contexts/store-context";
 
 export default function MyAffiliatePage() {
-  const { data, isLoading, isError, isSuccess } = useGetUserProfileQuery();
+  const { user } = useStoreContext();
 
   return (
     <>
       <Heading
-        title={`Welcome back ${data?.data.first_name || ""}`}
+        title={`Welcome back ${user.first_name}`}
         description="Total Earning is: 0,00$"
         drawEarning
-        isLoading={isLoading || isError || !isSuccess}
       />
       <AffiliateCode />
       <StatisticsSection />
