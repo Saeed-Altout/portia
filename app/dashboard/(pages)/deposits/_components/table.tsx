@@ -1,81 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
+import { columns } from "./columns";
 
-interface TableProps {
-  title: string;
-  columns: any;
-}
+import { DataTable, DataTableSkeleton } from "@/components/ui/data-table";
 
-export const Table = ({ title, columns }: TableProps) => {
+import { Pagination } from "@/app/dashboard/_components/pagination";
+import { useGetAffiliateEarningsHistoryQuery } from "@/app/dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
+
+export const Table = () => {
   const [page, setPage] = useState<number>(1);
 
-  const totalItems = 50;
-  const countItems = 10;
-  const countPages = Math.ceil(totalItems / countItems);
-  const data: any = [];
+  const { data, isLoading, isError, isSuccess } =
+    useGetAffiliateEarningsHistoryQuery(page);
+
+  if (isLoading || isError || !isSuccess) {
+    return <DataTableSkeleton columns={3} rows={10} />;
+  }
+
+  const { data: histories, total, per_page, last_page } = data.data;
 
   return (
     <div className="border rounded-md">
-      <div className="w-full flex justify-between items-center rounded-t-md py-6 px-4">
-        <h1 className="font-medium text-lg">{title}</h1>
+      <div className="w-full flex flex-col rounded-t-md py-6 px-4">
+        <h3 className="font-medium text-lg">All my deposit</h3>
+        <p className="text-sm"></p>
       </div>
-      <DataTable columns={columns} data={data} />
-      <div className="w-full flex justify-between items-center rounded-b-md py-6 px-4">
-        <Button
-          variant="outline"
-          disabled={page === 1}
-          onClick={() => setPage((prev) => prev - 1)}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span>Previous</span>
-        </Button>
-        <div className="flex justify-center items-center gap-x-2">
-          {page >= 2 && (
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => setPage(page - 1)}
-            >
-              {page - 1}
-            </Button>
-          )}
-          <Button
-            size="icon"
-            variant="ghost"
-            className="bg-secondary"
-            onClick={() => setPage(page)}
-          >
-            {page}
-          </Button>
-          {page >= countPages / 2 && page - 1 != countPages && (
-            <Button size="icon" variant="ghost">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          )}
-          {page <= countPages && (
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => setPage(page + 1)}
-            >
-              {page + 1}
-            </Button>
-          )}
-        </div>
-        <Button
-          variant="outline"
-          disabled={page - 1 === countPages}
-          onClick={() => setPage((prev) => prev + 1)}
-        >
-          <span>Next</span>
-          <ChevronRight className="h-4 w-4" />
-        </Button>
-      </div>
+      <DataTable columns={columns} data={[]} />
+      <Pagination
+        prevButton={page === 1}
+        nextButton={page === last_page}
+        setPage={setPage}
+        currentPage={page}
+        totalPages={total / per_page}
+      />
     </div>
   );
 };

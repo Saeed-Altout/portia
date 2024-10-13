@@ -1,26 +1,9 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-
 import { cn } from "@/lib/utils";
-
-import { Checkbox } from "@/components/ui/checkbox";
-
 import { CellActions } from "./cell-actions";
-
-export type Proxy = {
-  id: string;
-  renew: boolean;
-  status: boolean;
-  package: string;
-  plan: string;
-  type: string;
-  network: string;
-  port: string;
-  expiredData: string;
-  isExpired: boolean;
-  usernamePassword: string;
-};
+import { ColumnDef } from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const columns: ColumnDef<Proxy>[] = [
   {

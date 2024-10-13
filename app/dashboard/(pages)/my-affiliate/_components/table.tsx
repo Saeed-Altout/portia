@@ -4,12 +4,13 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
-import { Pagination } from "./pagination";
 
-import localStorage from "@/services/local-storage";
 import { DataTable, DataTableSkeleton } from "@/components/ui/data-table";
 
-import { useGetAffiliateEarningsHistoryQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
+import { Pagination } from "@/app/dashboard/_components/pagination";
+import { useGetAffiliateEarningsHistoryQuery } from "@/app/dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
+
+import localStorage from "@/services/local-storage";
 
 export const Table = () => {
   const [email, setEmail] = useState<string>("un known");

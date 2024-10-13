@@ -85,3 +85,17 @@ declare type Earning = {
   email: string;
   date: Date | string;
 };
+
+declare type Proxy = {
+  id: string;
+  renew: boolean;
+  status: boolean;
+  package: string;
+  plan: string;
+  type: string;
+  network: string;
+  port: string;
+  expiredData: string;
+  isExpired: boolean;
+  usernamePassword: string;
+};
