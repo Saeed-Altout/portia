@@ -99,3 +99,10 @@ declare type Proxy = {
   isExpired: boolean;
   usernamePassword: string;
 };
+
+declare type Deposits = {
+  id: number;
+  amount: String;
+  date: string;
+  typeOfPayment: string;
+};
