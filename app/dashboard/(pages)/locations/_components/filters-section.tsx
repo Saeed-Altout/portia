@@ -7,10 +7,7 @@ import {
   useGetPackagesQuery,
   useGetServiceProviderQuery,
 } from "@website/hooks";
-import {
-  formatObjectArray,
-  formatStringArray,
-} from "@/app/dashboard/utils/formatters";
+import { formatObjectArray, formatStringArray } from "@/utils/formatters";
 
 import { Filter } from "./filter";
 

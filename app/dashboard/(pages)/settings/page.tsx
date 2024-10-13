@@ -8,9 +8,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Form,
   FormControl,
@@ -20,15 +17,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 import { Heading } from "@dashboard/_components/ui/heading";
-import { userProfileSchema } from "@dashboard/schemas";
-import { useGetUserProfileQuery, useUpdateUserProfile } from "@dashboard/hooks";
 import { AffiliateCode } from "@dashboard/_components/affiliate-code";
+
+import { userProfileSchema } from "@dashboard/schemas";
+import { useUpdateUserProfile } from "@dashboard/hooks";
+import { useStoreContext } from "@dashboard/contexts/store-context";
 
 export default function SettingsPage() {
   const { onSubmit, isPending } = useUpdateUserProfile();
-  const userQuery = useGetUserProfileQuery();
+  const { user, isLoading } = useStoreContext();
 
   const form = useForm<z.infer<typeof userProfileSchema>>({
     resolver: zodResolver(userProfileSchema),
@@ -43,14 +45,12 @@ export default function SettingsPage() {
   });
 
   useEffect(() => {
-    if (!userQuery.isLoading) {
-      form.reset({
-        first_name: userQuery.data?.data.first_name || "",
-        last_name: userQuery.data?.data.last_name || "",
-        email: userQuery.data?.data.email || "",
-      });
-    }
-  }, [form, userQuery]);
+    form.reset({
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      email: user.email || "",
+    });
+  }, [form, user, isLoading]);
 
   return (
     <Form {...form}>
@@ -61,18 +61,10 @@ export default function SettingsPage() {
           className="col-span-1 md:col-span-2 lg:col-span-4"
         >
           <div className="flex items-center justify-center gap-3">
-            <Button
-              variant="outline"
-              asChild
-              disabled={isPending || userQuery.isLoading}
-            >
+            <Button variant="outline" asChild disabled={isPending}>
               <Link href="/dashboard">Cancel</Link>
             </Button>
-            <Button
-              type="submit"
-              variant="default"
-              disabled={isPending || userQuery.isLoading}
-            >
+            <Button type="submit" variant="default" disabled={isPending}>
               {isPending ? <BeatLoader size={10} color="#fff" /> : "Update"}
             </Button>
           </div>
@@ -88,7 +80,7 @@ export default function SettingsPage() {
                 <Input
                   type="text"
                   placeholder="first name"
-                  disabled={isPending || userQuery.isLoading}
+                  disabled={isPending}
                   {...field}
                 />
               </FormControl>
@@ -106,7 +98,7 @@ export default function SettingsPage() {
                 <Input
                   type="text"
                   placeholder="last name"
-                  disabled={isPending || userQuery.isLoading}
+                  disabled={isPending}
                   {...field}
                 />
               </FormControl>
@@ -124,7 +116,7 @@ export default function SettingsPage() {
                 <Input
                   type="email"
                   placeholder="email"
-                  disabled={isPending || userQuery.isLoading}
+                  disabled={isPending}
                   {...field}
                 />
               </FormControl>
@@ -148,7 +140,7 @@ export default function SettingsPage() {
                 <Input
                   type="password"
                   placeholder="********"
-                  disabled={isPending || userQuery.isLoading}
+                  disabled={isPending}
                   {...field}
                 />
               </FormControl>
@@ -166,7 +158,7 @@ export default function SettingsPage() {
                 <Input
                   type="password"
                   placeholder="********"
-                  disabled={isPending || userQuery.isLoading}
+                  disabled={isPending}
                   {...field}
                 />
               </FormControl>
@@ -187,7 +179,7 @@ export default function SettingsPage() {
                 <Input
                   type="password"
                   placeholder="********"
-                  disabled={isPending || userQuery.isLoading}
+                  disabled={isPending}
                   {...field}
                 />
               </FormControl>
@@ -196,7 +188,6 @@ export default function SettingsPage() {
           )}
         />
         <AffiliateCode />
-
         <div className="space-y-6 pt-12">
           <div className="space-y-2">
             <h3 className="font-medium text-lg">Export Data</h3>

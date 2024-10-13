@@ -14,7 +14,6 @@ export const dashboardService = {
       throw error;
     }
   },
-
   async getUserProfile(): Promise<RootObj<UserProfile>> {
     try {
       const response: AxiosResponse<RootObj<UserProfile>> = await _axios.get(
@@ -54,7 +53,6 @@ export const dashboardService = {
       throw error;
     }
   },
-
   async getAffiliateEarningsHistory({
     queryKey,
   }: {

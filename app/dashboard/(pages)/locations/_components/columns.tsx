@@ -2,7 +2,7 @@
 
 import { CellActions } from "./cell-actions";
 import { ColumnDef } from "@tanstack/react-table";
-import { formatTime } from "@/app/dashboard/utils/formatters";
+import { formatTime } from "@/utils/formatters";
 
 export const columns: ColumnDef<ListProxy>[] = [
   {
