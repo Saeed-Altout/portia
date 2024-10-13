@@ -1,8 +1,5 @@
-import * as React from "react";
-import { Info } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-
+import { Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface CellActionsProps {
