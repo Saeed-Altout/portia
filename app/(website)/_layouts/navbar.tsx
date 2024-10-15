@@ -16,6 +16,7 @@ export const Navbar = () => {
   return (
     <header className="shadow-md h-20 w-full flex justify-center items-center">
       <Container className="w-full flex-row justify-between items-center">
+        <Logo redirectTo="/" />
         <NavMain />
         <NavMobile />
         <div className="hidden lg:flex items-center justify-end gap-x-4">

@@ -39,7 +39,7 @@ export const NavMobile = () => {
       </SheetTrigger>
       <SheetContent className="w-full flex flex-col gap-y-3 overflow-y-auto">
         <SheetHeader>
-          <Logo redirectTo="/" className="h-[120px] w-9" />
+          <Logo redirectTo="/" />
         </SheetHeader>
         <div className="flex flex-col gap-y-2">
           {navLinks.map(({ label, href, links }, index) => (
