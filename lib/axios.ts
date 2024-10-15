@@ -39,8 +39,6 @@ _axios.interceptors.response.use(
         console.error(
           "Unauthorized: You need to login to access this resource."
         );
-        cookieStorage.removeAccessToken();
-        window.location.href = "/auth/login";
         break;
 
       case 403:

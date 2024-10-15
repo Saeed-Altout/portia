@@ -17,7 +17,7 @@ import { useStoreContext } from "@dashboard/contexts/store-context";
 import { useGetAffiliateEarningsHistoryQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
 import { useGetAffiliateEarningsStatisticsQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-statistics-query";
 
-import localStorage from "@/services/local-storage";
+import cookieStorage from "@/services/cookie-storage";
 
 export default function MyAffiliatePage() {
   const { user } = useStoreContext();
@@ -31,7 +31,7 @@ export default function MyAffiliatePage() {
   const isSuccess = statistics.isSuccess && histories.isSuccess;
 
   useEffect(() => {
-    const email = localStorage.getEmail();
+    const email = cookieStorage.getEmail();
     if (email) {
       setEmail(email);
     }

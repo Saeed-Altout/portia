@@ -171,7 +171,6 @@ export class CookieStorage {
     this.removeCookie("accessToken");
     this.removeCookie("refreshToken");
     this.removeCookie("user");
-    this.removeCookie("memory-user");
     this.removeEmail();
     return this;
   }

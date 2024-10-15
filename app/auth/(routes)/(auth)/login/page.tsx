@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -25,8 +25,11 @@ import { CardWrapper, Provider, SubmitButton } from "@/app/auth/_components";
 import { loginSchema } from "@/app/auth/features/schemas";
 import { useLogin } from "@/app/auth/features/hooks";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
+import cookieStorage from "@/services/cookie-storage";
 
 export default function LoginPage() {
+  const [isRememberMe, setIsRememberMe] = useState<boolean>(false);
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -36,7 +39,39 @@ export default function LoginPage() {
     },
   });
 
-  const { onSubmit, isPending, isRememberMe, setIsRememberMe } = useLogin(form);
+  const { onSubmit, isPending } = useLogin(isRememberMe);
+
+  useEffect(() => {
+    const currentMemoryUser = cookieStorage.getMemoryUser();
+    if (currentMemoryUser) {
+      toast("Welcome back, Remember your information!", {
+        action: (
+          <>
+            <Button
+              onClick={() => {
+                form.setValue("email", currentMemoryUser.email);
+                form.setValue("password", currentMemoryUser.password);
+              }}
+              variant="outline"
+              size="sm"
+            >
+              Yes
+            </Button>
+            <Button
+              onClick={() => {
+                form.setValue("email", "");
+                form.setValue("password", "");
+              }}
+              variant="destructive"
+              size="sm"
+            >
+              No
+            </Button>
+          </>
+        ),
+      });
+    }
+  }, [form, isRememberMe]);
 
   return (
     <CardWrapper

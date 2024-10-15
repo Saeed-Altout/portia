@@ -6,9 +6,7 @@ import { useHandleResponse, useLoginMutation } from "@/app/auth/features/hooks";
 
 import cookieStorageService from "@/services/cookie-storage";
 
-export const useLogin = (form: any) => {
-  const [isRememberMe, setIsRememberMe] = useState<boolean>(false);
-
+export const useLogin = (isRememberMe: boolean) => {
   const { handleSuccess, handleError } = useHandleResponse();
   const { mutateAsync: loginMutation, isPending } = useLoginMutation();
 
@@ -24,14 +22,5 @@ export const useLogin = (form: any) => {
     }
   };
 
-  useEffect(() => {
-    const currentMemoryUser = cookieStorageService.getMemoryUser();
-    if (currentMemoryUser) {
-      form.setValue("email", currentMemoryUser.email);
-      form.setValue("password", currentMemoryUser.password);
-      setIsRememberMe(true);
-    }
-  }, [form]);
-
-  return { onSubmit, isPending, isRememberMe, setIsRememberMe };
+  return { onSubmit, isPending };
 };

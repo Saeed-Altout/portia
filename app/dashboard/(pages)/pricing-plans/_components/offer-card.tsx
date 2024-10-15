@@ -18,7 +18,7 @@ export const OfferCard = ({ offer, theme }: { offer?: any; theme?: any }) => (
     </div>
     <div className="w-full md:w-fit flex flex-row md:flex-col items-center md:items-start justify-start gap-4 md:gap-1">
       <p className={cn("text-base md:text-sm font-semibold text-primary")}>
-        {offer.cost}
+        {offer.cost} $
       </p>
       <Button
         size="sm"
