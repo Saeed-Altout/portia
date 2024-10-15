@@ -13,21 +13,20 @@ import { StatisticCard } from "@dashboard/_components/cards/statistics-card";
 import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 
-import { useStoreContext } from "@dashboard/contexts/store-context";
 import { useGetAffiliateEarningsHistoryQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
 import { useGetAffiliateEarningsStatisticsQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-statistics-query";
 
 import cookieStorage from "@/services/cookie-storage";
+import { useSession } from "@/contexts/session-provider";
 
 export default function MyAffiliatePage() {
-  const { user } = useStoreContext();
+  const { user } = useSession();
   const [email, setEmail] = useState<string>("un known");
   const [page, setPage] = useState<number>(1);
 
   const statistics = useGetAffiliateEarningsStatisticsQuery();
   const histories = useGetAffiliateEarningsHistoryQuery(page);
 
-  const isLoading = statistics.isLoading || histories.isLoading;
   const isSuccess = statistics.isSuccess && histories.isSuccess;
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export default function MyAffiliatePage() {
     }
   }, []);
 
-  if (isLoading || !isSuccess) {
+  if (!isSuccess) {
     return <Loader />;
   }
 
