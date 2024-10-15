@@ -16,7 +16,7 @@ export const Footer = () => {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
           <div className="sm:col-span-2 space-y-3">
             <div className="h-[30] w-[100px]">
-              <Logo dark />
+              <Logo redirectTo="/" dark />
             </div>
             <p className="text !text-gray-200">
               Your Gateway to Unlimited Browsing.
