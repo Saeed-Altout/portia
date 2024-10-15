@@ -19,8 +19,11 @@ import { useRegister } from "@/app/auth/features/hooks";
 import { registerSchema } from "@/app/auth/features/schemas";
 
 import { CardWrapper, SubmitButton, Provider } from "@auth/_components";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 export default function RegisterPage() {
+  const [passwordType, setPasswordType] = useState<"text" | "password">("text");
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -112,12 +115,31 @@ export default function RegisterPage() {
                     Password*
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Create a password"
-                      disabled={isPending}
-                      {...field}
-                    />
+                    <div className="flex items-center relative">
+                      <Input
+                        {...field}
+                        type={passwordType}
+                        disabled={isPending}
+                        placeholder="********"
+                      />
+                      <div
+                        role="button"
+                        onClick={() =>
+                          setPasswordType((prev) =>
+                            prev === "password" ? "text" : "password"
+                          )
+                        }
+                        className="absolute right-4 top-[50%] translate-y-[-50%]"
+                        aria-label="Toggle password visibility"
+                        title="Toggle password visibility"
+                      >
+                        {passwordType === "password" ? (
+                          <EyeOff className="h-4 w-4 text-gray-400" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-gray-400" />
+                        )}
+                      </div>
+                    </div>
                   </FormControl>
                   <FormDescription>
                     Must be at least 8 characters.

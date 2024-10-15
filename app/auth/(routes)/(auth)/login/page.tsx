@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -23,8 +24,10 @@ import { CardWrapper, Provider, SubmitButton } from "@/app/auth/_components";
 
 import { loginSchema } from "@/app/auth/features/schemas";
 import { useLogin } from "@/app/auth/features/hooks";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
+  const [passwordType, setPasswordType] = useState<"text" | "password">("text");
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -73,12 +76,31 @@ export default function LoginPage() {
                     Password
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      disabled={isPending}
-                      placeholder="********"
-                    />
+                    <div className="flex items-center relative">
+                      <Input
+                        {...field}
+                        type={passwordType}
+                        disabled={isPending}
+                        placeholder="********"
+                      />
+                      <div
+                        role="button"
+                        onClick={() =>
+                          setPasswordType((prev) =>
+                            prev === "password" ? "text" : "password"
+                          )
+                        }
+                        className="absolute right-4 top-[50%] translate-y-[-50%]"
+                        aria-label="Toggle password visibility"
+                        title="Toggle password visibility"
+                      >
+                        {passwordType === "password" ? (
+                          <EyeOff className="h-4 w-4 text-gray-400" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-gray-400" />
+                        )}
+                      </div>
+                    </div>
                   </FormControl>
                   <FormDescription>
                     Must be at least 8 characters.
