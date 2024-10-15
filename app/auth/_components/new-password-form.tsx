@@ -73,7 +73,7 @@ export const NewPasswordForm = () => {
                           prev === "password" ? "text" : "password"
                         )
                       }
-                      className="absolute right-4 top-[50%] translate-y-[-50%]"
+                      className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                       aria-label="Toggle password visibility"
                       title="Toggle password visibility"
                     >
@@ -115,7 +115,7 @@ export const NewPasswordForm = () => {
                           prev === "password" ? "text" : "password"
                         )
                       }
-                      className="absolute right-4 top-[50%] translate-y-[-50%]"
+                      className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                       aria-label="Toggle password visibility"
                       title="Toggle password visibility"
                     >
