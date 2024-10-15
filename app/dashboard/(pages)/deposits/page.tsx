@@ -1,24 +1,38 @@
 "use client";
 
-import { Table } from "./_components/table";
-import { CardsSection } from "./_components/cards-section";
-
+import { Pagination } from "@/app/dashboard/_components/pagination";
 import { Heading } from "@/app/dashboard/_components/heading";
-import { useGetUserProfileQuery } from "@/app/dashboard/hooks";
+
+import { columns } from "./_components/columns";
+import { DepositCard } from "./_components/deposit-card";
+
+import { DataTable } from "@/components/ui/data-table";
+import { useSession } from "@/contexts/session-provider";
 
 export default function DepositsPage() {
-  const { data, isLoading, isError, isSuccess } = useGetUserProfileQuery();
+  const { user } = useSession();
 
   return (
     <>
-      <Heading
-        title={`Welcome back, ${data?.data.first_name}`}
-        newProxy
-        addFunds
-        isLoading={isLoading || isError || !isSuccess}
-      />
-      <CardsSection />
-      <Table />
+      <Heading title={`Welcome back, ${user.first_name}`} newProxy addFunds />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[].map((item, index) => (
+          <DepositCard key={index} initialData={item} />
+        ))}
+      </div>
+      <div className="border rounded-md">
+        <div className="w-full flex flex-col rounded-t-md py-6 px-4">
+          <h3 className="font-medium text-lg">All my deposit</h3>
+        </div>
+        <DataTable columns={columns} data={[]} />
+        <Pagination
+          prevButton={false}
+          nextButton={false}
+          setPage={() => {}}
+          currentPage={1}
+          totalPages={1}
+        />
+      </div>
     </>
   );
 }
