@@ -8,6 +8,7 @@ import { FiltersSection } from "./_components/filters-section";
 import { Heading } from "@dashboard/_components/heading";
 import { useSession } from "@/contexts/session-provider";
 import { useGetPricingPlansQuery } from "@/app/dashboard/features/hooks";
+import { Loader } from "@/components/ui/loader";
 
 interface Filter {
   pkgName: string;
@@ -24,19 +25,19 @@ export default function PricingPlansPage() {
     planName: "Hourly",
   });
 
-  const packages = isSuccess
-    ? data.data.map((item, index) => ({
-        id: index,
-        name: item.name,
-      }))
-    : [];
+  if (!isSuccess) {
+    return <Loader />;
+  }
 
-  const plans = isSuccess
-    ? data?.data[0].plans.map((item, index) => ({
-        id: index,
-        name: item.plan_name,
-      }))
-    : [];
+  const packages = data.data.map((item, index) => ({
+    id: index,
+    name: item.name,
+  }));
+
+  const plans = data?.data[0].plans.map((item, index) => ({
+    id: index,
+    name: item.plan_name,
+  }));
 
   return (
     <>
@@ -50,7 +51,7 @@ export default function PricingPlansPage() {
         packages={packages}
         plans={plans}
       />
-      <Table filter={filter} data={isSuccess ? data.data : []} />
+      <Table filter={filter} data={data.data} />
     </>
   );
 }
