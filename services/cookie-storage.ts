@@ -102,7 +102,6 @@ export class CookieStorage {
     return this;
   }
 
-  // Methods for Access Token, Refresh Token, and User
   public setAccessToken(
     accessToken: string,
     options: CookieOptions = {}
