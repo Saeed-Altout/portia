@@ -22,7 +22,6 @@ export const Navbar = () => {
           <Button variant="ghost" className="text-gray-500" asChild>
             <Link href="/auth/login">Log in</Link>
           </Button>
-
           <Button onClick={scrollStore.scrollToSection}>Get Started</Button>
         </div>
       </Container>

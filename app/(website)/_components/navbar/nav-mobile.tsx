@@ -39,9 +39,9 @@ export const NavMobile = () => {
       </SheetTrigger>
       <SheetContent className="w-full flex flex-col gap-y-3 overflow-y-auto">
         <SheetHeader>
-          <Logo />
+          <Logo redirectTo="/" />
         </SheetHeader>
-        <ul className="flex flex-col gap-y-2">
+        <div className="flex flex-col gap-y-2">
           {navLinks.map(({ label, href, links }, index) => (
             <React.Fragment key={index}>
               {links ? (
@@ -73,7 +73,7 @@ export const NavMobile = () => {
                   </AccordionItem>
                 </Accordion>
               ) : (
-                <li key={index} className="w-full py-3">
+                <ul key={index} className="w-full py-3">
                   <Link
                     onClick={() => setIsOpen(false)}
                     href={href}
@@ -81,11 +81,11 @@ export const NavMobile = () => {
                   >
                     {label}
                   </Link>
-                </li>
+                </ul>
               )}
             </React.Fragment>
           ))}
-        </ul>
+        </div>
         <Separator />
         <div className="w-full grid grid-cols-2 gap-x-6 gap-y-5 py-5">
           <div className="flex flex-col gap-y-5">
