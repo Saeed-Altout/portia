@@ -1,24 +1,46 @@
 "use client";
 
-import { Table } from "./_components/table";
-import { CardsSection } from "./_components/overview-cards-section";
+import { useState } from "react";
 
 import { Heading } from "@/app/dashboard/_components/heading";
-import { useGetUserProfileQuery } from "@/app/dashboard/hooks";
+import { Pagination } from "@/app/dashboard/_components/pagination";
+
+import { columns } from "./_components/columns";
+import { OverviewCard } from "./_components/overview-card";
+
+import { DataTable } from "@/components/ui/data-table";
+import { useSession } from "@/contexts/session-provider";
 
 export default function OverviewPage() {
-  const { data, isLoading, isError, isSuccess } = useGetUserProfileQuery();
+  const { user } = useSession();
+  const [page, setPage] = useState<number>(1);
 
   return (
     <>
       <Heading
-        title={`Welcome back, ${data?.data.first_name}`}
+        title={`Welcome back, ${user.first_name || ""}`}
         newProxy
         addFunds
-        isLoading={isLoading || isError || !isSuccess}
       />
-      <CardsSection />
-      <Table />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[].map((item, index) => (
+          <OverviewCard key={index} initialData={item} />
+        ))}
+      </div>
+      <div className="border rounded-md">
+        <div className="w-full flex flex-col rounded-t-md py-6 px-4">
+          <h3 className="font-medium text-lg">Your earning calendar</h3>
+          <p className="text-sm">Track your earnings by days</p>
+        </div>
+        <DataTable columns={columns} data={[]} />
+        <Pagination
+          prevButton={true}
+          nextButton={true}
+          setPage={setPage}
+          currentPage={page}
+          totalPages={1}
+        />
+      </div>
     </>
   );
 }
