@@ -14,11 +14,13 @@ const initialUserValues: UserProfile = {
 interface SessionProps {
   user: UserProfile;
   isLoading: boolean;
+  isSuccess: boolean;
 }
 
 const SessionContext = createContext<SessionProps>({
   user: initialUserValues,
   isLoading: false,
+  isSuccess: false,
 });
 
 export const SessionProvider = ({
@@ -36,7 +38,7 @@ export const SessionProvider = ({
   }, [isSuccess, data]);
 
   return (
-    <SessionContext.Provider value={{ user, isLoading }}>
+    <SessionContext.Provider value={{ user, isLoading, isSuccess }}>
       {children}
     </SessionContext.Provider>
   );

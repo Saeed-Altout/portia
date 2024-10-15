@@ -30,12 +30,13 @@ import { AffiliateCode } from "@dashboard/_components/affiliate-code";
 
 import { UserButton } from "@/app/auth/_components/user-button";
 import { useSession } from "@/providers/session-provider";
+import { Loader } from "@/components/ui/loader";
 
 export default function SettingsPage() {
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");
 
   const { onSubmit, isPending } = useUpdateUserProfile();
-  const { user, isLoading } = useSession();
+  const { user, isLoading, isSuccess } = useSession();
 
   const form = useForm<z.infer<typeof userProfileSchema>>({
     resolver: zodResolver(userProfileSchema),
@@ -56,6 +57,10 @@ export default function SettingsPage() {
       email: user.email || "",
     });
   }, [form, user, isLoading]);
+
+  if (!isSuccess) {
+    return <Loader />;
+  }
 
   return (
     <Form {...form}>
