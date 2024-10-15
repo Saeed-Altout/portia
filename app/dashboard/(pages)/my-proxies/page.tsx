@@ -7,7 +7,7 @@ import { Heading } from "@/app/dashboard/_components/heading";
 import { Pagination } from "@/app/dashboard/_components/pagination";
 
 import { DataTable } from "@/components/ui/data-table";
-import { useSession } from "@/contexts/session-provider";
+import { useSession } from "@/providers/session-provider";
 
 export default function MyProxiesPage() {
   const { user } = useSession();

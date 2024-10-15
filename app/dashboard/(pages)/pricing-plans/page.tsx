@@ -6,7 +6,7 @@ import { Table } from "./_components/table";
 import { FiltersSection } from "./_components/filters-section";
 
 import { Heading } from "@dashboard/_components/heading";
-import { useSession } from "@/contexts/session-provider";
+import { useSession } from "@/providers/session-provider";
 import { useGetPricingPlansQuery } from "@/app/dashboard/features/hooks";
 import { Loader } from "@/components/ui/loader";
 

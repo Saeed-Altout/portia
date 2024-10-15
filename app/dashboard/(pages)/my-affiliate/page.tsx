@@ -4,20 +4,21 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 import { columns } from "./_components/columns";
+import { StatisticCard } from "./_components/statistics-card";
 
 import { Heading } from "@dashboard/_components/heading";
 import { Pagination } from "@dashboard/_components/pagination";
 import { AffiliateCode } from "@dashboard/_components/affiliate-code";
-import { StatisticCard } from "@dashboard/_components/cards/statistics-card";
 
 import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 
-import { useGetAffiliateEarningsHistoryQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-history-query";
-import { useGetAffiliateEarningsStatisticsQuery } from "@dashboard/hooks/affiliate-system/get-affiliate-earnings-statistics-query";
-
+import {
+  useGetAffiliateEarningsHistoriesQuery,
+  useGetAffiliateEarningsStatisticsQuery,
+} from "@/app/dashboard/features/hooks";
+import { useSession } from "@/providers/session-provider";
 import cookieStorage from "@/services/cookie-storage";
-import { useSession } from "@/contexts/session-provider";
 
 export default function MyAffiliatePage() {
   const { user } = useSession();
@@ -25,7 +26,7 @@ export default function MyAffiliatePage() {
   const [page, setPage] = useState<number>(1);
 
   const statistics = useGetAffiliateEarningsStatisticsQuery();
-  const histories = useGetAffiliateEarningsHistoryQuery(page);
+  const histories = useGetAffiliateEarningsHistoriesQuery(page);
 
   const isSuccess = statistics.isSuccess && histories.isSuccess;
 

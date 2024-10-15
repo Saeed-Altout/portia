@@ -1,57 +1,45 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useGetUserProfileQuery } from "@dashboard/hooks";
+import { useGetUserDetailsQuery } from "@/app/dashboard/features/hooks";
 
-interface Session {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  referred_code: string;
-}
+const initialUserValues: UserProfile = {
+  id: 0,
+  first_name: "",
+  last_name: "",
+  email: "",
+  referred_code: "",
+};
 
-interface SessionContextProps {
-  session: Session | null;
+interface SessionProps {
+  user: UserProfile;
   isLoading: boolean;
 }
 
-const SessionContext = createContext<SessionContextProps>({
-  session: null,
+const SessionContext = createContext<SessionProps>({
+  user: initialUserValues,
   isLoading: false,
 });
-interface SessionProviderProps {
+
+export const SessionProvider = ({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-export const SessionProvider = ({ children }: SessionProviderProps) => {
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [session, setSession] = useState<Session | null>(null);
-
-  const { data: user, isLoading, isSuccess } = useGetUserProfileQuery();
+}) => {
+  const [user, setUser] = useState<UserProfile>(initialUserValues);
+  const { data, isSuccess, isLoading } = useGetUserDetailsQuery();
 
   useEffect(() => {
-    if (isSuccess && user?.data) {
-      setSession(user.data);
+    if (isSuccess) {
+      setUser(data.data);
     }
-    setIsMounted(true);
-  }, [isSuccess, user]);
-
-  if (!isMounted) {
-    return null;
-  }
+  }, [isSuccess, data]);
 
   return (
-    <SessionContext.Provider value={{ session, isLoading }}>
+    <SessionContext.Provider value={{ user, isLoading }}>
       {children}
     </SessionContext.Provider>
   );
 };
 
-export const useSessionContext = (): SessionContextProps => {
-  const context = useContext(SessionContext);
-  if (!context) {
-    throw new Error("useSessionContext must be used within a SessionProvider");
-  }
-  return context;
-};
+export const useSession = () => useContext(SessionContext);

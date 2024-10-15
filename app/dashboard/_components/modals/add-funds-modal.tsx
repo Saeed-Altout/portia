@@ -12,7 +12,7 @@ import * as z from "zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { Modal } from "@dashboard/_components/ui/modal";
+import { Modal } from "@/app/dashboard/_components/modal";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
 import { useStoreModal } from "@/hooks/use-store-modal";
 

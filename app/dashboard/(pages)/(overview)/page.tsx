@@ -9,7 +9,7 @@ import { columns } from "./_components/columns";
 import { OverviewCard } from "./_components/overview-card";
 
 import { DataTable } from "@/components/ui/data-table";
-import { useSession } from "@/contexts/session-provider";
+import { useSession } from "@/providers/session-provider";
 
 export default function OverviewPage() {
   const { user } = useSession();

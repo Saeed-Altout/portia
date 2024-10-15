@@ -7,7 +7,7 @@ import { columns } from "./_components/columns";
 import { DepositCard } from "./_components/deposit-card";
 
 import { DataTable } from "@/components/ui/data-table";
-import { useSession } from "@/contexts/session-provider";
+import { useSession } from "@/providers/session-provider";
 
 export default function DepositsPage() {
   const { user } = useSession();
