@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { RenewExpiredProxiesModal } from "@dashboard/_components/modals/renew-expired-proxies-modal";
-import { useState } from "react";
 
 interface CellActionsProps {
   row: any;
