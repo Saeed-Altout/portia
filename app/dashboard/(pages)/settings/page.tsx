@@ -26,12 +26,13 @@ import { AffiliateCode } from "@dashboard/_components/affiliate-code";
 
 import { userProfileSchema } from "@dashboard/schemas";
 import { useUpdateUserProfile } from "@dashboard/hooks";
-import { useStoreContext } from "@dashboard/contexts/store-context";
+import { useSession } from "@/contexts/session-provider";
+
 import { UserButton } from "@/app/auth/_components/user-button";
 
 export default function SettingsPage() {
   const { onSubmit, isPending } = useUpdateUserProfile();
-  const { user, isLoading } = useStoreContext();
+  const { user, isLoading } = useSession();
 
   const form = useForm<z.infer<typeof userProfileSchema>>({
     resolver: zodResolver(userProfileSchema),
