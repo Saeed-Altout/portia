@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
+import { Eye, EyeOff } from "lucide-react";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -21,16 +22,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { Heading } from "@dashboard/_components/ui/heading";
+import { useUpdateUserProfile } from "@/app/dashboard/features/hooks";
+import { userProfileSchema } from "@/app/dashboard/features/schemas";
+
+import { Heading } from "@/app/dashboard/_components/heading";
 import { AffiliateCode } from "@dashboard/_components/affiliate-code";
 
-import { userProfileSchema } from "@/app/dashboard/features/schemas";
-import { useUpdateUserProfile } from "@dashboard/hooks";
+import { UserButton } from "@/app/auth/_components/user-button";
 import { useSession } from "@/providers/session-provider";
 
-import { UserButton } from "@/app/auth/_components/user-button";
-
 export default function SettingsPage() {
+  const [passwordType, setPasswordType] = useState<"text" | "password">("text");
+
   const { onSubmit, isPending } = useUpdateUserProfile();
   const { user, isLoading } = useSession();
 
@@ -139,12 +142,31 @@ export default function SettingsPage() {
             <FormItem>
               <FormLabel>Current Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="********"
-                  disabled={isPending}
-                  {...field}
-                />
+                <div className="flex items-center relative">
+                  <Input
+                    {...field}
+                    type={passwordType}
+                    disabled={isPending}
+                    placeholder="********"
+                  />
+                  <div
+                    role="button"
+                    onClick={() =>
+                      setPasswordType((prev) =>
+                        prev === "password" ? "text" : "password"
+                      )
+                    }
+                    className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
+                    aria-label="Toggle password visibility"
+                    title="Toggle password visibility"
+                  >
+                    {passwordType === "password" ? (
+                      <EyeOff className="h-4 w-4 text-gray-400" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-400" />
+                    )}
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -157,12 +179,31 @@ export default function SettingsPage() {
             <FormItem>
               <FormLabel>New Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="********"
-                  disabled={isPending}
-                  {...field}
-                />
+                <div className="flex items-center relative">
+                  <Input
+                    {...field}
+                    type={passwordType}
+                    disabled={isPending}
+                    placeholder="********"
+                  />
+                  <div
+                    role="button"
+                    onClick={() =>
+                      setPasswordType((prev) =>
+                        prev === "password" ? "text" : "password"
+                      )
+                    }
+                    className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
+                    aria-label="Toggle password visibility"
+                    title="Toggle password visibility"
+                  >
+                    {passwordType === "password" ? (
+                      <EyeOff className="h-4 w-4 text-gray-400" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-400" />
+                    )}
+                  </div>
+                </div>
               </FormControl>
               <FormDescription>
                 Your new password must be more than 8 characters
@@ -178,12 +219,31 @@ export default function SettingsPage() {
             <FormItem>
               <FormLabel>New Password Confirmation</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="********"
-                  disabled={isPending}
-                  {...field}
-                />
+                <div className="flex items-center relative">
+                  <Input
+                    {...field}
+                    type={passwordType}
+                    disabled={isPending}
+                    placeholder="********"
+                  />
+                  <div
+                    role="button"
+                    onClick={() =>
+                      setPasswordType((prev) =>
+                        prev === "password" ? "text" : "password"
+                      )
+                    }
+                    className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
+                    aria-label="Toggle password visibility"
+                    title="Toggle password visibility"
+                  >
+                    {passwordType === "password" ? (
+                      <EyeOff className="h-4 w-4 text-gray-400" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-400" />
+                    )}
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
