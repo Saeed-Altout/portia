@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     const currentMemoryUser = cookieStorage.getMemoryUser();
-    if (currentMemoryUser) {
+    if (currentMemoryUser && isRememberMe) {
       toast("Welcome back, Remember your information!", {
         action: (
           <>
