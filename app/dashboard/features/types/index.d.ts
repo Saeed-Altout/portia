@@ -10,5 +10,20 @@ declare type User = {
   email: string;
   referred_code: string;
 };
-
 declare type UserDetails = RootObj<User>;
+
+declare type PricingPlan = {
+  name: string;
+  plans: {
+    plan_name: string;
+    offers: {
+      id: number;
+      amount: number;
+      cost: string;
+      is_top: boolean;
+      description: string | null;
+    }[];
+  }[];
+};
+
+declare type PricingPlanResponseType = RootObj<PricingPlan[]>;
