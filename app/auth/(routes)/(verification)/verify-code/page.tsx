@@ -9,7 +9,6 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Circle, Icon } from "@/components/shared/circle-icon";
 import {
   Card,
   CardContent,
@@ -31,15 +30,15 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { Circle, Icon } from "@/components/circle-icon";
 
-import { useVerifyCode } from "@auth/hooks";
-import { verifyCodeSchema } from "@auth/schemas";
+import { useVerifyCode } from "@/app/auth/features/hooks";
+import { verifyCodeSchema } from "@/app/auth/features/schemas";
 import { BackButton, ResendButton, SubmitButton } from "@auth/_components";
-import { useEffect, useState } from "react";
 
 export default function VerifyCodePage() {
-  const [email, setEmail] = useState<string | null>(null);
   const params = useSearchParams();
+  const email = params.get("email");
 
   const { onSubmit, isPending } = useVerifyCode(email || "");
 
@@ -49,13 +48,6 @@ export default function VerifyCodePage() {
       code: "",
     },
   });
-
-  useEffect(() => {
-    if (params) {
-      const email = params.get("email");
-      setEmail(email);
-    }
-  }, [params]);
 
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
@@ -75,7 +67,7 @@ export default function VerifyCodePage() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="flex justify-center items-center">
               <FormField
                 control={form.control}
@@ -105,12 +97,11 @@ export default function VerifyCodePage() {
                 )}
               />
             </div>
-
             <SubmitButton label="Verify email" isLoading={isPending} />
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex flex-col gap-y-5">
+      <CardFooter className="flex flex-col gap-y-4">
         <ResendButton />
         <BackButton />
       </CardFooter>

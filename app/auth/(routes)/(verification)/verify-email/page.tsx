@@ -2,11 +2,8 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-
 import { Mail } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/shared/circle-icon";
 import {
   Card,
   CardContent,
@@ -15,20 +12,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Circle, Icon } from "@/components/circle-icon";
 
 import { BackButton } from "@auth/_components";
-import { useEffect, useState } from "react";
 
 export default function VerifyEmailPage() {
-  const [email, setEmail] = useState<string | null>(null);
   const params = useSearchParams();
-
-  useEffect(() => {
-    if (params) {
-      const email = params.get("email");
-      setEmail(email);
-    }
-  }, [params]);
+  const email = params.get("email");
 
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
@@ -48,7 +39,7 @@ export default function VerifyEmailPage() {
       </CardHeader>
       <CardContent>
         <Button className="w-full">
-          <Link href={`/auth/verify-code?email=${email}`}>
+          <Link href={`/auth/verify-code?email=${email! && email}`}>
             Enter code manually
           </Link>
         </Button>

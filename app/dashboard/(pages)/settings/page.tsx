@@ -27,6 +27,7 @@ import { AffiliateCode } from "@dashboard/_components/affiliate-code";
 import { userProfileSchema } from "@dashboard/schemas";
 import { useUpdateUserProfile } from "@dashboard/hooks";
 import { useStoreContext } from "@dashboard/contexts/store-context";
+import { UserButton } from "@/app/auth/_components/user-button";
 
 export default function SettingsPage() {
   const { onSubmit, isPending } = useUpdateUserProfile();
@@ -187,7 +188,7 @@ export default function SettingsPage() {
             </FormItem>
           )}
         />
-        <AffiliateCode />
+        <AffiliateCode code={user.referred_code} />
         <div className="space-y-6 pt-12">
           <div className="space-y-2">
             <h3 className="font-medium text-lg">Export Data</h3>
@@ -196,7 +197,10 @@ export default function SettingsPage() {
               your data will include all your proxies all your deposits
             </p>
           </div>
-          <Button type="button">Export My Data</Button>
+          <div className="flex items-center justify-start gap-4">
+            <Button type="button">Export My Data</Button>
+            <UserButton />
+          </div>
         </div>
       </form>
     </Form>

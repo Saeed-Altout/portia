@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/shared/logo";
+import { Logo } from "@/components/logo";
 
 import { Container } from "@website/_components/ui/container";
 import { NavMain, NavMobile } from "@website/_components/navbar";

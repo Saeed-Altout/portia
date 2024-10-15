@@ -1,87 +1,101 @@
-import axios, { AxiosError } from 'axios';
-import cookieStorage from '@/services/cookie-storage';
+import axios, { AxiosError } from "axios";
+import cookieStorage from "@/services/cookie-storage";
 
 export const _axios = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_API_URL,
-	headers: {
-		'Content-Type': 'application/json',
-	},
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 _axios.interceptors.request.use(
-	async (request) => {
-		const token = cookieStorage.getAccessToken();
-		console.log('run');
-
-		if (token) {
-			request.headers['Authorization'] = `Bearer ${token}`;
-		}
-
-		return request;
-	},
-	function (error) {
-		return Promise.reject(error);
-	}
+  async (request) => {
+    const token = cookieStorage.getAccessToken();
+    if (token) {
+      request.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return request;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
 );
 
 _axios.interceptors.response.use(
-	(res) => {
-		return res;
-	},
+  (res) => {
+    return res;
+  },
 
-	async (err: AxiosError) => {
-		const status = err.response?.status;
-		switch (status) {
-			case 400:
-				console.error('Bad Request: The server could not understand the request.');
-				break;
+  async (err: AxiosError) => {
+    const status = err.response?.status;
+    switch (status) {
+      case 400:
+        console.error(
+          "Bad Request: The server could not understand the request."
+        );
+        break;
 
-			case 401:
-				console.error('Unauthorized: You need to login to access this resource.');
-				window.location.href = '/auth/login';
-				break;
+      case 401:
+        console.error(
+          "Unauthorized: You need to login to access this resource."
+        );
+        cookieStorage.removeAccessToken();
+        window.location.href = "/auth/login";
+        break;
 
-			case 403:
-				console.error('Forbidden: You do not have permission to access this resource.');
-				break;
+      case 403:
+        console.error(
+          "Forbidden: You do not have permission to access this resource."
+        );
+        break;
 
-			case 404:
-				console.error('Not Found: The requested resource could not be found.');
-				break;
+      case 404:
+        console.error("Not Found: The requested resource could not be found.");
+        break;
 
-			case 405:
-				console.error('Method Not Allowed: The HTTP method is not allowed.');
-				break;
+      case 405:
+        console.error("Method Not Allowed: The HTTP method is not allowed.");
+        break;
 
-			case 408:
-				console.error('Request Timeout: The request took too long to complete.');
-				break;
+      case 408:
+        console.error(
+          "Request Timeout: The request took too long to complete."
+        );
+        break;
 
-			case 429:
-				console.error('Too Many Requests: You have sent too many requests in a given amount of time.');
-				break;
+      case 429:
+        console.error(
+          "Too Many Requests: You have sent too many requests in a given amount of time."
+        );
+        break;
 
-			case 500:
-				console.error('Internal Server Error: Something went wrong on the server.');
-				break;
+      case 500:
+        console.error(
+          "Internal Server Error: Something went wrong on the server."
+        );
+        break;
 
-			case 502:
-				console.error('Bad Gateway: Invalid response from the upstream server.');
-				break;
+      case 502:
+        console.error(
+          "Bad Gateway: Invalid response from the upstream server."
+        );
+        break;
 
-			case 503:
-				console.error('Service Unavailable: The server is temporarily unavailable.');
-				break;
+      case 503:
+        console.error(
+          "Service Unavailable: The server is temporarily unavailable."
+        );
+        break;
 
-			case 504:
-				console.error('Gateway Timeout: The server took too long to respond.');
-				break;
+      case 504:
+        console.error("Gateway Timeout: The server took too long to respond.");
+        break;
 
-			default:
-				console.error('An unexpected error occurred.');
-				break;
-		}
+      default:
+        console.error("An unexpected error occurred.");
+        break;
+    }
 
-		return Promise.reject(err);
-	}
+    return Promise.reject(err);
+  }
 );

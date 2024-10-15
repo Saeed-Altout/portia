@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CheckCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/shared/circle-icon";
 import {
   Card,
   CardContent,
@@ -15,29 +13,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Circle, Icon } from "@/components/circle-icon";
 
 import { BackButton } from "@auth/_components";
 
 import cookieStorage from "@/services/cookie-storage";
 
 export default function EmailConfirmedPage() {
-  const [token, setToken] = useState<string | null>(null);
   const params = useSearchParams();
+  const token = params.get("token");
 
   useEffect(() => {
     if (token) {
       cookieStorage.setAccessToken(token);
-    } else {
-      cookieStorage.removeAccessToken();
     }
   }, [token]);
-
-  useEffect(() => {
-    if (params) {
-      const token = params.get("token");
-      setToken(token);
-    }
-  }, [params]);
 
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">

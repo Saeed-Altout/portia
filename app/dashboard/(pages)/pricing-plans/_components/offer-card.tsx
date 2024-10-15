@@ -3,7 +3,7 @@ import { Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/shared/circle-icon";
+import { Circle, Icon } from "@/components/circle-icon";
 
 export const OfferCard = ({ offer, theme }: { offer?: any; theme?: any }) => (
   <div className="flex items-start md:items-center justify-between flex-col md:flex-row p-4 border rounded-lg gap-4">

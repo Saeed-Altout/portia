@@ -3,7 +3,7 @@ import { Zap } from "lucide-react";
 import { Section } from "@website/_components/ui/section";
 import { Container } from "@website/_components/ui/container";
 import { Heading } from "@website/_components/ui/heading";
-import { Circle, Icon } from "@/components/shared/circle-icon";
+import { Circle, Icon } from "@/components/circle-icon";
 
 import { featuresData } from "@website/constants";
 

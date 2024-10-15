@@ -1,7 +1,7 @@
 import * as React from "react";
 import { LucideIcon } from "lucide-react";
 
-import { Circle, Icon } from "@/components/shared/circle-icon";
+import { Circle, Icon } from "@/components/circle-icon";
 
 interface FeatureCardProps {
   icon: LucideIcon;
