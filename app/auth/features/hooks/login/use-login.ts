@@ -1,5 +1,4 @@
 import * as z from "zod";
-import { useEffect, useState } from "react";
 
 import { loginSchema } from "@/app/auth/features/schemas";
 import { useHandleResponse, useLoginMutation } from "@/app/auth/features/hooks";
@@ -16,7 +15,11 @@ export const useLogin = (isRememberMe: boolean) => {
       isRememberMe && cookieStorageService.setMemoryUser(data, { days: 10 });
       !isRememberMe && cookieStorageService.removeMemoryUser();
       cookieStorageService.setEmail(data.email);
-      handleSuccess({ message: res.message, refresh: true });
+      handleSuccess({
+        message: res.message,
+        refresh: true,
+        redirectTo: "/dashboard",
+      });
     } catch (error) {
       handleError({ error });
     }

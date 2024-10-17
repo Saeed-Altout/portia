@@ -13,7 +13,11 @@ export const useLogout = () => {
   const onSubmit = async () => {
     try {
       await logoutMutation();
-      handleSuccess({ message: "Logout successful", refresh: true });
+      handleSuccess({
+        message: "Logout successful",
+        refresh: true,
+        redirectTo: "/auth/login",
+      });
       cookieStorageService.clearAll();
       localStorage.clearAll();
     } catch (error) {
