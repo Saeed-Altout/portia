@@ -21,9 +21,3 @@ export default function HomePage() {
     </main>
   );
 }
-
-// TODO: Hero bLog page. "Design"
-// TODO: Select country and number. "Libs"
-// TODO: Animate card customers.
-// TODO: Button in hero of pricey page. "Design"
-// TODO: Build locations page. "Not yet"

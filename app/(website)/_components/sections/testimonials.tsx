@@ -1,14 +1,5 @@
 "use client";
 
-import * as React from "react";
-
-import { Section } from "@website/_components/ui/section";
-import { Container } from "@website/_components/ui/container";
-import {
-  TestimonialCard,
-  TestimonialSkeltonCard,
-} from "@website/_components/cards/testimonial-card";
-
 import {
   Carousel,
   CarouselContent,
@@ -16,7 +7,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
+import {
+  TestimonialCard,
+  TestimonialSkeltonCard,
+} from "@website/_components/cards/testimonial-card";
 import { useGetReviewsQuery } from "@website/hooks";
 
 export const Testimonials = () => {
@@ -28,29 +22,27 @@ export const Testimonials = () => {
   } = useGetReviewsQuery(5);
 
   return (
-    <Section>
-      <Container>
-        <Carousel className="w-full">
-          <CarouselContent>
-            {isSuccess && (
-              <>
-                {reviews?.data.map((review, index) => (
-                  <CarouselItem key={index}>
-                    <TestimonialCard initialData={review} />
-                  </CarouselItem>
-                ))}
-              </>
-            )}
-            {(isError || isLoading) && <TestimonialSkeltonCard />}
-          </CarouselContent>
+    <section id="testimonials" className="container py-24">
+      <Carousel className="w-full">
+        <CarouselContent>
           {isSuccess && (
-            <div className="w-fit mr-auto space-x-8 mt-8">
-              <CarouselPrevious />
-              <CarouselNext />
-            </div>
+            <>
+              {reviews?.data.map((review, index) => (
+                <CarouselItem key={index}>
+                  <TestimonialCard initialData={review} />
+                </CarouselItem>
+              ))}
+            </>
           )}
-        </Carousel>
-      </Container>
-    </Section>
+          {(isError || isLoading) && <TestimonialSkeltonCard />}
+        </CarouselContent>
+        {isSuccess && (
+          <div className="w-fit mr-auto space-x-8 mt-8">
+            <CarouselPrevious />
+            <CarouselNext />
+          </div>
+        )}
+      </Carousel>
+    </section>
   );
 };
