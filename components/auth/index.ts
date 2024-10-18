@@ -9,6 +9,8 @@ import { LoginForm } from "./login-form";
 import { RegisterForm } from "./register-form";
 import { SendResetEmailForm } from "./send-reset-email-form";
 import { PasswordResetForm } from "./password-reset-form";
+import { VerifyRestCodeForm } from "./verify-reset-code-form";
+import { VerifyRestEmailForm } from "./verify-reset-email-form";
 export {
   Header,
   Footer,
@@ -21,4 +23,6 @@ export {
   RegisterForm,
   SendResetEmailForm,
   PasswordResetForm,
+  VerifyRestCodeForm,
+  VerifyRestEmailForm,
 };

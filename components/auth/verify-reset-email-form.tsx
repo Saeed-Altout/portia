@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-
 import { Mail } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 import {
   Card,
@@ -15,8 +14,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import { Circle, Icon } from "@/components/circle-icon";
-import { BackButton, ResendButton } from "@auth/_components";
+import { BackButton, ResendButton } from "@/components/auth";
+
+import { Circle, Icon } from "../circle-icon";
 
 export const VerifyRestEmailForm = () => {
   const params = useSearchParams();
