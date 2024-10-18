@@ -2,15 +2,14 @@
 
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
-
-import { useLoginWithGoogle } from "@/app/auth/features/hooks";
+import { useLoginWithGoogle } from "@/features/auth/hooks";
 
 interface ProviderProps {
   isLoading: boolean;
 }
 
 export const Provider = ({ isLoading }: ProviderProps) => {
-  const { onSubmit, isPending } = useLoginWithGoogle();
+  const { mutate, isPending } = useLoginWithGoogle();
 
   return (
     <Button
@@ -18,7 +17,7 @@ export const Provider = ({ isLoading }: ProviderProps) => {
       variant="outline"
       className="w-full flex items-center justify-center gap-x-2"
       disabled={isLoading || isPending}
-      onClick={onSubmit}
+      onClick={() => mutate}
     >
       <FcGoogle className="w-4 h-4" />
       <span>Login with Google</span>

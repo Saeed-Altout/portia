@@ -30,3 +30,32 @@ declare type LogoutRequestType = {
   message: string;
 };
 declare type LogoutResponseType = ErrorResponse;
+
+declare type VerificationCodeRequestType = {
+  email: string;
+  code: string;
+};
+declare type VerificationCodeResponse = {
+  success: boolean;
+  message: string | string[];
+  access_token: string;
+  token_type: string;
+  expires_in: string;
+};
+
+declare type SetNewPasswordRequestType = {
+  password: string;
+  password_confirmation: string;
+  token: string;
+};
+declare type SetNewPasswordResponseType = ErrorResponse;
+
+declare type SendResetEmailRequestType = {
+  email: string;
+};
+declare type SendResetEmailResponseType = ErrorResponse;
+
+declare type ResendVerificationCodeRequestType = {
+  email: string;
+};
+declare type ResendVerificationCodeResponseType = ErrorResponse;

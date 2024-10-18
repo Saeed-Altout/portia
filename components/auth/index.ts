@@ -12,6 +12,7 @@ import { PasswordResetForm } from "./password-reset-form";
 import { VerifyRestCodeForm } from "./verify-reset-code-form";
 import { VerifyRestEmailForm } from "./verify-reset-email-form";
 import { VerifyEmailForm } from "./verify-email-form";
+import { EmailConfirmedForm } from "./email-confirmed-form";
 export {
   Header,
   Footer,
@@ -27,4 +28,5 @@ export {
   VerifyRestCodeForm,
   VerifyRestEmailForm,
   VerifyEmailForm,
+  EmailConfirmedForm,
 };

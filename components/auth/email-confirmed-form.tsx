@@ -14,19 +14,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/circle-icon";
 
-import { BackButton } from "@auth/_components";
+import { setAccessToken } from "@/lib/auth";
+import { BackButton } from "@/components/auth";
 
-import cookieStorage from "@/services/cookie-storage";
+import { Circle, Icon } from "../circle-icon";
 
-export default function EmailConfirmedForm() {
+export const EmailConfirmedForm = () => {
   const params = useSearchParams();
   const token = params.get("token");
 
   useEffect(() => {
     if (token) {
-      cookieStorage.setAccessToken(token);
+      setAccessToken(token);
     }
   }, [token]);
 
@@ -54,4 +54,4 @@ export default function EmailConfirmedForm() {
       </CardFooter>
     </Card>
   );
-}
+};

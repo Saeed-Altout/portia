@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import cookieStorage from "@/services/cookie-storage";
+import { getAccessToken } from "@/lib/auth";
 
 export const UnProtectedRoute = ({
   children,
@@ -13,7 +13,7 @@ export const UnProtectedRoute = ({
   const router = useRouter();
 
   useEffect(() => {
-    const token = cookieStorage.getAccessToken();
+    const token = getAccessToken();
 
     if (!!token) {
       router.push("/dashboard");

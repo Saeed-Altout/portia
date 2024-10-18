@@ -2,13 +2,13 @@ import * as z from "zod";
 
 import { getModifiedData } from "@/utils";
 
-import { useHandleResponse } from "@/app/auth/features/hooks";
 import { userProfileSchema } from "@/app/dashboard/features/schemas";
 
 import { useUpdateUserProfileMutation } from "./update-user-profile-mutation";
+import { useResponse } from "@/features/auth/hooks";
 
 export const useUpdateUserProfile = () => {
-  const { handleSuccess, handleError } = useHandleResponse();
+  const { Success, Error } = useResponse();
   const { mutateAsync: updateUserProfileMutation, isPending } =
     useUpdateUserProfileMutation();
 
@@ -16,9 +16,9 @@ export const useUpdateUserProfile = () => {
     const modifiedData = getModifiedData(data) as UpdateUserProfileRequestType;
     try {
       const res = await updateUserProfileMutation(modifiedData);
-      handleSuccess({ message: res.message });
+      Success({ message: res.message[0] });
     } catch (error) {
-      handleError({ error });
+      Error({ error });
     }
   };
   return { onSubmit, isPending };
