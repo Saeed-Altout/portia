@@ -28,9 +28,9 @@ import { userProfileSchema } from "@/app/dashboard/features/schemas";
 import { Heading } from "@/app/dashboard/_components/heading";
 import { AffiliateCode } from "@dashboard/_components/affiliate-code";
 
-import { UserButton } from "@/app/auth/_components/user-button";
 import { useSession } from "@/providers/session-provider";
 import { Loader } from "@/components/ui/loader";
+import { UserButton } from "@/components/auth/ui/user-button";
 
 export default function SettingsPage() {
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");

@@ -1,5 +1,11 @@
 import { UnProtectedRoute } from "@/guard/UnProtectedRoute";
 
+export const metadata = {
+  title: "Authentication",
+  description:
+    "Manage your account with secure login, registration, password recovery, and verification.",
+};
+
 export default function AuthLayout({
   children,
 }: Readonly<{

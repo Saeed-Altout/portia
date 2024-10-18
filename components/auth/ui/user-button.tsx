@@ -13,7 +13,7 @@ export const UserButton = () => {
       disabled={isPending}
       variant="destructive"
       type="button"
-      onClick={() => mutate}
+      onClick={() => mutate()}
     >
       Logout <LogOut className="ml-2 h-4 w-4" />
     </Button>

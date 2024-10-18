@@ -7,11 +7,7 @@ import { removeAccessToken, removeEmail } from "@/lib/auth";
 
 export const useLogout = () => {
   const { Success, Error } = useResponse();
-  return useMutation<
-    LogoutResponseType,
-    AxiosError<ErrorResponse>,
-    LogoutRequestType
-  >({
+  return useMutation<LogoutResponseType, AxiosError<ErrorResponse>, void>({
     mutationKey: ["logout"],
     mutationFn: () => logout(),
     onSuccess(req) {
