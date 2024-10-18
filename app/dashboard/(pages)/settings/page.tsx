@@ -161,7 +161,7 @@ export default function SettingsPage() {
                         prev === "password" ? "text" : "password"
                       )
                     }
-                    className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
+                    className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                     aria-label="Toggle password visibility"
                     title="Toggle password visibility"
                   >
@@ -198,7 +198,7 @@ export default function SettingsPage() {
                         prev === "password" ? "text" : "password"
                       )
                     }
-                    className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
+                    className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                     aria-label="Toggle password visibility"
                     title="Toggle password visibility"
                   >
@@ -238,7 +238,7 @@ export default function SettingsPage() {
                         prev === "password" ? "text" : "password"
                       )
                     }
-                    className="bg-background absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
+                    className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                     aria-label="Toggle password visibility"
                     title="Toggle password visibility"
                   >

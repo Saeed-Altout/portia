@@ -1,3 +1,5 @@
+import { AUTH_COOKIE_TOKEN } from "@/constants";
+
 interface CookieOptions {
   days?: number;
   path?: string;
@@ -13,7 +15,7 @@ interface MemoryUser {
 interface User {
   success: boolean;
   message: string;
-  access_token: string;
+  AUTH_COOKIE_TOKEN: string;
   token_type: string;
   expires_in: string;
 }
@@ -106,15 +108,15 @@ export class CookieStorage {
     accessToken: string,
     options: CookieOptions = {}
   ): this {
-    return this.setCookie("accessToken", accessToken, options);
+    return this.setCookie(AUTH_COOKIE_TOKEN, accessToken, options);
   }
 
   public getAccessToken(): string | null {
-    return this.getCookie<string>("accessToken");
+    return this.getCookie<string>(AUTH_COOKIE_TOKEN);
   }
 
   public removeAccessToken(): this {
-    return this.removeCookie("accessToken");
+    return this.removeCookie(AUTH_COOKIE_TOKEN);
   }
 
   public setRefreshToken(
@@ -168,7 +170,7 @@ export class CookieStorage {
   }
 
   public clearAll(): this {
-    this.removeCookie("accessToken");
+    this.removeCookie(AUTH_COOKIE_TOKEN);
     this.removeCookie("refreshToken");
     this.removeCookie("user");
     this.removeEmail();
