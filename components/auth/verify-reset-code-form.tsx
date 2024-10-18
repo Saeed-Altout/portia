@@ -1,14 +1,21 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-
 import { Mail } from "lucide-react";
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { useSearchParams } from "next/navigation";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import {
   Card,
   CardContent,
@@ -18,29 +25,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { Circle, Icon } from "@/components/circle-icon";
 
-import { useVerifyCode } from "@/app/auth/features/hooks";
-import { verifyCodeSchema } from "@/app/auth/features/schemas";
-import { BackButton, ResendButton, SubmitButton } from "@auth/_components";
+import { useVerifyCode } from "@/features/auth/hooks";
+import { verifyCodeSchema } from "@/features/auth/schemas";
+import { BackButton, ResendButton, SubmitButton } from "@/components/auth";
+
+import { Circle, Icon } from "../circle-icon";
 
 export const VerifyRestCodeForm = () => {
   const params = useSearchParams();
   const email = params.get("email");
 
-  const { onSubmit, isPending } = useVerifyCode(email || "");
+  const { mutate, isPending } = useVerifyCode();
+
+  const onSubmit = async (values: z.infer<typeof verifyCodeSchema>) =>
+    mutate({ code: values.code, email: email || "" });
 
   const form = useForm<z.infer<typeof verifyCodeSchema>>({
     resolver: zodResolver(verifyCodeSchema),

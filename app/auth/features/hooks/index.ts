@@ -1,8 +1,4 @@
 import { useHandleResponse } from "./error/use-handle-response";
-
-import { useVerifyCode } from "./verify-code/use-verify-code";
-import { useVerifyCodeMutation } from "./verify-code/use-verify-code-mutation";
-
 import { useResendVerificationCode } from "./resend-verification-code/use-resend-verification-code";
 import { useResendVerificationCodeMutation } from "./resend-verification-code/use-resend-verification-code-mutation";
 
@@ -11,8 +7,6 @@ import { useLoginWithGoogleMutation } from "./login-with-google/use-login-with-g
 
 export {
   useHandleResponse,
-  useVerifyCode,
-  useVerifyCodeMutation,
   useResendVerificationCode,
   useResendVerificationCodeMutation,
   useLoginWithGoogle,

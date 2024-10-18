@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { Mail } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 import {
   Card,
@@ -13,11 +13,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/circle-icon";
 
-import { BackButton } from "@auth/_components";
+import { BackButton } from "@/components/auth";
 
-export default function VerifyEmailForm() {
+import { Circle, Icon } from "../circle-icon";
+
+export const VerifyEmailForm = () => {
   const params = useSearchParams();
   const email = params.get("email");
 
@@ -49,4 +50,4 @@ export default function VerifyEmailForm() {
       </CardFooter>
     </Card>
   );
-}
+};

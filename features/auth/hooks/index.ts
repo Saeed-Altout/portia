@@ -5,6 +5,7 @@ import { useLogout } from "./use-logout";
 
 import { useSendResetEmail } from "./use-send-reset-email";
 import { useSetNewPassword } from "./use-set-new-password";
+import { useVerifyCode } from "./use-verify-code";
 
 export {
   useResponse,
@@ -13,4 +14,5 @@ export {
   useLogout,
   useSendResetEmail,
   useSetNewPassword,
+  useVerifyCode,
 };

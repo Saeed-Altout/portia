@@ -1,10 +1,5 @@
-import { Suspense } from "react";
-
-import { Loader } from "@/components/ui/loader";
-import { VerifyRestCodeForm } from "@/app/auth/_components/verify-reset-code-form";
+import { VerifyRestCodeForm } from "@/components/auth";
 
 export default function VerifyCodePage() {
-  <Suspense fallback={<Loader />}>
-    <VerifyRestCodeForm />
-  </Suspense>;
+  return <VerifyRestCodeForm />;
 }
