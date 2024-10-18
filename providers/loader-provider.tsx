@@ -9,7 +9,7 @@ export const LoaderProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const loaderTimeout = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 5000);
     return () => clearTimeout(loaderTimeout);
   }, []);
 

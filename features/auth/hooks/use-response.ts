@@ -1,8 +1,8 @@
+"use client";
+
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-
-import cookieStorage from "@/services/cookie-storage";
 
 export const useResponse = () => {
   const router = useRouter();
@@ -18,10 +18,6 @@ export const useResponse = () => {
     token?: string;
     refresh?: boolean;
   }) => {
-    if (token) {
-      cookieStorage.setAccessToken(token);
-    }
-
     if (Array.isArray(message)) {
       message.forEach((msg) => toast.success(msg));
     } else {
