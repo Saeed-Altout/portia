@@ -8,7 +8,7 @@ import { CardWrapper } from "./card-wrapper";
 import { LoginForm } from "./login-form";
 import { RegisterForm } from "./register-form";
 import { SendResetEmailForm } from "./send-reset-email-form";
-
+import { PasswordResetForm } from "./password-reset-form";
 export {
   Header,
   Footer,
@@ -20,4 +20,5 @@ export {
   LoginForm,
   RegisterForm,
   SendResetEmailForm,
+  PasswordResetForm,
 };
