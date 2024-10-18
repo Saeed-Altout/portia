@@ -2,22 +2,22 @@ import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
 import { useResponse } from "@/features/auth/hooks";
-import { sendResetEmail } from "@/features/auth/api";
+import { setNewPassword } from "@/features/auth/api";
 
-export const useSendResetEmail = () => {
+export const useSetNewPassword = () => {
   const { Success, Error } = useResponse();
   return useMutation<
-    SendResetEmailResponseType,
+    SetNewPasswordResponseType,
     AxiosError<ErrorResponse>,
-    SendResetEmailRequestType
+    SetNewPasswordRequestType
   >({
-    mutationKey: ["send-reset-email"],
-    mutationFn: (email: SendResetEmailRequestType) => sendResetEmail(email),
-    onSuccess(res, req) {
+    mutationKey: ["set-new-password"],
+    mutationFn: (values: SetNewPasswordRequestType) => setNewPassword(values),
+    onSuccess(res) {
       Success({
         message: res.message,
         refresh: true,
-        redirectTo: `/auth/verify-reset-email?email=${req.email}`,
+        redirectTo: "/auth/password-reset",
       });
     },
     onError(error) {
