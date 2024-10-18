@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 import * as z from "zod";
@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
+import { getSession } from "@/lib/auth";
 import { useLogin } from "@/features/auth/hooks";
 import { loginSchema } from "@/features/auth/schemas";
 import { CardWrapper, Provider, SubmitButton } from "@/components/auth";
@@ -40,6 +41,15 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => mutate(values);
+
+  useEffect(() => {
+    const session = getSession();
+    if (session!) {
+      setIsRememberMe(true);
+      form.setValue("email", session.email);
+      form.setValue("password", session.password);
+    }
+  }, [form]);
 
   return (
     <CardWrapper
