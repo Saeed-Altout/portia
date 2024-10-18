@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Mail } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { CheckCircle } from "lucide-react";
 
 import {
   Card,
@@ -16,37 +15,30 @@ import { Button } from "@/components/ui/button";
 
 import { BackButton } from "@/components/auth";
 
-import { Circle, Icon } from "../circle-icon";
+import { Circle, Icon } from "../../circle-icon";
 
-export const VerifyEmailForm = () => {
-  const params = useSearchParams();
-  const email = params.get("email");
-
+export const PasswordResetForm = () => {
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
       <CardHeader className="flex flex-col items-center justify-center gap-y-3">
-        <Circle size="lg">
-          <Icon size="lg" icon={Mail} />
+        <Circle size="lg" fill="success">
+          <Icon size="lg" theme="success" icon={CheckCircle} />
         </Circle>
         <CardTitle className="text-2xl md:text-3xl font-semibold text-center">
-          Check your email
+          Password reset
         </CardTitle>
         <CardDescription className="text-center">
-          We sent a password reset link to
-          {email != "null" && email && (
-            <span className="font-medium block text-wrap">{email}</span>
-          )}
+          Your password has been successfully reset. Click below to log in
+          magically
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Button className="w-full">
-          <Link href={`/auth/verify-code?email=${email! && email}`}>
-            Enter code manually
-          </Link>
+        <Button className="w-full" asChild>
+          <Link href="/auth/login">Continue to login</Link>
         </Button>
       </CardContent>
       <CardFooter>
-        <BackButton />
+        <BackButton label="Back to home" href="/" />
       </CardFooter>
     </Card>
   );

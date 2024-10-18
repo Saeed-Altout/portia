@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { useEffect } from "react";
+import { CheckCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 import {
@@ -14,40 +15,42 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import { BackButton, ResendButton } from "@/components/auth";
+import { setAccessToken } from "@/lib/auth";
+import { BackButton } from "@/components/auth";
 
-import { Circle, Icon } from "../circle-icon";
+import { Circle, Icon } from "../../circle-icon";
 
-export const VerifyRestEmailForm = () => {
+export const EmailConfirmedForm = () => {
   const params = useSearchParams();
-  const email = params.get("email");
+  const token = params.get("token");
+
+  useEffect(() => {
+    if (token) {
+      setAccessToken(token);
+    }
+  }, [token]);
 
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
       <CardHeader className="flex flex-col items-center justify-center gap-y-3">
-        <Circle size="lg">
-          <Icon size="lg" icon={Mail} />
+        <Circle size="lg" fill="success">
+          <Icon size="lg" theme="success" icon={CheckCircle} />
         </Circle>
         <CardTitle className="text-2xl md:text-3xl font-semibold text-center">
-          Check your email
+          Email verified
         </CardTitle>
         <CardDescription className="text-center">
-          We sent a password reset link to
-          {email != "null" && email && (
-            <span className="font-medium block text-wrap">{email}</span>
-          )}
+          Your password has been successfully reset. Click below to log in
+          magically.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Button className="w-full" asChild>
-          <Link href="mailto:admin@portia.pro" target="_blank">
-            Open email app
-          </Link>
+          <Link href="/dashboard">Continue to dashboard</Link>
         </Button>
       </CardContent>
-      <CardFooter className="flex flex-col gap-y-5">
-        <ResendButton />
-        <BackButton />
+      <CardFooter>
+        <BackButton label="Back to home" href="/" />
       </CardFooter>
     </Card>
   );

@@ -35,7 +35,7 @@ import { useVerifyCode } from "@/features/auth/hooks";
 import { verifyCodeSchema } from "@/features/auth/schemas";
 import { BackButton, ResendButton, SubmitButton } from "@/components/auth";
 
-import { Circle, Icon } from "../circle-icon";
+import { Circle, Icon } from "../../circle-icon";
 
 export const VerifyRestCodeForm = () => {
   const params = useSearchParams();
