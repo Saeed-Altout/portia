@@ -40,3 +40,7 @@ export const registerSchema = z.object({
       message: "Password must contain at least one special character",
     }),
 });
+
+export const sendResetEmailSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});

@@ -7,6 +7,7 @@ import { Provider } from "./provider";
 import { CardWrapper } from "./card-wrapper";
 import { LoginForm } from "./login-form";
 import { RegisterForm } from "./register-form";
+import { SendResetEmailForm } from "./send-reset-email-form";
 
 export {
   Header,
@@ -18,4 +19,5 @@ export {
   CardWrapper,
   LoginForm,
   RegisterForm,
+  SendResetEmailForm,
 };
