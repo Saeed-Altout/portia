@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 
-import { Heading } from "@/app/dashboard/_components/heading";
-import { Pagination } from "@/app/dashboard/_components/pagination";
-
 import { columns } from "./_components/columns";
 import { OverviewCard } from "./_components/overview-card";
 
 import { DataTable } from "@/components/ui/data-table";
+import { Heading } from "@/components/dashboard/heading";
+import { Pagination } from "@/components/dashboard/pagination";
+
 import { useSession } from "@/providers/session-provider";
+
+import { overviewData, overviewTableData } from "../../constants";
 
 export default function OverviewPage() {
   const { user } = useSession();
@@ -23,7 +25,7 @@ export default function OverviewPage() {
         addFunds
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[].map((item, index) => (
+        {overviewData.map((item, index) => (
           <OverviewCard key={index} initialData={item} />
         ))}
       </div>
@@ -32,7 +34,7 @@ export default function OverviewPage() {
           <h3 className="font-medium text-lg">Your earning calendar</h3>
           <p className="text-sm">Track your earnings by days</p>
         </div>
-        <DataTable columns={columns} data={[]} />
+        <DataTable columns={columns} data={overviewTableData} />
         <Pagination
           prevButton={true}
           nextButton={true}

@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { Modal } from "@/app/dashboard/_components/modal";
+import { Modal } from "@/components/dashboard/modal";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
 
 const activateNewProxySchema = z.object({

@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { toast } from "sonner";
-import { CreditCard } from "lucide-react";
 import { BeatLoader } from "react-spinners";
+import { toast } from "sonner";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -12,35 +11,34 @@ import * as z from "zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { Modal } from "@/app/dashboard/_components/modal";
+import { Modal } from "@/components/dashboard/modal";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
-import { useStoreModal } from "@/hooks/use-store-modal";
 
-const addFundsSchema = z.object({
-  amount: z.string().min(2),
-  method: z.string().min(2),
+import { useChangeProxyTypeModal } from "@/components/dashboard/hooks/modals/use-change-proxy-type-modal";
+
+const changeProxyTypeSchema = z.object({
+  proxyType: z.string().min(2),
 });
 
-export const AddFundsModal = () => {
-  const storeModal = useStoreModal();
-
+export const ChangeProxyTypeModal = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof addFundsSchema>>({
-    resolver: zodResolver(addFundsSchema),
+  const changeProxyTypeModal = useChangeProxyTypeModal();
+
+  const form = useForm<z.infer<typeof changeProxyTypeSchema>>({
+    resolver: zodResolver(changeProxyTypeSchema),
     defaultValues: {
-      amount: "",
-      method: "",
+      proxyType: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof addFundsSchema>) => {
+  const onSubmit = (values: z.infer<typeof changeProxyTypeSchema>) => {
     setIsLoading(true);
     try {
       setTimeout(() => {
         onClose();
         console.log(values);
-        toast.success("Add funds successfully");
+        toast.success("Change my proxy location successfully");
       }, 2000);
     } catch (error) {
       console.log(error);
@@ -51,41 +49,30 @@ export const AddFundsModal = () => {
   const onClose = () => {
     form.reset();
     setIsLoading(false);
-    storeModal.onCloseAddFunds();
+    changeProxyTypeModal.onClose();
   };
 
-  const methodData = [
-    { value: "bank", label: "Bank" },
-    { value: "crypto-currency", label: "Crypto Currency" },
+  const proxyTypeData = [
+    { value: "http-proxy", label: "Http proxy" },
+    { value: "https-proxy", label: "Https proxy" },
   ];
 
   return (
     <Modal
-      title="Add funds to your account"
-      isOpen={storeModal.addFunds}
+      title="Change my proxy (id:24) Type"
+      isOpen={changeProxyTypeModal.isOpen}
       onClose={onClose}
-      icon={CreditCard}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-4">
-            <CustomField
-              name="amount"
-              label="Amount"
-              placeholder="Amount"
-              type={FiledType.TEXT}
-              isLoading={isLoading}
-            />
-            <CustomField
-              name="method"
-              label="Payment Method"
-              placeholder="Select a method"
-              type={FiledType.SELECT}
-              options={methodData}
-              isLoading={isLoading}
-            />
-          </div>
-
+          <CustomField
+            name="proxyType"
+            label="Proxy Type"
+            placeholder="Proxy type"
+            type={FiledType.SELECT}
+            options={proxyTypeData}
+            isLoading={isLoading}
+          />
           <div className="flex justify-between items-center gap-5">
             <Button
               type="button"
@@ -102,7 +89,7 @@ export const AddFundsModal = () => {
               className="basis-1/2"
               disabled={isLoading}
             >
-              {isLoading ? <BeatLoader color="#fff" /> : "Add funds"}
+              {isLoading ? <BeatLoader color="#fff" /> : "Update"}
             </Button>
           </div>
         </form>

@@ -11,28 +11,28 @@ import * as z from "zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { Modal } from "@/app/dashboard/_components/modal";
+import { Modal } from "@/components/dashboard/modal";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
 
-import { useChangeProxyTypeModal } from "@/app/dashboard/hooks/modals/use-change-proxy-type-modal";
+import { useChangeProxyLocationModal } from "@/components/dashboard/hooks/modals/use-change-proxy-location-modal";
 
-const changeProxyTypeSchema = z.object({
-  proxyType: z.string().min(2),
+const changeProxyLocationSchema = z.object({
+  provider: z.string().min(2),
 });
 
-export const ChangeProxyTypeModal = () => {
+export const ChangeProxyLocationModal = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const changeProxyTypeModal = useChangeProxyTypeModal();
+  const changeProxyLocationModal = useChangeProxyLocationModal();
 
-  const form = useForm<z.infer<typeof changeProxyTypeSchema>>({
-    resolver: zodResolver(changeProxyTypeSchema),
+  const form = useForm<z.infer<typeof changeProxyLocationSchema>>({
+    resolver: zodResolver(changeProxyLocationSchema),
     defaultValues: {
-      proxyType: "",
+      provider: "First available uk network & location",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof changeProxyTypeSchema>) => {
+  const onSubmit = (values: z.infer<typeof changeProxyLocationSchema>) => {
     setIsLoading(true);
     try {
       setTimeout(() => {
@@ -49,29 +49,24 @@ export const ChangeProxyTypeModal = () => {
   const onClose = () => {
     form.reset();
     setIsLoading(false);
-    changeProxyTypeModal.onClose();
+    changeProxyLocationModal.onClose();
   };
-
-  const proxyTypeData = [
-    { value: "http-proxy", label: "Http proxy" },
-    { value: "https-proxy", label: "Https proxy" },
-  ];
 
   return (
     <Modal
-      title="Change my proxy (id:24) Type"
-      isOpen={changeProxyTypeModal.isOpen}
+      title="Change my proxy (id:24) location"
+      isOpen={changeProxyLocationModal.isOpen}
       onClose={onClose}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <CustomField
-            name="proxyType"
-            label="Proxy Type"
-            placeholder="Proxy type"
-            type={FiledType.SELECT}
-            options={proxyTypeData}
-            isLoading={isLoading}
+            name="provider"
+            label="Provider & Location"
+            placeholder="Provider & Location"
+            type={FiledType.TEXT}
+            href="/dashboard/my-proxies"
+            isLoading={true}
           />
           <div className="flex justify-between items-center gap-5">
             <Button

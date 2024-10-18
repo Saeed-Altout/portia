@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { RenewExpiredProxiesModal } from "@dashboard/_components/modals/renew-expired-proxies-modal";
+import { RenewExpiredProxiesModal } from "@/components/dashboard/modals/renew-expired-proxies-modal";
 
 interface CellActionsProps {
   row: any;

@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { columns } from "./_components/columns";
 import { StatisticCard } from "./_components/statistics-card";
 
-import { Heading } from "@dashboard/_components/heading";
-import { Pagination } from "@dashboard/_components/pagination";
-import { AffiliateCode } from "@dashboard/_components/affiliate-code";
+import { Heading } from "@/components/dashboard/heading";
+import { Pagination } from "@/components/dashboard/pagination";
+import { AffiliateCode } from "@/components/dashboard/affiliate-code";
 
 import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { BeatLoader } from "react-spinners";
 import { toast } from "sonner";
+import { Key, User } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,28 +12,32 @@ import * as z from "zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { Modal } from "@/app/dashboard/_components/modal";
+import { Modal } from "@/components/dashboard/modal";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
 
-import { useChangeProxyLocationModal } from "@/app/dashboard/hooks/modals/use-change-proxy-location-modal";
+import { useChangeProxyAuthenticationsModal } from "@/components/dashboard/hooks/modals/use-change-proxy-authentications-modal";
 
-const changeProxyLocationSchema = z.object({
-  provider: z.string().min(2),
+const changeProxyAuthenticationsSchema = z.object({
+  username: z.string().min(2),
+  password: z.string().min(2),
 });
 
-export const ChangeProxyLocationModal = () => {
+export const ChangeProxyAuthenticationsModal = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const changeProxyLocationModal = useChangeProxyLocationModal();
+  const changeProxyAuthenticationsModal = useChangeProxyAuthenticationsModal();
 
-  const form = useForm<z.infer<typeof changeProxyLocationSchema>>({
-    resolver: zodResolver(changeProxyLocationSchema),
+  const form = useForm<z.infer<typeof changeProxyAuthenticationsSchema>>({
+    resolver: zodResolver(changeProxyAuthenticationsSchema),
     defaultValues: {
-      provider: "First available uk network & location",
+      username: "",
+      password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof changeProxyLocationSchema>) => {
+  const onSubmit = (
+    values: z.infer<typeof changeProxyAuthenticationsSchema>
+  ) => {
     setIsLoading(true);
     try {
       setTimeout(() => {
@@ -49,25 +54,35 @@ export const ChangeProxyLocationModal = () => {
   const onClose = () => {
     form.reset();
     setIsLoading(false);
-    changeProxyLocationModal.onClose();
+    changeProxyAuthenticationsModal.onClose();
   };
 
   return (
     <Modal
-      title="Change my proxy (id:24) location"
-      isOpen={changeProxyLocationModal.isOpen}
+      title="Change my proxy (id:24) Authentications"
+      isOpen={changeProxyAuthenticationsModal.isOpen}
       onClose={onClose}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <CustomField
-            name="provider"
-            label="Provider & Location"
-            placeholder="Provider & Location"
-            type={FiledType.TEXT}
-            href="/dashboard/my-proxies"
-            isLoading={true}
-          />
+          <div className="space-y-4">
+            <CustomField
+              name="username"
+              label="Proxy Authentications"
+              placeholder="Username"
+              icon={User}
+              type={FiledType.TEXT}
+              isLoading={isLoading}
+            />
+            <CustomField
+              name="password"
+              placeholder="Password"
+              icon={Key}
+              type={FiledType.TEXT}
+              isLoading={isLoading}
+            />
+          </div>
+
           <div className="flex justify-between items-center gap-5">
             <Button
               type="button"

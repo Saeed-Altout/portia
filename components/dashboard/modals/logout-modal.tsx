@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import { useLogoutModal } from "@/app/dashboard/hooks/modals/use-logout-modal";
+import { useLogoutModal } from "@/components/dashboard/hooks/modals/use-logout-modal";
 import { Circle, Icon } from "@/components/dashboard/circle-icon";
 
 export const LogoutModal = () => {

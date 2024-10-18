@@ -1,7 +1,7 @@
 "use client";
 
-import { Pagination } from "@/app/dashboard/_components/pagination";
-import { Heading } from "@/app/dashboard/_components/heading";
+import { Pagination } from "@/components/dashboard/pagination";
+import { Heading } from "@/components/dashboard/heading";
 
 import { columns } from "./_components/columns";
 import { DepositCard } from "./_components/deposit-card";

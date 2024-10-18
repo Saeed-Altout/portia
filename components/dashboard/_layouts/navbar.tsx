@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { routes } from "../config";
+import { routes } from "../../../app/dashboard/config";
 
 export const Navbar = () => {
   const pathname = usePathname();

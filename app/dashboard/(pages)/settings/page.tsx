@@ -25,8 +25,8 @@ import { Separator } from "@/components/ui/separator";
 import { useUpdateUserProfile } from "@/app/dashboard/features/hooks";
 import { userProfileSchema } from "@/app/dashboard/features/schemas";
 
-import { Heading } from "@/app/dashboard/_components/heading";
-import { AffiliateCode } from "@dashboard/_components/affiliate-code";
+import { Heading } from "@/components/dashboard/heading";
+import { AffiliateCode } from "@/components/dashboard/affiliate-code";
 
 import { useSession } from "@/providers/session-provider";
 import { Loader } from "@/components/ui/loader";
