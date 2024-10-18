@@ -2,6 +2,7 @@
 import { Header } from "./layouts/header";
 import { Footer } from "./layouts/footer";
 import { CardWrapper } from "./layouts/card-wrapper";
+import { Sidebar } from "./layouts/sidebar";
 
 // Ui
 import { SubmitButton } from "./ui/submit-button";
@@ -22,6 +23,7 @@ import { EmailConfirmedForm } from "./forms/email-confirmed-form";
 export {
   Header,
   Footer,
+  Sidebar,
   SubmitButton,
   BackButton,
   ResendButton,

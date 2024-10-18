@@ -1,4 +1,4 @@
-import { Sidebar } from "./_components/sidebar";
+import { Sidebar } from "@/components/auth";
 
 export default function AuthLayout({
   children,
