@@ -1,10 +1,10 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useGetUserDetailsQuery } from "@/app/dashboard/features/hooks";
 import { useRouter } from "next/navigation";
 
 import { getAccessToken } from "@/lib/auth";
+import { useGetUserDetails } from "@/features/dashboard/hooks";
 
 const initialUserValues: UserProfile = {
   id: 0,
@@ -33,7 +33,7 @@ export const SessionProvider = ({
 }) => {
   const router = useRouter();
   const [user, setUser] = useState<UserProfile>(initialUserValues);
-  const { data, isSuccess, isLoading } = useGetUserDetailsQuery();
+  const { data, isSuccess, isLoading } = useGetUserDetails();
 
   useEffect(() => {
     const token = getAccessToken();
