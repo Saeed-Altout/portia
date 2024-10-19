@@ -2,13 +2,16 @@
 
 import { useState } from "react";
 
-import { Table } from "./_components/table";
-import { FiltersSection } from "./_components/filters-section";
+import { TabMenu } from "./_components/tab-menu";
+import { DropdownMenu } from "./_components/dropdown-menu";
 
-import { Heading } from "@/components/dashboard/ui/heading";
-import { useSession } from "@/providers/session-provider";
-import { useGetPricingPlansQuery } from "@/app/dashboard/features/hooks";
 import { Loader } from "@/components/ui/loader";
+
+import {
+  useGetPricingPlans,
+  useGetUserDetails,
+} from "@/features/dashboard/hooks";
+import { Heading, OfferCard } from "@/components/dashboard";
 
 interface Filter {
   pkgName: string;
@@ -16,42 +19,104 @@ interface Filter {
 }
 
 export default function PricingPlansPage() {
-  const { user } = useSession();
+  const { data: user, isLoading: isLoadingUser } = useGetUserDetails();
+  const { data: pricingPlans, isLoading: isLoadingPricingPlans } =
+    useGetPricingPlans();
 
-  const { data, isSuccess } = useGetPricingPlansQuery();
+  const isLoading = isLoadingUser || isLoadingPricingPlans;
 
-  const [filter, setFilter] = useState<Filter>({
+  const [filter, setFilter] = useState<>({
     pkgName: "Basic",
     planName: "Hourly",
   });
 
-  if (!isSuccess) {
-    return <Loader />;
-  }
-
-  const packages = data.data.map((item, index) => ({
+  const packages = pricingPlans?.data?.map((item, index) => ({
     id: index,
     name: item.name,
   }));
 
-  const plans = data?.data[0].plans.map((item, index) => ({
+  const plans = pricingPlans?.data[0]?.plans.map((item, index) => ({
     id: index,
     name: item.plan_name,
   }));
 
+  const handleFilterChange = (key: keyof Filter, value: number) => {
+    setFilter({ ...filter, [key]: value });
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Heading
-        title={`Welcome back ${user.first_name}`}
+        title={`Welcome back ${user?.data.first_name || ""}`}
         label="Our Pricing plans"
       />
-      <FiltersSection
-        filter={filter}
-        setFilter={setFilter}
-        packages={packages}
-        plans={plans}
-      />
-      <Table filter={filter} data={data.data} />
+      <div className="flex flex-col gap-y-4">
+        <div className="hidden lg:flex items-start justify-start gap-x-12">
+          <TabMenu
+            items={packages || []}
+            selected={filter.pkgName}
+            onChange={(e) => handleFilterChange("pkgName", e)}
+          />
+          <TabMenu
+            items={plans || []}
+            selected={filter.planName}
+            onChange={(e) => handleFilterChange("planName", e)}
+          />
+        </div>
+        <div className="lg:hidden flex flex-col gap-5">
+          <DropdownMenu
+            items={packages || []}
+            selected={filter.pkgName}
+            onChange={(e) => handleFilterChange("pkgName", e)}
+          />
+          <DropdownMenu
+            items={plans || []}
+            selected={filter.planName}
+            onChange={(e) => handleFilterChange("planName", e)}
+          />
+        </div>
+      </div>
+      <div className="grid gap-4">
+        {pricingPlans?.data?.some(
+          (pkg) =>
+            pkg.name === filter.pkgName &&
+            pkg.plans.some(
+              (plan: { plan_name: any; offers: string | any[] }) =>
+                plan.plan_name === filter.planName && plan.offers.length > 0
+            )
+        ) ? (
+          pricingPlans.data
+            ?.filter((pkg) => pkg.name === filter.pkgName)
+            ?.flatMap((pkg) =>
+              pkg.plans
+                ?.filter(
+                  (plan: { plan_name: any }) =>
+                    plan.plan_name === filter.planName
+                )
+                ?.flatMap((plan: { offers: any[] }) =>
+                  plan.offers.map((offer, index) => (
+                    <OfferCard
+                      key={index}
+                      offer={offer}
+                      theme={
+                        filter.pkgName == "Basic"
+                          ? "primary"
+                          : filter.pkgName == "Standard"
+                          ? "danger"
+                          : "muted"
+                      }
+                    />
+                  ))
+                )
+            )
+        ) : (
+          <p>No offers available for this plan.</p>
+        )}
+      </div>
     </>
   );
 }

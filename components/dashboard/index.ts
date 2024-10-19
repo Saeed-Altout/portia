@@ -6,6 +6,7 @@ import { Banner } from "./_layouts/banner";
 import { OverviewCard } from "./cards/overview-card";
 import { DepositCard } from "./cards/deposit-card";
 import { ProxiesCard } from "./cards/proxies-card";
+import { OfferCard } from "./cards/offer-card";
 
 // Ui
 import { Heading } from "./ui/heading";
@@ -18,6 +19,7 @@ export {
   OverviewCard,
   DepositCard,
   ProxiesCard,
+  OfferCard,
   Heading,
   Pagination,
   AffiliateCode,

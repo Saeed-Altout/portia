@@ -1,3 +1,4 @@
 import { getUserDetails } from "./get-user-details";
 import { updateUserProfile } from "./update-user-profile";
-export { getUserDetails, updateUserProfile };
+import { getPricingPlans } from "./get-pricing-plans";
+export { getUserDetails, updateUserProfile, getPricingPlans };
