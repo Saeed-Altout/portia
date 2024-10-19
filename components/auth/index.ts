@@ -9,6 +9,7 @@ import { SubmitButton } from "./ui/submit-button";
 import { BackButton } from "./ui/back-button";
 import { Provider } from "./ui/provider";
 import { ResendButton } from "./ui/resend-button";
+import { UserButton } from "./ui/user-button";
 
 // Forms
 import { LoginForm } from "./forms/login-form";
@@ -26,6 +27,7 @@ export {
   Sidebar,
   SubmitButton,
   BackButton,
+  UserButton,
   ResendButton,
   Provider,
   CardWrapper,

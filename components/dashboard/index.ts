@@ -10,6 +10,7 @@ import { ProxiesCard } from "./cards/proxies-card";
 // Ui
 import { Heading } from "./ui/heading";
 import { Pagination } from "./ui/pagination";
+import { AffiliateCode } from "./ui/affiliate-code";
 
 export {
   Navbar,
@@ -19,4 +20,5 @@ export {
   ProxiesCard,
   Heading,
   Pagination,
+  AffiliateCode,
 };
