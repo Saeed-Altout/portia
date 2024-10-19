@@ -3,8 +3,8 @@
 import { ProxiesCard } from "./_components/proxies-card";
 import { activeColumns, expiredColumns } from "./_components/columns";
 
-import { Heading } from "@/components/dashboard/heading";
-import { Pagination } from "@/components/dashboard/pagination";
+import { Heading } from "@/components/dashboard/ui/heading";
+import { Pagination } from "@/components/dashboard/ui/pagination";
 import { DataTable } from "@/components/ui/data-table";
 
 import { useSession } from "@/providers/session-provider";

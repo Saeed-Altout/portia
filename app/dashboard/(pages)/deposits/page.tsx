@@ -1,20 +1,27 @@
 "use client";
 
-import { Pagination } from "@/components/dashboard/pagination";
-import { Heading } from "@/components/dashboard/heading";
-
 import { columns } from "./_components/columns";
-import { DepositCard } from "./_components/deposit-card";
 
+import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
-import { useSession } from "@/providers/session-provider";
+
+import { Heading, Pagination, DepositCard } from "@/components/dashboard";
+import { useGetUserDetails } from "@/features/dashboard/hooks";
 
 export default function DepositsPage() {
-  const { user } = useSession();
+  const { data: user, isLoading } = useGetUserDetails();
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
-      <Heading title={`Welcome back, ${user.first_name}`} newProxy addFunds />
+      <Heading
+        title={`Welcome back, ${user?.data.first_name || ""}`}
+        newProxy
+        addFunds
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[].map((item, index) => (
           <DepositCard key={index} initialData={item} />

@@ -11,8 +11,8 @@ import {
   useGetProxiesQuery,
 } from "@website/hooks";
 
-import { Heading } from "@/components/dashboard/heading";
-import { Pagination } from "@/components/dashboard/pagination";
+import { Heading } from "@/components/dashboard/ui/heading";
+import { Pagination } from "@/components/dashboard/ui/pagination";
 
 import { Filter } from "./_components/filter";
 import { columns } from "./_components/columns";

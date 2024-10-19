@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Table } from "./_components/table";
 import { FiltersSection } from "./_components/filters-section";
 
-import { Heading } from "@/components/dashboard/heading";
+import { Heading } from "@/components/dashboard/ui/heading";
 import { useSession } from "@/providers/session-provider";
 import { useGetPricingPlansQuery } from "@/app/dashboard/features/hooks";
 import { Loader } from "@/components/ui/loader";

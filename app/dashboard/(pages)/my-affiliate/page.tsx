@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { columns } from "./_components/columns";
 import { StatisticCard } from "./_components/statistics-card";
 
-import { Heading } from "@/components/dashboard/heading";
-import { Pagination } from "@/components/dashboard/pagination";
+import { Heading } from "@/components/dashboard/ui/heading";
+import { Pagination } from "@/components/dashboard/ui/pagination";
 import { AffiliateCode } from "@/components/dashboard/affiliate-code";
 
 import { Loader } from "@/components/ui/loader";

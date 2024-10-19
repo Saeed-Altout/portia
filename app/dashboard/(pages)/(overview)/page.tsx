@@ -1,14 +1,11 @@
 "use client";
 
 import { columns } from "./_components/columns";
-import { OverviewCard } from "./_components/overview-card";
 
 import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 
-import { Heading } from "@/components/dashboard/heading";
-import { Pagination } from "@/components/dashboard/pagination";
-
+import { Heading, Pagination, OverviewCard } from "@/components/dashboard";
 import { useGetUserDetails } from "@/features/dashboard/hooks";
 
 import { overviewData, overviewTableData } from "../../constants";
