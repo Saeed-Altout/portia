@@ -25,7 +25,7 @@ export default function PricingPlansPage() {
 
   const isLoading = isLoadingUser || isLoadingPricingPlans;
 
-  const [filter, setFilter] = useState<>({
+  const [filter, setFilter] = useState<Filter>({
     pkgName: "Basic",
     planName: "Hourly",
   });
