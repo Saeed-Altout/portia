@@ -7,6 +7,7 @@ import { OverviewCard } from "./cards/overview-card";
 import { DepositCard } from "./cards/deposit-card";
 import { ProxiesCard } from "./cards/proxies-card";
 import { OfferCard } from "./cards/offer-card";
+import { StatisticCard } from "./cards/statistics-card";
 
 // Ui
 import { Heading } from "./ui/heading";
@@ -20,6 +21,7 @@ export {
   DepositCard,
   ProxiesCard,
   OfferCard,
+  StatisticCard,
   Heading,
   Pagination,
   AffiliateCode,

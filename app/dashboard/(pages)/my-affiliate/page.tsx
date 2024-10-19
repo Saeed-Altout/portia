@@ -4,72 +4,76 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 import { columns } from "./_components/columns";
-import { StatisticCard } from "./_components/statistics-card";
-
-import { Heading } from "@/components/dashboard/ui/heading";
-import { Pagination } from "@/components/dashboard/ui/pagination";
-import { AffiliateCode } from "@/components/dashboard/ui/affiliate-code";
 
 import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 
 import {
-  useGetAffiliateEarningsHistoriesQuery,
-  useGetAffiliateEarningsStatisticsQuery,
-} from "@/app/dashboard/features/hooks";
-import { useSession } from "@/providers/session-provider";
-import cookieStorage from "@/services/cookie-storage";
+  Heading,
+  Pagination,
+  AffiliateCode,
+  StatisticCard,
+} from "@/components/dashboard";
+import {
+  useGetAffiliateEarnings,
+  useGetUserDetails,
+} from "@/features/dashboard/hooks";
+import { getEmail } from "@/lib/auth";
 
 export default function MyAffiliatePage() {
-  const { user } = useSession();
   const [email, setEmail] = useState<string>("un known");
   const [page, setPage] = useState<number>(1);
 
-  const statistics = useGetAffiliateEarningsStatisticsQuery();
-  const histories = useGetAffiliateEarningsHistoriesQuery(page);
+  const { data: user, isLoading: isLoadingUser } = useGetUserDetails();
+  const affiliateEarnings = useGetAffiliateEarnings();
 
-  const isSuccess = statistics.isSuccess && histories.isSuccess;
+  const histories = affiliateEarnings[0].data?.data;
+  const statistics = affiliateEarnings[1].data?.data;
+  const isLoading =
+    isLoadingUser ||
+    affiliateEarnings[0].isLoading ||
+    affiliateEarnings[1].isLoading;
 
-  useEffect(() => {
-    const email = cookieStorage.getEmail();
-    if (email) {
-      setEmail(email);
-    }
-  }, []);
-
-  if (!isSuccess) {
-    return <Loader />;
-  }
-
-  const historiesFormatted = histories.data.data.data.map((item) => ({
+  const historiesFormatted = histories?.data.map((item) => ({
     id: item.id,
     amount: item.amount,
     email: email,
     date: format(new Date(item.created_at), "MMM dd, yyyy"),
   }));
 
+  useEffect(() => {
+    const email = getEmail();
+    if (email) {
+      setEmail(email);
+    }
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Heading
-        title={`Welcome back ${user.first_name}`}
+        title={`Welcome back ${user?.data.first_name ?? ""}`}
         description="Total Earning is: 0,00$"
         drawEarning
       />
-      <AffiliateCode code={user.referred_code} />
+      <AffiliateCode code={user?.data.referred_code ?? ""} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <StatisticCard
           color="#26a6a4"
-          amount={statistics.data.data.this_month_earnings}
+          amount={statistics?.this_month_earnings ?? 0}
           label="This Month"
         />
         <StatisticCard
           color="#f63d68"
-          amount={statistics.data.data.this_year_earnings}
+          amount={statistics?.this_year_earnings ?? 0}
           label="This Year"
         />
         <StatisticCard
           color="#7a5af8"
-          amount={statistics.data.data.total_earnings}
+          amount={statistics?.total_earnings ?? 0}
           label="All Time"
         />
       </div>
@@ -78,13 +82,17 @@ export default function MyAffiliatePage() {
           <h3 className="font-medium text-lg">Your earning calendar</h3>
           <p className="text-sm">Track your earnings by days</p>
         </div>
-        <DataTable columns={columns} data={historiesFormatted} />
+        <DataTable columns={columns} data={historiesFormatted || []} />
         <Pagination
           prevButton={page === 1}
-          nextButton={page === histories.data.data.last_page}
+          nextButton={page === histories?.last_page}
           setPage={setPage}
           currentPage={page}
-          totalPages={histories.data.data.total / histories.data.data.per_page}
+          totalPages={
+            histories?.total && histories?.per_page
+              ? histories.total / histories.per_page
+              : 0
+          }
         />
       </div>
     </>
