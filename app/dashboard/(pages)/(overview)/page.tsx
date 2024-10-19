@@ -1,26 +1,29 @@
 "use client";
 
-import { useState } from "react";
-
 import { columns } from "./_components/columns";
 import { OverviewCard } from "./_components/overview-card";
 
+import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
+
 import { Heading } from "@/components/dashboard/heading";
 import { Pagination } from "@/components/dashboard/pagination";
 
-import { useSession } from "@/providers/session-provider";
+import { useGetUserDetails } from "@/features/dashboard/hooks";
 
 import { overviewData, overviewTableData } from "../../constants";
 
 export default function OverviewPage() {
-  const { user } = useSession();
-  const [page, setPage] = useState<number>(1);
+  const { data: user, isLoading } = useGetUserDetails();
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
       <Heading
-        title={`Welcome back, ${user.first_name || ""}`}
+        title={`Welcome back, ${user?.data.first_name || ""}`}
         newProxy
         addFunds
       />
@@ -38,8 +41,8 @@ export default function OverviewPage() {
         <Pagination
           prevButton={true}
           nextButton={true}
-          setPage={setPage}
-          currentPage={page}
+          setPage={() => {}}
+          currentPage={1}
           totalPages={1}
         />
       </div>

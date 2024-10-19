@@ -6,11 +6,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Bell, Menu, Settings } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { routes } from "../../../app/dashboard/config";
+
+import { cn } from "@/lib/utils";
+import { routes } from "@/config";
 
 export const Navbar = () => {
   const pathname = usePathname();

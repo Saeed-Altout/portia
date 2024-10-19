@@ -2,6 +2,9 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useGetUserDetailsQuery } from "@/app/dashboard/features/hooks";
+import { useRouter } from "next/navigation";
+
+import { getAccessToken } from "@/lib/auth";
 
 const initialUserValues: UserProfile = {
   id: 0,
@@ -28,14 +31,20 @@ export const SessionProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const router = useRouter();
   const [user, setUser] = useState<UserProfile>(initialUserValues);
   const { data, isSuccess, isLoading } = useGetUserDetailsQuery();
 
   useEffect(() => {
-    if (isSuccess) {
+    const token = getAccessToken();
+    if (data && isSuccess) {
       setUser(data.data);
     }
-  }, [isSuccess, data]);
+
+    if (!data && !isLoading && !token) {
+      router.push("/auth/login");
+    }
+  }, [data, isLoading, isSuccess, router]);
 
   return (
     <SessionContext.Provider value={{ user, isLoading, isSuccess }}>
