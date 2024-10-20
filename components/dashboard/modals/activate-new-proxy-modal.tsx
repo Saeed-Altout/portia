@@ -20,7 +20,7 @@ import {
   ActivateNewProxySchema,
   activateNewProxySchema,
   initialValuesActivateNewProxy,
-} from "@/app/dashboard/features/schemas";
+} from "@/schemas";
 
 export const ActivateNewProxyModal = () => {
   const storeModal = useStoreModal();
