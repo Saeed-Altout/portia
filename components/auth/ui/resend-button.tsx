@@ -25,7 +25,7 @@ export const ResendButton = ({
       <Button
         variant="link"
         className="px-0 hover:underline !text-primary font-medium text-nowrap ml-2"
-        onClick={() => mutate({ email: email || "" })}
+        onClick={() => mutate({ email: email ?? "" })}
         disabled={isPending}
       >
         {label}

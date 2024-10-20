@@ -7,7 +7,7 @@ import { useLoginWithGoogle } from "./use-login-with-google";
 import { useSendResetEmail } from "./use-send-reset-email";
 import { useSetNewPassword } from "./use-set-new-password";
 import { useVerifyCode } from "./use-verify-code";
-import { useResendVerificationCode } from "./use-resend-verification-code-mutation";
+import { useResendVerificationCode } from "./use-resend-verification-code";
 
 export {
   useResponse,

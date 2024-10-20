@@ -34,7 +34,7 @@ export const PasswordResetForm = () => {
       </CardHeader>
       <CardContent>
         <Button className="w-full" asChild>
-          <Link href="/auth/login">Continue to login</Link>
+          <Link href="/dashboard">Continue to dashboard</Link>
         </Button>
       </CardContent>
       <CardFooter>

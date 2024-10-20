@@ -48,7 +48,13 @@ declare type SetNewPasswordRequestType = {
   password_confirmation: string;
   token: string;
 };
-declare type SetNewPasswordResponseType = ErrorResponse;
+declare type SetNewPasswordResponseType = {
+  success: boolean;
+  message: string;
+  access_token: string;
+  token_type: string;
+  expires_in: Date | string;
+};
 
 declare type SendResetEmailRequestType = {
   email: string;
