@@ -1,5 +1,8 @@
 import { Banner, Navbar } from "@/components/dashboard";
+
 import { ProtectedRoute } from "@/guard/protected-route";
+
+import { ModalProviders } from "@/providers/modals-provider";
 import { SessionProvider } from "@/providers/session-provider";
 
 export default function DashboardLayout({
@@ -10,6 +13,7 @@ export default function DashboardLayout({
   return (
     <SessionProvider>
       <ProtectedRoute>
+        <ModalProviders />
         <div className="flex min-h-screen w-full flex-col">
           <Banner />
           <Navbar />

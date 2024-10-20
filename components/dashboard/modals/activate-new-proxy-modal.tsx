@@ -1,21 +1,41 @@
 "use client";
 
-import * as React from "react";
-import { BeatLoader } from "react-spinners";
-import { Key, User } from "lucide-react";
+import { useState } from "react";
+
 import { toast } from "sonner";
+import { ArrowUpRight, Key, User } from "lucide-react";
+import { BeatLoader } from "react-spinners";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useForm, useFormContext } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-
 import { Modal } from "@/components/dashboard/modal";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
 
 import { useStoreModal } from "@/hooks/use-store-modal";
+import { Input } from "@/components/ui/input";
+import { Arrow } from "@radix-ui/react-select";
+import Link from "next/link";
+import { Checkbox } from "@/components/ui/checkbox";
+
 export const activateNewProxySchema = z.object({
   package: z.string().min(2),
   plan: z.string().min(2),
@@ -29,27 +49,26 @@ export const activateNewProxySchema = z.object({
 });
 
 export type ActivateNewProxySchema = z.infer<typeof activateNewProxySchema>;
-export const initialValuesActivateNewProxy = {
-  package: "",
-  plan: "",
-  amount: "",
-  provider: "First available uk network & location",
-  ipRotation: "",
-  proxyType: "",
-  autoRenew: false,
-  username: "",
-  password: "",
-};
 
 export const ActivateNewProxyModal = () => {
   const storeModal = useStoreModal();
 
-  const [step, setStep] = React.useState<number>(1);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [step, setStep] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<ActivateNewProxySchema>({
     resolver: zodResolver(activateNewProxySchema),
-    defaultValues: initialValuesActivateNewProxy,
+    defaultValues: {
+      package: "",
+      plan: "",
+      amount: "",
+      provider: "First available uk network & location",
+      ipRotation: "",
+      proxyType: "",
+      autoRenew: false,
+      username: "",
+      password: "",
+    },
   });
 
   const onSubmit = async (values: ActivateNewProxySchema) => {
@@ -160,6 +179,8 @@ interface StepOneProps {
 }
 
 export const StepOne = ({ isLoading }: StepOneProps) => {
+  const { control } = useFormContext();
+
   const packageData = [
     { value: "basic", label: "Basic" },
     { value: "standard", label: "Standard" },
@@ -180,29 +201,89 @@ export const StepOne = ({ isLoading }: StepOneProps) => {
 
   return (
     <>
-      <CustomField
+      <FormField
+        control={control}
         name="package"
-        label="Package"
-        placeholder="Select a package"
-        type={FiledType.SELECT}
-        options={packageData}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Packages</FormLabel>
+            <Select
+              disabled={isLoading}
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a package" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {packageData.map(({ value, label }, index) => (
+                  <SelectItem key={index} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-      <CustomField
+      <FormField
+        control={control}
         name="plan"
-        label="Plan"
-        placeholder="Select a plan"
-        type={FiledType.SELECT}
-        options={planData}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Plans</FormLabel>
+            <Select
+              disabled={isLoading}
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a plan" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {planData.map(({ value, label }, index) => (
+                  <SelectItem key={index} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-      <CustomField
+      <FormField
+        control={control}
         name="amount"
-        label="Amount"
-        placeholder="Select a amount"
-        type={FiledType.SELECT}
-        options={amountData}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Amount</FormLabel>
+            <Select
+              disabled={isLoading}
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a amount" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {amountData.map(({ value, label }, index) => (
+                  <SelectItem key={index} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
       />
     </>
   );
@@ -213,22 +294,59 @@ interface StepTwoProps {
 }
 
 export const StepTwo = ({ isLoading }: StepTwoProps) => {
+  const { control } = useFormContext();
+  const storeModal = useStoreModal();
   return (
     <>
-      <CustomField
+      <FormField
+        control={control}
         name="provider"
-        label="Provider & Location"
-        placeholder="Provider & Location"
-        type={FiledType.TEXT}
-        href="/dashboard/locations"
-        isLoading={true}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Provider & Location</FormLabel>
+            <FormControl>
+              <div className="flex justify-between items-center">
+                <Input
+                  placeholder="Provider & Location"
+                  className="flex-1 rounded-r-none"
+                  disabled={true}
+                  readOnly
+                  {...field}
+                />
+                <Button
+                  size="icon"
+                  className="rounded-l-none"
+                  onClick={() => storeModal.onCloseActivateNewProxy()}
+                  asChild
+                >
+                  <Link href="/dashboard/locations">
+                    <ArrowUpRight className="h-4 w-4" />
+                    <span className="sr-only">ArrowUpRight Icon</span>
+                  </Link>
+                </Button>
+              </div>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-      <CustomField
+
+      <FormField
+        control={control}
         name="ipRotation"
-        label="Minimum time between IP rotation"
-        placeholder="IP rotation"
-        type={FiledType.TEXT}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Minimum time between IP rotation</FormLabel>
+            <FormControl>
+              <Input
+                disabled={isLoading}
+                placeholder="IP rotation"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
     </>
   );
@@ -239,6 +357,7 @@ interface StepThreeProps {
 }
 
 export const StepThree = ({ isLoading }: StepThreeProps) => {
+  const { control } = useFormContext();
   const proxyTypeData = [
     { value: "http-proxy", label: "Http proxy" },
     { value: "https-proxy", label: "Https proxy" },
@@ -246,35 +365,86 @@ export const StepThree = ({ isLoading }: StepThreeProps) => {
 
   return (
     <>
-      <CustomField
+      <FormField
+        control={control}
         name="proxyType"
-        label="Proxy Type"
-        placeholder="Proxy type"
-        type={FiledType.SELECT}
-        options={proxyTypeData}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Proxy Type</FormLabel>
+            <Select
+              disabled={isLoading}
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a proxy type" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {proxyTypeData.map(({ value, label }, index) => (
+                  <SelectItem key={index} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-      <CustomField
+      <FormField
+        control={control}
         name="autoRenew"
-        labelCheckbox="Auto Renew"
-        type={FiledType.CHECKBOX}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+            <FormControl>
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            </FormControl>
+            <FormLabel className="leading-0">Auto Renew</FormLabel>
+          </FormItem>
+        )}
       />
-      <CustomField
+      <FormField
+        control={control}
         name="username"
-        label="Proxy Authentications"
-        placeholder="Username"
-        icon={User}
-        type={FiledType.TEXT}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input
+                icon={User}
+                type="text"
+                disabled={isLoading}
+                placeholder="username"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-      <CustomField
+      <FormField
+        control={control}
         name="password"
-        placeholder="Password"
-        icon={Key}
-        type={FiledType.TEXT}
-        isLoading={isLoading}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input
+                icon={Key}
+                type="password"
+                disabled={isLoading}
+                placeholder="username"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
+
       <p className="text-lg font-semibold">Cost: 0,000$</p>
     </>
   );
