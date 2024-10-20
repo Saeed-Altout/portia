@@ -1,4 +1,7 @@
+import { Suspense } from "react";
+
 import { LoginForm } from "@/components/auth";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata = {
   title: "Secure User Login | Access Your Account",
@@ -7,5 +10,9 @@ export const metadata = {
 };
 
 export default function LoginPage() {
-  return <LoginForm />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <LoginForm />
+    </Suspense>
+  );
 }

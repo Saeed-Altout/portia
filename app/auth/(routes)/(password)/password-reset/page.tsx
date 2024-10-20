@@ -1,4 +1,7 @@
+import { Suspense } from "react";
+
 import { PasswordResetForm } from "@/components/auth";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata = {
   title: "Password Reset Request | Recover Account Access",
@@ -7,5 +10,9 @@ export const metadata = {
 };
 
 export default function PasswordResetPage() {
-  return <PasswordResetForm />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <PasswordResetForm />
+    </Suspense>
+  );
 }

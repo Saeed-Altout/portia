@@ -1,4 +1,7 @@
+import { Suspense } from "react";
+
 import { VerifyRestCodeForm } from "@/components/auth";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata = {
   title: "Enter Verification Code | Secure Email Validation",
@@ -7,5 +10,9 @@ export const metadata = {
 };
 
 export default function VerifyCodePage() {
-  return <VerifyRestCodeForm />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <VerifyRestCodeForm />
+    </Suspense>
+  );
 }

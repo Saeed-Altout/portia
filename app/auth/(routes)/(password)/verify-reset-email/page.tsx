@@ -1,4 +1,7 @@
+import { Suspense } from "react";
+
 import { VerifyRestEmailForm } from "@/components/auth";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata = {
   title: "Verify Password Reset Email | Complete Your Recovery",
@@ -7,5 +10,9 @@ export const metadata = {
 };
 
 export default function VerifyRestEmailPage() {
-  return <VerifyRestEmailForm />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <VerifyRestEmailForm />
+    </Suspense>
+  );
 }

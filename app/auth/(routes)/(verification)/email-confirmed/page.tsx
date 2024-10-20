@@ -1,4 +1,7 @@
+import { Suspense } from "react";
+
 import { EmailConfirmedForm } from "@/components/auth";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata = {
   title: "Email Successfully Confirmed | Verification Complete",
@@ -7,5 +10,9 @@ export const metadata = {
 };
 
 export default function EmailConfirmedPage() {
-  return <EmailConfirmedForm />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <EmailConfirmedForm />
+    </Suspense>
+  );
 }

@@ -1,4 +1,7 @@
+import { Suspense } from "react";
+
 import { VerifyEmailForm } from "@/components/auth";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata = {
   title: "Verify Your Email Address | Complete Account Setup",
@@ -7,5 +10,9 @@ export const metadata = {
 };
 
 export default function VerifyEmailPage() {
-  return <VerifyEmailForm />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <VerifyEmailForm />
+    </Suspense>
+  );
 }
