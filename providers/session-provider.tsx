@@ -1,9 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { getAccessToken } from "@/lib/auth";
 import { useGetUserDetails } from "@/features/dashboard/hooks";
 
 const initialUserValues: UserProfile = {
@@ -31,20 +28,14 @@ export const SessionProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const router = useRouter();
   const [user, setUser] = useState<UserProfile>(initialUserValues);
   const { data, isSuccess, isLoading } = useGetUserDetails();
 
   useEffect(() => {
-    const token = getAccessToken();
     if (data && isSuccess) {
       setUser(data.data);
     }
-
-    if (!data && !isLoading && !token) {
-      router.push("/auth/login");
-    }
-  }, [data, isLoading, isSuccess, router]);
+  }, [data, isSuccess]);
 
   return (
     <SessionContext.Provider value={{ user, isLoading, isSuccess }}>

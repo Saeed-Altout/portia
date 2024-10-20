@@ -12,11 +12,6 @@ export enum QueryKeys {
   CONTACT_US = "contact-us",
 }
 
-export enum Routes {
-  DEFAULT_PAGE = "/",
-  CONTACT_US = "/contact-us",
-}
-
 export const routes = [
   {
     label: "Dashboard",

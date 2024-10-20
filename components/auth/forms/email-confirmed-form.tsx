@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { setAccessToken } from "@/lib/auth";
 import { BackButton } from "@/components/auth";
 
-import { Circle, Icon } from "../../circle-icon";
+import { Circle, Icon } from "../../ui/circle-icon";
 
 export const EmailConfirmedForm = () => {
   const params = useSearchParams();

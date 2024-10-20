@@ -1,4 +1,4 @@
-import { UnProtectedRoute } from "@/guard/UnProtectedRoute";
+import { UnProtectedRoute } from "@/guard/un-protected-route";
 
 export const metadata = {
   title: "Authentication",

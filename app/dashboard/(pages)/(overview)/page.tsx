@@ -8,7 +8,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { Heading, Pagination, OverviewCard } from "@/components/dashboard";
 import { useGetUserDetails } from "@/features/dashboard/hooks";
 
-import { overviewData, overviewTableData } from "../../constants";
+import { overviewData, overviewTableData } from "@/constants";
 
 export default function OverviewPage() {
   const { data: user, isLoading } = useGetUserDetails();

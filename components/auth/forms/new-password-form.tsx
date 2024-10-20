@@ -31,7 +31,7 @@ import { useSetNewPassword } from "@/features/auth/hooks";
 import { newPasswordSchema } from "@/features/auth/schemas";
 import { BackButton, SubmitButton } from "@/components/auth";
 
-import { Circle, Icon } from "../../circle-icon";
+import { Circle, Icon } from "../../ui/circle-icon";
 
 export const NewPasswordForm = () => {
   const params = useSearchParams();

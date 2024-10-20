@@ -1,4 +1,4 @@
-import { AUTH_COOKIE_TOKEN } from "@/constants";
+import { AUTH_COOKIE_TOKEN } from "@/features/dashboard/constants";
 
 interface CookieOptions {
   days?: number;

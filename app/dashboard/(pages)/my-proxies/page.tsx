@@ -8,7 +8,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { Heading, Pagination, ProxiesCard } from "@/components/dashboard";
 import { useGetUserDetails } from "@/features/dashboard/hooks";
 
-import { proxiesData, proxiesTableData } from "../../constants";
+import { proxiesData, proxiesTableData } from "@/constants";
 
 export default function MyProxiesPage() {
   const { data: user, isLoading } = useGetUserDetails();

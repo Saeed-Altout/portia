@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 
 import { BackButton } from "@/components/auth";
 
-import { Circle, Icon } from "../../circle-icon";
+import { Circle, Icon } from "../../ui/circle-icon";
 
 export const VerifyEmailForm = () => {
   const params = useSearchParams();

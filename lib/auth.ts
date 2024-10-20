@@ -1,10 +1,10 @@
-import { cookies } from "@/lib/cookies";
 import {
   AUTH_COOKIE_INFO_MAIL,
   AUTH_COOKIE_REFRESH_TOKEN,
   AUTH_COOKIE_SESSION,
   AUTH_COOKIE_TOKEN,
-} from "@/constants";
+} from "@/features/dashboard/constants";
+import { cookies } from "@/lib/cookies";
 
 interface CookieOptions {
   days?: number;

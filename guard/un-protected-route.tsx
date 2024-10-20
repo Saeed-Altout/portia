@@ -14,6 +14,7 @@ export const UnProtectedRoute = ({
 
   useEffect(() => {
     const token = getAccessToken();
+    console.log(!!token);
 
     if (!!token) {
       router.push("/dashboard");
