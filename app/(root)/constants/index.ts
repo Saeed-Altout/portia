@@ -32,11 +32,11 @@ export const navLinks = [
     label: "Resources",
     href: "/resources",
     links: [
-      {
-        label: "Blogs",
-        href: "/blogs",
-        description: "The latest industry news, updates and info.",
-      },
+      // {
+      //   label: "Blogs",
+      //   href: "/blogs",
+      //   description: "The latest industry news, updates and info.",
+      // },
       {
         label: "Faqs",
         href: "/faqs",
