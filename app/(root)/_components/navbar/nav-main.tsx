@@ -46,7 +46,7 @@ export const NavMain = () => {
                       </ListItem>
                     ))}
                   </ul>
-                  <Separator />
+                  {/* <Separator />
                   <div className="px-6 py-5 flex items-center justify-between gap-2">
                     {navbarLinks.map(({ name, icon: Icon, href }, index) => (
                       <Link
@@ -58,7 +58,7 @@ export const NavMain = () => {
                         {name}
                       </Link>
                     ))}
-                  </div>
+                  </div> */}
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ) : (
