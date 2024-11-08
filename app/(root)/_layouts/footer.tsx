@@ -13,7 +13,7 @@ export const Footer = () => {
   return (
     <footer className="bg-black-300 pt-16 pb-12">
       <Container>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
           <div className="sm:col-span-2 space-y-3">
             <div className="h-[30] w-[100px]">
               <Logo redirectTo="/" dark />
@@ -47,7 +47,7 @@ export const Footer = () => {
           <p className="text !text-gray-400">
             @ {year} Portia.io All rights reserved.
           </p>
-          <div className="flex items-center justify-center gap-x-2 -order-1 md:order-1">
+          {/* <div className="flex items-center justify-center gap-x-2 -order-1 md:order-1">
             {footerIcons.map(({ name, icon: Icon, href }, index) => (
               <Button key={index} variant="link" size="icon" asChild>
                 <Link href={href}>
@@ -56,7 +56,7 @@ export const Footer = () => {
                 </Link>
               </Button>
             ))}
-          </div>
+          </div> */}
         </div>
       </Container>
     </footer>

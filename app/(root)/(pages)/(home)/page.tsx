@@ -4,12 +4,12 @@ import {
   Features,
   Statistic,
   Testimonials,
-} from "@/app/(root)/_components/sections";
+} from "@/components/sections";
 import { Map, Hero, Plans } from "./_components";
 
 export default function HomePage() {
   return (
-    <main className="w-full">
+    <main className="min-h-full overflow-x-hidden">
       <Hero />
       <Map />
       <Statistic />
