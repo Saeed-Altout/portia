@@ -1,4 +1,4 @@
-import { FAQs, CTA, Testimonials } from "@/app/(root)/_components/sections";
+import { CTA, FAQs, Testimonials } from "@/components/sections";
 import { Countries, Features, Hero } from "./_components";
 
 export default function WhyPortiaIoPage() {

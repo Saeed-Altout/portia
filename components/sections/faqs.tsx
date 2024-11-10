@@ -33,18 +33,21 @@ export const FAQs = () => {
         </p>
       </div>
       <div className="flex-1">
-        <Accordion type="single" collapsible className="space-y-10">
-          {isLoading &&
-            [...Array(5)].map((_, index) => (
-              <AccordionItem
-                key={index}
-                value={`faq-${index + 1}`}
-                className="flex items-center gap-2"
-              >
-                <Skeleton className="h-6 w-full block" />
-                <Skeleton className="h-6 w-6 rounded-full block" />
-              </AccordionItem>
-            ))}
+        <Accordion type="single" collapsible>
+          {isLoading && (
+            <div className="space-y-10">
+              {[...Array(5)].map((_, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`faq-${index + 1}`}
+                  className="flex items-center gap-2"
+                >
+                  <Skeleton className="h-6 w-full block" />
+                  <Skeleton className="h-6 w-6 rounded-full block" />
+                </AccordionItem>
+              ))}
+            </div>
+          )}
           {!isLoading &&
             data?.data?.map(({ question, answer }, index) => (
               <AccordionItem key={index} value={`faq-${index + 1}`}>
