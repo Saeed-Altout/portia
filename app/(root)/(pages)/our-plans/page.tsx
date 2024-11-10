@@ -1,14 +1,9 @@
-import {
-  CTA,
-  FAQs,
-  Features,
-  Testimonials,
-} from "@/app/(root)/_components/sections";
+import { CTA, FAQs, Features, Testimonials } from "@/components/sections";
 import { Hero, Plans } from "./_components";
 
 export default function OurPlansPage() {
   return (
-    <main className="w-full">
+    <main className="min-h-full overflow-x-hidden">
       <Hero />
       <Plans />
       <Features />

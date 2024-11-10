@@ -108,6 +108,58 @@ export const plansData = [
     isPopular: false,
   },
 ];
+export const plansData2 = [
+  {
+    type: "Silver plan",
+    price: "$10",
+    description:
+      "Essential features for users in the USA with good speed and stability.",
+    features: [
+      "USA only",
+      "2 carriers (T-Mobile, AT&T)",
+      "Unlimited changes",
+      "Good speed & stability",
+      "Few ports",
+      "100,000+ IPs in the USA",
+      "Multiple states & cities",
+    ],
+    message: "Ideal for individuals seeking reliable access within the USA.",
+    isPopular: false,
+  },
+  {
+    type: "Golden plan",
+    price: "$14.5",
+    description:
+      "A well-rounded package with global IP coverage, multiple carriers, and great speed.",
+    features: [
+      "8 countries",
+      "Unlimited changes",
+      "1M+ IPs globally",
+      "Multiple carriers, states & cities",
+      "Many ports",
+      "Great speed & stability",
+    ],
+    message: "Best value for extensive coverage and stability.",
+    isPopular: true,
+  },
+  {
+    type: "Platinum plan",
+    price: "$20",
+    description:
+      "Premium features with wide carrier and location support, offering top-tier speed and stability.",
+    features: [
+      "15 countries",
+      "Unlimited changes",
+      "5M+ IPs globally",
+      "Wide carrier & location support",
+      "Numerous ports",
+      "Premium speed & stability",
+    ],
+    message:
+      "Everything in the Golden plan plus wider global coverage and premium speed.",
+    isPopular: false,
+  },
+];
 export const countriesData = [
   {
     name: "United States",
