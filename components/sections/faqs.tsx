@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetFaqs } from "@/features/website/hooks/use-get-faqs";
 
 export const FAQs = () => {
-  const { data, isLoading } = useGetFaqs();
+  const { data, isLoading, isSuccess } = useGetFaqs();
 
   return (
     <section
@@ -34,7 +34,7 @@ export const FAQs = () => {
       </div>
       <div className="flex-1">
         <Accordion type="single" collapsible>
-          {isLoading && (
+          {(isLoading || !isSuccess) && (
             <div className="space-y-10">
               {[...Array(5)].map((_, index) => (
                 <AccordionItem
@@ -48,7 +48,7 @@ export const FAQs = () => {
               ))}
             </div>
           )}
-          {!isLoading &&
+          {isSuccess &&
             data?.data?.map(({ question, answer }, index) => (
               <AccordionItem key={index} value={`faq-${index + 1}`}>
                 <AccordionTrigger>{question}</AccordionTrigger>

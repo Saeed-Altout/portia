@@ -15,13 +15,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetReviews } from "@/features/website/hooks/use-get-reviews";
 
 export const Testimonials = () => {
-  const { data, isLoading } = useGetReviews();
+  const { data, isLoading, isSuccess } = useGetReviews();
 
   return (
     <section id="testimonials" className="screen py-24">
       <Carousel>
         <CarouselContent>
-          {isLoading && (
+          {(isLoading || !isSuccess) && (
             <CarouselItem className="space-y-6 md:space-y-8 lg:space-y-10 xl:space-y-12">
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, index) => (
@@ -42,7 +42,7 @@ export const Testimonials = () => {
               </div>
             </CarouselItem>
           )}
-          {!isLoading &&
+          {isSuccess &&
             data?.data?.map(
               ({
                 id,
