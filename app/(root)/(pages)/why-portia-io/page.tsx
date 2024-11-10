@@ -3,7 +3,7 @@ import { Countries, Features, Hero } from "./_components";
 
 export default function WhyPortiaIoPage() {
   return (
-    <main className="w-full">
+    <main className="min-h-full overflow-x-hidden">
       <Hero />
       <Features />
       <Testimonials />
