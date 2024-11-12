@@ -74,5 +74,41 @@ declare type EarningsStatistics = {
   total_earnings: number;
 };
 
+declare type AddProxyRequestType = {
+  parent_proxy_id: number;
+  pkg_id: number;
+  re_new: number;
+  protocol: string;
+  protocol_value: number;
+  duration: string;
+  username: string;
+  password: string;
+  ip_addr: number;
+};
+
+declare type AddProxyResponse = {
+  user_id: number;
+  proxy_id: number;
+  parent_proxy_id: number;
+  package_id: number;
+  rotation_time: number;
+  re_new: boolean;
+  protocol: string;
+  protocol_port: number;
+  country_name: string;
+  city_name: string;
+  service_provider: string;
+  username: string;
+  password: string;
+  ip_addr: string;
+  duration: string;
+  price: number;
+  expire_at: Date;
+  updated_at: Date;
+  created_at: Date;
+  id: number;
+};
+
 declare type EarningsHistoriesResponseType = RootObj<EarningsHistories>;
 declare type EarningsStatisticsResponseType = RootObj<EarningsStatistics>;
+declare type AddProxyResponseType = RootObj<AddProxyResponse>;

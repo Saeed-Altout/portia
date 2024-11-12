@@ -16,7 +16,7 @@ import { getServicesProvider } from "./get-services-provider";
 import { getIpRotations } from "./get-ip-rotations";
 import { getProxies } from "./get-proxies";
 import { getPackages } from "./get-packages";
-
+import { addProxy } from "./add-proxy";
 export {
   getUserDetails,
   updateUserProfile,
@@ -29,4 +29,5 @@ export {
   getIpRotations,
   getProxies,
   getPackages,
+  addProxy,
 };

@@ -4,6 +4,7 @@ import { useUpdateUserProfile } from "./use-update-user-profile";
 import { useGetPricingPlans } from "./use-get-pricing-plans";
 import { useGetAffiliateEarnings } from "./use-get-affiliate-earnings";
 import { useGetLocations } from "./use-get-locations";
+import { useAddProxy } from "./use-add-proxy";
 export {
   useResponse,
   useGetUserDetails,
@@ -11,4 +12,5 @@ export {
   useGetPricingPlans,
   useGetAffiliateEarnings,
   useGetLocations,
+  useAddProxy,
 };
