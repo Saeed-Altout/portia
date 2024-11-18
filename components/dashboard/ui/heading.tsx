@@ -3,8 +3,8 @@
 import { ChartColumn, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useStoreModal } from "@/hooks/use-store-modal";
 import { useGetUserDetails } from "@/features/dashboard/hooks";
+import { proxyStore } from "@/stores/proxy-store";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -24,7 +24,7 @@ export const Heading = ({
   drawEarning = false,
   children,
 }: HeadingProps) => {
-  const storeModal = useStoreModal();
+  const { onOpen } = proxyStore();
   const { data: user } = useGetUserDetails();
 
   return (
@@ -38,15 +38,12 @@ export const Heading = ({
       </div>
       <div className="flex items-center justify-center gap-3">
         {newProxy && (
-          <Button
-            variant="outline"
-            onClick={() => storeModal.onOpenActivateNewProxy()}
-          >
+          <Button variant="outline" onClick={onOpen}>
             <Plus className="h-4 w-4 mr-2" /> Activate Proxies
           </Button>
         )}
         {addFunds && (
-          <Button variant="outline" onClick={() => storeModal.onOpenAddFunds()}>
+          <Button variant="outline" onClick={() => {}}>
             <Plus className="h-4 w-4 mr-2" /> Add Fund
           </Button>
         )}

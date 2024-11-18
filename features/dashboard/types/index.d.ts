@@ -75,15 +75,14 @@ declare type EarningsStatistics = {
 };
 
 declare type AddProxyRequestType = {
-  parent_proxy_id: number;
-  pkg_id: number;
-  re_new: number;
+  parent_proxy_id: any;
+  pkg_id: any;
+  re_new: any;
   protocol: string;
-  protocol_value: number;
+  protocol_value: any;
   duration: string;
   username: string;
   password: string;
-  ip_addr: number;
 };
 
 declare type AddProxyResponse = {
@@ -103,9 +102,9 @@ declare type AddProxyResponse = {
   ip_addr: string;
   duration: string;
   price: number;
-  expire_at: Date;
-  updated_at: Date;
-  created_at: Date;
+  expire_at: Date | string;
+  updated_at: Date | string;
+  created_at: Date | string;
   id: number;
 };
 

@@ -10,15 +10,15 @@ export const userProfileSchema = z.object({
 });
 
 export const activateNewProxySchema = z.object({
-  package: z.string().min(2),
-  plan: z.string().min(2),
-  amount: z.string().min(2),
-  provider: z.string().min(2),
-  ipRotation: z.string().min(2),
-  proxyType: z.string().min(2),
-  autoRenew: z.boolean().default(false),
-  username: z.string().min(2),
-  password: z.string().min(2),
+  pkg_id: z.string().min(1),
+  plan_id: z.string().min(1),
+  amount: z.string().min(1),
+  provider: z.string().min(1),
+  ipRotation: z.string().min(1),
+  protocol: z.string().min(1),
+  re_new: z.boolean().default(false),
+  username: z.string().min(1),
+  password: z.string().min(1),
 });
 
 export type ActivateNewProxySchema = z.infer<typeof activateNewProxySchema>;
