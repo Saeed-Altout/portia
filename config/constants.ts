@@ -13,6 +13,7 @@ export const API_GET_ALL_COUNTRIES = "/get-countries";
 export const API_GET_ALL_CITIES = "/get-cities";
 export const API_GET_SERVICE_PROVIDERS = "/get-service-providers";
 export const API_GET_IP_ROTATIONS = "/get-Ip-Rotations";
+export const API_GET_PROXIES_COUNTS = "/proxies/counts";
 
 const NAME = "cws-portia";
 // Special Keys For LocalStorage

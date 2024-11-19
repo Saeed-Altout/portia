@@ -304,3 +304,11 @@ declare type Package = {
 };
 
 declare type GetAllPackagesResponse = RootObj<Package[]>;
+
+declare type GetProxiesCounts = {
+  total: 15;
+  active: 10;
+  inactive: 5;
+};
+
+declare type GetProxiesCountsResponse = RootObj<GetProxiesCounts>;
