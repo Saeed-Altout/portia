@@ -133,6 +133,7 @@ declare type City = {
   city_name: string;
   country_id: number;
 };
+
 declare type ServiceProvider = {
   id: number;
   city_name: string;

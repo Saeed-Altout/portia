@@ -1,131 +1,288 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { Filter } from "./_components/filter";
 import { columns } from "./_components/columns";
-
-import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 import { Heading, Pagination } from "@/components/dashboard";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-import { useGetLocations } from "@/hooks/dashboard";
-import { formatObjectArray, formatStringArray } from "@/utils/formatters";
+import {
+  useGetAllPackages,
+  useGetAllCities,
+  useGetAllCountries,
+  useGetAllLocations,
+  useGetIpRotations,
+  useGetServiceProvider,
+} from "@/hooks";
+
+import { useLocationStore } from "@/stores/use-location-store";
 
 export default function LocationsPage() {
-  const [page, setPage] = useState<number>(1);
-  const [filters, setFilters] = useState<FiltersProps>({
-    pkg_id: 1,
-    service_provider_id: 0,
-    city_id: 0,
-    country_id: 0,
-    rotation_time: 0,
+  const {
+    offset,
+    pkgId,
+    countryId,
+    cityId,
+    serviceProviderId,
+    ipRotationId,
+    setPkgId,
+    setCountryId,
+    setCityId,
+    setServiceProviderId,
+    setIpRotationId,
+    setOffset,
+  } = useLocationStore();
+
+  const {
+    data: locations,
+    refetch: locationsRefetch,
+    isLoading: locationsIsLoading,
+  } = useGetAllLocations({
+    offset,
+    pkg_id: pkgId,
+    country_id: countryId,
+    city_id: cityId,
+    service_provider_id: serviceProviderId,
+    ip_rotation: ipRotationId,
+  });
+  const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
+
+  const {
+    data: countries,
+    refetch: refetchCountries,
+    isLoading: countriesIsLoading,
+  } = useGetAllCountries({ pkg_id: pkgId });
+
+  const {
+    data: cities,
+    refetch: refetchCities,
+    isLoading: citiesIsLoading,
+  } = useGetAllCities({
+    pkg_id: pkgId,
+    country_id: countryId,
   });
 
-  const { pkg_id, country_id, city_id, service_provider_id } = filters;
-
-  const locations = useGetLocations({
-    pkg_id,
-    country_id,
-    city_id,
-    service_provider_id,
-    offset: 1,
+  const {
+    data: serviceProviders,
+    refetch: refetchServiceProviders,
+    isLoading: serviceProvidersIsLoading,
+  } = useGetServiceProvider({
+    pkg_id: pkgId,
+    country_id: countryId,
+    city_id: cityId,
   });
 
-  const proxies = locations[0].data?.data;
-  const pkgs = locations[1].data?.data;
-  const countries = locations[2].data?.data;
-  const cities = locations[3].data?.data;
-  const sp = locations[4].data?.data;
-  const ipRotations = locations[5].data?.data;
-
-  const ipRotationsFormatted = formatStringArray(ipRotations);
-  const packagesFormatted = formatObjectArray(pkgs, "id", "name");
-  const countriesFormatted = formatObjectArray(countries, "id", "country_name");
-  const citiesFormatted = formatObjectArray(cities, "id", "city_name");
-  const servicesProviderFormatted = formatObjectArray(
-    sp,
-    "id",
-    "service_provider_name"
-  );
-
-  const isLoading =
-    locations[0].isLoading ||
-    locations[1].isLoading ||
-    locations[2].isLoading ||
-    locations[3].isLoading ||
-    locations[4].isLoading ||
-    locations[5].isLoading;
-
-  const handleFilterChange = (key: keyof FiltersProps, value: number) => {
-    setFilters({ ...filters, [key]: value });
-  };
+  const {
+    data: ipRotations,
+    refetch: refetchIpRotations,
+    isLoading: ipRotationsIsLoading,
+  } = useGetIpRotations({
+    pkg_id: pkgId,
+    country_id: countryId,
+    city_id: cityId,
+  });
 
   useEffect(() => {
-    setPage(1);
-  }, [filters]);
+    if (pkgId) {
+      refetchCountries();
+      refetchCities();
+      refetchServiceProviders();
+      refetchIpRotations();
+      locationsRefetch();
+    }
+  }, [
+    pkgId,
+    refetchCountries,
+    refetchCities,
+    refetchServiceProviders,
+    refetchIpRotations,
+    locationsRefetch,
+  ]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  useEffect(() => {
+    if (countryId) {
+      refetchCities();
+      refetchServiceProviders();
+      refetchIpRotations();
+      locationsRefetch();
+    }
+  }, [
+    countryId,
+    refetchCities,
+    refetchServiceProviders,
+    refetchIpRotations,
+    locationsRefetch,
+  ]);
+
+  useEffect(() => {
+    if (cityId) {
+      refetchServiceProviders();
+      refetchIpRotations();
+      locationsRefetch();
+    }
+  }, [cityId, refetchServiceProviders, refetchIpRotations, locationsRefetch]);
+
+  useEffect(() => {
+    if (ipRotationId) {
+      locationsRefetch();
+    }
+  }, [ipRotationId, locationsRefetch]);
+
+  useEffect(() => {
+    if (offset) {
+      locationsRefetch();
+    }
+  }, [locationsRefetch, offset]);
+
+  useEffect(() => {
+    setOffset(1);
+  }, [pkgId, countryId, cityId, serviceProviderId, ipRotationId]);
+
+  // Event handlers for dropdown selection
+  const onSelectPackage = (pkgId: string) => {
+    setPkgId(+pkgId);
+    setCountryId(null);
+    setCityId(null);
+    setServiceProviderId(null);
+    setIpRotationId(null);
+  };
+
+  const onSelectCountry = (countryId: string) => {
+    setCountryId(+countryId);
+    setCityId(null);
+    setServiceProviderId(null);
+    setIpRotationId(null);
+  };
+
+  const onSelectCity = (cityId: string) => {
+    setCityId(+cityId);
+    setServiceProviderId(null);
+    setIpRotationId(null);
+  };
+
+  const onSelectServiceProvider = (serviceProviderId: string) => {
+    setServiceProviderId(+serviceProviderId);
+    setIpRotationId(null);
+  };
+
+  const onSelectIpRotations = (ipRotationId: string) => {
+    setIpRotationId(+ipRotationId);
+  };
 
   return (
     <>
       <Heading
         label="Our Available Proxy's Locations"
         title="Choose your location's needs"
-        description="you can easily filter your results based on country, state, isp, rotation by this:"
+        description="You can easily filter your results based on country, state, ISP, rotation by this:"
       />
-      <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-        <Filter
-          disabled={locations[1].isLoading || packagesFormatted.length == 0}
-          onValueChange={(e) => handleFilterChange("pkg_id", Number(e))}
-          placeholder="Package"
-          options={packagesFormatted}
-        />
-        <Filter
-          disabled={locations[2].isLoading || countriesFormatted.length == 0}
-          onValueChange={(e) => handleFilterChange("country_id", Number(e))}
-          placeholder="Country"
-          options={countriesFormatted}
-        />
-        <Filter
-          disabled={locations[3].isLoading || citiesFormatted.length == 0}
-          onValueChange={(e) => handleFilterChange("city_id", Number(e))}
-          placeholder="City"
-          options={citiesFormatted}
-        />
-        <Filter
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-6">
+        <Select
+          onValueChange={onSelectPackage}
+          defaultValue={packages?.data[0]?.id.toString()}
+          disabled={!packages?.data || packagesIsLoading}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Package" />
+          </SelectTrigger>
+          <SelectContent>
+            {packages?.data?.map((pkg) => (
+              <SelectItem key={pkg.id} value={pkg.id.toString()}>
+                {pkg.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          onValueChange={onSelectCountry}
+          disabled={!countries?.data || packagesIsLoading || countriesIsLoading}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Country" />
+          </SelectTrigger>
+          <SelectContent>
+            {countries?.data?.map((country) => (
+              <SelectItem key={country.id} value={country.id.toString()}>
+                {country.country_name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          onValueChange={onSelectCity}
+          disabled={!cities?.data || countriesIsLoading || citiesIsLoading}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="State" />
+          </SelectTrigger>
+          <SelectContent>
+            {cities?.data?.map((city) => (
+              <SelectItem key={city.id} value={city.id.toString()}>
+                {city.city_name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          onValueChange={onSelectServiceProvider}
           disabled={
-            locations[4].isLoading || servicesProviderFormatted.length == 0
+            !serviceProviders?.data ||
+            citiesIsLoading ||
+            serviceProvidersIsLoading
           }
-          onValueChange={(e) =>
-            handleFilterChange("service_provider_id", Number(e))
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="ISP" />
+          </SelectTrigger>
+          <SelectContent>
+            {serviceProviders?.data?.map((serviceProvider) => (
+              <SelectItem
+                key={serviceProvider.id}
+                value={serviceProvider.id.toString()}
+              >
+                {serviceProvider.service_provider_name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          onValueChange={onSelectIpRotations}
+          disabled={
+            !ipRotations?.data ||
+            serviceProvidersIsLoading ||
+            ipRotationsIsLoading
           }
-          placeholder="SP"
-          options={servicesProviderFormatted}
-        />
-        <Filter
-          disabled={locations[5].isLoading || ipRotationsFormatted.length == 0}
-          onValueChange={(e) => handleFilterChange("rotation_time", Number(e))}
-          placeholder="Ip Rotations"
-          options={ipRotationsFormatted}
-        />
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="IP Rotation" />
+          </SelectTrigger>
+          <SelectContent>
+            {ipRotations?.data?.map((ipRotation) => (
+              <SelectItem key={ipRotation} value={ipRotation}>
+                {ipRotation}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="border rounded-md relative z-0">
-        {isLoading && (
-          <div className="bg-white/40 w-full h-full absolute z-50 rounded-md"></div>
-        )}
         <div className="w-full flex flex-col rounded-t-md py-6 px-4 relative">
-          <h3 className="font-medium text-lg">All my deposit</h3>
+          <h3 className="font-medium text-lg">Filtered Locations</h3>
         </div>
-        <DataTable columns={columns} data={proxies?.list ?? []} />
+        <DataTable columns={columns} data={locations?.data.list ?? []} />
         <Pagination
-          prevButton={page === 1}
-          nextButton={!proxies?.has_more}
-          setPage={setPage}
-          currentPage={page}
-          totalPages={Math.floor(proxies?.count ?? 10 / 10)}
+          prevButton={offset === 1}
+          nextButton={!locations?.data.has_more}
+          setPage={setOffset}
+          currentPage={offset}
+          totalPages={Math.ceil((locations?.data?.count ?? 10) / 10)}
         />
       </div>
     </>

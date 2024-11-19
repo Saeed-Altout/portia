@@ -16,54 +16,51 @@ export const Pagination = ({
   nextButton = false,
   setPage,
 }: PaginationProps) => {
+  const handleNextPage = () => setPage(Math.min(currentPage + 1, totalPages));
+  const handlePreviousPage = () => setPage(Math.max(currentPage - 1, 1));
+
+  const generatePagination = () => {
+    const maxVisiblePages = 5;
+    const pages = [];
+
+    const startPage = Math.max(
+      1,
+      currentPage - Math.floor(maxVisiblePages / 2)
+    );
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <Button
+          key={i}
+          variant={currentPage === i ? "outline" : "ghost"}
+          onClick={() => setPage(i)}
+        >
+          {i}
+        </Button>
+      );
+    }
+
+    if (endPage < totalPages) {
+      pages.push(
+        <MoreHorizontal key="more" className="h-4 w-4 mx-1 text-gray-500" />
+      );
+    }
+
+    return pages;
+  };
   return (
-    <div className="w-full flex justify-between items-center rounded-b-md py-6 px-4">
+    <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5 px-6">
       <Button
         variant="outline"
+        onClick={handlePreviousPage}
         disabled={prevButton}
-        onClick={() => setPage(currentPage - 1)}
       >
         <ChevronLeft className="h-4 w-4" />
         <span>Previous</span>
       </Button>
-      <div className="flex justify-center items-center gap-x-2">
-        {currentPage >= 2 && (
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => setPage(currentPage - 1)}
-          >
-            {currentPage - 1}
-          </Button>
-        )}
-        <Button
-          size="icon"
-          variant="ghost"
-          className="bg-secondary"
-          onClick={() => setPage(currentPage)}
-        >
-          {currentPage}
-        </Button>
-        {totalPages >= 4 && currentPage >= 4 && (
-          <Button size="icon" variant="ghost">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        )}
-        {currentPage <= totalPages && totalPages > 1 && (
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => setPage(currentPage + 1)}
-          >
-            {currentPage + 1}
-          </Button>
-        )}
-      </div>
-      <Button
-        variant="outline"
-        disabled={nextButton}
-        onClick={() => setPage(currentPage + 1)}
-      >
+      <div className="flex items-center gap-2">{generatePagination()}</div>
+      <Button variant="outline" onClick={handleNextPage} disabled={nextButton}>
         <span>Next</span>
         <ChevronRight className="h-4 w-4" />
       </Button>

@@ -5,8 +5,8 @@ import {
   getCities,
   getServicesProvider,
   getIpRotations,
-  getAllProxies,
   getPackages,
+  getAllLocations,
 } from "@/api/dashboard";
 
 export const useGetLocations = ({
@@ -29,7 +29,7 @@ export const useGetLocations = ({
       {
         queryKey: ["get-proxies"],
         queryFn: () =>
-          getAllProxies({
+          getAllLocations({
             pkg_id,
             country_id,
             city_id,

@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { getAccessToken } from "@/utils/token";
+import cookieStorage from "@/services/cookie-storage";
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,7 +10,7 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   async (request) => {
-    const token = getAccessToken();
+    const token = cookieStorage.getAccessToken();
     if (token) {
       request.headers["Authorization"] = `Bearer ${token}`;
     }

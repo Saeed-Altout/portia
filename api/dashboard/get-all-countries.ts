@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
 
 import { apiClient } from "@/api/config";
-import { API_GET_IP_ROTATIONS } from "@/config/constants";
+import { API_GET_ALL_COUNTRIES } from "@/config/constants";
 
-export const getIpRotations = async (
+export const getAllCountries = async (
   params: Record<string, any>
-): Promise<RootObj<string[]>> => {
+): Promise<RootObj<Country[]>> => {
   const filteredParams = Object.fromEntries(
     Object.entries(params).filter(
       ([, value]) => value !== undefined && value !== null && value !== 0
@@ -13,9 +13,9 @@ export const getIpRotations = async (
   );
 
   try {
-    const response: AxiosResponse<RootObj<string[]>> = await apiClient.get<
-      RootObj<string[]>
-    >(API_GET_IP_ROTATIONS, { params: { ...filteredParams } });
+    const response: AxiosResponse<RootObj<Country[]>> = await apiClient.get<
+      RootObj<Country[]>
+    >(API_GET_ALL_COUNTRIES, { params: { ...filteredParams } });
     return response.data;
   } catch (error) {
     throw error;

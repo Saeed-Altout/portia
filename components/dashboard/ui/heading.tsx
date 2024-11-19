@@ -3,7 +3,6 @@
 import { ChartColumn, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useGetUserDetails } from "@/hooks/dashboard";
 import { proxyStore } from "@/stores/proxy-store";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLElement> {
@@ -25,15 +24,12 @@ export const Heading = ({
   children,
 }: HeadingProps) => {
   const { onOpen } = proxyStore();
-  const { data: user } = useGetUserDetails();
 
   return (
     <div className="flex justify-between items-start lg:items-center flex-col lg:flex-row gap-4">
       <div className="flex flex-col gap-y-1">
         <p className="text-sm">{label}</p>
-        <h1 className="text-2xl md:text-3xl font-medium capitalize">{`${title} ${
-          user?.data?.first_name ?? ""
-        }`}</h1>
+        <h1 className="text-2xl md:text-3xl font-medium capitalize">{title}</h1>
         <p className="text-sm">{description}</p>
       </div>
       <div className="flex items-center justify-center gap-3">

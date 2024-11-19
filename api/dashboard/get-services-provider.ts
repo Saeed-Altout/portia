@@ -1,31 +1,23 @@
-import { _axios } from "@/lib/axios";
 import { AxiosResponse } from "axios";
 
-export const getServicesProvider = async ({
-  pkg_id,
-  city_id,
-  country_id,
-}: {
-  pkg_id: number;
-  city_id?: number;
-  country_id?: number;
-}): Promise<RootObj<ServiceProvider[]>> => {
-  const params: Record<string, any> = {
-    pkg_id,
-    city_id,
-    country_id,
-  };
+import { apiClient } from "@/api/config";
+import { API_GET_SERVICE_PROVIDERS } from "@/config/constants";
 
-  Object.keys(params).forEach(
-    (key) =>
-      (params[key] === 0 || params[key] === undefined) && delete params[key]
+export const getServicesProvider = async (
+  params: Record<string, any>
+): Promise<RootObj<ServiceProvider[]>> => {
+  const filteredParams = Object.fromEntries(
+    Object.entries(params).filter(
+      ([, value]) => value !== undefined && value !== null && value !== 0
+    )
   );
 
   try {
     const response: AxiosResponse<RootObj<ServiceProvider[]>> =
-      await _axios.get(process.env.NEXT_PUBLIC_SERVICE_PROVIDERS!, {
-        params,
-      });
+      await apiClient.get<RootObj<ServiceProvider[]>>(
+        API_GET_SERVICE_PROVIDERS,
+        { params: { ...filteredParams } }
+      );
     return response.data;
   } catch (error) {
     throw error;
