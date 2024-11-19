@@ -17,9 +17,10 @@ import { StepTwo } from "./step-two";
 import { StepThree } from "./step-three";
 import { proxyStore } from "@/stores/proxy-store";
 import { activateNewProxySchema } from "@/schemas";
-import { useAddProxy } from "@/features/dashboard/hooks";
-import { useGetPorts } from "@/features/dashboard/hooks/use-get-ports";
-import { useGetAllPackages } from "@/features/dashboard/hooks/use-get-all-packages";
+
+import { useAddProxy } from "@/hooks/dashboard";
+import { useGetPorts } from "@/hooks/dashboard/use-get-ports";
+import { useGetAllPackages } from "@/hooks/dashboard/use-get-all-packages";
 
 export const AddProxyModal = () => {
   const {
