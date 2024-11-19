@@ -14,7 +14,7 @@ import {
   useGetCountriesQuery,
   useGetIpRotationsQuery,
   useGetPackagesQuery,
-  useGetProxiesQuery,
+  useGetAllProxiesQuery,
   useGetServiceProviderQuery,
 } from "@/app/(root)/hooks";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
@@ -37,7 +37,7 @@ export const Content = () => {
     data: proxies,
     isSuccess,
     isLoading,
-  } = useGetProxiesQuery({
+  } = useGetAllProxiesQuery({
     pkg_id: pkg,
     offset: offset,
     country_id: country,

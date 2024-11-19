@@ -17,7 +17,7 @@ import { useGetPackagesQuery } from "./proxies/get-packages-query";
 import { useGetCitiesQuery } from "./proxies/get-cities-query";
 import { useGetServiceProviderQuery } from "./proxies/get-service-providers-query";
 import { useGetIpRotationsQuery } from "./proxies/get-ip-rotations-query";
-import { useGetProxiesQuery } from "./proxies/get-proxies-query";
+import { useGetAllProxiesQuery } from "./proxies/get-proxies-query";
 import { useGetCountriesQuery } from "./proxies/get-countries-query";
 
 export {
@@ -33,6 +33,6 @@ export {
   useGetCitiesQuery,
   useGetCountriesQuery,
   useGetIpRotationsQuery,
-  useGetProxiesQuery,
+  useGetAllProxiesQuery,
   useGetServiceProviderQuery,
 };

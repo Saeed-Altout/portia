@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { websiteService } from "@/app/(root)/services";
 
-export const useGetProxiesQuery = ({
+export const useGetAllProxiesQuery = ({
   pkg_id,
   country_id,
   city_id,
@@ -34,7 +34,7 @@ export const useGetProxiesQuery = ({
       `rotation_time=${rotation_time}`,
     ],
     queryFn: () =>
-      websiteService.getProxies({
+      websiteService.getAllProxies({
         pkg_id,
         offset,
         country_id,

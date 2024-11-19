@@ -58,7 +58,7 @@ export const websiteService = {
     }
   },
 
-  async getProxies({
+  async getAllProxies({
     pkg_id,
     country_id,
     city_id,

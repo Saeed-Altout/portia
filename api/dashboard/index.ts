@@ -14,7 +14,7 @@ import { getCountries } from "./get-countries";
 import { getCities } from "./get-cities";
 import { getServicesProvider } from "./get-services-provider";
 import { getIpRotations } from "./get-ip-rotations";
-import { getProxies } from "./get-proxies";
+import { getAllProxies } from "./get-all-proxies";
 import { getPackages } from "./get-packages";
 import { addProxy } from "./add-proxy";
 export {
@@ -27,7 +27,7 @@ export {
   getCities,
   getServicesProvider,
   getIpRotations,
-  getProxies,
+  getAllProxies,
   getPackages,
   addProxy,
 };

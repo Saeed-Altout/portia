@@ -1,7 +1,7 @@
 import { _axios } from "@/lib/axios";
 import { AxiosResponse } from "axios";
 
-export const getProxies = async ({
+export const getAllProxies = async ({
   pkg_id,
   country_id,
   city_id,
