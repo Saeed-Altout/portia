@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { useGetFaqs } from "@/features/website/hooks/use-get-faqs";
+import { useGetFaqs } from "@/hooks/root/use-get-faqs";
 
 export const FAQs = () => {
   const { data, isLoading, isSuccess } = useGetFaqs();

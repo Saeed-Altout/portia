@@ -12,7 +12,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { useGetReviews } from "@/features/website/hooks/use-get-reviews";
+import { useGetReviews } from "@/hooks/root/use-get-reviews";
 
 export const Testimonials = () => {
   const { data, isLoading, isSuccess } = useGetReviews();
