@@ -7,10 +7,7 @@ import { DropdownMenu } from "./_components/dropdown-menu";
 
 import { Loader } from "@/components/ui/loader";
 
-import {
-  useGetPricingPlans,
-  useGetUserDetails,
-} from "@/features/dashboard/hooks";
+import { useGetPricingPlans, useGetUserDetails } from "@/hooks/dashboard";
 import { Heading, OfferCard } from "@/components/dashboard";
 
 interface Filter {

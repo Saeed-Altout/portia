@@ -6,7 +6,7 @@ import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 
 import { Heading, Pagination, ProxiesCard } from "@/components/dashboard";
-import { useGetUserDetails } from "@/features/dashboard/hooks";
+import { useGetUserDetails } from "@/hooks/dashboard";
 
 import { proxiesData, proxiesTableData } from "@/constants";
 

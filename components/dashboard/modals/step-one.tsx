@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useGetCost } from "@/features/dashboard/hooks/use-get-cost";
+import { useGetCost } from "@/hooks/dashboard/use-get-cost";
 import { proxyStore } from "@/stores/proxy-store";
 
 interface StepOneProps {

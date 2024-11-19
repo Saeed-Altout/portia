@@ -9,7 +9,7 @@ import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 import { Heading, Pagination } from "@/components/dashboard";
 
-import { useGetLocations } from "@/features/dashboard/hooks";
+import { useGetLocations } from "@/hooks/dashboard";
 import { formatObjectArray, formatStringArray } from "@/utils/formatters";
 
 export default function LocationsPage() {

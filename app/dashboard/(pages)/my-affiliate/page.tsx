@@ -14,10 +14,7 @@ import {
   AffiliateCode,
   StatisticCard,
 } from "@/components/dashboard";
-import {
-  useGetAffiliateEarnings,
-  useGetUserDetails,
-} from "@/features/dashboard/hooks";
+import { useGetAffiliateEarnings, useGetUserDetails } from "@/hooks/dashboard";
 import { getEmail } from "@/lib/auth";
 
 export default function MyAffiliatePage() {

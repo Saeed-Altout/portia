@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useGetUserDetails } from "@/features/dashboard/hooks";
+import { useGetUserDetails } from "@/hooks/dashboard";
 
 const initialUserValues: UserProfile = {
   id: 0,

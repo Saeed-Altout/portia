@@ -3,7 +3,7 @@
 import { ChartColumn, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useGetUserDetails } from "@/features/dashboard/hooks";
+import { useGetUserDetails } from "@/hooks/dashboard";
 import { proxyStore } from "@/stores/proxy-store";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLElement> {

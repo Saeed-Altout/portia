@@ -6,7 +6,7 @@ import { Loader } from "@/components/ui/loader";
 import { DataTable } from "@/components/ui/data-table";
 
 import { Heading, Pagination, DepositCard } from "@/components/dashboard";
-import { useGetUserDetails } from "@/features/dashboard/hooks";
+import { useGetUserDetails } from "@/hooks/dashboard";
 
 export default function DepositsPage() {
   const { data: user, isLoading } = useGetUserDetails();

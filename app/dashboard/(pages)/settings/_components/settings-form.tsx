@@ -25,10 +25,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { UserButton } from "@/components/auth";
 
-import {
-  useGetUserDetails,
-  useUpdateUserProfile,
-} from "@/features/dashboard/hooks";
+import { useGetUserDetails, useUpdateUserProfile } from "@/hooks/dashboard";
 import { userProfileSchema } from "@/schemas";
 import { Heading, AffiliateCode } from "@/components/dashboard";
 
