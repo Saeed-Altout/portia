@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { useResponse } from "@/features/auth/hooks";
-import { sendResetEmail } from "@/features/auth/api";
+import { useResponse } from "@/hooks/auth";
+import { sendResetEmail } from "@/api/auth";
 
 export const useSendResetEmail = () => {
   const { Success, Error } = useResponse();

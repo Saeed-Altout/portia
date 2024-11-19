@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { useResponse } from "@/features/auth/hooks";
-import { setNewPassword } from "@/features/auth/api";
+import { useResponse } from "@/hooks/auth";
+import { setNewPassword } from "@/api/auth";
 import { setAccessToken } from "@/lib/auth";
 
 export const useSetNewPassword = () => {

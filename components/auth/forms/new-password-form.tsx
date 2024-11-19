@@ -27,8 +27,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-import { useSetNewPassword } from "@/features/auth/hooks";
-import { newPasswordSchema } from "@/features/auth/schemas";
+import { useSetNewPassword } from "@/hooks/auth";
+import { newPasswordSchema } from "@/schemas";
 import { BackButton, SubmitButton } from "@/components/auth";
 
 import { Circle, Icon } from "../../ui/circle-icon";

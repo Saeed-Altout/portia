@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { useRegister } from "@/features/auth/hooks";
-import { registerSchema } from "@/features/auth/schemas";
+import { useRegister } from "@/hooks/auth";
+import { registerSchema } from "@/schemas";
 import { CardWrapper, Provider, SubmitButton } from "@/components/auth";
 
 export const RegisterForm = () => {

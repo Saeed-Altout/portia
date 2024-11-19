@@ -31,8 +31,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-import { useVerifyCode } from "@/features/auth/hooks";
-import { verifyCodeSchema } from "@/features/auth/schemas";
+import { useVerifyCode } from "@/hooks/auth";
+import { verifyCodeSchema } from "@/schemas";
 import { BackButton, ResendButton, SubmitButton } from "@/components/auth";
 
 import { Circle, Icon } from "../../ui/circle-icon";

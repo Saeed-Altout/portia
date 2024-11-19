@@ -1,4 +1,4 @@
-import { useResponse } from "./use-response";
+import { useResponse } from "../use-response";
 import { useLogin } from "./use-login";
 import { useRegister } from "./use-register";
 import { useLogout } from "./use-logout";

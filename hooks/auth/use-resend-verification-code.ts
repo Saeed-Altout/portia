@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { resendVerificationCode } from "@/features/auth/api";
-import { useResponse } from "@/features/auth/hooks";
+import { resendVerificationCode } from "@/api/auth";
+import { useResponse } from "@/hooks/auth";
 
 export const useResendVerificationCode = () => {
   const { Success, Error } = useResponse();

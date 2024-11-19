@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { login } from "@/features/auth/api";
-import { useResponse } from "@/features/auth/hooks";
+import { login } from "@/api/auth";
+import { useResponse } from "@/hooks/auth";
 import { setAccessToken, setSession } from "@/lib/auth";
 
 export const useLogin = (isRememberMe: boolean) => {

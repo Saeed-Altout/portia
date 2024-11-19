@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { useResendVerificationCode } from "@/features/auth/hooks";
+import { useResendVerificationCode } from "@/hooks/auth";
 
 interface ResendButtonProps {
   label?: string;

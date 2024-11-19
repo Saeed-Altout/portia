@@ -2,7 +2,7 @@
 
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
-import { useLoginWithGoogle } from "@/features/auth/hooks";
+import { useLoginWithGoogle } from "@/hooks/auth";
 
 interface ProviderProps {
   isLoading: boolean;

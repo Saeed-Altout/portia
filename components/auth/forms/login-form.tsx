@@ -22,8 +22,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { getSession } from "@/lib/auth";
-import { useLogin } from "@/features/auth/hooks";
-import { loginSchema } from "@/features/auth/schemas";
+import { useLogin } from "@/hooks/auth";
+import { loginSchema } from "@/schemas";
 import { CardWrapper, Provider, SubmitButton } from "@/components/auth";
 
 export const LoginForm = () => {

@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { logout } from "@/features/auth/api";
-import { useResponse } from "@/features/auth/hooks";
+import { logout } from "@/api/auth";
+import { useResponse } from "@/hooks/auth";
 import { removeAccessToken, removeEmail } from "@/lib/auth";
 
 export const useLogout = () => {

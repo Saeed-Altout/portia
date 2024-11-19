@@ -7,6 +7,12 @@ import {
   Zap,
 } from "lucide-react";
 
+const NAME = "cws-portia";
+// Special Keys For LocalStorage
+export const EMAIL = `${NAME}-email`;
+export const TOKEN_KEY = `${NAME}-token`;
+export const USER_KEY = `${NAME}-user-metadata`;
+
 export const statisticData = [
   {
     value: "40k+",
