@@ -1,64 +1,34 @@
 "use client";
 
-import * as React from "react";
-
-import { ArrowUp } from "lucide-react";
-import { Area, AreaChart } from "recharts";
-
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { LucideIcon } from "lucide-react";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 
 interface DepositCardProps {
   title: string;
-  price: string;
-  color: string;
-  data: {
-    id: number;
-    amount: number;
-  }[];
+  label?: string | null;
+  theme?: any;
+  icon: LucideIcon;
 }
 
 export const DepositCard = ({
-  initialData,
-}: {
-  initialData: DepositCardProps;
-}) => {
-  const { title, price, color, data } = initialData;
-  const chartConfig = {
-    deposits: {
-      label: "Deposits",
-    },
-  } satisfies ChartConfig;
-
+  title,
+  label,
+  theme,
+  icon,
+}: DepositCardProps) => {
   return (
-    <div className="border rounded-lg">
-      <div className="p-6 flex items-end justify-between h-full">
-        <div className="flex justify-start items-start flex-col gap-y-5 flex-1">
-          <h2 className="font-medium">{title}</h2>
-          <p className="font-semibold text-3xl text-black-200">{price}</p>
-          <div className="flex items-center justify-start gap-x-2">
-            <ArrowUp className="h-5 w-5 text-[#26a6a4]" style={{ color }} />
-            <p className="text-sm">Currently Spending</p>
-          </div>
-        </div>
-        <ChartContainer config={chartConfig} className="w-1/2 h-full">
-          <AreaChart accessibilityLayer data={data}>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Area
-              dataKey="amount"
-              type="natural"
-              fill={color}
-              fillOpacity={0.2}
-              stroke={color}
-              stackId="a"
-            />
-          </AreaChart>
-        </ChartContainer>
+    <div className="border rounded-[8px] shadow-sm p-6 space-y-6">
+      <div className="flex items-center gap-5">
+        <Circle fill={theme}>
+          <Icon icon={icon} theme={theme} />
+        </Circle>
+        <p className="font-medium text-[#0A0A0A]">{title}</p>
       </div>
+      {label && (
+        <h4 className="text-[#0A0A0A] font-semibold text-3xl md:text-4xl">
+          {label}
+        </h4>
+      )}
     </div>
   );
 };
