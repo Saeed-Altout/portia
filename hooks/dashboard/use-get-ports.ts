@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPorts } from "@/features/dashboard/api/get-ports";
+import { getPorts } from "@/api/dashboard/get-ports";
 
 export const useGetPorts = ({ id }: { id: number }) => {
   return useQuery({

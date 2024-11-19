@@ -29,7 +29,7 @@ import {
   useGetUserDetails,
   useUpdateUserProfile,
 } from "@/features/dashboard/hooks";
-import { userProfileSchema } from "@/features/dashboard/schemas";
+import { userProfileSchema } from "@/schemas";
 import { Heading, AffiliateCode } from "@/components/dashboard";
 
 import { getModifiedData } from "@/utils";

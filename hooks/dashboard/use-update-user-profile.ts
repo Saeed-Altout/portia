@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
 import { useResponse } from "@/features/dashboard/hooks";
-import { updateUserProfile } from "@/features/dashboard/api";
+import { updateUserProfile } from "@/api/dashboard";
 
 export const useUpdateUserProfile = () => {
   const { Success, Error } = useResponse();

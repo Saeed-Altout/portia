@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPricingPlans } from "@/features/dashboard/api";
+import { getPricingPlans } from "@/api/dashboard";
 
 export const useGetPricingPlans = () => {
   return useQuery({

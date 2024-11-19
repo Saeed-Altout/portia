@@ -1,4 +1,4 @@
-import { userProfileSchema } from "@/features/dashboard/schemas";
+import { userProfileSchema } from "@/schemas";
 import * as z from "zod";
 
 export const getModifiedData = (data: z.infer<typeof userProfileSchema>) => {

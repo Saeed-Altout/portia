@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCost } from "@/features/dashboard/api/get-cost";
+import { getCost } from "@/api/dashboard/get-cost";
 
 export const useGetCost = ({ pkg_id }: { pkg_id: number }) => {
   return useQuery({

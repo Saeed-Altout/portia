@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { addProxy } from "@/features/dashboard/api";
+import { addProxy } from "@/api/dashboard";
 import { useResponse } from "@/features/dashboard/hooks";
 
 export const useAddProxy = () => {

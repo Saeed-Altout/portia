@@ -16,7 +16,7 @@ import { StepOne } from "./step-one";
 import { StepTwo } from "./step-two";
 import { StepThree } from "./step-three";
 import { proxyStore } from "@/stores/proxy-store";
-import { activateNewProxySchema } from "@/features/dashboard/schemas";
+import { activateNewProxySchema } from "@/schemas";
 import { useAddProxy } from "@/features/dashboard/hooks";
 import { useGetPorts } from "@/features/dashboard/hooks/use-get-ports";
 import { useGetAllPackages } from "@/features/dashboard/hooks/use-get-all-packages";

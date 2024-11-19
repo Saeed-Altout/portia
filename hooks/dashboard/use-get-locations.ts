@@ -7,7 +7,7 @@ import {
   getIpRotations,
   getProxies,
   getPackages,
-} from "@/features/dashboard/api";
+} from "@/api/dashboard";
 
 export const useGetLocations = ({
   pkg_id,

@@ -13,6 +13,11 @@ export const EMAIL = `${NAME}-email`;
 export const TOKEN_KEY = `${NAME}-token`;
 export const USER_KEY = `${NAME}-user-metadata`;
 
+export const AUTH_COOKIE_TOKEN = "cws-portia-token";
+export const AUTH_COOKIE_REFRESH_TOKEN = "cws-portia-refresh_token";
+export const AUTH_COOKIE_SESSION = "cws-portia-session";
+export const AUTH_COOKIE_INFO_MAIL = "cws-portia-info-mail";
+
 export const statisticData = [
   {
     value: "40k+",

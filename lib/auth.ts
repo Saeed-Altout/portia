@@ -3,7 +3,7 @@ import {
   AUTH_COOKIE_REFRESH_TOKEN,
   AUTH_COOKIE_SESSION,
   AUTH_COOKIE_TOKEN,
-} from "@/features/dashboard/constants";
+} from "@/config/constants";
 import { cookies } from "@/lib/cookies";
 
 interface CookieOptions {

@@ -3,7 +3,7 @@ import { keepPreviousData, useQueries } from "@tanstack/react-query";
 import {
   getAffiliateEarningsStatistics,
   getAffiliateEarningsHistories,
-} from "@/features/dashboard/api";
+} from "@/api/dashboard";
 
 export const useGetAffiliateEarnings = (page?: number) => {
   return useQueries({
