@@ -6,6 +6,8 @@ import {
   Star,
   Zap,
 } from "lucide-react";
+// Endpoints
+export const API_GET_ALL_PACKAGES = "/get-all-packages";
 
 const NAME = "cws-portia";
 // Special Keys For LocalStorage

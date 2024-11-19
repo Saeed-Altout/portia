@@ -296,3 +296,11 @@ declare type AddProxyResponse = {
 declare type EarningsHistoriesResponseType = RootObj<EarningsHistories>;
 declare type EarningsStatisticsResponseType = RootObj<EarningsStatistics>;
 declare type AddProxyResponseType = RootObj<AddProxyResponse>;
+
+// ///////////////////////////////////////
+declare type Package = {
+  id: number;
+  name: string;
+};
+
+declare type GetAllPackagesResponse = RootObj<Package[]>;
