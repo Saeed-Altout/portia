@@ -1,13 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Activity } from "lucide-react";
+import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
-
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { format } from "date-fns";
+import { ActiveProxiesCellActions } from "./cell-actions";
 
 type Proxy = {
   id: number;
@@ -33,7 +31,7 @@ type Proxy = {
   user_id: number;
 };
 
-export const activeColumns: ColumnDef<Proxy>[] = [
+export const inactiveColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "#",
@@ -109,19 +107,6 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end items-center gap-4">
-          <Button
-            size="sm"
-            className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
-          >
-            <Activity className="h-4 w-4" />
-            <span className="sr-only">Activity Icon</span>
-          </Button>
-          <Button size="sm">Manage</Button>
-        </div>
-      );
-    },
+    cell: ({ row }) => <ActiveProxiesCellActions data={row.original} />,
   },
 ];
