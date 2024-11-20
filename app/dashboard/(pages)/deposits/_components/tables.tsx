@@ -12,9 +12,9 @@ export const Tables = () => {
   const [activePage, setActivePage] = useState<number>(1);
   const [inactivePage, setInactivePage] = useState<number>(1);
 
-  const { data: activeProxies } = useGetActiveProxies({ per_page: activePage });
+  const { data: activeProxies } = useGetActiveProxies({ page: activePage });
   const { data: inactiveProxies } = useGetInactiveProxies({
-    per_page: inactivePage,
+    page: inactivePage,
   });
 
   return (
