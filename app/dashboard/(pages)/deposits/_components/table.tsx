@@ -26,19 +26,47 @@ export const Table = ({
   nextButton,
   setPage,
 }: TableProps) => {
-  const handleNextPage = () => setPage(Math.min(currentPage + 1, totalPages));
-  const handlePreviousPage = () => setPage(Math.max(currentPage - 1, 1));
+  /**
+   * Navigate to the next page, ensuring we don't exceed total pages.
+   */
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setPage(currentPage + 1);
+  };
 
+  /**
+   * Navigate to the previous page, ensuring we don't go below page 1.
+   */
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setPage(currentPage - 1);
+  };
+
+  /**
+   * Generate pagination buttons with dynamic ranges and ellipses for better UX.
+   */
   const generatePagination = () => {
-    const maxVisiblePages = 5;
-    const pages = [];
+    const visiblePages = 3; // Number of visible pages on each side of the current page.
+    const pages: JSX.Element[] = [];
 
-    const startPage = Math.max(
-      1,
-      currentPage - Math.floor(maxVisiblePages / 2)
-    );
-    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    const startPage = Math.max(1, currentPage - visiblePages);
+    const endPage = Math.min(totalPages, currentPage + visiblePages);
 
+    // Add first page and ellipsis if current page is far from start.
+    if (startPage > 1) {
+      pages.push(
+        <Button
+          key={1}
+          variant={currentPage === 1 ? "outline" : "ghost"}
+          onClick={() => setPage(1)}
+        >
+          1
+        </Button>
+      );
+      if (startPage > 2) {
+        pages.push(<MoreHorizontal key="start-ellipsis" className="h-4 w-4" />);
+      }
+    }
+
+    // Add middle pages dynamically.
     for (let i = startPage; i <= endPage; i++) {
       pages.push(
         <Button
@@ -51,9 +79,19 @@ export const Table = ({
       );
     }
 
+    // Add last page and ellipsis if current page is far from end.
     if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        pages.push(<MoreHorizontal key="end-ellipsis" className="h-4 w-4" />);
+      }
       pages.push(
-        <MoreHorizontal key="more" className="h-4 w-4 mx-1 text-gray-500" />
+        <Button
+          key={totalPages}
+          variant={currentPage === totalPages ? "outline" : "ghost"}
+          onClick={() => setPage(totalPages)}
+        >
+          {totalPages}
+        </Button>
       );
     }
 
@@ -62,15 +100,20 @@ export const Table = ({
 
   return (
     <div className="flex-1 overflow-hidden">
+      {/* Header */}
       <div className="w-full flex flex-col rounded-t-md py-6 px-4">
         <h3 className="font-medium text-lg">{title}</h3>
       </div>
+
+      {/* Data Table */}
       <DataTable columns={columns} data={data} />
+
+      {/* Pagination */}
       <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5 px-6">
         <Button
           variant="outline"
           onClick={handlePreviousPage}
-          disabled={prevButton}
+          disabled={currentPage === 1 || prevButton}
         >
           <ChevronLeft className="h-4 w-4" />
           <span>Previous</span>
@@ -79,7 +122,7 @@ export const Table = ({
         <Button
           variant="outline"
           onClick={handleNextPage}
-          disabled={nextButton}
+          disabled={currentPage === totalPages || nextButton}
         >
           <span>Next</span>
           <ChevronRight className="h-4 w-4" />
