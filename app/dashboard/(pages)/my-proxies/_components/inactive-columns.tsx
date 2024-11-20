@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ActiveProxiesCellActions } from "./cell-actions";
+import { InactiveProxiesCellActions } from "./cell-actions";
 
 type Proxy = {
   id: number;
@@ -107,6 +107,6 @@ export const inactiveColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <ActiveProxiesCellActions data={row.original} />,
+    cell: ({ row }) => <InactiveProxiesCellActions data={row.original} />,
   },
 ];
