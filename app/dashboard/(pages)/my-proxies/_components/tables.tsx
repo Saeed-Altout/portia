@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import { Table } from "@/components/table";
+import { activeColumns } from "./active-columns";
 import { inactiveColumns } from "./inactive-columns";
 
 import { useGetActiveProxies } from "@/hooks/dashboard/use-get-active-proxies";
 import { useGetInactiveProxies } from "@/hooks/dashboard/use-get-inactive-proxies";
-import { Table } from "@/components/table";
-import { activeColumns } from "./active-columns";
 
 export const Tables = () => {
   const [activePage, setActivePage] = useState<number>(1);
@@ -14,15 +14,22 @@ export const Tables = () => {
 
   const { data: activeProxies, refetch: refetchActiveProxies } =
     useGetActiveProxies({ page: activePage });
-  const { data: inactiveProxies } = useGetInactiveProxies({
-    page: inactivePage,
-  });
+  const { data: inactiveProxies, refetch: refetchInactiveProxies } =
+    useGetInactiveProxies({
+      page: inactivePage,
+    });
 
   useEffect(() => {
     if (activePage) {
       refetchActiveProxies();
     }
   }, [activePage, refetchActiveProxies]);
+
+  useEffect(() => {
+    if (inactivePage) {
+      refetchInactiveProxies();
+    }
+  }, [inactivePage, refetchInactiveProxies]);
 
   return (
     <>
