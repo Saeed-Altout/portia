@@ -65,18 +65,5 @@ export const proxyStore = create<ProxyStoreProps>((set) => ({
   setPrice: (price: number) => set({ price }),
 
   duration: 0,
-  setDuration: (duration: number) =>
-    set(() => {
-      if (duration === 1) {
-        return { duration: 0.01 };
-      } else if (duration === 10) {
-        return { duration: 0.1 };
-      } else if (duration === 24) {
-        return { duration: 1.0 };
-      } else if (duration === 48) {
-        return { duration: 2.0 };
-      } else {
-        return { duration: 0.01 };
-      }
-    }),
+  setDuration: (duration: number) => set({ duration }),
 }));
