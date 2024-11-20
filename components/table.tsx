@@ -109,7 +109,7 @@ export const Table = ({
       <DataTable columns={columns} data={data} />
 
       {/* Pagination */}
-      <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5 px-6">
+      <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5">
         <Button
           variant="outline"
           onClick={handlePreviousPage}
@@ -118,7 +118,9 @@ export const Table = ({
           <ChevronLeft className="h-4 w-4" />
           <span>Previous</span>
         </Button>
-        <div className="flex items-center gap-2">{generatePagination()}</div>
+        <div className="flex items-center space-x-2">
+          {generatePagination()}
+        </div>
         <Button
           variant="outline"
           onClick={handleNextPage}
