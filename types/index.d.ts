@@ -312,3 +312,11 @@ declare type GetProxiesCounts = {
 };
 
 declare type GetProxiesCountsResponse = RootObj<GetProxiesCounts>;
+
+type PlanWithPriceResponse = {
+  plan: Array<{
+    value: number;
+    price: number;
+    duration: number;
+  }>;
+};
