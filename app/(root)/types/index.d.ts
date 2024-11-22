@@ -74,7 +74,7 @@ declare type Offer = {
   id: number;
   amount: number;
   cost: string;
-  is_top: boolean;
+  is_popular: boolean;
   plan: string;
   package: {
     id: number;
