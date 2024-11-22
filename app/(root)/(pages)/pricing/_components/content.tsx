@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { OfferCard } from "./offer-card";
 import { OfferSkeleton } from "./offer-skeleton";
 
@@ -19,7 +20,12 @@ export const Content = () => {
           </div>
         )}
         {isSuccess && (
-          <div className="w-full grid grid-cols-1 md:grid-cols-4">
+          <div
+            className={cn(
+              "w-full grid grid-cols-1",
+              `md:grid-cols-${offers.data.length + 1}`
+            )}
+          >
             {offers.data.map((offer, offerIndex) => (
               <OfferCard
                 key={offerIndex}
