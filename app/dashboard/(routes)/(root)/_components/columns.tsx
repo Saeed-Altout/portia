@@ -1,11 +1,11 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
-
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
+import { format } from "date-fns";
+import { ColumnDef } from "@tanstack/react-table";
+
 import { CellActions } from "./cell-actions";
+import { CellRenew } from "./cell-renew";
 
 type Proxy = {
   id: number;
@@ -31,7 +31,7 @@ type Proxy = {
   user_id: number;
 };
 
-export const columns: ColumnDef<Proxy>[] = [
+export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "#",
@@ -39,35 +39,25 @@ export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "re_new",
     header: "Renew",
-    cell: ({ row }) => (
-      <Checkbox disabled checked={row.original.re_new !== 0} />
-    ),
+    cell: ({ row }) => <CellRenew data={row} />,
   },
   {
     accessorKey: "is_active",
     header: "Status",
     cell: ({ row }) => (
-      <div>
-        {row.original.is_active === 1 ? (
+      <>
+        {row.original.is_active === 1 && (
           <span className="text-[#035E5C] bg-[#D4FFFE] font-medium text-xs px-2 py-1 rounded-full leading-none">
             Active
           </span>
-        ) : (
-          <span className="text-[#801121] bg-[#F7B5BF] font-medium text-xs px-2 py-1 rounded-full leading-none">
-            Expired
-          </span>
         )}
-      </div>
+      </>
     ),
   },
   {
     accessorKey: "package_id",
     header: "Package",
   },
-  // {
-  //   accessorKey: "plan",
-  //   header: "Plan",
-  // },
   {
     accessorKey: "protocol",
     header: "Type",
@@ -88,7 +78,7 @@ export const columns: ColumnDef<Proxy>[] = [
   },
   {
     accessorKey: "expire_at",
-    header: "Expired Data",
+    header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
       <p className={cn(row.original.expire_at && "text-[#801121]")}>
         {format(row.original.expire_at, "MMM dd, yyyy")}
@@ -107,6 +97,6 @@ export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <CellActions data={row.original} />,
+    cell: ({ row }) => <CellActions data={row} />,
   },
 ];

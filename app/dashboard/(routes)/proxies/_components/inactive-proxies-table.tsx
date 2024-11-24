@@ -10,17 +10,16 @@ import { useGetInactiveProxies } from "@/hooks";
 export const InactiveProxiesTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const { data, refetch } = useGetInactiveProxies({ page: currentPage });
+  const { data } = useGetInactiveProxies({ page: currentPage });
 
   useEffect(() => {
     if (data?.data) {
-      setTotalPages(data.data.total);
+      const total = data.data.total;
+      const per_page = data.data.per_page;
+      const totalPages = Math.ceil(total / per_page);
+      setTotalPages(totalPages);
     }
   }, [data]);
-
-  useEffect(() => {
-    refetch();
-  }, [currentPage, refetch]);
 
   return (
     <DataTable

@@ -6,6 +6,7 @@ import { useGetServiceProvider } from "./dashboard/use-get-service-providers";
 import { useGetIpRotations } from "./dashboard/use-get-ip-rotations";
 import { useGetActiveProxies } from "./dashboard/use-get-active-proxies";
 import { useGetInactiveProxies } from "./dashboard/use-get-inactive-proxies";
+import { useGetUserBalance } from "./dashboard/use-get-user-balance";
 export {
   useGetAllPackages,
   useGetAllLocations,
@@ -15,4 +16,5 @@ export {
   useGetIpRotations,
   useGetActiveProxies,
   useGetInactiveProxies,
+  useGetUserBalance,
 };

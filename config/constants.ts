@@ -18,6 +18,7 @@ export const API_GET_IP_ROTATIONS = "/get-Ip-Rotations";
 export const API_GET_PROXIES_COUNTS = "/proxies/counts";
 export const API_GET_PROXIES_ACTIVE = "/proxies/active";
 export const API_GET_PROXIES_INACTIVE = "/proxies/inactive";
+export const API_GET_USER_BALANCE = "/get-user-balance";
 
 // Constants
 const NAME_PROJECT = "PORTIA";

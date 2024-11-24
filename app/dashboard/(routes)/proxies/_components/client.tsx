@@ -17,19 +17,19 @@ export const ProxiesClient = () => {
   const formattedStatistic = [
     {
       icon: Zap,
-      label: "My Active Proxies",
+      title: "My Active Proxies",
       theme: "success",
       value: `${activeProxiesCount} Proxies`,
     },
     {
       icon: Zap,
-      label: "My Expired Proxies",
+      title: "My Expired Proxies",
       theme: "danger",
       value: `${inactiveProxiesCount} Proxies`,
     },
     {
       icon: Zap,
-      label: "All Proxies",
+      title: "All Proxies",
       theme: "primary",
       value: `${totalProxiesCount} Proxies`,
     },
@@ -45,7 +45,7 @@ export const ProxiesClient = () => {
               <Circle fill={item.theme as any}>
                 <Icon icon={item.icon} theme={item.theme as any} />
               </Circle>
-              <p className="font-medium">{item.label}</p>
+              <p className="font-medium">{item.title}</p>
             </div>
             <h4 className="text-4xl font-semibold">{item.value}</h4>
           </div>

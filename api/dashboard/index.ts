@@ -1,7 +1,7 @@
 // User
 import { getUserDetails } from "./get-user-details";
 import { updateUserProfile } from "./update-user-profile";
-
+import { getUserBalance } from "./get-user-balance";
 // Pricing plans
 import { getPricingPlans } from "./get-pricing-plans";
 
@@ -30,4 +30,5 @@ export {
   getAllLocations,
   getPackages,
   addProxy,
+  getUserBalance,
 };

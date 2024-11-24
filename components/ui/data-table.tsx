@@ -47,33 +47,21 @@ export function DataTable<TData, TValue>({
   const getPageNumbers = () => {
     const range = [];
     const delta = 2;
-
-    if (totalPages <= 5) {
-      for (let i = 0; i < totalPages; i++) {
-        range.push(i);
-      }
-    } else {
-      range.push(0);
-
-      if (currentPage - delta > 1) {
-        range.push("...");
-      }
-
-      for (
-        let i = Math.max(currentPage - delta, 1);
-        i <= Math.min(currentPage + delta, totalPages - 2);
-        i++
-      ) {
-        range.push(i);
-      }
-
-      if (currentPage + delta < totalPages - 2) {
-        range.push("...");
-      }
-
-      range.push(totalPages - 1);
+    if (totalPages <= 1) return [1];
+    const addEllipsis = (array: any[], condition: boolean) => {
+      if (condition) array.push("...");
+    };
+    range.push(1);
+    addEllipsis(range, currentPage - delta > 2);
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i);
     }
-
+    addEllipsis(range, currentPage + delta < totalPages - 1);
+    range.push(totalPages);
     return range;
   };
 
@@ -153,7 +141,7 @@ export function DataTable<TData, TValue>({
                 )}
                 onClick={() => handlePageChange(page)}
               >
-                {page + 1}
+                {page}
               </Button>
             ) : (
               <Button variant="ghost" key={index}>

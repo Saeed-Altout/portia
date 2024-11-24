@@ -6,7 +6,6 @@ import { activeColumns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 
 import { useGetActiveProxies } from "@/hooks";
-
 export const ActiveProxiesTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);

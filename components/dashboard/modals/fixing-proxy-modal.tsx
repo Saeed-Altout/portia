@@ -14,8 +14,10 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { useFixingProxy } from "@/components/dashboard/hooks/modals/use-fixing-proxy";
+import { useModalStore } from "@/stores";
 
 export const FixingProxyModal = () => {
+  const { fixProxyModalIsOpen, fixProxyModalOnClose } = useModalStore();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const fixingProxy = useFixingProxy();
@@ -36,20 +38,20 @@ export const FixingProxyModal = () => {
 
   const onChange = (open: boolean) => {
     if (!open && !isLoading) {
-      fixingProxy.onClose();
+      fixProxyModalOnClose();
     }
   };
 
   return (
-    <Dialog open={fixingProxy.isOpen} onOpenChange={onChange}>
+    <Dialog open={fixProxyModalIsOpen} onOpenChange={onChange}>
       <DialogContent className="max-w-sm sm:max-w-[480px]">
         <DialogHeader>
           <DialogTitle className="text-lg font-medium">
             Fixing proxy (id:24) troublesShoot
           </DialogTitle>
           <DialogDescription className="text-sm font-normal">
-            if the proxy doesn&apos;t work for any reason click this button
-            below to diagnostics
+            if the proxy does&apos;t work for any reason click this button below
+            to diagnostics
           </DialogDescription>
         </DialogHeader>
         <div className="flex justify-between items-center gap-5">
@@ -58,7 +60,7 @@ export const FixingProxyModal = () => {
             variant="outline"
             className="basis-1/2"
             disabled={isLoading}
-            onClick={() => fixingProxy.onClose()}
+            onClick={fixProxyModalOnClose}
           >
             Cancel
           </Button>
