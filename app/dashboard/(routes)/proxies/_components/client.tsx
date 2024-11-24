@@ -8,8 +8,7 @@ import { Circle, Icon } from "@/components/ui/circle-icon";
 import { ActiveProxiesTable } from "./active-proxies-table";
 import { InactiveProxiesTable } from "./inactive-proxies-table";
 
-import { useAuthStore } from "@/stores/auth-store";
-import { useProxyStore } from "@/stores/new/proxy-store";
+import { useAuthStore, useProxyStore } from "@/stores";
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
   const { activeProxiesCount, inactiveProxiesCount, totalProxiesCount } =
