@@ -1,11 +1,13 @@
 "use client";
 import { Activity } from "lucide-react";
 
-import { useModalStore } from "@/stores";
+import { Proxy } from "./columns";
 import { Button } from "@/components/ui/button";
 
-export const CellActions = ({ data }: { data: any }) => {
-  const { fixProxyModalOnOpen, activeProxyModalOnOpen } = useModalStore();
+import { useModalStore } from "@/stores";
+
+export const CellActions = ({ data }: { data: Proxy }) => {
+  const { fixProxyModalOnOpen, setFixProxy } = useModalStore();
 
   return (
     <>
@@ -13,14 +15,18 @@ export const CellActions = ({ data }: { data: any }) => {
         <Button
           size="sm"
           className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
-          onClick={fixProxyModalOnOpen}
+          onClick={() => {
+            setFixProxy({
+              proxy_id: data.proxy_id,
+              pkg_id: data.package_id,
+            });
+            fixProxyModalOnOpen();
+          }}
         >
           <Activity className="h-4 w-4" />
           <span className="sr-only">Activity Icon</span>
         </Button>
-        <Button size="sm" onClick={activeProxyModalOnOpen}>
-          Manage
-        </Button>
+        <Button size="sm">Manage</Button>
       </div>
     </>
   );

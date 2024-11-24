@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 interface FixProxy {
-  pkg_id: number;
-  proxy_id: number;
+  pkg_id: string;
+  proxy_id: string;
 }
 export interface ModalStoreProps {
   renewProxyModalIsOpen: boolean;
@@ -27,8 +27,8 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   renewProxyModalOnClose: () => set({ renewProxyModalIsOpen: false }),
 
   fixProxy: {
-    pkg_id: 0,
-    proxy_id: 0,
+    pkg_id: "",
+    proxy_id: "",
   },
   setFixProxy: (data) => set({ fixProxy: data }),
 

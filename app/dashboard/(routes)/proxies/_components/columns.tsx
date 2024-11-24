@@ -10,7 +10,7 @@ import {
 } from "./cell-actions";
 import { CellRenew } from "./cell-renew";
 
-type Proxy = {
+export type Proxy = {
   id: number;
   proxy_id: string;
   parent_proxy_id: string;
@@ -100,7 +100,7 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <ActiveProxiesCellActions data={row} />,
+    cell: ({ row }) => <ActiveProxiesCellActions data={row.original} />,
   },
 ];
 

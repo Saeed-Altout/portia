@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellActions } from "./cell-actions";
 import { CellRenew } from "./cell-renew";
 
-type Proxy = {
+export type Proxy = {
   id: number;
   proxy_id: string;
   parent_proxy_id: string;
@@ -97,6 +97,6 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <CellActions data={row} />,
+    cell: ({ row }) => <CellActions data={row.original} />,
   },
 ];

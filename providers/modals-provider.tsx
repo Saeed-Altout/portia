@@ -7,9 +7,10 @@ import { ActivateNewProxyModal } from "@/components/dashboard/modals/activate-ne
 import { ChangeProxyLocationModal } from "@/components/dashboard/modals/change-proxy-location-modal";
 import { ChangeProxyTypeModal } from "@/components/dashboard/modals/change-proxy-type-modal";
 import { ChangeProxyAuthenticationsModal } from "@/components/dashboard/modals/change-proxy-authentications-modal copy";
-import { FixingProxyModal } from "@/components/dashboard/modals/fixing-proxy-modal";
+import { FixProxyModal } from "@/components/dashboard/modals/fix-proxy-modal";
 import { LogoutModal } from "@/components/dashboard/modals/logout-modal";
 import { AddProxyModal } from "@/components/dashboard/modals/add-proxy-modal";
+import { RenewExpiredProxiesModal } from "@/components/dashboard/modals/renew-expired-proxies-modal";
 
 export const ModalProviders = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -30,7 +31,8 @@ export const ModalProviders = () => {
       <ChangeProxyLocationModal />
       <ChangeProxyTypeModal />
       <ChangeProxyAuthenticationsModal />
-      <FixingProxyModal />
+      <RenewExpiredProxiesModal />
+      <FixProxyModal />
       <LogoutModal />
     </>
   );

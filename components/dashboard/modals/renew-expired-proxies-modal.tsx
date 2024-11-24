@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 
 import { Modal } from "@/components/dashboard/modal";
 import { CustomField, FiledType } from "@/components/ui/custom-field";
+import { useModalStore } from "@/stores";
 
 const activateNewProxySchema = z.object({
   package: z.string().min(2),
@@ -28,17 +29,10 @@ const activateNewProxySchema = z.object({
   password: z.string().min(2),
 });
 
-interface RenewExpiredProxiesModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const RenewExpiredProxiesModal = ({
-  isOpen,
-  onClose,
-}: RenewExpiredProxiesModalProps) => {
+export const RenewExpiredProxiesModal = () => {
   const [step, setStep] = React.useState<number>(1);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { renewProxyModalIsOpen, renewProxyModalOnClose } = useModalStore();
 
   const form = useForm<z.infer<typeof activateNewProxySchema>>({
     resolver: zodResolver(activateNewProxySchema),
@@ -59,7 +53,7 @@ export const RenewExpiredProxiesModal = ({
     setIsLoading(true);
     try {
       setTimeout(() => {
-        onClose();
+        renewProxyModalOnClose();
         setStep(1);
         console.log(values);
         toast.success("Proxy activated successfully");
@@ -93,8 +87,8 @@ export const RenewExpiredProxiesModal = ({
     <Modal
       title="Renew Expired Proxy (id:19)"
       description="New order - Renew - 5G mobile proxy"
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={renewProxyModalIsOpen}
+      onClose={renewProxyModalOnClose}
       progress={step * 35}
       icon={Zap}
     >
@@ -138,7 +132,7 @@ export const RenewExpiredProxiesModal = ({
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={onClose}
+                onClick={renewProxyModalOnClose}
                 disabled={isLoading}
               >
                 Cancel

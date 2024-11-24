@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { useModalStore } from "@/stores/use-modal-store";
+import { useModalStore } from "@/stores";
 
 export const CellRenew = ({ data }: { data: any }) => {
   const { renewProxyModalOnOpen } = useModalStore();
