@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { getAccessToken } from "@/lib/auth";
+import { useAuthStore } from "@/stores/auth-store";
 
 export const UnProtectedRoute = ({
   children,
@@ -11,15 +11,21 @@ export const UnProtectedRoute = ({
   children: React.ReactNode;
 }) => {
   const router = useRouter();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
-    const token = getAccessToken();
-    console.log(!!token);
-
-    if (!!token) {
+    setIsMounted(true);
+    if (isAuthenticated) {
       router.push("/dashboard");
     }
-  }, [router]);
 
-  return children;
+    return () => setIsMounted(false);
+  }, [isAuthenticated, router]);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  return !isAuthenticated ? children : null;
 };

@@ -9,15 +9,15 @@ import { overviewData } from "@/constants";
 import { Table } from "@/components/table";
 import { Heading, OverviewCard } from "@/components/dashboard";
 
-import { useGetUserDetails } from "@/hooks/dashboard";
+import { useAuthStore } from "@/stores/auth-store";
 import { useGetActiveProxies } from "@/hooks/dashboard/use-get-active-proxies";
 
 export default function OverviewPage() {
   const [activePage, setActivePage] = useState<number>(1);
+  const { user } = useAuthStore();
   const { data: activeProxies, refetch } = useGetActiveProxies({
     page: activePage,
   });
-  const { data: user } = useGetUserDetails();
 
   useEffect(() => {
     if (activePage) {
@@ -27,11 +27,7 @@ export default function OverviewPage() {
 
   return (
     <>
-      <Heading
-        title={`Welcome back ${user?.data.first_name ?? ""}`}
-        newProxy
-        addFunds
-      />
+      <Heading title={`Welcome back ${user.first_name}`} newProxy addFunds />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {overviewData.map((item, index) => (
           <OverviewCard key={index} initialData={item} />

@@ -320,3 +320,23 @@ type PlanWithPriceResponse = {
     duration: number;
   }>;
 };
+
+// /////////////////////////////////////////
+declare type ILoginRequest = {
+  email: string;
+  password: string;
+};
+declare type ILoginResponse = {
+  status: boolean;
+  data: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    referred_code: string;
+  };
+  message: string;
+  access_token: string;
+  token_type: string;
+  expires_in: string;
+};

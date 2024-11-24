@@ -6,6 +6,7 @@ import {
   Star,
   Zap,
 } from "lucide-react";
+
 // Endpoints
 export const API_GET_ALL_PACKAGES = "/get-all-packages";
 export const API_GET_ALL_LOCATIONS = "/get-proxy-locations";
@@ -18,12 +19,15 @@ export const API_GET_PROXIES_COUNTS = "/proxies/counts";
 export const API_GET_PROXIES_ACTIVE = "/proxies/active";
 export const API_GET_PROXIES_INACTIVE = "/proxies/inactive";
 
-const NAME = "cws-portia";
-// Special Keys For LocalStorage
-export const EMAIL = `${NAME}-email`;
-export const TOKEN_KEY = `${NAME}-token`;
-export const USER_KEY = `${NAME}-user-metadata`;
+// Constants
+const NAME_PROJECT = "PORTIA";
+const NAME_SECRET = "NEXT_CWS";
 
+export const TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_TOKEN`;
+export const EMAIL_KEY = `${NAME_SECRET}_${NAME_PROJECT}_EMAIL`;
+export const USER_KEY = `${NAME_SECRET}_${NAME_PROJECT}_USER`;
+// Special Keys For LocalStorage
+export const EMAIL = `${NAME_PROJECT}-email`;
 export const AUTH_COOKIE_TOKEN = "cws-portia-token";
 export const AUTH_COOKIE_REFRESH_TOKEN = "cws-portia-refresh_token";
 export const AUTH_COOKIE_SESSION = "cws-portia-session";

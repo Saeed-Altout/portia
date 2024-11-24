@@ -1,35 +1,36 @@
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
 import { login } from "@/api/auth";
-import { useResponse } from "@/hooks/auth";
-import { setAccessToken, setSession } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
+import { setToken, setUser } from "@/utils/cookie";
+export const useLogin = () => {
+  const router = useRouter();
+  const { toast } = useToast();
 
-export const useLogin = (isRememberMe: boolean) => {
-  const { Success, Error } = useResponse();
-  return useMutation<
-    LoginResponseType,
-    AxiosError<ErrorResponse>,
-    LoginRequestType
-  >({
+  return useMutation({
     mutationKey: ["login"],
-    mutationFn: async (data) => login(data),
-    onSuccess: (res, req) => {
-      const expirationDays = isRememberMe ? +res.expires_in.split(" ")[0] : 0;
-      setAccessToken(res.access_token, {
-        days: +res.expires_in.split(" ")[0],
+    mutationFn: (data: ILoginRequest) => login(data),
+    onSuccess: (data) => {
+      setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
+      setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
+
+      toast({
+        title: "Login",
+        description: data.message ?? "Login successfully",
       });
-      setSession(req, {
-        days: expirationDays,
-      });
-      Success({
-        message: res.message,
-        refresh: true,
-        redirectTo: "/dashboard",
-      });
+
+      router.refresh();
     },
     onError(error) {
-      Error({ error });
+      if (error instanceof AxiosError && error.response) {
+        const message = error.response.data.message;
+        toast({
+          title: "Login",
+          description: message ?? "Something went wrong!!",
+        });
+      }
     },
   });
 };
