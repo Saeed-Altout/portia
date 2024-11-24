@@ -25,14 +25,16 @@ export const ModalProviders = () => {
 
   return (
     <>
+      <FixProxyModal />
+
       <AddProxyModal />
+
       {/* <ActivateNewProxyModal /> */}
       <AddFundsModal />
       <ChangeProxyLocationModal />
       <ChangeProxyTypeModal />
       <ChangeProxyAuthenticationsModal />
       <RenewExpiredProxiesModal />
-      <FixProxyModal />
       <LogoutModal />
     </>
   );

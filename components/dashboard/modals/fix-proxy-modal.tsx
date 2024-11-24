@@ -3,15 +3,15 @@
 import { BeatLoader } from "react-spinners";
 
 import { Button } from "@/components/ui/button";
+import { Modal } from "@/components/ui/modal";
 
 import { useModalStore } from "@/stores";
 import { useFixProxy } from "@/hooks";
-import { Modal } from "../modal";
 
 export const FixProxyModal = () => {
+  const { mutate, isPending } = useFixProxy();
   const { fixProxyModalIsOpen, fixProxyModalOnClose, fixProxy } =
     useModalStore();
-  const { mutate, isPending } = useFixProxy();
 
   const onSubmit = () => {
     mutate(fixProxy);
@@ -19,29 +19,22 @@ export const FixProxyModal = () => {
 
   return (
     <Modal
-      title="Fixing proxy (id:24) troublesShoot"
+      title={`Fixing proxy (id:${fixProxy.proxy_id}) troublesShoot`}
       description="if the proxy does't work for any reason click this button below to diagnostics"
       isOpen={fixProxyModalIsOpen}
       onClose={fixProxyModalOnClose}
     >
       <div className="flex justify-between items-center gap-5">
         <Button
-          type="button"
           variant="outline"
-          className="basis-1/2"
           disabled={isPending}
           onClick={fixProxyModalOnClose}
+          className="w-full"
         >
           Cancel
         </Button>
-        <Button
-          type="button"
-          variant="default"
-          className="basis-1/2"
-          disabled={isPending}
-          onClick={onSubmit}
-        >
-          {isPending ? <BeatLoader color="#fff" /> : "Fix my proxy"}
+        <Button disabled={isPending} onClick={onSubmit} className="w-full">
+          {isPending ? <BeatLoader color="#fff" size={12} /> : "Fix my proxy"}
         </Button>
       </div>
     </Modal>
