@@ -5,13 +5,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RenewExpiredProxiesModal } from "@/components/dashboard/modals/renew-expired-proxies-modal";
 import { Activity } from "lucide-react";
+import { useModalStore } from "@/stores/use-modal-store";
 
 interface CellActionsProps {
   data: any;
 }
 
 export const ActiveProxiesCellActions = ({ data }: CellActionsProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { fixProxyModalOnOpen, activeProxyModalOnOpen } = useModalStore();
 
   return (
     <>
@@ -19,11 +20,14 @@ export const ActiveProxiesCellActions = ({ data }: CellActionsProps) => {
         <Button
           size="sm"
           className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
+          onClick={fixProxyModalOnOpen}
         >
           <Activity className="h-4 w-4" />
           <span className="sr-only">Activity Icon</span>
         </Button>
-        <Button size="sm">Manage</Button>
+        <Button size="sm" onClick={activeProxyModalOnOpen}>
+          Manage
+        </Button>
       </div>
     </>
   );

@@ -19,7 +19,7 @@ export const routes = [
   },
   {
     label: "My Proxies",
-    href: "/dashboard/my-proxies",
+    href: "/dashboard/proxies",
   },
   {
     label: "Pricing Plans",

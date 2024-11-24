@@ -30,7 +30,7 @@ export const LoginForm = () => {
   const [isRememberMe, setIsRememberMe] = useState<boolean>(false);
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");
 
-  const { mutate, isPending } = useLogin(isRememberMe);
+  const { mutate, isPending } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
