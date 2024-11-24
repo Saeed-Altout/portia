@@ -16,7 +16,7 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 flex h-[72px] items-center gap-4 bg-background px-4 md:px-6 z-10">
+    <header className="sticky top-0 flex h-[72px] items-center gap-4 bg-background px-4 md:px-6 z-10 border-b">
       <nav className="hidden md:flex flex-row items-center gap-6">
         <Link href="/dashboard" className="relative h-[27px] w-[91px]">
           <Image src="/icons/logo.svg" alt="Logo" fill priority />

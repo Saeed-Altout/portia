@@ -15,7 +15,7 @@ export enum QueryKeys {
 export const routes = [
   {
     label: "Dashboard",
-    href: "/dashboard/",
+    href: "/dashboard",
   },
   {
     label: "My Proxies",
