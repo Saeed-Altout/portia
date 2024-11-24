@@ -1,6 +1,6 @@
 // Layouts
-import { Navbar } from "./_layouts/navbar";
-import { Banner } from "./_layouts/banner";
+import { Navbar } from "../../app/dashboard/_components/navbar";
+import { Banner } from "../../app/dashboard/_components/banner";
 
 // Cards
 import { OverviewCard } from "./cards/overview-card";

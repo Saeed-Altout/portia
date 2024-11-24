@@ -1,5 +1,8 @@
-import { Banner, Navbar } from "@/components/dashboard";
+import { Banner } from "./_components/banner";
+import { Navbar } from "./_components/navbar";
+
 import { ProtectedRoute } from "@/guard/protected-route";
+
 import { ModalProviders } from "@/providers/modals-provider";
 import { DashboardProvider } from "@/providers/dashboard-provider";
 

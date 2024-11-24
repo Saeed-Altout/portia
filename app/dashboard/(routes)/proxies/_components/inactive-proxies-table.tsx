@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import { inactiveColumns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
-import { useGetInactiveProxies } from "@/hooks/dashboard/use-get-inactive-proxies";
+
+import { useGetInactiveProxies } from "@/hooks";
 
 export const InactiveProxiesTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -12,7 +14,7 @@ export const InactiveProxiesTable = () => {
 
   useEffect(() => {
     if (data?.data) {
-      setTotalPages(data.data.last_page);
+      setTotalPages(data.data.total);
     }
   }, [data]);
 
