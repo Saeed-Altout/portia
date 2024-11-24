@@ -4,6 +4,7 @@ import { ChartColumn, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { proxyStore } from "@/stores/proxy-store";
+import { useAuthStore } from "@/stores/auth-store";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -24,7 +25,7 @@ export const Heading = ({
   children,
 }: HeadingProps) => {
   const { onOpen } = proxyStore();
-
+  const { user } = useAuthStore();
   return (
     <div className="flex justify-between items-start lg:items-center flex-col lg:flex-row gap-4">
       <div className="flex flex-col gap-y-1">

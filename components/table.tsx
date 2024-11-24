@@ -99,17 +99,16 @@ export const Table = ({
   };
 
   return (
-    <div className="flex-1 overflow-hidden">
+    <div className="flex-1 overflow-hidden border rounded-md">
       {/* Header */}
       <div className="w-full flex flex-col rounded-t-md py-6 px-4">
         <h3 className="font-medium text-lg">{title}</h3>
       </div>
 
       {/* Data Table */}
-      <DataTable columns={columns} data={data} />
 
       {/* Pagination */}
-      <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5">
+      <div className="w-full flex justify-between items-center bg-white rounded-b-md py-5 px-4">
         <Button
           variant="outline"
           onClick={handlePreviousPage}
