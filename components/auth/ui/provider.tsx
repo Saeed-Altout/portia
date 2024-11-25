@@ -17,7 +17,7 @@ export const Provider = ({ isLoading }: ProviderProps) => {
       variant="outline"
       className="w-full flex items-center justify-center gap-x-2"
       disabled={isLoading || isPending}
-      onClick={() => mutate}
+      onClick={() => mutate()}
     >
       <FcGoogle className="w-4 h-4" />
       <span>Login with Google</span>
