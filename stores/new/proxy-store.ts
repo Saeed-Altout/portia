@@ -1,28 +1,12 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-interface ProxyState {
-  id: number;
-  proxy_id: string;
-  parent_proxy_id: string;
-  package_id: string;
-  rotation_time: string;
-  is_active: number;
-  re_new: number;
-  protocol: string;
-  protocol_port: number;
-  country_name: string;
-  city_name: string;
-  service_provider: string;
-  username: string;
-  password: string;
-  ip_addr: string;
-  duration: number;
-  price: string;
-  expire_at: string | Date;
-  created_at: string | Date;
-  updated_at: string | Date;
-  user_id: number;
+interface Costs {
+  plan: Array<{
+    value: number;
+    price: number;
+    duration: number;
+  }>;
 }
 
 const initialProxy: ProxyState = {
@@ -49,9 +33,23 @@ const initialProxy: ProxyState = {
   user_id: 0,
 };
 
+const initialLocation: LocationState = {
+  id: 0,
+  http_port: 0,
+  socks_port: 0,
+  service_provider_name: "",
+  country_name: "",
+  city_name: "",
+  rotation_time: 0,
+  is_available: false,
+};
+
 interface ProxyStore {
   proxy: ProxyState;
   setProxy: (proxy: ProxyState) => void;
+
+  location: LocationState;
+  setLocation: (location: LocationState) => void;
 
   activeProxies: ProxyState[];
   setActiveProxies: (proxies: ProxyState[]) => void;
@@ -73,12 +71,42 @@ interface ProxyStore {
 
   totalProxiesCount: number;
   setTotalProxiesCount: (count: number) => void;
+
+  packages: Package[];
+  setPackages: (packages: Package[]) => void;
+
+  protocol: number;
+  setProtocol: (protocol: number) => void;
+
+  pkgId: string;
+  setPkgId: (pkgId: string) => void;
+
+  ports: string[];
+  setPorts: (ports: string[]) => void;
+
+  plans: string[];
+  setPlans: (plans: string[]) => void;
+
+  costs: Costs;
+  setCosts: (costs: Costs) => void;
+
+  price: number;
+  setPrice: (price: number) => void;
+
+  duration: number;
+  setDuration: (duration: number) => void;
+
+  amounts: string[];
+  setAmounts: (amounts: string[]) => void;
 }
 
 export const useProxyStore = create<ProxyStore>()(
   immer((set) => ({
     proxy: initialProxy,
     setProxy: (proxy) => set((state) => void (state.proxy = proxy)),
+
+    location: initialLocation,
+    setLocation: (location) => set((state) => void (state.location = location)),
 
     activeProxies: [],
     setActiveProxies: (proxies) =>
@@ -110,5 +138,32 @@ export const useProxyStore = create<ProxyStore>()(
 
     totalProxiesCount: 0,
     setTotalProxiesCount: (count: number) => set({ totalProxiesCount: count }),
+
+    packages: [],
+    setPackages: (packages) => set({ packages }),
+
+    protocol: 0,
+    setProtocol: (protocol) => set({ protocol }),
+
+    pkgId: "",
+    setPkgId: (pkgId) => set({ pkgId }),
+
+    ports: [],
+    setPorts: (ports) => set({ ports }),
+
+    plans: [],
+    setPlans: (plans) => set({ plans }),
+
+    costs: { plan: [] },
+    setCosts: (costs) => set({ costs }),
+
+    price: 0,
+    setPrice: (price) => set({ price }),
+
+    duration: 0,
+    setDuration: (duration) => set({ duration }),
+
+    amounts: [],
+    setAmounts: (amounts) => set({ amounts }),
   }))
 );

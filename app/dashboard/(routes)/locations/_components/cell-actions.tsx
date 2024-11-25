@@ -1,23 +1,22 @@
-import { cn } from "@/lib/utils";
+"use client";
 import { Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { proxyStore } from "@/stores/proxy-store";
 import { useRouter, useSearchParams } from "next/navigation";
 
-interface CellActionsProps {
-  data: ListProxy;
-}
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useModalStore, useProxyStore } from "@/stores";
 
-export const CellActions = ({ data }: CellActionsProps) => {
-  const { setProxy, onOpen } = proxyStore();
+export const CellActions = ({ data }: { data: LocationState }) => {
+  const { activeProxyModalOnOpen } = useModalStore();
+  const { setLocation } = useProxyStore();
+
   const router = useRouter();
-  const params = useSearchParams();
-  const pathname = params.get("callback");
+  const callback = useSearchParams().get("callback");
 
   const onSelectProvider = () => {
-    setProxy(data);
-    onOpen();
-    router.push(pathname ?? "/dashboard");
+    setLocation(data);
+    activeProxyModalOnOpen();
+    router.push(callback ?? "/dashboard");
   };
 
   return (

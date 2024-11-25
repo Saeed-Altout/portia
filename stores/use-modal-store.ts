@@ -19,6 +19,11 @@ export interface ModalStoreProps {
   activeProxyModalIsOpen: boolean;
   activeProxyModalOnOpen: () => void;
   activeProxyModalOnClose: () => void;
+
+  step: number;
+  setStep: (step: number) => void;
+  moveNextStep: () => void;
+  movePrevStep: () => void;
 }
 
 export const useModalStore = create<ModalStoreProps>((set) => ({
@@ -30,7 +35,7 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
     pkg_id: "",
     proxy_id: "",
   },
-  setFixProxy: (data) => set({ fixProxy: data }),
+  setFixProxy: (fixProxy) => set({ fixProxy }),
 
   fixProxyModalIsOpen: false,
   fixProxyModalOnOpen: () => set({ fixProxyModalIsOpen: true }),
@@ -39,4 +44,9 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   activeProxyModalIsOpen: false,
   activeProxyModalOnOpen: () => set({ activeProxyModalIsOpen: true }),
   activeProxyModalOnClose: () => set({ activeProxyModalIsOpen: false }),
+
+  step: 1,
+  setStep: (step) => set({ step }),
+  moveNextStep: () => set((state) => ({ step: state.step + 1 })),
+  movePrevStep: () => set((state) => ({ step: state.step - 1 })),
 }));

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { columns } from "./_components/columns";
 import { DataTable } from "@/components/ui/data-table";
-import { Heading, Pagination } from "@/components/dashboard";
+import { Heading } from "@/components/dashboard";
 import {
   Select,
   SelectContent,
@@ -25,6 +25,7 @@ import {
 import { useLocationStore } from "@/stores/use-location-store";
 
 export default function LocationsPage() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const {
     offset,
     pkgId,
@@ -272,19 +273,15 @@ export default function LocationsPage() {
           </SelectContent>
         </Select>
       </div>
-      <div className="border rounded-md relative z-0">
-        <div className="w-full flex flex-col rounded-t-md py-6 px-4 relative">
-          <h3 className="font-medium text-lg">Filtered Locations</h3>
-        </div>
-        <DataTable columns={columns} data={locations?.data.list ?? []} />
-        <Pagination
-          prevButton={offset === 1}
-          nextButton={!locations?.data.has_more}
-          setPage={setOffset}
-          currentPage={offset}
-          totalPages={Math.ceil((locations?.data?.count ?? 10) / 10)}
-        />
-      </div>
+
+      <DataTable
+        title="Filtered Locations"
+        columns={columns}
+        data={locations?.data.list ?? []}
+        totalPages={locations?.data.count ?? 1}
+        currentPage={currentPage}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </>
   );
 }

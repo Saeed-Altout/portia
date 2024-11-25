@@ -21,7 +21,7 @@ export const useLogin = () => {
         description: data.message ?? "Login successfully",
       });
 
-      router.refresh();
+      router.push("/dashboard");
     },
     onError(error) {
       if (error instanceof AxiosError && error.response) {

@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 
 import * as z from "zod";
@@ -15,32 +14,23 @@ import { Modal } from "@/components/dashboard/modal";
 import { StepOne } from "./step-one";
 import { StepTwo } from "./step-two";
 import { StepThree } from "./step-three";
-import { proxyStore } from "@/stores/proxy-store";
-import { activateNewProxySchema } from "@/schemas";
 
 import { useAddProxy } from "@/hooks/dashboard";
-import { useGetPorts } from "@/hooks/dashboard/use-get-ports";
-import { useGetAllPackages } from "@/hooks/dashboard/use-get-all-packages";
+import { activateNewProxySchema } from "@/schemas";
+import { useModalStore, useProxyStore } from "@/stores";
 
 export const AddProxyModal = () => {
+  const { price, duration, location, protocol } = useProxyStore();
   const {
-    isOpen,
-    onClose,
     step,
     setStep,
     moveNextStep,
     movePrevStep,
-    proxy,
-    pkg_id,
-    setPackageId,
-    duration,
-  } = proxyStore();
-  const [protocolOptions, setProtocolOptions] = useState<string[]>([]);
+    activeProxyModalIsOpen,
+    activeProxyModalOnClose,
+  } = useModalStore();
 
   const { mutate, isPending } = useAddProxy();
-  const { data: packages } = useGetAllPackages();
-  const { data: portsData, refetch } = useGetPorts({ id: pkg_id });
-  const { price } = proxyStore();
 
   const form = useForm<z.infer<typeof activateNewProxySchema>>({
     resolver: zodResolver(activateNewProxySchema),
@@ -58,61 +48,39 @@ export const AddProxyModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof activateNewProxySchema>) => {
-    const protocolValue = values.protocol.includes("http")
-      ? proxy?.http_port
-      : proxy?.socks_port;
-
     mutate({
-      parent_proxy_id: proxy?.id.toString(),
+      parent_proxy_id: location?.id.toString(),
       pkg_id: values.pkg_id,
       re_new: values.re_new,
       protocol: values.protocol,
-      protocol_value: protocolValue,
+      protocol_value: protocol,
       duration: duration.toString(),
       username: values.username,
       password: values.password,
     });
   };
 
-  const onClickClose = () => {
+  const onClose = () => {
     form.reset();
     setStep(1);
-    onClose();
-  };
-
-  const handleProtocolSelect = (protocol: string) => {
-    form.setValue("protocol", protocol);
+    activeProxyModalOnClose();
   };
 
   useEffect(() => {
-    if (portsData?.data) {
-      setProtocolOptions(portsData.data);
+    if (step === 2 && location) {
+      form.setValue("ipRotation", `${location.rotation_time}`);
+      form.setValue("provider", `${location.service_provider_name}`);
     }
-  }, [portsData]);
-
-  useEffect(() => {
-    if (step === 2 && proxy) {
-      form.setValue("ipRotation", `${proxy.rotation_time}`);
-      form.setValue("provider", `${proxy.service_provider_name}`);
-    }
-  }, [form, proxy, step]);
+  }, [form, location, step]);
 
   const renderStep = () => {
     switch (step) {
       case 1:
-        return (
-          <StepOne isLoading={isPending} packages={packages?.data ?? []} />
-        );
+        return <StepOne isLoading={isPending} />;
       case 2:
         return <StepTwo isLoading={isPending} />;
       case 3:
-        return (
-          <StepThree
-            isLoading={isPending}
-            protocolOptions={protocolOptions}
-            onProtocolSelect={handleProtocolSelect}
-          />
-        );
+        return <StepThree isLoading={isPending} />;
       default:
         return null;
     }
@@ -121,9 +89,9 @@ export const AddProxyModal = () => {
   return (
     <Modal
       title="Activate a new proxy"
-      description="New order - 5G mobile proxy"
-      isOpen={isOpen}
-      onClose={onClickClose}
+      description={`New order - ${location.service_provider_name ?? ""} proxy`}
+      isOpen={activeProxyModalIsOpen}
+      onClose={onClose}
       progress={step * 35}
     >
       <Form {...form}>
@@ -134,19 +102,17 @@ export const AddProxyModal = () => {
           </div>
           <div className="flex flex-col items-center gap-4">
             {step == 3 && (
-              <Button
-                type="submit"
-                variant="default"
-                className="w-full"
-                disabled={isPending}
-              >
-                {isPending ? <BeatLoader color="#fff" /> : "Activate Proxy"}
+              <Button type="submit" className="w-full" disabled={isPending}>
+                {isPending ? (
+                  <BeatLoader color="#fff" size={12} />
+                ) : (
+                  "Activate Proxy"
+                )}
               </Button>
             )}
             {step !== 3 && (
               <Button
                 type="button"
-                variant="default"
                 className="w-full"
                 onClick={moveNextStep}
                 disabled={step === 3}
@@ -169,7 +135,7 @@ export const AddProxyModal = () => {
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={onClickClose}
+                onClick={onClose}
                 disabled={isPending}
               >
                 Cancel

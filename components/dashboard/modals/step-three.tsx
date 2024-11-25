@@ -20,18 +20,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
+import { useProxyStore } from "@/stores";
+
 interface StepThreeProps {
   isLoading?: boolean;
-  protocolOptions: string[];
-  onProtocolSelect: (protocol: string) => void;
 }
 
-export const StepThree = ({
-  isLoading,
-  protocolOptions,
-  onProtocolSelect,
-}: StepThreeProps) => {
+export const StepThree = ({ isLoading }: StepThreeProps) => {
   const { control } = useFormContext();
+  const { ports, location, setProtocol } = useProxyStore();
+
+  const onProtocolSelect = (protocolName: string) => {
+    if (location) {
+      const protocolValue = protocolName.includes("http")
+        ? location.http_port
+        : location.socks_port;
+
+      setProtocol(protocolValue);
+    }
+  };
 
   return (
     <>
@@ -42,7 +49,7 @@ export const StepThree = ({
           <FormItem>
             <FormLabel>Proxy Type</FormLabel>
             <Select
-              disabled={isLoading}
+              disabled={isLoading || ports.length == 0}
               defaultValue={field.value}
               onValueChange={(value) => {
                 field.onChange(value);
@@ -55,7 +62,7 @@ export const StepThree = ({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {protocolOptions.map((item, index) => (
+                {ports.map((item, index) => (
                   <SelectItem key={index} value={item}>
                     {item}
                   </SelectItem>

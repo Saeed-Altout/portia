@@ -21,71 +21,66 @@ import {
 
 import { proxyStore } from "@/stores/proxy-store";
 import { useGetPlansWithCost } from "@/hooks/dashboard/use-get-plans-with-cost";
+import { useProxyStore } from "@/stores";
 
 interface StepOneProps {
   isLoading?: boolean;
-  packages: {
-    id: number;
-    name: string;
-  }[];
 }
 
-export const StepOne = ({ isLoading, packages }: StepOneProps) => {
+interface ValuePlanProps {
+  price: number;
+  duration: number;
+  value: number;
+}
+
+export const StepOne = ({ isLoading }: StepOneProps) => {
+  const [valuePlan, setValuePlan] = useState<ValuePlanProps[]>([]);
   const { control } = useFormContext();
-  const { setPackageId, pkg_id, setDuration, setPrice } = proxyStore();
-  const { data: proxiesWithCost, isFetching: isFetchingPlans } =
-    useGetPlansWithCost({ pkg_id });
+  const {
+    packages,
+    plans,
+    costs,
+    amounts,
+    setPkgId,
+    setPrice,
+    setDuration,
+    setAmounts,
+  } = useProxyStore();
 
-  const [filteredPlans, setFilteredPlans] = useState<string[]>([]);
-  const [filteredAmounts, setFilteredAmounts] = useState<string[]>([]);
-
-  // Handle Package Selection
-  const handlePackageSelect = (value: string) => {
-    const packageId = Number(value);
-    setPackageId(packageId);
-
-    // Reset dependent fields
-    setFilteredPlans([]);
-    setFilteredAmounts([]);
+  const handlePackageSelect = (newPkgId: string) => {
+    setPkgId(newPkgId);
+    // Clear State
+    setValuePlan([]);
+    setAmounts([]);
+    setDuration(0);
+    setPrice(0);
   };
-
-  // Handle Plan Selection
   const handlePlanSelect = (plan: string) => {
-    const amounts =
-      proxiesWithCost?.data && plan in proxiesWithCost.data
-        ? proxiesWithCost.data[plan as keyof typeof proxiesWithCost.data]?.map(
-            (item) => String(item.value)
-          )
-        : [];
-    setFilteredAmounts(amounts);
+    const valuePlan = Object.entries(costs)
+      .filter(([key]) => key === plan)
+      .map(([, value]) => value)
+      .flat();
+
+    setValuePlan(valuePlan);
+
+    const amounts = valuePlan.map((item) => item.value);
+    setAmounts(amounts);
+
+    // Clear State
+    setDuration(0);
+    setPrice(0);
   };
 
-  // Handle Amount Selection
-  const handleAmountSelect = (value: string) => {
-    const selectedItem = Object.values(proxiesWithCost?.data || {})
-      .flatMap((items) => items)
-      .find((item) => String(item.value) === value);
-
-    if (selectedItem) {
-      setPrice(selectedItem.price);
-      setDuration(selectedItem.duration);
+  const handleAmountSelect = (amount: number) => {
+    const values = valuePlan.filter((item) => item.value == amount && item)[0];
+    if (values) {
+      setDuration(values.duration);
+      setPrice(values.price);
     }
   };
-
-  // Update Plans when Package Changes
-  useEffect(() => {
-    if (proxiesWithCost?.data) {
-      const plans = Object.keys(proxiesWithCost.data);
-      setFilteredPlans(plans);
-
-      // Reset amounts if plans update
-      setFilteredAmounts([]);
-    }
-  }, [proxiesWithCost]);
 
   return (
     <>
-      {/* Package Selection */}
       <FormField
         control={control}
         name="pkg_id"
@@ -117,8 +112,6 @@ export const StepOne = ({ isLoading, packages }: StepOneProps) => {
           </FormItem>
         )}
       />
-
-      {/* Plan Selection */}
       <FormField
         control={control}
         name="plan_id"
@@ -126,9 +119,7 @@ export const StepOne = ({ isLoading, packages }: StepOneProps) => {
           <FormItem>
             <FormLabel>Plans</FormLabel>
             <Select
-              disabled={
-                isLoading || isFetchingPlans || filteredPlans.length === 0
-              }
+              disabled={isLoading || plans.length === 0}
               onValueChange={(value) => {
                 field.onChange(value);
                 handlePlanSelect(value);
@@ -141,7 +132,7 @@ export const StepOne = ({ isLoading, packages }: StepOneProps) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {filteredPlans.map((plan) => (
+                {plans.map((plan) => (
                   <SelectItem key={plan} value={plan} className="capitalize">
                     {plan}
                   </SelectItem>
@@ -152,8 +143,6 @@ export const StepOne = ({ isLoading, packages }: StepOneProps) => {
           </FormItem>
         )}
       />
-
-      {/* Amount Selection */}
       <FormField
         control={control}
         name="amount"
@@ -161,10 +150,10 @@ export const StepOne = ({ isLoading, packages }: StepOneProps) => {
           <FormItem>
             <FormLabel>Amount</FormLabel>
             <Select
-              disabled={isLoading || filteredAmounts.length === 0}
+              disabled={isLoading || amounts.length == 0}
               onValueChange={(value) => {
                 field.onChange(value);
-                handleAmountSelect(value);
+                handleAmountSelect(+value);
               }}
               defaultValue={field.value}
             >
@@ -174,7 +163,7 @@ export const StepOne = ({ isLoading, packages }: StepOneProps) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {filteredAmounts.map((amount, index) => (
+                {amounts.map((amount, index) => (
                   <SelectItem key={index} value={amount.toString()}>
                     {amount}
                   </SelectItem>

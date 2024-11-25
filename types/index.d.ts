@@ -371,3 +371,38 @@ declare type ILoginResponse = {
   token_type: string;
   expires_in: string;
 };
+
+declare type LocationState = {
+  id: number;
+  http_port: number;
+  socks_port: number;
+  service_provider_name: string;
+  country_name: string;
+  city_name: string;
+  rotation_time: number;
+  is_available: boolean;
+};
+
+declare type ProxyState = {
+  id: number;
+  proxy_id: string;
+  parent_proxy_id: string;
+  package_id: string;
+  rotation_time: string;
+  is_active: number;
+  re_new: number;
+  protocol: string;
+  protocol_port: number;
+  country_name: string;
+  city_name: string;
+  service_provider: string;
+  username: string;
+  password: string;
+  ip_addr: string;
+  duration: number;
+  price: string;
+  expire_at: string | Date;
+  created_at: string | Date;
+  updated_at: string | Date;
+  user_id: number;
+};

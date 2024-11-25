@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPorts } from "@/api/dashboard/get-ports";
 
-export const useGetPorts = ({ id }: { id: number }) => {
+export const useGetPorts = (params: Record<string, any>) => {
   return useQuery({
-    queryKey: ["get-ports"],
-    queryFn: () => getPorts({ id }),
-    enabled: id !== 0,
+    queryKey: ["get-ports", params],
+    queryFn: () => getPorts(params),
+    enabled: params.id !== 0,
   });
 };

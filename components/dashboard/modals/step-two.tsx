@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 
 import {
@@ -14,8 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { proxyStore } from "@/stores/proxy-store";
-import { usePathname } from "next/navigation";
+import { useModalStore } from "@/stores";
 
 interface StepTwoProps {
   isLoading?: boolean;
@@ -24,7 +24,7 @@ interface StepTwoProps {
 export const StepTwo = ({ isLoading }: StepTwoProps) => {
   const pathname = usePathname();
   const { control } = useFormContext();
-  const { onClose } = proxyStore();
+  const { activeProxyModalOnClose } = useModalStore();
 
   return (
     <>
@@ -47,7 +47,7 @@ export const StepTwo = ({ isLoading }: StepTwoProps) => {
                   size="icon"
                   className="rounded-l-none"
                   type="button"
-                  onClick={onClose}
+                  onClick={activeProxyModalOnClose}
                   asChild
                 >
                   <Link href={`/dashboard/locations?callback=${pathname}`}>

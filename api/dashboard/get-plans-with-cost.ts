@@ -9,7 +9,6 @@ type ParamsType = {
 export const getPlansWithCost = async (
   params: ParamsType
 ): Promise<RootObj<PlanWithPriceResponse>> => {
-  // Filter out invalid parameters
   const filteredParams = Object.fromEntries(
     Object.entries(params).filter(
       ([, value]) => value !== undefined && value !== null && value !== 0
@@ -17,11 +16,10 @@ export const getPlansWithCost = async (
   );
 
   try {
-    // Make the API request
     const response: AxiosResponse<RootObj<PlanWithPriceResponse>> =
       await apiClient.get<RootObj<PlanWithPriceResponse>>(
         API_GET_PLANS_WITH_COST,
-        { params: filteredParams }
+        { params: { ...filteredParams } }
       );
     return response.data;
   } catch (error) {

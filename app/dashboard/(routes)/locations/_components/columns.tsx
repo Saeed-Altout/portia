@@ -1,10 +1,11 @@
 "use client";
 
-import { CellActions } from "./cell-actions";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatTime } from "@/utils/formatters";
 
-export const columns: ColumnDef<ListProxy>[] = [
+import { CellActions } from "./cell-actions";
+
+export const columns: ColumnDef<LocationState>[] = [
   {
     accessorKey: "country_name",
     header: "Country",
