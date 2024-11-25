@@ -39,7 +39,8 @@ const editProxySchema = z.object({
 
 export const EditProxyModal = () => {
   const pathname = usePathname();
-  const { editProxyModalIsOpen, editProxyModalOnClose } = useModalStore();
+  const { editProxyModalIsOpen, editProxyModalOnClose, setAction } =
+    useModalStore();
   const { ports, location, proxy, setProxy, setLocation } = useProxyStore();
   const { mutateAsync, isPending } = useEditProxy();
 
@@ -105,7 +106,10 @@ export const EditProxyModal = () => {
                         size="icon"
                         className="rounded-l-none"
                         type="button"
-                        onClick={editProxyModalOnClose}
+                        onClick={() => {
+                          editProxyModalOnClose();
+                          setAction("edit");
+                        }}
                         asChild
                       >
                         <Link

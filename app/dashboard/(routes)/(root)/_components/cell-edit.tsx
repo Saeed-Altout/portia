@@ -14,6 +14,8 @@ export const CellEdit = ({
 
   const onSelectToEdit = () => {
     setProxy(data);
+    console.log(data.package_id);
+
     setPkgId(data.package_id);
     setAction("edit");
     editProxyModalOnOpen();

@@ -24,7 +24,7 @@ interface StepTwoProps {
 export const StepTwo = ({ isLoading }: StepTwoProps) => {
   const pathname = usePathname();
   const { control } = useFormContext();
-  const { activeProxyModalOnClose } = useModalStore();
+  const { activeProxyModalOnClose, setAction } = useModalStore();
 
   return (
     <>
@@ -47,7 +47,10 @@ export const StepTwo = ({ isLoading }: StepTwoProps) => {
                   size="icon"
                   className="rounded-l-none"
                   type="button"
-                  onClick={activeProxyModalOnClose}
+                  onClick={() => {
+                    activeProxyModalOnClose();
+                    setAction("add");
+                  }}
                   asChild
                 >
                   <Link href={`/dashboard/locations?callback=${pathname}`}>

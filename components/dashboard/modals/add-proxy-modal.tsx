@@ -76,8 +76,8 @@ export const AddProxyModal = () => {
 
   useEffect(() => {
     if (step === 2 && location) {
-      form.setValue("ipRotation", `${location.rotation_time}`);
-      form.setValue("provider", `${location.service_provider_name}`);
+      form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
+      form.setValue("provider", `${location.service_provider_name ?? ""}`);
     }
   }, [form, location, step]);
 
