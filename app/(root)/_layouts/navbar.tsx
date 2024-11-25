@@ -8,12 +8,10 @@ import { Logo } from "@/components/logo";
 import { Container } from "@/app/(root)/_components/ui/container";
 import { NavMain, NavMobile } from "@/app/(root)/_components/navbar";
 
-import { useScrollStore } from "@/app/(root)/hooks/scroll-to";
 import { useAuthStore } from "@/stores";
 import { useEffect, useState } from "react";
 
 export const Navbar = () => {
-  const scrollStore = useScrollStore();
   const { isAuthenticated } = useAuthStore();
 
   return (
