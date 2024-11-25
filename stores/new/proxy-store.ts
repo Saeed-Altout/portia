@@ -14,6 +14,7 @@ const initialProxy: ProxyState = {
   proxy_id: "",
   parent_proxy_id: "",
   package_id: "",
+  package_name: "",
   rotation_time: "",
   is_active: 0,
   re_new: 0,

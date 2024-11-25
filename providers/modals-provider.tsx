@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import { FixProxyModal } from "@/components/dashboard/modals/fix-proxy-modal";
 import { AddProxyModal } from "@/components/dashboard/modals/add-proxy-modal";
+import { FixProxyModal } from "@/components/dashboard/modals/fix-proxy-modal";
+import { EditProxyModal } from "@/components/dashboard/modals/edit-proxy-modal";
 
 import { LogoutModal } from "@/components/dashboard/modals/logout-modal";
 
@@ -27,8 +28,9 @@ export const ModalProviders = () => {
 
   return (
     <>
-      <FixProxyModal />
       <AddProxyModal />
+      <FixProxyModal />
+      <EditProxyModal />
 
       {/* <ActivateNewProxyModal /> */}
       <AddFundsModal />

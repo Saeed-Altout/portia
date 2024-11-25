@@ -23,12 +23,13 @@ import {
 } from "@/hooks";
 
 import { useLocationStore } from "@/stores/use-location-store";
+import { useProxyStore } from "@/stores";
 
 export default function LocationsPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const { pkgId } = useProxyStore();
   const {
     offset,
-    pkgId,
     countryId,
     cityId,
     serviceProviderId,

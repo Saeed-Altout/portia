@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { CellActions } from "./cell-actions";
 import { CellRenew } from "./cell-renew";
+import { CellEdit } from "./cell-edit";
 
 export const activeColumns: ColumnDef<ProxyState>[] = [
   {
@@ -38,14 +39,14 @@ export const activeColumns: ColumnDef<ProxyState>[] = [
     accessorKey: "protocol",
     header: "Type",
     cell: ({ row }) => (
-      <p className="text-primary capitalize">{row.original.protocol}</p>
+      <CellEdit data={row.original}>{row.original.protocol}</CellEdit>
     ),
   },
   {
     accessorKey: "service_provider",
     header: "Network",
     cell: ({ row }) => (
-      <p className="text-primary">{row.original.service_provider}</p>
+      <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>
     ),
   },
   {

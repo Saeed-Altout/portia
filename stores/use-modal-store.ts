@@ -1,6 +1,10 @@
 import { create } from "zustand";
 
 export interface ModalStoreProps {
+  editProxyModalIsOpen: boolean;
+  editProxyModalOnOpen: () => void;
+  editProxyModalOnClose: () => void;
+
   renewProxyModalIsOpen: boolean;
   renewProxyModalOnOpen: () => void;
   renewProxyModalOnClose: () => void;
@@ -17,9 +21,16 @@ export interface ModalStoreProps {
   setStep: (step: number) => void;
   moveNextStep: () => void;
   movePrevStep: () => void;
+
+  action: "edit" | "add" | "fix";
+  setAction: (action: "edit" | "add" | "fix") => void;
 }
 
 export const useModalStore = create<ModalStoreProps>((set) => ({
+  editProxyModalIsOpen: false,
+  editProxyModalOnOpen: () => set({ editProxyModalIsOpen: true }),
+  editProxyModalOnClose: () => set({ editProxyModalIsOpen: false }),
+
   renewProxyModalIsOpen: false,
   renewProxyModalOnOpen: () => set({ renewProxyModalIsOpen: true }),
   renewProxyModalOnClose: () => set({ renewProxyModalIsOpen: false }),
@@ -36,4 +47,7 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   setStep: (step) => set({ step }),
   moveNextStep: () => set((state) => ({ step: state.step + 1 })),
   movePrevStep: () => set((state) => ({ step: state.step - 1 })),
+
+  action: "add",
+  setAction: (action) => set({ action }),
 }));

@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useModalStore, useProxyStore } from "@/stores";
 
 export const CellActions = ({ data }: { data: LocationState }) => {
-  const { activeProxyModalOnOpen } = useModalStore();
+  const { activeProxyModalOnOpen, editProxyModalOnOpen, action } =
+    useModalStore();
   const { setLocation } = useProxyStore();
 
   const router = useRouter();
@@ -15,7 +16,11 @@ export const CellActions = ({ data }: { data: LocationState }) => {
 
   const onSelectProvider = () => {
     setLocation(data);
-    activeProxyModalOnOpen();
+    if (action === "add") {
+      activeProxyModalOnOpen();
+    } else if (action === "edit") {
+      editProxyModalOnOpen();
+    }
     router.push(callback ?? "/dashboard");
   };
 

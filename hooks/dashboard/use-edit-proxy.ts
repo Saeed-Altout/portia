@@ -2,21 +2,21 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { addProxy } from "@/api/dashboard";
 import { useResponse } from "@/hooks/dashboard";
+import { editProxy } from "@/api/dashboard/edit-proxy";
 
-export const useAddProxy = () => {
+export const useEditProxy = () => {
   const { Success, Error } = useResponse();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["add-proxy"],
-    mutationFn: (values: AddProxyRequestType) => addProxy(values),
+    mutationKey: ["edit-proxy"],
+    mutationFn: (values: EditProxyRequestType) => editProxy(values),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["get-active-proxies"],
       });
-      Success({ message: "Added proxy completed" });
+      Success({ message: "Edit proxy completed" });
     },
     onError: (error) => {
       Error({ error });

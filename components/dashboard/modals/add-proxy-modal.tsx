@@ -20,7 +20,8 @@ import { activateNewProxySchema } from "@/schemas";
 import { useModalStore, useProxyStore } from "@/stores";
 
 export const AddProxyModal = () => {
-  const { price, duration, location, protocol } = useProxyStore();
+  const { price, duration, location, protocol, setProxy, setLocation } =
+    useProxyStore();
   const {
     step,
     setStep,
@@ -30,7 +31,7 @@ export const AddProxyModal = () => {
     activeProxyModalOnClose,
   } = useModalStore();
 
-  const { mutate, isPending } = useAddProxy();
+  const { mutateAsync, isPending } = useAddProxy();
 
   const form = useForm<z.infer<typeof activateNewProxySchema>>({
     resolver: zodResolver(activateNewProxySchema),
@@ -48,21 +49,28 @@ export const AddProxyModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof activateNewProxySchema>) => {
-    mutate({
-      parent_proxy_id: location?.id.toString(),
-      pkg_id: values.pkg_id,
-      re_new: values.re_new,
-      protocol: values.protocol,
-      protocol_value: protocol,
-      duration: duration.toString(),
-      username: values.username,
-      password: values.password,
-    });
+    try {
+      await mutateAsync({
+        parent_proxy_id: location ? location?.id.toString() : "",
+        pkg_id: values.pkg_id,
+        re_new: values.re_new,
+        protocol: values.protocol,
+        protocol_value: protocol,
+        duration: duration ? duration.toString() : "",
+        username: values.username,
+        password: values.password,
+      });
+      onClose();
+      setProxy({} as ProxyState);
+      setLocation({} as LocationState);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onClose = () => {
-    form.reset();
     setStep(1);
+    form.reset();
     activeProxyModalOnClose();
   };
 
