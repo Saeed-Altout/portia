@@ -24,6 +24,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   title?: string;
+  description?: string;
   onPageChange?: (page: number) => void;
   currentPage: number;
   totalPages: number;
@@ -33,6 +34,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   title,
+  description,
   onPageChange,
   currentPage,
   totalPages,
@@ -76,6 +78,7 @@ export function DataTable<TData, TValue>({
       {title && (
         <div className="w-full flex flex-col py-6 px-4">
           <h3 className="font-medium text-lg">{title}</h3>
+          <p className="text-sm">{description}</p>
         </div>
       )}
       <Table>
