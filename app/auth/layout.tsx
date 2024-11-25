@@ -13,7 +13,7 @@ export default function AuthLayout({
 }>) {
   return (
     <UnProtectedRoute>
-      <div className="flex flex-row justify-center items-start min-h-screen w-full">
+      <div className="flex flex-row justify-center items-start h-full w-full">
         {children}
       </div>
     </UnProtectedRoute>

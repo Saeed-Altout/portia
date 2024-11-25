@@ -22,7 +22,7 @@ export const GoogleClient = () => {
   return (
     <div className="h-full flex justify-center items-center">
       <Button variant="outline">
-        Redirecting to dashboard
+        {token ? "Redirecting to dashboard" : "Loading"}
         <Loader className="animate-spin ml-2 h-5 w-5" />
       </Button>
     </div>
