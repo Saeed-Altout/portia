@@ -1,13 +1,11 @@
-import { CTA, FAQs, Features, Testimonials } from "@/components/sections";
-import { Hero, Plans } from "./_components";
+import { CTA, FAQs } from "@/app/(root)/_components/sections";
+import { Hero, Content } from "./_components";
 
-export default function OurPlansPage() {
+export default function PricingPage() {
   return (
-    <main className="min-h-full overflow-x-hidden">
+    <main className="w-full">
       <Hero />
-      <Plans />
-      <Features />
-      <Testimonials />
+      <Content />
       <FAQs />
       <CTA />
     </main>

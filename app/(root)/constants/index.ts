@@ -25,8 +25,8 @@ export const navLinks = [
     href: "/why-portia-io",
   },
   {
-    label: "Our plans",
-    href: "/our-plans",
+    label: "Pricing plans",
+    href: "/pricing-plans",
   },
   {
     label: "Resources",
@@ -219,8 +219,8 @@ export const footerLinks = [
         href: "/why-portia-io",
       },
       {
-        label: "Pricing",
-        href: "/pricing",
+        label: "Our Plans",
+        href: "/our-plans",
       },
       {
         label: "Testimonials",

@@ -1,4 +1,4 @@
-import { Plans } from './plans';
 import { Hero } from './hero';
+import { Content } from './content';
 
-export { Plans, Hero };
+export { Hero, Content };
