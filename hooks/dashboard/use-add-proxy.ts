@@ -1,24 +1,27 @@
 "use client";
 
-import { AxiosError } from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { addProxy } from "@/api/dashboard";
 import { useResponse } from "@/hooks/dashboard";
-import { useModalStore } from "@/stores";
+import { useModalStore, useProxyStore } from "@/stores";
 
 export const useAddProxy = () => {
   const { Success, Error } = useResponse();
-  const { activeProxyModalOnClose } = useModalStore();
-  return useMutation<
-    AddProxyResponseType,
-    AxiosError<ErrorResponse>,
-    AddProxyRequestType
-  >({
+  const { activeProxyModalOnClose, setStep } = useModalStore();
+  const queryClient = useQueryClient();
+  const { setProxy } = useProxyStore();
+
+  return useMutation({
     mutationKey: ["add-proxy"],
     mutationFn: (values: AddProxyRequestType) => addProxy(values),
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-active-proxies"],
+      });
+      setStep(1);
       activeProxyModalOnClose();
+      setProxy({} as ProxyState);
       Success({ message: "Added proxy completed" });
     },
     onError: (error) => {

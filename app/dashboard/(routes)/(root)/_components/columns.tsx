@@ -7,31 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellActions } from "./cell-actions";
 import { CellRenew } from "./cell-renew";
 
-export type Proxy = {
-  id: number;
-  proxy_id: string;
-  parent_proxy_id: string;
-  package_id: string;
-  rotation_time: string;
-  is_active: number;
-  re_new: number;
-  protocol: string;
-  protocol_port: number;
-  country_name: string;
-  city_name: string;
-  service_provider: string;
-  username: string;
-  password: string;
-  ip_addr: string;
-  duration: number;
-  price: string;
-  expire_at: Date | string;
-  created_at: Date | string;
-  updated_at: Date | string;
-  user_id: number;
-};
-
-export const activeColumns: ColumnDef<Proxy>[] = [
+export const activeColumns: ColumnDef<ProxyState>[] = [
   {
     accessorKey: "id",
     header: "#",
@@ -39,7 +15,7 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "re_new",
     header: "Renew",
-    cell: ({ row }) => <CellRenew data={row} />,
+    cell: ({ row }) => <CellRenew data={row.original} />,
   },
   {
     accessorKey: "is_active",
@@ -55,7 +31,7 @@ export const activeColumns: ColumnDef<Proxy>[] = [
     ),
   },
   {
-    accessorKey: "package_id",
+    accessorKey: "package_name",
     header: "Package",
   },
   {

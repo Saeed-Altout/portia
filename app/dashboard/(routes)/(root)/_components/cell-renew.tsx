@@ -3,13 +3,10 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { useModalStore } from "@/stores";
 
-export const CellRenew = ({ data }: { data: any }) => {
+export const CellRenew = ({ data }: { data: ProxyState }) => {
   const { renewProxyModalOnOpen } = useModalStore();
 
   return (
-    <Checkbox
-      checked={!!data.original.re_new}
-      onCheckedChange={renewProxyModalOnOpen}
-    />
+    <Checkbox checked={!!data.re_new} onCheckedChange={renewProxyModalOnOpen} />
   );
 };

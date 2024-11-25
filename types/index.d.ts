@@ -388,6 +388,7 @@ declare type ProxyState = {
   proxy_id: string;
   parent_proxy_id: string;
   package_id: string;
+  package_name: string;
   rotation_time: string;
   is_active: number;
   re_new: number;
@@ -401,8 +402,8 @@ declare type ProxyState = {
   ip_addr: string;
   duration: number;
   price: string;
-  expire_at: string | Date;
-  created_at: string | Date;
-  updated_at: string | Date;
+  expire_at: Date | string;
+  created_at: Date | string;
+  updated_at: Date | string;
   user_id: number;
 };

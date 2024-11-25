@@ -5,21 +5,23 @@ import { BeatLoader } from "react-spinners";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 
-import { useModalStore } from "@/stores";
 import { useFixProxy } from "@/hooks";
+import { useModalStore, useProxyStore } from "@/stores";
 
 export const FixProxyModal = () => {
+  const { proxy } = useProxyStore();
+  const { fixProxyModalIsOpen, fixProxyModalOnClose } = useModalStore();
   const { mutate, isPending } = useFixProxy();
-  const { fixProxyModalIsOpen, fixProxyModalOnClose, fixProxy } =
-    useModalStore();
 
-  const onSubmit = () => {
-    mutate(fixProxy);
-  };
+  const onSubmit = () =>
+    mutate({
+      pkg_id: proxy.package_id,
+      proxy_id: proxy.proxy_id,
+    });
 
   return (
     <Modal
-      title={`Fixing proxy (id:${fixProxy.proxy_id}) troublesShoot`}
+      title={`Fixing proxy (id:${proxy.proxy_id}) troublesShoot`}
       description="if the proxy does't work for any reason click this button below to diagnostics"
       isOpen={fixProxyModalIsOpen}
       onClose={fixProxyModalOnClose}
