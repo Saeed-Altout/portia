@@ -1,14 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { formatTime } from "@/utils/formatters";
 
 import { CellActions } from "./cell-actions";
 
-export const columns: ColumnDef<ListProxy>[] = [
-  {
-    accessorKey: "id",
-    header: "#",
-  },
+export const columns: ColumnDef<LocationState>[] = [
   {
     accessorKey: "country_name",
     header: "Country",
@@ -24,7 +21,7 @@ export const columns: ColumnDef<ListProxy>[] = [
   {
     accessorKey: "rotation_time",
     header: "Ip Rotation",
-    cell: ({ row }) => <span>{row.original.rotation_time} min</span>,
+    cell: ({ row }) => <span>{formatTime(row.original.rotation_time)}</span>,
   },
   {
     accessorKey: "id",
