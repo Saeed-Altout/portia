@@ -5,6 +5,10 @@ export interface ModalStoreProps {
   editProxyModalOnOpen: () => void;
   editProxyModalOnClose: () => void;
 
+  editAuthProxyModalIsOpen: boolean;
+  editAuthProxyModalOnOpen: () => void;
+  editAuthProxyModalOnClose: () => void;
+
   renewProxyModalIsOpen: boolean;
   renewProxyModalOnOpen: () => void;
   renewProxyModalOnClose: () => void;
@@ -30,6 +34,10 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   editProxyModalIsOpen: false,
   editProxyModalOnOpen: () => set({ editProxyModalIsOpen: true }),
   editProxyModalOnClose: () => set({ editProxyModalIsOpen: false }),
+
+  editAuthProxyModalIsOpen: false,
+  editAuthProxyModalOnOpen: () => set({ editAuthProxyModalIsOpen: true }),
+  editAuthProxyModalOnClose: () => set({ editAuthProxyModalIsOpen: false }),
 
   renewProxyModalIsOpen: false,
   renewProxyModalOnOpen: () => set({ renewProxyModalIsOpen: true }),

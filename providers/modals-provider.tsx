@@ -14,6 +14,7 @@ import { ChangeProxyTypeModal } from "@/components/dashboard/modals/change-proxy
 import { AddFundsModal } from "@/components/dashboard/modals/add-funds-modal";
 import { ChangeProxyAuthenticationsModal } from "@/components/dashboard/modals/change-proxy-authentications-modal copy";
 import { RenewExpiredProxiesModal } from "@/components/dashboard/modals/renew-expired-proxies-modal";
+import { EditAuthProxyModal } from "@/components/dashboard/modals/edit-auth-proxy-modal";
 
 export const ModalProviders = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -31,12 +32,13 @@ export const ModalProviders = () => {
       <AddProxyModal />
       <FixProxyModal />
       <EditProxyModal />
+      <EditAuthProxyModal />
 
       {/* <ActivateNewProxyModal /> */}
+      <ChangeProxyAuthenticationsModal />
       <AddFundsModal />
       <ChangeProxyLocationModal />
       <ChangeProxyTypeModal />
-      <ChangeProxyAuthenticationsModal />
       <RenewExpiredProxiesModal />
       <LogoutModal />
     </>

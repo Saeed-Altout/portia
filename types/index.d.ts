@@ -279,7 +279,34 @@ declare type EditProxyRequestType = {
   proxy_id: string;
   protocol: string;
 };
+declare type EditAuthProxyRequestType = {
+  proxy_id: string;
+  password: string;
+};
 
+declare type EditAuthProxyResponse = {
+  user_id: number;
+  proxy_id: number;
+  parent_proxy_id: number;
+  package_id: number;
+  package_name: string;
+  rotation_time: number;
+  re_new: boolean;
+  protocol: string;
+  protocol_port: number;
+  country_name: string;
+  city_name: string;
+  service_provider: string;
+  username: string;
+  password: string;
+  ip_addr: string;
+  duration: string;
+  price: number;
+  expire_at: Date | string;
+  updated_at: Date | string;
+  created_at: Date | string;
+  id: number;
+};
 declare type EditProxyResponse = {
   user_id: number;
   proxy_id: number;
@@ -355,6 +382,7 @@ declare type EarningsStatisticsResponseType = RootObj<EarningsStatistics>;
 declare type AddProxyResponseType = RootObj<AddProxyResponse>;
 declare type FixProxyResponseType = RootObj<FixProxyResponse>;
 declare type EditProxyResponseType = RootObj<EditProxyResponse>;
+declare type EditAuthProxyResponseType = RootObj<EditAuthProxyResponse>;
 
 // ///////////////////////////////////////
 declare type Package = {

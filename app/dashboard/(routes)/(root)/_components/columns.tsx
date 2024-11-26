@@ -7,6 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellActions } from "./cell-actions";
 import { CellRenew } from "./cell-renew";
 import { CellEdit } from "./cell-edit";
+import { CellAuthEdit } from "./cell-auth-edit";
 
 export const activeColumns: ColumnDef<ProxyState>[] = [
   {
@@ -66,9 +67,9 @@ export const activeColumns: ColumnDef<ProxyState>[] = [
     accessorKey: "username",
     header: "Username/Pass",
     cell: ({ row }) => (
-      <p className="text-primary whitespace-nowrap line-clamp-1">
+      <CellAuthEdit data={row.original}>
         {row.original.username}/{row.original.password}
-      </p>
+      </CellAuthEdit>
     ),
   },
   {

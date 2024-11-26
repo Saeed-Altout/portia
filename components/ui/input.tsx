@@ -14,7 +14,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <>
         {Icon && (
-          <div className="relative flex items-center">
+          <div className="relative w-full flex items-center">
             <span className="absolute left-3">
               <Icon className="h-4 w-4 text-muted-foreground" />
             </span>
