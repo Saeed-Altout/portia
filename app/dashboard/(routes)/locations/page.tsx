@@ -82,28 +82,28 @@ export default function LocationsPage() {
 
   const onSelectPackage = (pkgId: string) => {
     setPkgId(pkgId);
-    // setCountryId(null);
-    // setCityId(null);
-    // setServiceProviderId(null);
-    // setIpRotationId(null);
+    setCountryId(null);
+    setCityId(null);
+    setServiceProviderId(null);
+    setIpRotationId(null);
   };
 
   const onSelectCountry = (countryId: string) => {
     setCountryId(+countryId);
-    // setCityId(null);
-    // setServiceProviderId(null);
-    // setIpRotationId(null);
+    setCityId(null);
+    setServiceProviderId(null);
+    setIpRotationId(null);
   };
 
   const onSelectCity = (cityId: string) => {
     setCityId(+cityId);
-    // setServiceProviderId(null);
-    // setIpRotationId(null);
+    setServiceProviderId(null);
+    setIpRotationId(null);
   };
 
   const onSelectServiceProvider = (serviceProviderId: string) => {
     setServiceProviderId(+serviceProviderId);
-    // setIpRotationId(null);
+    setIpRotationId(null);
   };
 
   const onSelectIpRotations = (ipRotationId: string) => {
