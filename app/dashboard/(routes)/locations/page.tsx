@@ -26,157 +26,96 @@ import { useLocationStore } from "@/stores/use-location-store";
 import { useProxyStore } from "@/stores";
 
 export default function LocationsPage() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const { pkgId } = useProxyStore();
+  const { pkgId, setPkgId } = useProxyStore();
+  const [totalPages, setTotalPages] = useState<number>(1);
   const {
     offset,
     countryId,
     cityId,
     serviceProviderId,
     ipRotationId,
-    setPkgId,
     setCountryId,
     setCityId,
     setServiceProviderId,
     setIpRotationId,
     setOffset,
   } = useLocationStore();
-
-  const {
-    data: locations,
-    refetch: locationsRefetch,
-    isLoading: locationsIsLoading,
-  } = useGetAllLocations({
-    offset,
-    pkg_id: pkgId,
-    country_id: countryId,
-    city_id: cityId,
-    service_provider_id: serviceProviderId,
-    ip_rotation: ipRotationId,
-  });
   const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
 
-  const {
-    data: countries,
-    refetch: refetchCountries,
-    isLoading: countriesIsLoading,
-  } = useGetAllCountries({ pkg_id: pkgId });
+  const { data: locations, isSuccess: locationsIsSuccess } = useGetAllLocations(
+    {
+      offset,
+      pkg_id: pkgId,
+      country_id: countryId,
+      city_id: cityId,
+      service_provider_id: serviceProviderId,
+      ip_rotation: ipRotationId,
+    }
+  );
 
-  const {
-    data: cities,
-    refetch: refetchCities,
-    isLoading: citiesIsLoading,
-  } = useGetAllCities({
+  const { data: countries, isLoading: countriesIsLoading } = useGetAllCountries(
+    { pkg_id: pkgId }
+  );
+
+  const { data: cities, isLoading: citiesIsLoading } = useGetAllCities({
     pkg_id: pkgId,
     country_id: countryId,
   });
 
-  const {
-    data: serviceProviders,
-    refetch: refetchServiceProviders,
-    isLoading: serviceProvidersIsLoading,
-  } = useGetServiceProvider({
-    pkg_id: pkgId,
-    country_id: countryId,
-    city_id: cityId,
-  });
+  const { data: serviceProviders, isLoading: serviceProvidersIsLoading } =
+    useGetServiceProvider({
+      pkg_id: pkgId,
+      country_id: countryId,
+      city_id: cityId,
+    });
 
-  const {
-    data: ipRotations,
-    refetch: refetchIpRotations,
-    isLoading: ipRotationsIsLoading,
-  } = useGetIpRotations({
-    pkg_id: pkgId,
-    country_id: countryId,
-    city_id: cityId,
-  });
-
-  useEffect(() => {
-    if (pkgId) {
-      refetchCountries();
-      refetchCities();
-      refetchServiceProviders();
-      refetchIpRotations();
-      locationsRefetch();
-    }
-  }, [
-    pkgId,
-    refetchCountries,
-    refetchCities,
-    refetchServiceProviders,
-    refetchIpRotations,
-    locationsRefetch,
-  ]);
-
-  useEffect(() => {
-    if (countryId) {
-      refetchCities();
-      refetchServiceProviders();
-      refetchIpRotations();
-      locationsRefetch();
-    }
-  }, [
-    countryId,
-    refetchCities,
-    refetchServiceProviders,
-    refetchIpRotations,
-    locationsRefetch,
-  ]);
-
-  useEffect(() => {
-    if (cityId) {
-      refetchServiceProviders();
-      refetchIpRotations();
-      locationsRefetch();
-    }
-  }, [cityId, refetchServiceProviders, refetchIpRotations, locationsRefetch]);
-
-  useEffect(() => {
-    if (ipRotationId) {
-      locationsRefetch();
-    }
-  }, [ipRotationId, locationsRefetch]);
-
-  useEffect(() => {
-    if (offset) {
-      locationsRefetch();
-    }
-  }, [locationsRefetch, offset]);
+  const { data: ipRotations, isLoading: ipRotationsIsLoading } =
+    useGetIpRotations({
+      pkg_id: pkgId,
+      country_id: countryId,
+      city_id: cityId,
+    });
 
   useEffect(() => {
     setOffset(1);
   }, [pkgId, countryId, cityId, serviceProviderId, ipRotationId]);
 
-  // Event handlers for dropdown selection
   const onSelectPackage = (pkgId: string) => {
-    setPkgId(+pkgId);
-    setCountryId(null);
-    setCityId(null);
-    setServiceProviderId(null);
-    setIpRotationId(null);
+    setPkgId(pkgId);
+    // setCountryId(null);
+    // setCityId(null);
+    // setServiceProviderId(null);
+    // setIpRotationId(null);
   };
 
   const onSelectCountry = (countryId: string) => {
     setCountryId(+countryId);
-    setCityId(null);
-    setServiceProviderId(null);
-    setIpRotationId(null);
+    // setCityId(null);
+    // setServiceProviderId(null);
+    // setIpRotationId(null);
   };
 
   const onSelectCity = (cityId: string) => {
     setCityId(+cityId);
-    setServiceProviderId(null);
-    setIpRotationId(null);
+    // setServiceProviderId(null);
+    // setIpRotationId(null);
   };
 
   const onSelectServiceProvider = (serviceProviderId: string) => {
     setServiceProviderId(+serviceProviderId);
-    setIpRotationId(null);
+    // setIpRotationId(null);
   };
 
   const onSelectIpRotations = (ipRotationId: string) => {
     setIpRotationId(+ipRotationId);
   };
+
+  useEffect(() => {
+    if (locationsIsSuccess) {
+      const totalPages = Math.ceil(locations.data.count / 10);
+      setTotalPages(totalPages);
+    }
+  }, [locations, locationsIsSuccess]);
 
   return (
     <>
@@ -279,9 +218,9 @@ export default function LocationsPage() {
         title="Filtered Locations"
         columns={columns}
         data={locations?.data.list ?? []}
-        totalPages={locations?.data.count ?? 1}
-        currentPage={currentPage}
-        onPageChange={(page) => setCurrentPage(page)}
+        totalPages={totalPages}
+        currentPage={offset}
+        onPageChange={(page) => setOffset(page)}
       />
     </>
   );

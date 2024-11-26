@@ -17,7 +17,7 @@ interface LocationState {
 }
 
 export const useLocationStore = create<LocationState>((set) => ({
-  offset: 0,
+  offset: 1,
   pkgId: 1,
   countryId: null,
   cityId: null,

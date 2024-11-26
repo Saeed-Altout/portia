@@ -146,7 +146,7 @@ export const useProxyStore = create<ProxyStore>()(
     protocol: 0,
     setProtocol: (protocol) => set({ protocol }),
 
-    pkgId: "",
+    pkgId: "1",
     setPkgId: (pkgId) => set({ pkgId }),
 
     ports: [],
