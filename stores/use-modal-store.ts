@@ -1,6 +1,10 @@
 import { create } from "zustand";
 
 export interface ModalStoreProps {
+  logoutModalIsOpen: boolean;
+  logoutModalOnOpen: () => void;
+  logoutModalOnClose: () => void;
+
   editProxyModalIsOpen: boolean;
   editProxyModalOnOpen: () => void;
   editProxyModalOnClose: () => void;
@@ -31,6 +35,10 @@ export interface ModalStoreProps {
 }
 
 export const useModalStore = create<ModalStoreProps>((set) => ({
+  logoutModalIsOpen: false,
+  logoutModalOnOpen: () => set({ logoutModalIsOpen: true }),
+  logoutModalOnClose: () => set({ logoutModalIsOpen: false }),
+
   editProxyModalIsOpen: false,
   editProxyModalOnOpen: () => set({ editProxyModalIsOpen: true }),
   editProxyModalOnClose: () => set({ editProxyModalIsOpen: false }),

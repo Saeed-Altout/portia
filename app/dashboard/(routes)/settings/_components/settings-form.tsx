@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LogOut } from "lucide-react";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -22,18 +22,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { UserButton } from "@/components/auth";
 import { useUpdateUserProfile } from "@/hooks/dashboard";
 import { Heading, AffiliateCode } from "@/components/dashboard";
 import { userProfileSchema } from "@/schemas";
 import { getModifiedData } from "@/utils";
 import { useAuthStore } from "@/stores/auth-store";
+import { useModalStore } from "@/stores";
 
 export const SettingsForm = () => {
   const [isNewPassword, setIsNewPassword] = useState<boolean>(true);
   const [isCurrentPassword, setIsCurrentPassword] = useState<boolean>(true);
-  const [isNewPasswordConfirmation, setIsNewPasswordConfirmation] = useState<boolean>(true);
-
+  const [isNewPasswordConfirmation, setIsNewPasswordConfirmation] =
+    useState<boolean>(true);
+  const { logoutModalOnOpen } = useModalStore();
   const { user } = useAuthStore();
   const { mutate, isPending } = useUpdateUserProfile();
 
@@ -73,7 +74,12 @@ export const SettingsForm = () => {
           className="col-span-1 md:col-span-2 lg:col-span-4"
         >
           <div className="flex items-center gap-3">
-            <Button type="button" variant="outline" asChild disabled={isPending}>
+            <Button
+              type="button"
+              variant="outline"
+              asChild
+              disabled={isPending}
+            >
               <Link href="/dashboard">Cancel</Link>
             </Button>
             <Button type="submit" variant="default" disabled={isPending}>
@@ -152,7 +158,7 @@ export const SettingsForm = () => {
                 <div className="relative">
                   <Input
                     type={isCurrentPassword ? "password" : "text"}
-                    placeholder='********'
+                    placeholder="********"
                     disabled={isPending}
                     {...field}
                   />
@@ -183,7 +189,7 @@ export const SettingsForm = () => {
                 <div className="relative">
                   <Input
                     type={isNewPassword ? "password" : "text"}
-                    placeholder='********'
+                    placeholder="********"
                     disabled={isPending}
                     {...field}
                   />
@@ -217,13 +223,15 @@ export const SettingsForm = () => {
                 <div className="relative">
                   <Input
                     type={isNewPasswordConfirmation ? "password" : "text"}
-                    placeholder='********'
+                    placeholder="********"
                     disabled={isPending}
                     {...field}
                   />
                   <div
                     role="button"
-                    onClick={() => setIsNewPasswordConfirmation((prev) => !prev)}
+                    onClick={() =>
+                      setIsNewPasswordConfirmation((prev) => !prev)
+                    }
                     className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
                   >
                     {isNewPasswordConfirmation ? (
@@ -241,9 +249,7 @@ export const SettingsForm = () => {
 
         <div className="space-y-2">
           <h3 className="font-medium text-lg">Affiliate System</h3>
-          <p className="text-sm">
-            You can copy this code.
-          </p>
+          <p className="text-sm">You can copy this code.</p>
         </div>
         <AffiliateCode code={user?.referred_code || ""} />
 
@@ -258,7 +264,14 @@ export const SettingsForm = () => {
           </div>
           <div className="flex items-center justify-start gap-4">
             <Button type="button">Export My Data</Button>
-            <UserButton />
+            <Button
+              disabled={isPending}
+              variant="destructive"
+              type="button"
+              onClick={logoutModalOnOpen}
+            >
+              Logout <LogOut className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </form>

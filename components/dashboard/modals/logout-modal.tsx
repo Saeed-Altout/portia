@@ -3,7 +3,6 @@
 import * as React from "react";
 import { BeatLoader } from "react-spinners";
 import { Power } from "lucide-react";
-import { toast } from "sonner";
 
 import {
   Dialog,
@@ -14,35 +13,30 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import { useLogoutModal } from "@/components/dashboard/hooks/modals/use-logout-modal";
 import { Circle, Icon } from "@/components/dashboard/circle-icon";
+import { useModalStore } from "@/stores";
+import { useLogout } from "@/hooks/auth";
 
 export const LogoutModal = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { logoutModalIsOpen, logoutModalOnClose } = useModalStore();
+  const { mutateAsync, isPending } = useLogout();
 
-  const logoutModal = useLogoutModal();
-
-  const onConfirm = () => {
-    setIsLoading(true);
+  const onConfirm = async () => {
     try {
-      setTimeout(() => {
-        logoutModal.onClose();
-        setIsLoading(false);
-      }, 2000);
+      await mutateAsync();
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      console.error(error);
     }
   };
 
   const onChange = (open: boolean) => {
-    if (!open && !isLoading) {
-      logoutModal.onClose();
+    if (!open && !isPending) {
+      logoutModalOnClose();
     }
   };
 
   return (
-    <Dialog open={logoutModal.isOpen} onOpenChange={onChange}>
+    <Dialog open={logoutModalIsOpen} onOpenChange={onChange}>
       <DialogContent className="max-w-sm sm:max-w-[480px]">
         <DialogHeader className="flex items-start justify-start flex-row gap-5">
           <Circle fill="alert" className="mx-auto sm:mx-0">
@@ -61,19 +55,19 @@ export const LogoutModal = () => {
           <Button
             type="button"
             variant="outline"
-            className="basis-1/2"
-            disabled={isLoading}
-            onClick={() => logoutModal.onClose()}
+            className="w-full"
+            disabled={isPending}
+            onClick={logoutModalOnClose}
           >
             Cancel
           </Button>
           <Button
             type="button"
-            className="basis-1/2 !bg-[#801121] hover:!bg-[#901121]/90"
-            disabled={isLoading}
+            className="w-full !bg-[#801121] hover:!bg-[#901121]/90"
+            disabled={isPending}
             onClick={onConfirm}
           >
-            {isLoading ? <BeatLoader color="#fff" /> : "Logout"}
+            {isPending ? <BeatLoader color="#fff" size={12} /> : "Logout"}
           </Button>
         </div>
       </DialogContent>
