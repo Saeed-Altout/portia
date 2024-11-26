@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { logout } from "@/api/auth";
 import { useResponse } from "@/hooks/auth";
-import { removeAccessToken, removeEmail } from "@/lib/auth";
+import { removeToken, removeEmail, removeUser } from "@/utils/cookie";
 
 export const useLogout = () => {
   const { Success, Error } = useResponse();
@@ -11,12 +11,13 @@ export const useLogout = () => {
     mutationKey: ["logout"],
     mutationFn: () => logout(),
     onSuccess(req) {
-      removeAccessToken();
+      removeToken();
       removeEmail();
+      removeUser();
+      localStorage.clear();
+      window.location.assign("/auth/login");
       Success({
         message: req.message,
-        refresh: true,
-        redirectTo: "/auth/login",
       });
     },
     onError(error) {

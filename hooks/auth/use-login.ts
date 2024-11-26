@@ -21,7 +21,7 @@ export const useLogin = () => {
         description: data.message ?? "Login successfully",
       });
 
-      router.push("/dashboard");
+      window.location.assign("/dashboard");
     },
     onError(error) {
       if (error instanceof AxiosError && error.response) {

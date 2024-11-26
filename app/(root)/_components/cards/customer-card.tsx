@@ -35,7 +35,7 @@ export const CustomersCard = ({
       onMouseEnter={() => setIsShowComment(true)}
       onMouseLeave={() => setIsShowComment(false)}
     >
-      <Image src={imgUrl} alt={agency} fill className="object-cover" />
+      <img src={imgUrl} alt={agency} className="object-cover w-full h-full" />
       <motion.div
         initial={{ height: 212 }}
         animate={{ height: isShowComment ? 260 : 212 }}
