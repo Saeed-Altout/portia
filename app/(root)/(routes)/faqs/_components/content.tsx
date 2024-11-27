@@ -2,13 +2,13 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useGetAllFaqsQuery } from "@/hooks";
-import { FaqSkeleton } from "@/components/root/skeletons/faq-skeleton";
+import { useGetAllFaqs } from "@/hooks";
 
 export const Content = () => {
-  const { data: faqs, isLoading, isError, isSuccess } = useGetAllFaqsQuery();
+  const { data: faqs, isLoading, isError, isSuccess } = useGetAllFaqs();
 
   return (
     <section id="all-faqs" className="w-full py-20">
@@ -16,7 +16,10 @@ export const Content = () => {
         {(isLoading || isError) && (
           <div className="w-full flex flex-col gap-5 max-w-[800px] mx-auto">
             {[...Array(10)].map((_, index) => (
-              <FaqSkeleton key={index} />
+              <div className="flex items-center justify-between gap-x-5 py-8" key={index}>
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-6 rounded-full" />
+              </div>
             ))}
           </div>
         )}
