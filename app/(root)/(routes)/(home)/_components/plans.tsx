@@ -23,26 +23,14 @@ export const Plans = () => {
           >
             {isPopular && (
               <div className="absolute right-[20px] md:right-[-70px] top-[-30px] flex items-start justify-center">
-                <Image
-                  src="/icons/arrow.svg"
-                  alt="Arrow"
-                  width={62}
-                  height={30}
-                  className="relative top-1"
-                />
-                <span className="text-[#03055E] text-sm font-medium">
-                  Most Popular!
-                </span>
+                <Image src="/icons/arrow.svg" alt="Arrow" width={62} height={30} className="relative top-1" />
+                <span className="text-[#03055E] text-sm font-medium">Most Popular!</span>
               </div>
             )}
             <div className="space-y-4">
-              <h2 className="text-center text-[#0A0A0A] font-semibold text-4xl lg:text-5xl">
-                {price}
-              </h2>
+              <h2 className="text-center text-[#0A0A0A] font-semibold text-4xl lg:text-5xl">{price}</h2>
               <div className="w-full">
-                <h3 className="text-center text-[#0A0A0A] font-semibold text-base md:text-lg lg:text-xl">
-                  {type}
-                </h3>
+                <h3 className="text-center text-[#0A0A0A] font-semibold text-base md:text-lg lg:text-xl">{type}</h3>
                 <p className="text-center text-[#727282]">who is this for?</p>
               </div>
             </div>
@@ -53,9 +41,7 @@ export const Plans = () => {
                     <span className="bg-[#B5F7F6] h-5 w-5 rounded-full p-[3px] flex justify-center items-center">
                       <Check className="text-[#26A6A4] h-4 w-4" />
                     </span>
-                    <p className="text-[#727282] -mb-2 line-clamp-1">
-                      {feature}
-                    </p>
+                    <p className="text-[#727282] -mb-2 line-clamp-1">{feature}</p>
                   </div>
                 ))}
               </div>

@@ -21,9 +21,8 @@ export const Hero = () => {
         </span>
       </h1>
       <p className="text-[#727282] capitalize text-base leading-[28px] sm:text-lg sm:leading-[29px] lg:text-xl lg:leading-[30px] max-w-[640px]">
-        Get ultra-stable mobile proxies with unlimited data and effortless
-        country switching ⎯⎯ perfectly tailored for developers, social media
-        managers, E-commerce, and digital marketing professionals.
+        Get ultra-stable mobile proxies with unlimited data and effortless country switching ⎯⎯ perfectly tailored for
+        developers, social media managers, E-commerce, and digital marketing professionals.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-3 w-full md:w-fit">
         <Button variant="outline" size="lg" className="w-full" asChild>

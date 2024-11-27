@@ -1,11 +1,5 @@
-import {
-  CTA,
-  FAQs,
-  Features,
-  Statistic,
-  Testimonials,
-} from "@/components/sections";
 import { Map, Hero, Plans } from "./_components";
+import { CTA, FAQs, Features, Statistic, Testimonials } from "@/components/sections";
 
 export default function HomePage() {
   return (

@@ -17,9 +17,7 @@ export const Features = () => {
               <Icon icon={icon} />
             </Circle>
             <div className="space-y-2">
-              <h2 className="text-[#0A0A0A] text-lg md:text-xl font-medium">
-                {title}
-              </h2>
+              <h2 className="text-[#0A0A0A] text-lg md:text-xl font-medium">{title}</h2>
               <p className="text-[#727282]">{description}</p>
             </div>
           </div>
