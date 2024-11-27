@@ -9,37 +9,28 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { useUpdateUserProfile } from "@/hooks/dashboard";
 import { Heading, AffiliateCode } from "@/components/dashboard";
 import { userProfileSchema } from "@/schemas";
-import { getModifiedData } from "@/utils";
-import { useAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "@/stores/use-auth-store";
 import { useModalStore } from "@/stores";
+import { useUpdateUserProfile } from "@/hooks";
+import { getModifiedData } from "@/utils/get-modified-data";
 
 export const SettingsForm = () => {
   const [isNewPassword, setIsNewPassword] = useState<boolean>(true);
   const [isCurrentPassword, setIsCurrentPassword] = useState<boolean>(true);
-  const [isNewPasswordConfirmation, setIsNewPasswordConfirmation] =
-    useState<boolean>(true);
+  const [isNewPasswordConfirmation, setIsNewPasswordConfirmation] = useState<boolean>(true);
   const { logoutModalOnOpen } = useModalStore();
   const { user } = useAuthStore();
   const { mutate, isPending } = useUpdateUserProfile();
 
   const onSubmit = async (data: z.infer<typeof userProfileSchema>) => {
-    const modifiedData = getModifiedData(data) as UpdateUserProfileRequestType;
+    const modifiedData = getModifiedData(data) as IUpdateUserProfileRequest;
     mutate(modifiedData);
   };
 
@@ -74,12 +65,7 @@ export const SettingsForm = () => {
           className="col-span-1 md:col-span-2 lg:col-span-4"
         >
           <div className="flex items-center gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              asChild
-              disabled={isPending}
-            >
+            <Button type="button" variant="outline" asChild disabled={isPending}>
               <Link href="/dashboard">Cancel</Link>
             </Button>
             <Button type="submit" variant="default" disabled={isPending}>
@@ -95,12 +81,7 @@ export const SettingsForm = () => {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  placeholder="first name"
-                  disabled={isPending}
-                  {...field}
-                />
+                <Input type="text" placeholder="first name" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -113,12 +94,7 @@ export const SettingsForm = () => {
             <FormItem>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  placeholder="last name"
-                  disabled={isPending}
-                  {...field}
-                />
+                <Input type="text" placeholder="last name" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -131,12 +107,7 @@ export const SettingsForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  placeholder="email"
-                  disabled={isPending}
-                  {...field}
-                />
+                <Input type="email" placeholder="email" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,9 +115,7 @@ export const SettingsForm = () => {
         />
         <div className="space-y-2">
           <h3 className="font-medium text-lg">Password</h3>
-          <p className="text-sm">
-            Please enter your current password to change your password
-          </p>
+          <p className="text-sm">Please enter your current password to change your password</p>
         </div>
         <FormField
           control={form.control}
@@ -206,9 +175,7 @@ export const SettingsForm = () => {
                   </div>
                 </div>
               </FormControl>
-              <FormDescription>
-                Your new password must be more than 8 characters
-              </FormDescription>
+              <FormDescription>Your new password must be more than 8 characters</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -229,9 +196,7 @@ export const SettingsForm = () => {
                   />
                   <div
                     role="button"
-                    onClick={() =>
-                      setIsNewPasswordConfirmation((prev) => !prev)
-                    }
+                    onClick={() => setIsNewPasswordConfirmation((prev) => !prev)}
                     className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
                   >
                     {isNewPasswordConfirmation ? (
@@ -258,18 +223,13 @@ export const SettingsForm = () => {
           <div className="space-y-2">
             <h3 className="font-medium text-lg">Export Data</h3>
             <p className="text-sm max-w-[551px]">
-              you can easily export all your data by clicking the button below
-              your data will include all your proxies all your deposits
+              you can easily export all your data by clicking the button below your data will include all your proxies
+              all your deposits
             </p>
           </div>
           <div className="flex items-center justify-start gap-4">
             <Button type="button">Export My Data</Button>
-            <Button
-              disabled={isPending}
-              variant="destructive"
-              type="button"
-              onClick={logoutModalOnOpen}
-            >
+            <Button disabled={isPending} variant="destructive" type="button" onClick={logoutModalOnOpen}>
               Logout <LogOut className="ml-2 h-4 w-4" />
             </Button>
           </div>

@@ -31,6 +31,6 @@ export const routes = [
   },
   {
     label: "My Affiliate",
-    href: "/dashboard/my-affiliate",
+    href: "/dashboard/affiliate",
   },
 ];

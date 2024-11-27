@@ -2,19 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-import { useProxyStore } from "@/stores/new/proxy-store";
-import { useGetActiveProxies } from "@/hooks/dashboard/use-get-active-proxies";
-import { useGetInactiveProxies } from "@/hooks/dashboard/use-get-inactive-proxies";
-import { useGetProxiesCounts } from "@/hooks/dashboard/use-get-proxies-counts";
-import { useGetAllPackages } from "@/hooks";
-import { useGetPorts } from "@/hooks/dashboard/use-get-ports";
-import { useGetPlansWithCost } from "@/hooks/dashboard/use-get-plans-with-cost";
+import { useProxyStore } from "@/stores/use-proxy-store";
+import {
+  useGetActiveProxies,
+  useGetAllPackages,
+  useGetCostPlans,
+  useGetInactiveProxies,
+  useGetPorts,
+  useGetProxiesCounts,
+} from "@/hooks";
 
-export const DashboardProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const {
     setActiveProxies,
@@ -31,18 +29,15 @@ export const DashboardProvider = ({
     setCosts,
   } = useProxyStore();
 
-  const { data: proxiesCount, isSuccess: proxiesCountIsSuccess } =
-    useGetProxiesCounts();
-  const { data: activeProxies, isSuccess: activeProxiesIsSuccess } =
-    useGetActiveProxies({ page: activePage });
-  const { data: inactiveProxies, isSuccess: inactiveProxiesIsSuccess } =
-    useGetInactiveProxies({ page: inactivePage });
+  const { data: proxiesCount, isSuccess: proxiesCountIsSuccess } = useGetProxiesCounts();
+  const { data: activeProxies, isSuccess: activeProxiesIsSuccess } = useGetActiveProxies({ page: activePage });
+  const { data: inactiveProxies, isSuccess: inactiveProxiesIsSuccess } = useGetInactiveProxies({ page: inactivePage });
   const { data: packages, isSuccess: packagesIsSuccess } = useGetAllPackages();
   const {
     data: costs,
     isSuccess: costsIsSuccess,
     refetch: costsRefetch,
-  } = useGetPlansWithCost({
+  } = useGetCostPlans({
     pkg_id: +pkgId,
   });
   const {
@@ -95,13 +90,7 @@ export const DashboardProvider = ({
       setInactiveProxiesCount(proxiesCount.data.inactive);
       setTotalProxiesCount(proxiesCount.data.total);
     }
-  }, [
-    proxiesCount,
-    proxiesCountIsSuccess,
-    setActiveProxiesCount,
-    setInactiveProxiesCount,
-    setTotalProxiesCount,
-  ]);
+  }, [proxiesCount, proxiesCountIsSuccess, setActiveProxiesCount, setInactiveProxiesCount, setTotalProxiesCount]);
 
   useEffect(() => {
     setIsMounted(true);

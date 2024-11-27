@@ -1,17 +1,11 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const DropdownMenu = ({
   items,
   selected,
   onChange,
 }: {
-  items: CategoryPlan[] | CategoryPackage[];
+  items: any[];
   selected: string;
   onChange: (value: any) => void;
 }) => (

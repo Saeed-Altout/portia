@@ -3,18 +3,18 @@
 import Link from "next/link";
 import { Zap } from "lucide-react";
 
-import { ActiveProxiesTable } from "./active-proxies-table";
-
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/dashboard";
 import { Separator } from "@/components/ui/separator";
 import { Circle, Icon } from "@/components/ui/circle-icon";
 
-import { useGetUserBalance } from "@/hooks";
-import { useAuthStore, useProxyStore } from "@/stores";
+import { ActiveProxiesTable } from "./active-proxies-table";
+
+import { useAuthStore } from "@/stores";
+import { useGetProxiesCounts, useGetUserBalance } from "@/hooks";
 export const RootClient = () => {
   const { user } = useAuthStore();
-  const { totalProxiesCount } = useProxyStore();
+  const { data: proxiesCount } = useGetProxiesCounts();
   const { data: balance } = useGetUserBalance();
 
   const formattedStatistic = [
@@ -22,7 +22,7 @@ export const RootClient = () => {
       icon: Zap,
       title: "Paid Proxies",
       theme: "primary",
-      value: `${totalProxiesCount} Proxies`,
+      value: `${proxiesCount?.data.total ?? 0} Proxies`,
       href: "/dashboard/proxies",
       label: "View All Proxies",
     },

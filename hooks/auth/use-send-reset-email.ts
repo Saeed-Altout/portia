@@ -1,27 +1,18 @@
-import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { useResponse } from "@/hooks/auth";
-import { sendResetEmail } from "@/api/auth";
+import { sendResetEmail } from "@/api";
+import { useResponse } from "@/hooks";
 
 export const useSendResetEmail = () => {
   const { Success, Error } = useResponse();
-  return useMutation<
-    SendResetEmailResponseType,
-    AxiosError<ErrorResponse>,
-    SendResetEmailRequestType
-  >({
+  return useMutation({
     mutationKey: ["send-reset-email"],
-    mutationFn: (email: SendResetEmailRequestType) => sendResetEmail(email),
+    mutationFn: (values: ISendResetEmailRequest) => sendResetEmail(values),
     onSuccess(res, req) {
-      Success({
-        message: res.message,
-        refresh: true,
-        redirectTo: `/auth/verify-reset-email?email=${req.email}`,
-      });
+      Success({ message: res.message, redirectTo: `/auth/verify-reset-email?email=${req.email}` });
     },
     onError(error) {
-      Error({ error });
+      Error({ error: error, message: "Something went wrong!" });
     },
   });
 };

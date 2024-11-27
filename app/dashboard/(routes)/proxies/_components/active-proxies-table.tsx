@@ -10,10 +10,10 @@ import { useGetActiveProxies } from "@/hooks";
 export const ActiveProxiesTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const { data } = useGetActiveProxies({ page: currentPage });
+  const { data, isSuccess } = useGetActiveProxies({ page: currentPage });
 
   useEffect(() => {
-    if (data?.data) {
+    if (isSuccess) {
       const total = data.data.total;
       const per_page = data.data.per_page;
       const totalPages = Math.ceil(total / per_page);

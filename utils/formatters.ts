@@ -22,11 +22,7 @@ export const formatStringArray = (data: string[] = []): FormattedItem[] => {
  * @param labelKey - Key to extract the label
  * @returns Array of formatted objects with value and label
  */
-export const formatObjectArray = <T>(
-  data: T[] = [],
-  valueKey: keyof T,
-  labelKey: keyof T
-): FormattedItem[] => {
+export const formatObjectArray = <T>(data: T[] = [], valueKey: keyof T, labelKey: keyof T): FormattedItem[] => {
   return data.map((item) => ({
     value: item[valueKey]?.toString() || "",
     label: item[labelKey] as string,
@@ -46,9 +42,7 @@ export const formatTime = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
 
-    return remainingMinutes > 0
-      ? `${hours} hour ${remainingMinutes} min`
-      : `${hours} hour${hours > 1 ? "s" : ""}`;
+    return remainingMinutes > 0 ? `${hours} hour ${remainingMinutes} min` : `${hours} hour${hours > 1 ? "s" : ""}`;
   }
 
   return `${minutes} min`;

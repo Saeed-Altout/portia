@@ -10,39 +10,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/dashboard/modal";
 
 import { useModalStore, useProxyStore } from "@/stores";
-import { useEditProxy } from "@/hooks/dashboard/use-edit-proxy";
+import { useEditInfoProxy } from "@/hooks";
 
 const editProxySchema = z.object({
   provider: z.string().min(2),
   protocol: z.string().min(2),
 });
 
-export const EditProxyModal = () => {
+export const EditInfoProxyModal = () => {
   const pathname = usePathname();
-  const { editProxyModalIsOpen, editProxyModalOnClose, setAction } =
-    useModalStore();
+  const { editProxyModalIsOpen, editProxyModalOnClose, setAction } = useModalStore();
   const { ports, location, proxy, setProxy, setLocation } = useProxyStore();
-  const { mutateAsync, isPending } = useEditProxy();
+  const { mutateAsync, isPending } = useEditInfoProxy();
 
   const form = useForm<z.infer<typeof editProxySchema>>({
     resolver: zodResolver(editProxySchema),
@@ -112,9 +98,7 @@ export const EditProxyModal = () => {
                         }}
                         asChild
                       >
-                        <Link
-                          href={`/dashboard/locations?callback=${pathname}`}
-                        >
+                        <Link href={`/dashboard/locations?callback=${pathname}`}>
                           <ArrowUpRight className="h-4 w-4" />
                           <span className="sr-only">ArrowUpRight Icon</span>
                         </Link>
@@ -155,13 +139,7 @@ export const EditProxyModal = () => {
             />
           </div>
           <div className="flex justify-between items-center gap-5">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              disabled={isPending}
-              onClick={() => onClose()}
-            >
+            <Button type="button" variant="outline" className="w-full" disabled={isPending} onClick={() => onClose()}>
               Cancel
             </Button>
             <Button type="submit" className="w-full" disabled={isPending}>

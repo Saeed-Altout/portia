@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -13,12 +13,12 @@ export const Banner = () => {
 
   const onClose = () => {
     setIsOpen(false);
-    localStorage.setItem("bannerState", "close");
+    localStorage.setItem("banner", "close");
   };
 
   useEffect(() => {
     setIsMounted(true);
-    const bannerState = localStorage.getItem("bannerState");
+    const bannerState = localStorage.getItem("banner");
     if (bannerState) {
       setIsOpen(false);
     }
@@ -33,18 +33,13 @@ export const Banner = () => {
     <div
       className={cn(
         "relative text-white bg-gradient-to-t from-[#03055E] to-[#111280] h-[62px] md:h-[62px] px-4 flex justify-center items-center",
-        !isOpen && "hidden"
+        !isOpen && "hidden",
       )}
     >
-      <p className="text-sm md:text-base text-white">
-        <span className="mr-2 font-medium">
-          We&apos;ve just launched a new feature!
-        </span>
+      <p className="text-xs md:text-base text-white">
+        <span className="mr-2 font-medium">We&apos;ve just launched a new feature!</span>
         Check out the
-        <Link
-          href="/"
-          className="ml-0 md:ml-2 underline underline-offset-4 inline-block text-white"
-        >
+        <Link href="/" className="ml-0 md:ml-2 underline underline-offset-4 inline-block text-white">
           new dashboard.
         </Link>
       </p>

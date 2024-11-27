@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { getToken } from "@/utils/cookie";
-import { useAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "@/stores/use-auth-store";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();

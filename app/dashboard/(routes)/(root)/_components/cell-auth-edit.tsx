@@ -2,13 +2,7 @@
 
 import { useModalStore, useProxyStore } from "@/stores";
 
-export const CellAuthEdit = ({
-  data,
-  children,
-}: {
-  data: ProxyState;
-  children: React.ReactNode;
-}) => {
+export const CellAuthEdit = ({ data, children }: { data: IProxy; children: React.ReactNode }) => {
   const { editAuthProxyModalOnOpen } = useModalStore();
   const { setProxy } = useProxyStore();
 
@@ -18,11 +12,7 @@ export const CellAuthEdit = ({
   };
 
   return (
-    <p
-      role="button"
-      className="text-primary whitespace-nowrap line-clamp-1 cursor-pointer "
-      onClick={onSelectToEdit}
-    >
+    <p role="button" className="text-primary whitespace-nowrap line-clamp-1 cursor-pointer " onClick={onSelectToEdit}>
       {children}
     </p>
   );

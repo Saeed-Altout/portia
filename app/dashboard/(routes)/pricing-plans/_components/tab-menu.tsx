@@ -3,7 +3,7 @@ export const TabMenu = ({
   selected,
   onChange,
 }: {
-  items: CategoryPlan[] | CategoryPackage[];
+  items: any[];
   selected: string;
   onChange: (value: any) => void;
 }) => {
@@ -14,9 +14,7 @@ export const TabMenu = ({
           role="button"
           key={item.id}
           className={`px-4 py-2 rounded-md text-sm font-medium ${
-            selected === item.name
-              ? "bg-white text-black-default"
-              : "bg-transparent text-muted-foreground"
+            selected === item.name ? "bg-white text-black-default" : "bg-transparent text-muted-foreground"
           }`}
           onClick={() => onChange(item.name)}
         >

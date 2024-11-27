@@ -1,5 +1,5 @@
 import { RootClient } from "./_components/client";
 
-export default function OverviewPage() {
+export default function RootPage() {
   return <RootClient />;
 }

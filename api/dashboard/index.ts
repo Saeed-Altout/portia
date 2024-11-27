@@ -1,34 +1,48 @@
-// User
-import { getUserDetails } from "./get-user-details";
-import { updateUserProfile } from "./update-user-profile";
-import { getUserBalance } from "./get-user-balance";
-// Pricing plans
-import { getPricingPlans } from "./get-pricing-plans";
-
-// Affiliate
-import { getAffiliateEarningsHistories } from "./get-affiliate-earnings-histories";
-import { getAffiliateEarningsStatistics } from "./get-affiliate-earnings-statistics";
-
-// Locations
-import { getCountries } from "./get-countries";
-import { getCities } from "./get-cities";
-import { getServicesProvider } from "./get-services-provider";
-import { getIpRotations } from "./get-ip-rotations";
-import { getAllLocations } from "./get-all-locations";
-import { getPackages } from "./get-packages";
-import { addProxy } from "./add-proxy";
-export {
-  getUserDetails,
-  updateUserProfile,
-  getPricingPlans,
-  getAffiliateEarningsHistories,
-  getAffiliateEarningsStatistics,
-  getCountries,
-  getCities,
-  getServicesProvider,
-  getIpRotations,
-  getAllLocations,
-  getPackages,
+import { getAffiliateHistories, getAffiliateStatistics } from "./affiliate";
+import { getDepositHistories, getDepositStatistics } from "./deposit";
+import {
+  getProxyCities,
+  getProxyCountries,
+  getProxyIpRotations,
+  getProxyLocations,
+  getProxyServiceProviders,
+} from "./location";
+import {
+  getActiveProxies,
+  getInactiveProxies,
+  getProxiesCounts,
   addProxy,
+  fixProxy,
+  editAuthProxy,
+  editInfoProxy,
+} from "./proxy";
+import { getPricingPlans } from "./pricing";
+import { getAllPackages } from "./shared/get-all-packages";
+import { getPorts } from "./shared/get-ports";
+import { getCostPlans } from "./shared/get-cost-plans";
+import { updateUserProfile, getUserBalance, getUserDetails } from "./user";
+export {
+  getAffiliateHistories,
+  getAffiliateStatistics,
+  getDepositHistories,
+  getDepositStatistics,
+  getProxyCities,
+  getProxyCountries,
+  getProxyIpRotations,
+  getProxyLocations,
+  getProxyServiceProviders,
+  getActiveProxies,
+  getInactiveProxies,
+  getProxiesCounts,
+  addProxy,
+  fixProxy,
+  editAuthProxy,
+  editInfoProxy,
+  getPricingPlans,
+  getAllPackages,
+  getCostPlans,
+  getPorts,
+  updateUserProfile,
   getUserBalance,
+  getUserDetails,
 };

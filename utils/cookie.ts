@@ -17,19 +17,6 @@ const initialUser: User = {
   referred_code: "",
 };
 
-export const setAccessToken = (token: string, options?: any) => {
-  Cookies.set(TOKEN_KEY, token, {
-    expires: 10,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Strict",
-    ...options,
-  });
-};
-
-export const removeAccessToken = () => {
-  Cookies.remove(TOKEN_KEY);
-};
-
 export const setUser = (user: User, options?: any) => {
   Cookies.set(USER_KEY, JSON.stringify(user), {
     expires: 10,
@@ -82,7 +69,6 @@ export const removeEmail = () => {
 };
 
 export const clear = () => {
-  removeAccessToken();
   removeUser();
   removeToken();
   removeEmail();

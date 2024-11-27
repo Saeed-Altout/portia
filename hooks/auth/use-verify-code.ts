@@ -1,30 +1,20 @@
-import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { useResponse } from "@/hooks/auth";
-import { verificationCode } from "@/api/auth";
-import { setAccessToken } from "@/lib/auth";
+import { verificationCode } from "@/api";
+import { useResponse } from "@/hooks";
+import { setToken } from "@/utils/cookie";
 
 export const useVerifyCode = () => {
   const { Success, Error } = useResponse();
-  return useMutation<
-    VerificationCodeResponse,
-    AxiosError<ErrorResponse>,
-    VerificationCodeRequestType
-  >({
+  return useMutation({
     mutationKey: ["verification-code"],
-    mutationFn: (values: VerificationCodeRequestType) =>
-      verificationCode(values),
+    mutationFn: (values: IVerificationCodeRequest) => verificationCode(values),
     onSuccess(res) {
-      Success({
-        message: res.message,
-        refresh: true,
-        redirectTo: "/auth/email-confirmed",
-      });
-      setAccessToken(res.access_token);
+      setToken(res.access_token);
+      Success({ message: res.message, redirectTo: "/auth/email-confirmed" });
     },
     onError(error) {
-      Error({ error });
+      Error({ error: error, message: "Something went wrong!" });
     },
   });
 };

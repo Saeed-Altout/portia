@@ -1,13 +1,10 @@
-import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
-import { login } from "@/api/auth";
-import { useToast } from "@/hooks/use-toast";
+import { login } from "@/api";
+import { useResponse } from "@/hooks";
 import { setToken, setUser } from "@/utils/cookie";
 export const useLogin = () => {
-  const router = useRouter();
-  const { toast } = useToast();
+  const { Success, Error } = useResponse();
 
   return useMutation({
     mutationKey: ["login"],
@@ -15,22 +12,10 @@ export const useLogin = () => {
     onSuccess: (data) => {
       setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
       setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
-
-      toast({
-        title: "Login",
-        description: data.message ?? "Login successfully",
-      });
-
-      window.location.assign("/dashboard");
+      Success({ message: data.message, redirectTo: "/dashboard" });
     },
     onError(error) {
-      if (error instanceof AxiosError && error.response) {
-        const message = error.response.data.message;
-        toast({
-          title: "Login",
-          description: message ?? "Something went wrong!!",
-        });
-      }
+      Error({ error: error, message: "Something went wrong!" });
     },
   });
 };

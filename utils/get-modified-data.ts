@@ -1,5 +1,5 @@
-import { userProfileSchema } from "@/schemas";
 import * as z from "zod";
+import { userProfileSchema } from "@/schemas";
 
 export const getModifiedData = (data: z.infer<typeof userProfileSchema>) => {
   const modifiedData: Partial<z.infer<typeof userProfileSchema>> = {};

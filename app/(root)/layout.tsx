@@ -1,5 +1,5 @@
-import { Navbar } from "./_layouts/navbar";
-import { Footer } from "./_layouts/footer";
+import { Navbar } from "./_components/navbar";
+import { Footer } from "./_components/footer";
 
 export default function SiteLayout({
   children,

@@ -2,10 +2,9 @@
 import { Activity } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-
 import { useModalStore, useProxyStore } from "@/stores";
 
-export const CellActions = ({ data }: { data: ProxyState }) => {
+export const CellActions = ({ data }: { data: IProxy }) => {
   const { fixProxyModalOnOpen } = useModalStore();
   const { setProxy } = useProxyStore();
 

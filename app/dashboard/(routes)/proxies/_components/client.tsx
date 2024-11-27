@@ -8,30 +8,31 @@ import { Circle, Icon } from "@/components/ui/circle-icon";
 import { ActiveProxiesTable } from "./active-proxies-table";
 import { InactiveProxiesTable } from "./inactive-proxies-table";
 
-import { useAuthStore, useProxyStore } from "@/stores";
+import { useAuthStore } from "@/stores";
+import { useGetProxiesCounts } from "@/hooks";
+
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
-  const { activeProxiesCount, inactiveProxiesCount, totalProxiesCount } =
-    useProxyStore();
+  const { data: proxiesCount } = useGetProxiesCounts();
 
   const formattedStatistic = [
     {
       icon: Zap,
       title: "My Active Proxies",
       theme: "success",
-      value: `${activeProxiesCount} Proxies`,
+      value: `${proxiesCount?.data.active ?? 0} Proxies`,
     },
     {
       icon: Zap,
       title: "My Expired Proxies",
       theme: "danger",
-      value: `${inactiveProxiesCount} Proxies`,
+      value: `${proxiesCount?.data.inactive ?? 0} Proxies`,
     },
     {
       icon: Zap,
       title: "All Proxies",
       theme: "primary",
-      value: `${totalProxiesCount} Proxies`,
+      value: `${proxiesCount?.data.total ?? 0} Proxies`,
     },
   ];
 

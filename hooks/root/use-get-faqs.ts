@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-
-import { getFaqs } from "@/api/root/get-faqs";
+import { getFaqs } from "@/api";
 
 export const useGetFaqs = () => {
   return useQuery({
-    queryKey: ["faqs"],
+    queryKey: ["get-faqs"],
     queryFn: () => getFaqs(),
   });
 };

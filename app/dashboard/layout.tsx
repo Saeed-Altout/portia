@@ -1,10 +1,9 @@
 import { Banner } from "./_components/banner";
 import { Navbar } from "./_components/navbar";
 
-import { ProtectedRoute } from "@/guard/protected-route";
-
 import { ModalProviders } from "@/providers/modals-provider";
 import { DashboardProvider } from "@/providers/dashboard-provider";
+import { MiddlewareWrapper } from "@/components/middleware-wrapper";
 
 export default function DashboardLayout({
   children,
@@ -12,9 +11,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ProtectedRoute>
+    <MiddlewareWrapper role="user">
       <ModalProviders />
-      <div className="flex min-h-screen w-full flex-col">
+      <div className="min-h-full flex flex-col">
         <DashboardProvider>
           <Banner />
           <Navbar />
@@ -23,6 +22,6 @@ export default function DashboardLayout({
           </main>
         </DashboardProvider>
       </div>
-    </ProtectedRoute>
+    </MiddlewareWrapper>
   );
 }

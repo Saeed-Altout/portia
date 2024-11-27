@@ -2,13 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-export type IHistory = {
-  id: number;
-  payment_method: string;
-  amount: string;
-  date: Date | string;
-};
-
 export const columns: ColumnDef<IHistory>[] = [
   {
     accessorKey: "date",

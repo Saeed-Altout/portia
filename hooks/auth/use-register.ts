@@ -1,29 +1,23 @@
-import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { register } from "@/api/auth";
-import { useResponse } from "@/hooks/auth";
-import { setEmail } from "@/lib/auth";
-
+import { register } from "@/api";
+import { useResponse } from "@/hooks";
+import { setEmail } from "@/utils/cookie";
 export const useRegister = () => {
   const { Success, Error } = useResponse();
-  return useMutation<
-    RegisterResponseType,
-    AxiosError<ErrorResponse>,
-    RegisterRequestType
-  >({
+
+  return useMutation({
     mutationKey: ["register"],
-    mutationFn: (values: RegisterRequestType) => register(values),
+    mutationFn: (values: IRegisterRequest) => register(values),
     onSuccess(res, req) {
       setEmail(req.email);
       Success({
         message: res.message,
-        refresh: true,
         redirectTo: `/auth/verify-email?email=${req.email}`,
       });
     },
     onError(error) {
-      Error({ error });
+      Error({ error: error, message: "Something went wrong!" });
     },
   });
 };

@@ -1,10 +1,4 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Filter = ({
   disabled,
@@ -18,11 +12,7 @@ export const Filter = ({
   options: { value: string; label: string }[];
 }) => {
   return (
-    <Select
-      disabled={disabled}
-      defaultValue={placeholder === "Package" ? "1" : ""}
-      onValueChange={onValueChange}
-    >
+    <Select disabled={disabled} defaultValue={placeholder === "Package" ? "1" : ""} onValueChange={onValueChange}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

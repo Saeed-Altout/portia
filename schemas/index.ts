@@ -47,9 +47,7 @@ export const sendResetEmailSchema = z.object({
 
 export const newPasswordSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
-  password_confirmation: z
-    .string()
-    .min(8, "Confirm Password must be at least 8 characters"),
+  password_confirmation: z.string().min(8, "Confirm Password must be at least 8 characters"),
 });
 
 export const verifyCodeSchema = z.object({
@@ -89,3 +87,32 @@ export const initialValuesActivateNewProxy = {
   username: "",
   password: "",
 };
+
+export const formContactSchema = z.object({
+  first_name: z.string().min(2, {
+    message: "First Name must be at least 2 characters.",
+  }),
+  last_name: z.string().min(2, {
+    message: "Last Name must be at least 2 characters.",
+  }),
+  email: z.string().email(),
+  phone: z.string(),
+  message: z.string(),
+});
+
+export type FormContactValues = z.infer<typeof formContactSchema>;
+
+export const initialFormContactValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phoneNumber: { country: "", number: "" },
+  agreeToPrivacyPolicy: false,
+};
+
+export const searchByEmailSchema = z.object({
+  email: z.string().email(),
+});
+
+export type SearchByEmailSchema = z.infer<typeof searchByEmailSchema>;
+export const initialSearchByEmailValues = { email: "" };

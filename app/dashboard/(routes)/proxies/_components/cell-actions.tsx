@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/stores/use-modal-store";
 import { useProxyStore } from "@/stores";
 
-export const ActiveProxiesCellActions = ({ data }: { data: ProxyState }) => {
+export const ActiveProxiesCellActions = ({ data }: { data: IProxy }) => {
   const { fixProxyModalOnOpen } = useModalStore();
   const { setProxy } = useProxyStore();
 
@@ -30,9 +30,8 @@ export const ActiveProxiesCellActions = ({ data }: { data: ProxyState }) => {
   );
 };
 
-export const InactiveProxiesCellActions = ({ data }: { data: ProxyState }) => {
+export const InactiveProxiesCellActions = ({ data }: { data: IProxy }) => {
   const { renewProxyModalOnOpen } = useModalStore();
-
   return (
     <div className="flex justify-end items-center gap-4">
       <Button size="sm" onClick={renewProxyModalOnOpen}>

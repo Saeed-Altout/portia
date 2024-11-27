@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
 import { usePathname } from "next/navigation";
+
 import { Bell, Menu, Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-import { cn } from "@/lib/utils";
 import { routes } from "@/config";
 
 export const Navbar = () => {
@@ -54,10 +54,7 @@ export const Navbar = () => {
                 key={index}
                 variant="ghost"
                 size="sm"
-                className={cn(
-                  "w-full",
-                  href === pathname && "bg-secondary transition-all"
-                )}
+                className={cn("w-full", href === pathname && "bg-secondary transition-all")}
                 asChild
               >
                 <Link key={index} href={href}>

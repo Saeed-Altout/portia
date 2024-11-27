@@ -1,11 +1,15 @@
-import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { loginWithGoogle } from "@/api/auth";
+import { loginWithGoogle } from "@/api";
+import { useResponse } from "@/hooks";
 
 export const useLoginWithGoogle = () => {
-  return useMutation<void, AxiosError<ErrorResponse>, void>({
+  const { Error } = useResponse();
+  return useMutation({
     mutationKey: ["login-with-google"],
     mutationFn: () => loginWithGoogle(),
+    onError: (error) => {
+      Error({ error: error, message: "Something went wrong!" });
+    },
   });
 };

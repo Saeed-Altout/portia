@@ -1,27 +1,21 @@
-import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { logout } from "@/api/auth";
-import { useResponse } from "@/hooks/auth";
-import { removeToken, removeEmail, removeUser } from "@/utils/cookie";
+import { logout } from "@/api";
+import { useResponse } from "@/hooks";
+import { clear } from "@/utils/cookie";
 
 export const useLogout = () => {
   const { Success, Error } = useResponse();
-  return useMutation<LogoutResponseType, AxiosError<ErrorResponse>, void>({
+  return useMutation({
     mutationKey: ["logout"],
     mutationFn: () => logout(),
     onSuccess(req) {
-      removeToken();
-      removeEmail();
-      removeUser();
+      clear();
       localStorage.clear();
-      window.location.assign("/auth/login");
-      Success({
-        message: req.message,
-      });
+      Success({ message: req.message, redirectTo: "/auth/login" });
     },
     onError(error) {
-      Error({ error });
+      Error({ error: error, message: "Something went wrong!" });
     },
   });
 };

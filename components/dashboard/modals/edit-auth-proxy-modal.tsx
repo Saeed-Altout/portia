@@ -8,33 +8,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/dashboard/modal";
 
 import { useModalStore, useProxyStore } from "@/stores";
-import { useEditAuthProxy } from "@/hooks/dashboard/use-edit-auth-proxy";
+import { useEditAuthProxy } from "@/hooks/dashboard/proxy/use-edit-auth-proxy";
 
 const editAuthProxySchema = z.object({
   username: z.string().min(2),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters." }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
 });
 
 export const EditAuthProxyModal = () => {
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");
 
-  const { editAuthProxyModalIsOpen, editAuthProxyModalOnClose } =
-    useModalStore();
+  const { editAuthProxyModalIsOpen, editAuthProxyModalOnClose } = useModalStore();
   const { proxy, setProxy } = useProxyStore();
   const { mutateAsync, isPending } = useEditAuthProxy();
 
@@ -84,18 +74,9 @@ export const EditAuthProxyModal = () => {
               name="username"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel className="text-sm font-medium">
-                    Username
-                  </FormLabel>
+                  <FormLabel className="text-sm font-medium">Username</FormLabel>
                   <FormControl>
-                    <Input
-                      icon={User}
-                      type="text"
-                      readOnly
-                      placeholder="username"
-                      disabled={true}
-                      {...field}
-                    />
+                    <Input icon={User} type="text" readOnly placeholder="username" disabled={true} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,9 +87,7 @@ export const EditAuthProxyModal = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium">
-                    Password
-                  </FormLabel>
+                  <FormLabel className="text-sm font-medium">Password</FormLabel>
                   <FormControl>
                     <div className="flex items-center relative">
                       <Input
@@ -120,11 +99,7 @@ export const EditAuthProxyModal = () => {
                       />
                       <div
                         role="button"
-                        onClick={() =>
-                          setPasswordType((prev) =>
-                            prev === "password" ? "text" : "password"
-                          )
-                        }
+                        onClick={() => setPasswordType((prev) => (prev === "password" ? "text" : "password"))}
                         className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"
@@ -143,13 +118,7 @@ export const EditAuthProxyModal = () => {
             />
           </div>
           <div className="flex justify-between items-center gap-5">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              disabled={isPending}
-              onClick={() => onClose()}
-            >
+            <Button type="button" variant="outline" className="w-full" disabled={isPending} onClick={() => onClose()}>
               Cancel
             </Button>
             <Button type="submit" className="w-full" disabled={isPending}>

@@ -1,23 +1,86 @@
-import { useGetAllPackages } from "./dashboard/use-get-all-packages";
-import { useGetAllLocations } from "./dashboard/use-get-all-locations";
-import { useGetAllCities } from "./dashboard/use-get-all-cities";
-import { useGetAllCountries } from "./dashboard/use-get-all-countries";
-import { useGetServiceProvider } from "./dashboard/use-get-service-providers";
-import { useGetIpRotations } from "./dashboard/use-get-ip-rotations";
-import { useGetActiveProxies } from "./dashboard/use-get-active-proxies";
-import { useGetInactiveProxies } from "./dashboard/use-get-inactive-proxies";
-import { useGetUserBalance } from "./dashboard/use-get-user-balance";
+import { useResponse } from "./shared/use-response";
+import {
+  useGetAllFaqs,
+  useGetFaqs,
+  useGetFeaturesOffers,
+  useGetOffers,
+  useGetReviews,
+  useSendContactMessage,
+} from "./root";
 
-import { useFixProxy } from "./dashboard/use-fix-proxy";
-export {
-  useGetAllPackages,
-  useGetAllLocations,
-  useGetAllCities,
-  useGetAllCountries,
-  useGetServiceProvider,
-  useGetIpRotations,
-  useGetActiveProxies,
-  useGetInactiveProxies,
-  useGetUserBalance,
+import {
+  useLogin,
+  useRegister,
+  useLogout,
+  useLoginWithGoogle,
+  useSendResetEmail,
+  useSetNewPassword,
+  useVerifyCode,
+  useResendVerificationCode,
+} from "./auth";
+
+import {
+  useAddProxy,
+  useEditAuthProxy,
+  useEditInfoProxy,
   useFixProxy,
+  useGetActiveProxies,
+  useGetDepositsHistories,
+  useGetAffiliateHistories,
+  useGetAffiliateStatistics,
+  useGetDepositsStatistics,
+  useGetAllPackages,
+  useGetCostPlans,
+  useGetInactiveProxies,
+  useGetPorts,
+  useGetPricingPlans,
+  useGetProxiesCounts,
+  useGetProxyCities,
+  useGetProxyCountries,
+  useGetProxyIpRotations,
+  useGetProxyLocations,
+  useGetProxyServiceProvider,
+  useGetUserBalance,
+  useGetUserDetails,
+  useUpdateUserProfile,
+} from "./dashboard";
+export {
+  useResponse,
+  useGetAllFaqs,
+  useGetFaqs,
+  useGetFeaturesOffers,
+  useGetOffers,
+  useGetReviews,
+  useSendContactMessage,
+  useLogin,
+  useRegister,
+  useLogout,
+  useLoginWithGoogle,
+  useSendResetEmail,
+  useSetNewPassword,
+  useVerifyCode,
+  useResendVerificationCode,
+  useAddProxy,
+  useEditAuthProxy,
+  useEditInfoProxy,
+  useFixProxy,
+  useGetActiveProxies,
+  useGetDepositsHistories,
+  useGetAffiliateHistories,
+  useGetAffiliateStatistics,
+  useGetDepositsStatistics,
+  useGetAllPackages,
+  useGetCostPlans,
+  useGetInactiveProxies,
+  useGetPorts,
+  useGetPricingPlans,
+  useGetProxiesCounts,
+  useGetProxyCities,
+  useGetProxyCountries,
+  useGetProxyIpRotations,
+  useGetProxyLocations,
+  useGetProxyServiceProvider,
+  useGetUserBalance,
+  useGetUserDetails,
+  useUpdateUserProfile,
 };

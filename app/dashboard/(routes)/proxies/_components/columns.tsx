@@ -4,14 +4,11 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
-import {
-  ActiveProxiesCellActions,
-  InactiveProxiesCellActions,
-} from "./cell-actions";
+import { ActiveProxiesCellActions, InactiveProxiesCellActions } from "./cell-actions";
 import { CellRenew } from "./cell-renew";
 import { CellEdit } from "./cell-edit";
 
-export const activeColumns: ColumnDef<ProxyState>[] = [
+export const activeColumns: ColumnDef<IProxy>[] = [
   {
     accessorKey: "id",
     header: "#",
@@ -41,16 +38,12 @@ export const activeColumns: ColumnDef<ProxyState>[] = [
   {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => (
-      <CellEdit data={row.original}>{row.original.protocol}</CellEdit>
-    ),
+    cell: ({ row }) => <CellEdit data={row.original}>{row.original.protocol}</CellEdit>,
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => (
-      <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>
-    ),
+    cell: ({ row }) => <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>,
   },
   {
     accessorKey: "protocol_port",
@@ -60,9 +53,7 @@ export const activeColumns: ColumnDef<ProxyState>[] = [
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>
-        {format(row.original.expire_at, "MMM dd, yyyy")}
-      </p>
+      <p className={cn(row.original.expire_at && "text-[#801121]")}>{format(row.original.expire_at, "MMM dd, yyyy")}</p>
     ),
   },
   {
@@ -81,7 +72,7 @@ export const activeColumns: ColumnDef<ProxyState>[] = [
   },
 ];
 
-export const inactiveColumns: ColumnDef<ProxyState>[] = [
+export const inactiveColumns: ColumnDef<IProxy>[] = [
   {
     accessorKey: "id",
     header: "#",
@@ -111,16 +102,12 @@ export const inactiveColumns: ColumnDef<ProxyState>[] = [
   {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => (
-      <CellEdit data={row.original}>{row.original.protocol}</CellEdit>
-    ),
+    cell: ({ row }) => <CellEdit data={row.original}>{row.original.protocol}</CellEdit>,
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => (
-      <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>
-    ),
+    cell: ({ row }) => <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>,
   },
   {
     accessorKey: "protocol_port",
@@ -130,9 +117,7 @@ export const inactiveColumns: ColumnDef<ProxyState>[] = [
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>
-        {format(row.original.expire_at, "MMM dd, yyyy")}
-      </p>
+      <p className={cn(row.original.expire_at && "text-[#801121]")}>{format(row.original.expire_at, "MMM dd, yyyy")}</p>
     ),
   },
   {

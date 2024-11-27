@@ -3,13 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { useAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "@/stores/use-auth-store";
 
-export const UnProtectedRoute = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const UnProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const { isAuthenticated } = useAuthStore();

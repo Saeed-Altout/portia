@@ -3,23 +3,11 @@
 import { useFormContext } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { proxyStore } from "@/stores/proxy-store";
+import { proxyStore } from "@/stores/use-proxy-store";
 import { useGetPlansWithCost } from "@/hooks/dashboard/use-get-plans-with-cost";
 import { useProxyStore } from "@/stores";
 
@@ -36,16 +24,7 @@ interface ValuePlanProps {
 export const StepOne = ({ isLoading }: StepOneProps) => {
   const [valuePlan, setValuePlan] = useState<ValuePlanProps[]>([]);
   const { control } = useFormContext();
-  const {
-    packages,
-    plans,
-    costs,
-    amounts,
-    setPkgId,
-    setPrice,
-    setDuration,
-    setAmounts,
-  } = useProxyStore();
+  const { packages, plans, costs, amounts, setPkgId, setPrice, setDuration, setAmounts } = useProxyStore();
 
   const handlePackageSelect = (newPkgId: string) => {
     setPkgId(newPkgId);
