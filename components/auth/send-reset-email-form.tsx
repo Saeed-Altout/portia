@@ -6,29 +6,14 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
-import { useSendResetEmail } from "@/hooks/auth";
-import { sendResetEmailSchema } from "@/schemas";
+import { Circle, Icon } from "@/components/ui/circle-icon";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BackButton, SubmitButton } from "@/components/auth";
 
-import { Circle, Icon } from "../../ui/circle-icon";
+import { useSendResetEmail } from "@/hooks";
+import { sendResetEmailSchema } from "@/schemas";
 
 export const SendResetEmailForm = () => {
   const { mutate, isPending } = useSendResetEmail();
@@ -40,8 +25,7 @@ export const SendResetEmailForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof sendResetEmailSchema>) =>
-    mutate(values);
+  const onSubmit = (values: z.infer<typeof sendResetEmailSchema>) => mutate(values);
 
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
@@ -49,12 +33,8 @@ export const SendResetEmailForm = () => {
         <Circle size="lg">
           <Icon size="lg" icon={Key} />
         </Circle>
-        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">
-          Forgot password?
-        </CardTitle>
-        <CardDescription className="text-center">
-          No worries, we’ll send you reset instructions.
-        </CardDescription>
+        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">Forgot password?</CardTitle>
+        <CardDescription className="text-center">No worries, we’ll send you reset instructions.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -66,12 +46,7 @@ export const SendResetEmailForm = () => {
                 <FormItem>
                   <FormLabel className="text-sm font-medium">Email</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      disabled={isPending}
-                      placeholder="Enter your email"
-                    />
+                    <Input {...field} type="email" disabled={isPending} placeholder="Enter your email" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

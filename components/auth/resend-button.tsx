@@ -14,9 +14,7 @@ export const ResendButton = ({
   label = "Click to resend",
   message = "Didn’t receive the email?",
 }: ResendButtonProps) => {
-  const params = useSearchParams();
-  const email = params.get("email");
-
+  const email = useSearchParams().get("email");
   const { mutate, isPending } = useResendVerificationCode();
 
   return (

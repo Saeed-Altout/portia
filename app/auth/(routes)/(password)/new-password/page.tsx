@@ -1,7 +1,4 @@
-import { Suspense } from "react";
-
-import { NewPasswordForm } from "@/components/auth/forms/new-password-form";
-import { Loader } from "@/components/ui/loader";
+import { NewPasswordForm } from "@/components/auth";
 
 export const metadata = {
   title: "Set a New Password | Secure Your Account",
@@ -10,9 +7,5 @@ export const metadata = {
 };
 
 export default function NewPasswordPage() {
-  return (
-    <Suspense fallback={<Loader />}>
-      <NewPasswordForm />
-    </Suspense>
-  );
+  return <NewPasswordForm />;
 }

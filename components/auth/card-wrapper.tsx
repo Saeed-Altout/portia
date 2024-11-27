@@ -1,12 +1,7 @@
 import { Header } from "./header";
 import { Footer } from "./footer";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 interface CardWrapperProps {
   title: string;

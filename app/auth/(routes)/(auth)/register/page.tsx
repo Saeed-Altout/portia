@@ -1,7 +1,4 @@
-import { Suspense } from "react";
-
 import { RegisterForm } from "@/components/auth";
-import { Loader } from "@/components/ui/loader";
 
 export const metadata = {
   title: "Register a New Account | Sign Up Securely",
@@ -10,9 +7,5 @@ export const metadata = {
 };
 
 export default function RegisterPage() {
-  return (
-    <Suspense fallback={<Loader />}>
-      <RegisterForm />
-    </Suspense>
-  );
+  return <RegisterForm />;
 }

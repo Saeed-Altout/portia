@@ -7,20 +7,12 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import { useRegister } from "@/hooks/auth";
-import { registerSchema } from "@/schemas";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { CardWrapper, Provider, SubmitButton } from "@/components/auth";
+
+import { useRegister } from "@/hooks";
+import { registerSchema } from "@/schemas";
 
 export const RegisterForm = () => {
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");
@@ -55,16 +47,9 @@ export const RegisterForm = () => {
                 name="first_name"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel className="text-sm font-medium">
-                      First Name*
-                    </FormLabel>
+                    <FormLabel className="text-sm font-medium">First Name*</FormLabel>
                     <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Enter your first name"
-                        disabled={isPending}
-                        {...field}
-                      />
+                      <Input type="text" placeholder="Enter your first name" disabled={isPending} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -75,16 +60,9 @@ export const RegisterForm = () => {
                 name="last_name"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel className="text-sm font-medium">
-                      Last Name*
-                    </FormLabel>
+                    <FormLabel className="text-sm font-medium">Last Name*</FormLabel>
                     <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Enter your last name"
-                        {...field}
-                        disabled={isPending}
-                      />
+                      <Input type="text" placeholder="Enter your last name" disabled={isPending} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -98,12 +76,7 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel className="text-sm font-medium">Email*</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="Enter your email"
-                      disabled={isPending}
-                      {...field}
-                    />
+                    <Input type="email" placeholder="Enter your email" disabled={isPending} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,24 +87,13 @@ export const RegisterForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium">
-                    Password*
-                  </FormLabel>
+                  <FormLabel className="text-sm font-medium">Password*</FormLabel>
                   <FormControl>
                     <div className="flex items-center relative">
-                      <Input
-                        {...field}
-                        type={passwordType}
-                        disabled={isPending}
-                        placeholder="********"
-                      />
+                      <Input {...field} type={passwordType} disabled={isPending} placeholder="********" />
                       <div
                         role="button"
-                        onClick={() =>
-                          setPasswordType((prev) =>
-                            prev === "password" ? "text" : "password"
-                          )
-                        }
+                        onClick={() => setPasswordType((prev) => (prev === "password" ? "text" : "password"))}
                         className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"
@@ -144,9 +106,7 @@ export const RegisterForm = () => {
                       </div>
                     </div>
                   </FormControl>
-                  <FormDescription>
-                    Must be at least 8 characters.
-                  </FormDescription>
+                  <FormDescription>Must be at least 8 characters.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

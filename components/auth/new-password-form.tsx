@@ -8,36 +8,18 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Circle, Icon } from "@/components/ui/circle-icon";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { BackButton, SubmitButton } from "@/components/auth";
 
 import { useSetNewPassword } from "@/hooks/auth";
 import { newPasswordSchema } from "@/schemas";
-import { BackButton, SubmitButton } from "@/components/auth";
-
-import { Circle, Icon } from "../../ui/circle-icon";
 
 export const NewPasswordForm = () => {
-  const params = useSearchParams();
-  const token = params.get("token");
+  const token = useSearchParams().get("token");
   const [passwordType, setPasswordType] = useState<string>("text");
-
   const { mutate, isPending } = useSetNewPassword();
 
   const form = useForm<z.infer<typeof newPasswordSchema>>({
@@ -58,9 +40,7 @@ export const NewPasswordForm = () => {
         <Circle size="lg">
           <Icon size="lg" icon={Key} />
         </Circle>
-        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">
-          Set new password
-        </CardTitle>
+        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">Set new password</CardTitle>
         <CardDescription className="text-center">
           Your new password must be different from previously used passwords.
         </CardDescription>
@@ -74,24 +54,13 @@ export const NewPasswordForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium">
-                      Password
-                    </FormLabel>
+                    <FormLabel className="text-sm font-medium">Password</FormLabel>
                     <FormControl>
                       <div className="flex items-center relative">
-                        <Input
-                          {...field}
-                          type={passwordType}
-                          disabled={isPending}
-                          placeholder="********"
-                        />
+                        <Input {...field} type={passwordType} disabled={isPending} placeholder="********" />
                         <div
                           role="button"
-                          onClick={() =>
-                            setPasswordType((prev: string) =>
-                              prev === "password" ? "text" : "password"
-                            )
-                          }
+                          onClick={() => setPasswordType((prev: string) => (prev === "password" ? "text" : "password"))}
                           className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                           aria-label="Toggle password visibility"
                           title="Toggle password visibility"
@@ -104,9 +73,7 @@ export const NewPasswordForm = () => {
                         </div>
                       </div>
                     </FormControl>
-                    <FormDescription>
-                      Must be at least 8 characters.
-                    </FormDescription>
+                    <FormDescription>Must be at least 8 characters.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -116,24 +83,13 @@ export const NewPasswordForm = () => {
                 name="password_confirmation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium">
-                      Confirm Password
-                    </FormLabel>
+                    <FormLabel className="text-sm font-medium">Confirm Password</FormLabel>
                     <FormControl>
                       <div className="flex items-center relative">
-                        <Input
-                          {...field}
-                          type={passwordType}
-                          disabled={isPending}
-                          placeholder="********"
-                        />
+                        <Input {...field} type={passwordType} disabled={isPending} placeholder="********" />
                         <div
                           role="button"
-                          onClick={() =>
-                            setPasswordType((prev: string) =>
-                              prev === "password" ? "text" : "password"
-                            )
-                          }
+                          onClick={() => setPasswordType((prev: string) => (prev === "password" ? "text" : "password"))}
                           className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                           aria-label="Toggle password visibility"
                           title="Toggle password visibility"

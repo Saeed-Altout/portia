@@ -1,5 +1,4 @@
 import { BeatLoader } from "react-spinners";
-
 import { Button } from "@/components/ui/button";
 
 interface SubmitButtonProps {
@@ -10,7 +9,7 @@ interface SubmitButtonProps {
 export const SubmitButton = ({ isLoading, label }: SubmitButtonProps) => {
   return (
     <Button type="submit" className="w-full" disabled={isLoading}>
-      {isLoading ? <BeatLoader size={10} color="#fff" /> : label}
+      {isLoading ? <BeatLoader color="#fff" size={12} /> : label}
     </Button>
   );
 };

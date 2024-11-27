@@ -1,8 +1,9 @@
 "use client";
 
 import { FcGoogle } from "react-icons/fc";
+
+import { useLoginWithGoogle } from "@/hooks";
 import { Button } from "@/components/ui/button";
-import { useLoginWithGoogle } from "@/hooks/auth";
 
 interface ProviderProps {
   isLoading: boolean;

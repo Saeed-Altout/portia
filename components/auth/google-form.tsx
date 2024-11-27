@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { setToken, setUser } from "@/utils/cookie";
 import { Button } from "@/components/ui/button";
-import { useGetUserDetails } from "@/hooks/dashboard";
-export const GoogleClient = () => {
+import { setToken, setUser } from "@/utils/cookie";
+import { useGetUserDetails } from "@/hooks";
+export const GoogleForm = () => {
   const token = useSearchParams().get("callback");
   const router = useRouter();
   const { data, isPending, isSuccess, refetch } = useGetUserDetails();
@@ -17,12 +17,12 @@ export const GoogleClient = () => {
       setToken(token);
       if (isSuccess) {
         setUser(data.data);
-        window.location.assign("/dashboard");
+        router.push("/dashboard");
       } else {
         refetch();
       }
     } else {
-      window.location.assign("/auth/login");
+      router.push("/auth/login");
     }
   }, [isSuccess, refetch, token]);
 

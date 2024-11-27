@@ -1,47 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
 import { CheckCircle } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-import { setAccessToken } from "@/lib/auth";
+import { Circle, Icon } from "@/components/ui/circle-icon";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BackButton } from "@/components/auth";
 
-import { Circle, Icon } from "../../ui/circle-icon";
-
-export const EmailConfirmedForm = () => {
-  const params = useSearchParams();
-  const token = params.get("token");
-
-  useEffect(() => {
-    if (token) {
-      setAccessToken(token);
-    }
-  }, [token]);
-
+export const PasswordResetForm = () => {
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
       <CardHeader className="flex flex-col items-center justify-center gap-y-3">
         <Circle size="lg" fill="success">
           <Icon size="lg" theme="success" icon={CheckCircle} />
         </Circle>
-        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">
-          Email verified
-        </CardTitle>
+        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">Password reset</CardTitle>
         <CardDescription className="text-center">
-          Your password has been successfully reset. Click below to log in
-          magically.
+          Your password has been successfully reset. Click below to log in magically
         </CardDescription>
       </CardHeader>
       <CardContent>

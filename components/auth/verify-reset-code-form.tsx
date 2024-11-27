@@ -9,38 +9,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
-
-import { useVerifyCode } from "@/hooks/auth";
-import { verifyCodeSchema } from "@/schemas";
+import { Circle, Icon } from "@/components/ui/circle-icon";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BackButton, ResendButton, SubmitButton } from "@/components/auth";
 
-import { Circle, Icon } from "../../ui/circle-icon";
+import { useVerifyCode } from "@/hooks";
+import { verifyCodeSchema } from "@/schemas";
 
 export const VerifyRestCodeForm = () => {
-  const params = useSearchParams();
-  const email = params.get("email");
-
+  const email = useSearchParams().get("email");
   const { mutate, isPending } = useVerifyCode();
 
   const onSubmit = async (values: z.infer<typeof verifyCodeSchema>) =>
@@ -59,14 +38,10 @@ export const VerifyRestCodeForm = () => {
         <Circle size="lg">
           <Icon size="lg" icon={Mail} />
         </Circle>
-        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">
-          Check your email
-        </CardTitle>
+        <CardTitle className="text-2xl md:text-3xl font-semibold text-center">Check your email</CardTitle>
         <CardDescription className="text-center">
           We sent a password reset link to
-          {email != "null" && email && (
-            <span className="font-medium block text-wrap">{email}</span>
-          )}
+          {email != "null" && email && <span className="font-medium block text-wrap">{email}</span>}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -79,12 +54,7 @@ export const VerifyRestCodeForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <InputOTP
-                        disabled={isPending}
-                        maxLength={6}
-                        pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-                        {...field}
-                      >
+                      <InputOTP disabled={isPending} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} {...field}>
                         <InputOTPGroup>
                           <InputOTPSlot index={0} />
                           <InputOTPSlot index={1} />

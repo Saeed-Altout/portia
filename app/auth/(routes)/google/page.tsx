@@ -1,5 +1,5 @@
-import { GoogleClient } from "./_components/client";
+import { GoogleForm } from "@/components/auth";
 
 export default function GooglePage() {
-  return <GoogleClient />;
+  return <GoogleForm />;
 }
