@@ -19,7 +19,7 @@ export const ActiveProxiesTable = () => {
       const totalPages = Math.ceil(total / per_page);
       setTotalPages(totalPages);
     }
-  }, [data]);
+  }, [data, isSuccess]);
 
   return (
     <DataTable

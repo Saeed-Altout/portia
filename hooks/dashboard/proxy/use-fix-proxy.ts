@@ -12,11 +12,11 @@ export const useFixProxy = () => {
 
   return useMutation({
     mutationKey: ["fix-proxy"],
-    mutationFn: (values: FixProxyRequestType) => fixProxy(values),
+    mutationFn: (values: IFixProxyRequest) => fixProxy(values),
     onSuccess: () => {
       fixProxyModalOnClose();
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
-      setProxy({} as ProxyState);
+      setProxy({} as IProxy);
       Success({ message: "Fix proxy completed." });
     },
     onError: (error) => {

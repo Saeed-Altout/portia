@@ -66,7 +66,7 @@ export default function LocationsPage() {
 
   useEffect(() => {
     setOffset(1);
-  }, [pkgId, countryId, cityId, serviceProviderId, ipRotationId]);
+  }, [pkgId, countryId, cityId, serviceProviderId, ipRotationId, setOffset]);
 
   const onSelectPackage = (pkgId: string) => {
     setPkgId(pkgId);

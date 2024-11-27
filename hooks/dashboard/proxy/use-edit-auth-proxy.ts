@@ -9,7 +9,7 @@ export const useEditAuthProxy = () => {
 
   return useMutation({
     mutationKey: ["edit-auth-proxy"],
-    mutationFn: (values: EditAuthProxyRequestType) => editAuthProxy(values),
+    mutationFn: (values: IEditAuthProxyRequest) => editAuthProxy(values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
       Success({ message: "Edit auth proxy completed." });

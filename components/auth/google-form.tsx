@@ -24,7 +24,7 @@ export const GoogleForm = () => {
     } else {
       router.push("/auth/login");
     }
-  }, [isSuccess, refetch, token]);
+  }, [data, isSuccess, refetch, router, token]);
 
   return (
     <div className="h-full flex justify-center items-center">

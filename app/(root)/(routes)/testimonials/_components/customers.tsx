@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-
 import { customersData } from "@/constants";
 
 export const Customers = () => {
@@ -29,7 +29,7 @@ export const Customers = () => {
               onMouseLeave={() => setHoveredIndex(null)}
               className="relative min-w-[360px] h-[480px] group cursor-pointer basis-1 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             >
-              <img
+              <Image
                 src={customer.imgUrl}
                 alt={customer.agency}
                 className="object-cover w-full h-full absolute top-0 left-0"

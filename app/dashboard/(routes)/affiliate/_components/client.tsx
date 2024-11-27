@@ -43,7 +43,7 @@ export const AffiliateClient = () => {
         setTotalPages(totalPages);
       }
     }
-  }, [history, historyIsSuccess]);
+  }, [email, history, historyIsSuccess]);
 
   useEffect(() => {
     const email = getEmail();

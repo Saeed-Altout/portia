@@ -33,7 +33,7 @@ export const Content = () => {
         {(isLoading || !isSuccess) && (
           <div className="w-full grid grid-cols-1 md:grid-cols-4">
             {[...Array(3)].map((_, offerIndex) => (
-              <div className={cn(offerIndex === 0 && "col-span-1 md:col-span-2")}>
+              <div key={offerIndex} className={cn(offerIndex === 0 && "col-span-1 md:col-span-2")}>
                 <div
                   className={cn(
                     "min-h-[320px] flex justify-start flex-col items-center",

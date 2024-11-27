@@ -3,20 +3,8 @@
 import { Key, User } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -32,9 +20,7 @@ export const StepThree = ({ isLoading }: StepThreeProps) => {
 
   const onProtocolSelect = (protocolName: string) => {
     if (location) {
-      const protocolValue = protocolName.includes("http")
-        ? location.http_port
-        : location.socks_port;
+      const protocolValue = protocolName.includes("http") ? location.http_port : location.socks_port;
 
       setProtocol(protocolValue);
     }
@@ -79,10 +65,7 @@ export const StepThree = ({ isLoading }: StepThreeProps) => {
         render={({ field }) => (
           <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
             <FormControl>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
+              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
             </FormControl>
             <FormLabel className="leading-0">Auto Renew</FormLabel>
           </FormItem>
@@ -94,13 +77,7 @@ export const StepThree = ({ isLoading }: StepThreeProps) => {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Input
-                icon={User}
-                type="text"
-                disabled={isLoading}
-                placeholder="username"
-                {...field}
-              />
+              <Input icon={User} type="text" disabled={isLoading} placeholder="username" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -112,13 +89,7 @@ export const StepThree = ({ isLoading }: StepThreeProps) => {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Input
-                icon={Key}
-                type="password"
-                disabled={isLoading}
-                placeholder="username"
-                {...field}
-              />
+              <Input icon={Key} type="password" disabled={isLoading} placeholder="username" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

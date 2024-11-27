@@ -5,13 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -71,11 +65,7 @@ export const StepTwo = ({ isLoading }: StepTwoProps) => {
           <FormItem>
             <FormLabel>Minimum time between IP rotation</FormLabel>
             <FormControl>
-              <Input
-                disabled={isLoading}
-                placeholder="IP rotation"
-                {...field}
-              />
+              <Input disabled={isLoading} placeholder="IP rotation" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
