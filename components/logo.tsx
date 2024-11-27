@@ -12,14 +12,14 @@ export const Logo = ({
   redirectTo: string;
 } & React.HTMLAttributes<HTMLElement>) => {
   return (
-    <Link href={redirectTo} className={cn("w-[92px] h-[28px]", className)}>
+    <Link href={redirectTo} className={cn("fit", className)}>
       {!dark && (
         <Image
           src="/icons/logo.svg"
           alt="Logo"
           width={1000}
           height={1000}
-          className="object-contain"
+          className="object-contain w-[92px] h-[28px]"
           priority
         />
       )}
@@ -29,7 +29,7 @@ export const Logo = ({
           alt="Logo"
           width={1000}
           height={1000}
-          className="object-contain"
+          className="object-contain w-[92px] h-[28px]"
           priority
         />
       )}

@@ -16,12 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-import { formContactSchema } from "@/app/(root)/schema";
+import { formContactSchema } from "@/schemas";
 import { useSendContactMessage } from "@/hooks";
 
 export const ContactForm = () => {
-  const { onSubmit, isPending } = useSendContactMessage();
-
+  const { mutate, isPending } = useSendContactMessage();
   const form = useForm<z.infer<typeof formContactSchema>>({
     resolver: zodResolver(formContactSchema),
     defaultValues: {
@@ -32,6 +31,7 @@ export const ContactForm = () => {
       message: "",
     },
   });
+  const onSubmit = async (values: z.infer<typeof formContactSchema>) => mutate(values);
 
   return (
     <Section className="pt-16 pb-24">
@@ -47,7 +47,7 @@ export const ContactForm = () => {
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="first name" {...field} />
+                      <Input placeholder="first name" disabled={isPending} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -60,7 +60,7 @@ export const ContactForm = () => {
                   <FormItem>
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="last name" {...field} />
+                      <Input placeholder="last name" disabled={isPending} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -73,7 +73,7 @@ export const ContactForm = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="email" {...field} />
+                      <Input type="email" placeholder="email" disabled={isPending} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -112,7 +112,7 @@ export const ContactForm = () => {
               />
             </div>
             <Button type="submit" disabled={isPending}>
-              {isPending ? <BeatLoader size={10} color="#fff" /> : "Send message"}
+              {isPending ? <BeatLoader color="#fff" size={12} /> : "Send message"}
             </Button>
           </form>
         </Form>
