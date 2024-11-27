@@ -34,11 +34,7 @@ export const Heading = ({
       </div>
       <div className="flex items-center flex-wrap sm:flex-nowrap gap-3">
         {newProxy && (
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={activeProxyModalOnOpen}
-          >
+          <Button variant="outline" className="w-full" onClick={activeProxyModalOnOpen}>
             <Plus className="h-4 w-4 mr-2" /> Activate Proxies
           </Button>
         )}

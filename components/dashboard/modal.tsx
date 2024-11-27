@@ -3,15 +3,8 @@
 import * as React from "react";
 import { LucideIcon, Zap } from "lucide-react";
 
-import { Circle, Icon } from "@/components/dashboard/circle-icon";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 
 interface ModalProps {
   icon?: LucideIcon;
@@ -62,9 +55,7 @@ export const Modal = ({
           </Circle>
           <div>
             <DialogTitle className="text-lg font-medium">{title}</DialogTitle>
-            <DialogDescription className="text-sm font-normal">
-              {description}
-            </DialogDescription>
+            <DialogDescription className="text-sm font-normal">{description}</DialogDescription>
           </div>
         </DialogHeader>
         <div>{children}</div>

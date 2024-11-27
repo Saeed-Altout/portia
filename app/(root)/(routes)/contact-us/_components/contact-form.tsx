@@ -7,8 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BeatLoader } from "react-spinners";
 import { PhoneInput } from "react-international-phone";
 
-import { HeadingPage } from "@/components/root/ui/heading-page";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 
 import { formContactSchema } from "@/schemas";
 import { useSendContactMessage } from "@/hooks";
+import { Heading } from "@/components/ui/heading";
 
 export const ContactForm = () => {
   const { mutate, isPending } = useSendContactMessage();
@@ -33,7 +32,7 @@ export const ContactForm = () => {
 
   return (
     <section id="contact-form" className="screen pt-16 pb-24 space-y-12">
-      <HeadingPage title="Get in touch" description="Our friendly team would love to hear from you." />
+      <Heading title="Get in touch" description="Our friendly team would love to hear from you." />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">

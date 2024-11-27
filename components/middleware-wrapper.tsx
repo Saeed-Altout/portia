@@ -12,8 +12,8 @@ interface MiddlewareProps {
 }
 
 export const MiddlewareWrapper = ({ role, children }: MiddlewareProps) => {
+  const [isMounted, setIsMounted] = useState<boolean>(false);
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
   const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {

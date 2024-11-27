@@ -4,12 +4,7 @@ import * as React from "react";
 import { ArrowUp } from "lucide-react";
 import { Area, AreaChart } from "recharts";
 
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface StatisticCardProps {
@@ -47,14 +42,7 @@ export const StatisticCard = ({ amount, label, color }: StatisticCardProps) => {
         <ChartContainer config={chartConfig} className="w-1/2 h-full">
           <AreaChart accessibilityLayer data={data}>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Area
-              dataKey="amount"
-              type="natural"
-              fill={color}
-              fillOpacity={0.2}
-              stroke={color}
-              stackId="a"
-            />
+            <Area dataKey="amount" type="natural" fill={color} fillOpacity={0.2} stroke={color} stackId="a" />
           </AreaChart>
         </ChartContainer>
       </div>

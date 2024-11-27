@@ -26,7 +26,7 @@ import {
 import { useAuthStore } from "@/stores";
 import { useEffect, useState } from "react";
 import { navbarLinks, navLinks, sidebarLinks } from "@/constants";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/ui/logo";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuthStore();

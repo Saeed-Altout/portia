@@ -11,7 +11,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <MiddlewareWrapper role="user">
+    <MiddlewareWrapper role="guest">
       <div className="flex flex-row justify-center items-start h-full w-full">{children}</div>
     </MiddlewareWrapper>
   );

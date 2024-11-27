@@ -26,19 +26,13 @@ export const AffiliateCode = ({ code }: { code?: string }) => {
             value={`${host}/auth/register?code=${code}`}
           />
         </div>
-        <Button
-          size="icon"
-          variant="outline"
-          type="button"
-          onClick={() => onCopy(inputRef, http)}
-        >
+        <Button size="icon" variant="outline" type="button" onClick={() => onCopy(inputRef, http)}>
           <Copy className="h-4 w-4" />
           <span className="sr-only">Copy</span>
         </Button>
       </div>
       <p className="text-sm">
-        10% of all paid payments. from referred users. Over 60 days are credited
-        into your balance.
+        10% of all paid payments. from referred users. Over 60 days are credited into your balance.
       </p>
     </div>
   );

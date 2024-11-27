@@ -1,5 +1,5 @@
 import { ContactForm } from "./_components/contact-form";
-import { Statistic } from "@/components/sections";
+import { Statistic } from "@/components/root/sections";
 
 export default function ContactUsPage() {
   return (
