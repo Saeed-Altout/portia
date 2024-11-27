@@ -1,7 +1,7 @@
 import { Zap } from "lucide-react";
 
 import { Heading } from "@/components/ui/heading";
-import { featuresData } from "@/config/constants";
+import { featuresData } from "@/constants";
 
 export const Features = () => {
   return (

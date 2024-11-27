@@ -1,6 +1,6 @@
 import { Hero } from "./_components/hero";
 import { Plans } from "./_components/plans";
-import { CTA, FAQs, Features, Testimonials } from "@/components/root/sections";
+import { CTA, FAQs, Features, Testimonials } from "@/components/sections";
 
 export default function OurPlansPage() {
   return (

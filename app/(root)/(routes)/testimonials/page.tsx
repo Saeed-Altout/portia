@@ -1,6 +1,6 @@
 import { Hero } from "./_components/hero";
 import { Customers } from "./_components/customers";
-import { CTA } from "@/components/root/sections";
+import { CTA } from "@/components/sections";
 
 export default function TestimonialsPage() {
   return (

@@ -5,7 +5,7 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 
-import { plansData } from "@/config/constants";
+import { plansData } from "@/constants";
 
 export const Plans = () => {
   return (

@@ -1,6 +1,6 @@
 import { Hero } from "./_components/hero";
 import { Content } from "./_components/content";
-import { CTA } from "@/components/root/sections";
+import { CTA } from "@/components/sections";
 import { Tabs } from "@/components/ui/tabs";
 
 export default function TermsPage() {

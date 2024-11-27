@@ -1,7 +1,7 @@
 import { Heading } from "@/components/ui/heading";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { countriesData } from "@/config/constants";
+import { countriesData } from "@/constants";
 
 export const Countries = () => {
   return (

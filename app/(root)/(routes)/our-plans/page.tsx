@@ -1,6 +1,6 @@
 import { Hero } from "./_components/hero";
 import { Content } from "./_components/content";
-import { CTA, FAQs } from "@/components/root/sections";
+import { CTA, FAQs } from "@/components/sections";
 
 export default function PricingPage() {
   return (

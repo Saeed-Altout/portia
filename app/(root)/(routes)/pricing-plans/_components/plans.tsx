@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { plansData2 } from "@/config/constants";
+import { plansData2 } from "@/constants";
 
 export const Plans = () => {
   return (

@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { siteConfig } from "@/config";
+
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/providers/query-provider";
 

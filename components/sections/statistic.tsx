@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { statisticData } from "@/config/constants";
+import { statisticData } from "@/constants";
 
 export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
   return (
