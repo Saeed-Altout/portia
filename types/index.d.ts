@@ -259,16 +259,15 @@ declare type IGetCostPlansResponse = ApiResponse<{
 declare type IPort = string;
 declare type IGetPortsResponse = ApiResponse<IPort[]>;
 
-declare type IOffer = {
-  id: number;
-  amount: number;
-  cost: string;
-  is_top: boolean;
-  description: string;
-};
 declare type IPlan = {
   plan_name: string;
-  offers: IOffer[];
+  offers: {
+    id: number;
+    amount: number;
+    cost: string;
+    is_top: boolean;
+    description: string;
+  }[];
 };
 declare type IPricingPlan = {
   name: string;
@@ -405,6 +404,13 @@ declare type ISendContactMessageResponse = {
   message: string | string[];
 };
 
+declare type IFeature = {
+  id: number;
+  feature_group_id: number;
+  name: string;
+  description: string;
+  value: string | null;
+};
 declare type IOffer = {
   id: number;
   amount: number;
@@ -419,13 +425,7 @@ declare type IOffer = {
       id: number;
       name: string;
       package_id: number;
-      features: {
-        id: number;
-        feature_group_id: number;
-        name: string;
-        description: string;
-        value: string | null;
-      }[];
+      features: IFeature[];
     }[];
   };
 };
