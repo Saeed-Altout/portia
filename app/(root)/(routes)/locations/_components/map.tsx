@@ -1,14 +1,9 @@
 import Image from "next/image";
 
-import { Container } from "@/components/root/ui/container";
-import { Section } from "@/components/root/ui/section";
-
 export const Map = () => {
   return (
-    <Section className="pt-0 px-10">
-      <Container className="relative h-[250px] md:h-[450px] lg:h-[800px]">
-        <Image src="/icons/map2.svg" alt="Map" className="w-full h-full object-contain" fill priority />
-      </Container>
-    </Section>
+    <section id="map" className="screen pb-20">
+      <Image src="/icons/map2.svg" alt="Map" className="h-auto mx-auto w-full max-w-5xl" width={1000} height={1000} />
+    </section>
   );
 };

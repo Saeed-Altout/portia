@@ -1,8 +1,11 @@
-import { Hero, Map, Content, CTA } from "./_components";
+import { Hero } from "./_components/hero";
+import { Map } from "./_components/map";
+import { Content } from "./_components/content";
+import { CTA } from "./_components/cta";
 
 export default function Locations() {
   return (
-    <main className="w-full">
+    <main className="min-h-full overflow-x-hidden">
       <Hero />
       <Map />
       <Content />

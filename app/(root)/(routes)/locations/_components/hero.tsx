@@ -1,17 +1,13 @@
-import { Section } from "@/components/root/ui/section";
-import { Container } from "@/components/root/ui/container";
-import { HeadingPage } from "@/components/root/ui/heading-page";
-
 export const Hero = () => {
   return (
-    <Section>
-      <Container className="items-center justify-center text-center">
-        <HeadingPage
-          label="Available Locations"
-          title="Look at our various providers & Locations"
-          description="We have a lot of proxy’s location that attach with you needs."
-        />
-      </Container>
-    </Section>
+    <section id="hero" className="screen py-24 text-center">
+      <div className="space-y-6">
+        <div className="space-y-3">
+          <span className="text-[#03055E] font-semibold text-sm">Available Locations</span>;
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">Look at our various providers & Locations</h1>
+        </div>
+        <p className="text lg:text-xl">We have a lot of proxy’s location that attach with you needs.</p>
+      </div>
+    </section>
   );
 };

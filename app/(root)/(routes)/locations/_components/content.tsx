@@ -5,21 +5,15 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/dashboard";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import {
   useGetAllPackages,
-  useGetAllCities,
-  useGetAllCountries,
-  useGetAllLocations,
-  useGetIpRotations,
-  useGetServiceProvider,
+  useGetProxyCities,
+  useGetProxyCountries,
+  useGetProxyLocations,
+  useGetProxyIpRotations,
+  useGetProxyServiceProvider,
 } from "@/hooks";
 
 import { useLocationStore } from "@/stores/use-location-store";
@@ -42,43 +36,37 @@ export const Content = () => {
   } = useLocationStore();
   const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
 
-  const { data: locations, isSuccess: locationsIsSuccess } = useGetAllLocations(
-    {
-      offset,
-      pkg_id: pkgId,
-      country_id: countryId,
-      city_id: cityId,
-      service_provider_id: serviceProviderId,
-      ip_rotation: ipRotationId,
-    }
-  );
+  const { data: locations, isSuccess: locationsIsSuccess } = useGetProxyLocations({
+    offset,
+    pkg_id: pkgId,
+    country_id: countryId,
+    city_id: cityId,
+    service_provider_id: serviceProviderId,
+    ip_rotation: ipRotationId,
+  });
 
-  const { data: countries, isLoading: countriesIsLoading } = useGetAllCountries(
-    { pkg_id: pkgId }
-  );
+  const { data: countries, isLoading: countriesIsLoading } = useGetProxyCountries({ pkg_id: pkgId });
 
-  const { data: cities, isLoading: citiesIsLoading } = useGetAllCities({
+  const { data: cities, isLoading: citiesIsLoading } = useGetProxyCities({
     pkg_id: pkgId,
     country_id: countryId,
   });
 
-  const { data: serviceProviders, isLoading: serviceProvidersIsLoading } =
-    useGetServiceProvider({
-      pkg_id: pkgId,
-      country_id: countryId,
-      city_id: cityId,
-    });
+  const { data: serviceProviders, isLoading: serviceProvidersIsLoading } = useGetProxyServiceProvider({
+    pkg_id: pkgId,
+    country_id: countryId,
+    city_id: cityId,
+  });
 
-  const { data: ipRotations, isLoading: ipRotationsIsLoading } =
-    useGetIpRotations({
-      pkg_id: pkgId,
-      country_id: countryId,
-      city_id: cityId,
-    });
+  const { data: ipRotations, isLoading: ipRotationsIsLoading } = useGetProxyIpRotations({
+    pkg_id: pkgId,
+    country_id: countryId,
+    city_id: cityId,
+  });
 
   useEffect(() => {
     setOffset(1);
-  }, [pkgId, countryId, cityId, serviceProviderId, ipRotationId]);
+  }, [pkgId, countryId, cityId, serviceProviderId, ipRotationId, setOffset]);
 
   const onSelectPackage = (pkgId: string) => {
     setPkgId(pkgId);
@@ -141,10 +129,7 @@ export const Content = () => {
             ))}
           </SelectContent>
         </Select>
-        <Select
-          onValueChange={onSelectCountry}
-          disabled={!countries?.data || packagesIsLoading || countriesIsLoading}
-        >
+        <Select onValueChange={onSelectCountry} disabled={!countries?.data || packagesIsLoading || countriesIsLoading}>
           <SelectTrigger>
             <SelectValue placeholder="Country" />
           </SelectTrigger>
@@ -156,10 +141,7 @@ export const Content = () => {
             ))}
           </SelectContent>
         </Select>
-        <Select
-          onValueChange={onSelectCity}
-          disabled={!cities?.data || countriesIsLoading || citiesIsLoading}
-        >
+        <Select onValueChange={onSelectCity} disabled={!cities?.data || countriesIsLoading || citiesIsLoading}>
           <SelectTrigger>
             <SelectValue placeholder="State" />
           </SelectTrigger>
@@ -173,21 +155,14 @@ export const Content = () => {
         </Select>
         <Select
           onValueChange={onSelectServiceProvider}
-          disabled={
-            !serviceProviders?.data ||
-            citiesIsLoading ||
-            serviceProvidersIsLoading
-          }
+          disabled={!serviceProviders?.data || citiesIsLoading || serviceProvidersIsLoading}
         >
           <SelectTrigger>
             <SelectValue placeholder="ISP" />
           </SelectTrigger>
           <SelectContent>
             {serviceProviders?.data?.map((serviceProvider) => (
-              <SelectItem
-                key={serviceProvider.id}
-                value={serviceProvider.id.toString()}
-              >
+              <SelectItem key={serviceProvider.id} value={serviceProvider.id.toString()}>
                 {serviceProvider.service_provider_name}
               </SelectItem>
             ))}
@@ -195,11 +170,7 @@ export const Content = () => {
         </Select>
         <Select
           onValueChange={onSelectIpRotations}
-          disabled={
-            !ipRotations?.data ||
-            serviceProvidersIsLoading ||
-            ipRotationsIsLoading
-          }
+          disabled={!ipRotations?.data || serviceProvidersIsLoading || ipRotationsIsLoading}
         >
           <SelectTrigger>
             <SelectValue placeholder="IP Rotation" />
@@ -213,7 +184,6 @@ export const Content = () => {
           </SelectContent>
         </Select>
       </div>
-
       <DataTable
         title="Filtered Locations"
         columns={columns}

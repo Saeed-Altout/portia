@@ -6,9 +6,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useModalStore, useProxyStore } from "@/stores";
 
-export const CellActions = ({ data }: { data: LocationState }) => {
-  const { activeProxyModalOnOpen, editProxyModalOnOpen, action } =
-    useModalStore();
+export const CellActions = ({ data }: { data: ILocation }) => {
+  const { activeProxyModalOnOpen, editProxyModalOnOpen, action } = useModalStore();
   const { setLocation } = useProxyStore();
 
   const router = useRouter();

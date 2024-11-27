@@ -5,7 +5,7 @@ import { formatTime } from "@/utils/formatters";
 
 import { CellActions } from "./cell-actions";
 
-export const columns: ColumnDef<LocationState>[] = [
+export const columns: ColumnDef<ILocation>[] = [
   {
     accessorKey: "country_name",
     header: "Country",
