@@ -1,10 +1,11 @@
-import { CTA } from "@/components/root/sections";
-import { Content, Hero } from "./_components";
+import { Hero } from "./_components/hero";
+import { Content } from "./_components/content";
+import { CTA } from "@/components/sections";
 import { Tabs } from "@/components/ui/tabs";
 
 export default function TermsPage() {
   return (
-    <main className="w-full">
+    <main className="min-h-full overflow-x-hidden">
       <Tabs defaultValue="terms">
         <Hero />
         <Content />

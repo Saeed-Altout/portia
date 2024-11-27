@@ -1,24 +1,22 @@
-import { Section } from "@/components/root/ui/section";
-import { Container } from "@/components/root/ui/container";
-import { HeadingPage } from "@/components/root/ui/heading-page";
-
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Hero = () => {
   return (
-    <Section className="bg-[#F5F5FA]">
-      <Container className="items-center justify-center text-center gap-y-10">
-        <HeadingPage
-          label="Privacy Policy"
-          title="We care about your privacy"
-          description="Your privacy is important to us at Portia. We respect your privacy regarding any information we may collect from you across our website."
-        />
-
-        <TabsList className="bg-[#E9E9F2] h-11 p-2">
-          <TabsTrigger value="privacy-policy">Privacy Policy</TabsTrigger>
-          <TabsTrigger value="terms">Terms</TabsTrigger>
-        </TabsList>
-      </Container>
-    </Section>
+    <section className="bg-[#F5F5FA] py-24 text-center space-y-10">
+      <div className="space-y-6 screen">
+        <div className="space-y-3">
+          <span className="text-[#03055E] font-semibold text-sm">Privacy Policy</span>;
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">We care about your privacy</h1>
+        </div>
+        <p className="text lg:text-xl max-w-4xl mx-auto">
+          Your privacy is important to us at Portia. We respect your privacy regarding any information we may collect
+          from you across our website.
+        </p>
+      </div>
+      <TabsList className="bg-[#E9E9F2] h-11 p-2">
+        <TabsTrigger value="privacy-policy">Privacy Policy</TabsTrigger>
+        <TabsTrigger value="terms">Terms</TabsTrigger>
+      </TabsList>
+    </section>
   );
 };
