@@ -12,7 +12,7 @@ export const Content = () => {
 
   return (
     <section id="all-faqs" className="w-full py-20">
-      <div className="container space-y-12">
+      <div className="screen space-y-12">
         {(isLoading || isError) && (
           <div className="w-full flex flex-col gap-5 max-w-[800px] mx-auto">
             {[...Array(10)].map((_, index) => (

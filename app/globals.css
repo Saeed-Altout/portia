@@ -17,7 +17,6 @@ body,
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 239 77% 28%;
-    /* --primary: 222.2 47.4% 11.2%; */
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -74,154 +73,67 @@ body,
     @apply bg-background text-black-200 scroll-smooth;
   }
   p {
-    @apply text-base text-gray-500 font-normal leading-normal;
+    @apply text-gray-500;
   }
 }
-
-@layer components {
-  .container {
-    @apply max-w-7xl mx-auto w-full h-full px-4 md:px-6 lg:px-8 xl:px-10;
+@layer utilities {
+  .screen {
+    @apply max-w-7xl px-4 md:px-6 lg:px-8 mx-auto;
   }
-  .text {
-    @apply text-base text-gray-500 font-normal leading-normal;
-  }
-
-  .offer-table {
-    @apply w-full h-full grid grid-cols-4;
-  }
-  .offer-table-column {
-    @apply bg-white;
-  }
-  .offer-table-head {
-    @apply flex flex-col justify-center items-center;
-  }
-  .offer-table-body {
-    @apply bg-white;
-  }
-  .offer-table-group-features {
-    @apply flex flex-col border-b;
-  }
-  .offer-table-cell-head {
-    @apply py-6 px-4 font-medium text-sm odd:bg-white even:bg-[#F5F5FA];
-  }
-  .offer-table-cell-data {
-    @apply py-6 px-4 text-gray-500 text-center text-sm odd:bg-white even:bg-[#F5F5FA];
-  }
-
-  .offer-table-head-info {
-    @apply w-full flex justify-start items-start gap-x-2 py-6 px-4 border-b;
-  }
-  .offer-table-head-info-popular {
-    @apply bg-[#D4D4FF] text-primary px-5 py-1 rounded-full text-sm font-medium;
-  }
-
-  .offer-table-head-info-name {
-    @apply text-xl font-semibold leading-8;
-  }
-  .offer-table-head-content {
-    @apply w-full flex flex-col justify-start items-start gap-y-6 py-6 px-4;
-  }
-  .offer-table-head-content-price {
-    @apply font-semibold text-5xl;
-  }
-  .offer-table-head-content-plan {
-    @apply text-base font-medium text-gray-500 ml-2 tracking-wide text-nowrap;
-  }
-  .offer-table-head-content-description {
-    @apply text-sm;
-  }
-
-  .cell {
-    @apply h-[72px] px-4 flex justify-end md:justify-center items-center text-gray-500 text-center text-sm odd:bg-white even:bg-[#F5F5FA];
-  }
-  .cell-check {
-    @apply text-[#26A6A4] bg-[#B5F7F6] block rounded-full w-6 h-6 ml-auto md:mx-auto p-[2px];
-  }
-}
-.feature-item::before {
-  content: attr(data-content);
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 16px;
-  text-wrap: nowrap;
-  font-weight: 500;
-  text-transform: capitalize;
-  color: black;
-}
-.featureGroup-item::before {
-  content: attr(data-content);
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 16px;
-  text-wrap: nowrap;
-  font-weight: 500;
-  text-transform: capitalize;
-  color: #03055e;
 }
 
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"),
-    url("/fonts/Altone-ExtraBold.ttf") format("truetype");
+  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"), url("/fonts/Altone-ExtraBold.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
 }
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-Bold.ttf") format("truetype"),
-    url("/fonts/Altone-Bold.ttf") format("truetype");
+  src: url("/fonts/Altone-Bold.ttf") format("truetype"), url("/fonts/Altone-Bold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
 }
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-Bold.ttf") format("truetype"),
-    url("/fonts/Altone-Bold.ttf") format("truetype");
+  src: url("/fonts/Altone-Bold.ttf") format("truetype"), url("/fonts/Altone-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-SemiBold.ttf") format("truetype"),
-    url("/fonts/Altone-SemiBold.ttf") format("truetype");
+  src: url("/fonts/Altone-SemiBold.ttf") format("truetype"), url("/fonts/Altone-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-Medium.ttf") format("truetype"),
-    url("/fonts/Altone-Medium.ttf") format("truetype");
+  src: url("/fonts/Altone-Medium.ttf") format("truetype"), url("/fonts/Altone-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-Medium.ttf") format("truetype"),
-    url("/fonts/Altone-Medium.ttf") format("truetype");
+  src: url("/fonts/Altone-Medium.ttf") format("truetype"), url("/fonts/Altone-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-Regular.ttf") format("truetype"),
-    url("/fonts/Altone-Regular.ttf") format("truetype");
+  src: url("/fonts/Altone-Regular.ttf") format("truetype"), url("/fonts/Altone-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-Light.ttf") format("truetype"),
-    url("/fonts/Altone-Light.ttf") format("truetype");
+  src: url("/fonts/Altone-Light.ttf") format("truetype"), url("/fonts/Altone-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
   font-family: "Alton";
-  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"),
-    url("/fonts/Altone-ExtraBold.ttf") format("truetype");
+  src: url("/fonts/Altone-ExtraBold.ttf") format("truetype"), url("/fonts/Altone-ExtraBold.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
 }
@@ -248,7 +160,6 @@ body {
   }
 }
 
-/* phone-input.css */
 .react-international-phone-input-container {
   @apply h-10 w-full relative;
 }
@@ -288,10 +199,4 @@ body {
 .react-international-phone-country-selector-dropdown__list-item-country-name,
 .react-international-phone-country-selector-dropdown__list-item-dial-code {
   @apply text-gray-500;
-}
-
-@layer utilities {
-  .screen {
-    @apply max-w-7xl px-4 md:px-6 lg:px-8 mx-auto;
-  }
 }
