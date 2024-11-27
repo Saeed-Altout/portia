@@ -1,18 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Zap } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 import { TabMenu } from "./_components/tab-menu";
 import { DropdownMenu } from "./_components/dropdown-menu";
 
-import { Loader } from "@/components/ui/loader";
-
-import { Heading } from "@/components/dashboard";
-import { useGetPricingPlans, useGetUserDetails } from "@/hooks";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/dashboard";
 import { Circle, Icon } from "@/components/ui/circle-icon";
-import { Zap } from "lucide-react";
+
+import { useAuthStore } from "@/stores";
+import { useGetPricingPlans } from "@/hooks";
 
 interface Filter {
   pkgName: string;
@@ -20,23 +21,29 @@ interface Filter {
 }
 
 export default function PricingPlansPage() {
-  const { data: user, isLoading: isLoadingUser } = useGetUserDetails();
-  const { data: pricingPlans, isLoading: isLoadingPricingPlans } = useGetPricingPlans();
+  const { user } = useAuthStore();
+  const { data, isSuccess } = useGetPricingPlans();
 
-  const [filter, setFilter] = useState<Filter>({
-    pkgName: "Basic",
-    planName: "Hourly",
-  });
+  const [packages, setPackages] = useState<any>([]);
+  const [plans, setPlans] = useState<any>([]);
+  const [filter, setFilter] = useState<any>({});
 
-  const packages = pricingPlans?.data?.map((item, index) => ({
-    id: index,
-    name: item.name,
-  }));
+  useEffect(() => {
+    if (isSuccess) {
+      const packages = data.data.map((item, index) => ({
+        id: index,
+        name: item.name,
+      }));
 
-  const plans = pricingPlans?.data[0]?.plans.map((item, index) => ({
-    id: index,
-    name: item.plan_name,
-  }));
+      const plans = data.data[0].plans.map((item, index) => ({
+        id: index,
+        name: item.plan_name,
+      }));
+
+      setPackages(packages);
+      setPlans(plans);
+    }
+  }, [data, isSuccess]);
 
   const handleFilterChange = (key: keyof Filter, value: number) => {
     setFilter({ ...filter, [key]: value });
@@ -44,7 +51,7 @@ export default function PricingPlansPage() {
 
   return (
     <>
-      <Heading title={`Welcome back ${user?.data.first_name || ""}`} label="Our Pricing plans" />
+      <Heading title={`Welcome back ${user.first_name}`} label="Our Pricing plans" />
       <div className="flex flex-col gap-y-4">
         <div className="hidden lg:flex items-start justify-start gap-x-12">
           <TabMenu
@@ -68,7 +75,7 @@ export default function PricingPlansPage() {
         </div>
       </div>
       <div className="grid gap-4">
-        {pricingPlans?.data?.some(
+        {data?.data?.some(
           (pkg) =>
             pkg.name === filter.pkgName &&
             pkg.plans.some(
@@ -76,7 +83,7 @@ export default function PricingPlansPage() {
                 plan.plan_name === filter.planName && plan.offers.length > 0,
             ),
         ) ? (
-          pricingPlans.data
+          data.data
             ?.filter((pkg) => pkg.name === filter.pkgName)
             ?.flatMap((pkg) =>
               pkg.plans
