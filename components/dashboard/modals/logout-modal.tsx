@@ -4,16 +4,10 @@ import * as React from "react";
 import { BeatLoader } from "react-spinners";
 import { Power } from "lucide-react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import { Circle, Icon } from "@/components/dashboard/circle-icon";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 import { useModalStore } from "@/stores";
 import { useLogout } from "@/hooks/auth";
 
@@ -45,20 +39,13 @@ export const LogoutModal = () => {
           <div className="flex-1 !text-left">
             <DialogTitle className="text-lg font-medium">Logout</DialogTitle>
             <DialogDescription className="text-sm font-normal">
-              Are you sure you want to logout? if you are sure click
-              &apos;logout&apos; button below
+              Are you sure you want to logout? if you are sure click &apos;logout&apos; button below
             </DialogDescription>
           </div>
         </DialogHeader>
 
         <div className="flex justify-between items-center gap-5">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            disabled={isPending}
-            onClick={logoutModalOnClose}
-          >
+          <Button type="button" variant="outline" className="w-full" disabled={isPending} onClick={logoutModalOnClose}>
             Cancel
           </Button>
           <Button

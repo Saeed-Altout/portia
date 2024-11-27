@@ -46,8 +46,8 @@ export const EditInfoProxyModal = () => {
         protocol: values.protocol,
       });
       onClose();
-      setProxy({} as ProxyState);
-      setLocation({} as LocationState);
+      setProxy({} as IProxy);
+      setLocation({} as ILocation);
     } catch (error) {
       console.error(error);
     }

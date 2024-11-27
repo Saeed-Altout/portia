@@ -73,8 +73,8 @@ interface ProxyStore {
   totalProxiesCount: number;
   setTotalProxiesCount: (count: number) => void;
 
-  packages: Package[];
-  setPackages: (packages: Package[]) => void;
+  packages: IPackage[];
+  setPackages: (packages: IPackage[]) => void;
 
   protocol: number;
   setProtocol: (protocol: number) => void;

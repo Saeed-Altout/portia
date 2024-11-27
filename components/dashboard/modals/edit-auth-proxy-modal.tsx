@@ -43,7 +43,7 @@ export const EditAuthProxyModal = () => {
       });
 
       onClose();
-      setProxy({} as ProxyState);
+      setProxy({} as IProxy);
     } catch (error) {
       console.error(error);
     }

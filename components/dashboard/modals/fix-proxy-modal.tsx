@@ -27,12 +27,7 @@ export const FixProxyModal = () => {
       onClose={fixProxyModalOnClose}
     >
       <div className="flex justify-between items-center gap-5">
-        <Button
-          variant="outline"
-          disabled={isPending}
-          onClick={fixProxyModalOnClose}
-          className="w-full"
-        >
+        <Button variant="outline" disabled={isPending} onClick={fixProxyModalOnClose} className="w-full">
           Cancel
         </Button>
         <Button disabled={isPending} onClick={onSubmit} className="w-full">

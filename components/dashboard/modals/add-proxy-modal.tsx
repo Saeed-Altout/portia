@@ -20,16 +20,9 @@ import { activateNewProxySchema } from "@/schemas";
 import { useModalStore, useProxyStore } from "@/stores";
 
 export const AddProxyModal = () => {
-  const { price, duration, location, protocol, setProxy, setLocation } =
-    useProxyStore();
-  const {
-    step,
-    setStep,
-    moveNextStep,
-    movePrevStep,
-    activeProxyModalIsOpen,
-    activeProxyModalOnClose,
-  } = useModalStore();
+  const { price, duration, location, protocol, setProxy, setLocation } = useProxyStore();
+  const { step, setStep, moveNextStep, movePrevStep, activeProxyModalIsOpen, activeProxyModalOnClose } =
+    useModalStore();
 
   const { mutateAsync, isPending } = useAddProxy();
 
@@ -61,8 +54,8 @@ export const AddProxyModal = () => {
         password: values.password,
       });
       onClose();
-      setProxy({} as ProxyState);
-      setLocation({} as LocationState);
+      setProxy({} as IProxy);
+      setLocation({} as ILocation);
     } catch (error) {
       console.error(error);
     }
@@ -111,41 +104,21 @@ export const AddProxyModal = () => {
           <div className="flex flex-col items-center gap-4">
             {step == 3 && (
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? (
-                  <BeatLoader color="#fff" size={12} />
-                ) : (
-                  "Activate Proxy"
-                )}
+                {isPending ? <BeatLoader color="#fff" size={12} /> : "Activate Proxy"}
               </Button>
             )}
             {step !== 3 && (
-              <Button
-                type="button"
-                className="w-full"
-                onClick={moveNextStep}
-                disabled={step === 3}
-              >
+              <Button type="button" className="w-full" onClick={moveNextStep} disabled={step === 3}>
                 Next Step
               </Button>
             )}
             {step !== 1 && (
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={movePrevStep}
-              >
+              <Button type="button" variant="outline" className="w-full" onClick={movePrevStep}>
                 Previous
               </Button>
             )}
             {step == 1 && (
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={onClose}
-                disabled={isPending}
-              >
+              <Button type="button" variant="outline" className="w-full" onClick={onClose} disabled={isPending}>
                 Cancel
               </Button>
             )}

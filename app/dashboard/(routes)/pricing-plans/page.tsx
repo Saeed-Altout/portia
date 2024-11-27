@@ -7,7 +7,7 @@ import { DropdownMenu } from "./_components/dropdown-menu";
 
 import { Loader } from "@/components/ui/loader";
 
-import { Heading, OfferCard } from "@/components/dashboard";
+import { Heading } from "@/components/dashboard";
 import { useGetPricingPlans, useGetUserDetails } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,8 +22,6 @@ interface Filter {
 export default function PricingPlansPage() {
   const { data: user, isLoading: isLoadingUser } = useGetUserDetails();
   const { data: pricingPlans, isLoading: isLoadingPricingPlans } = useGetPricingPlans();
-
-  const isLoading = isLoadingUser || isLoadingPricingPlans;
 
   const [filter, setFilter] = useState<Filter>({
     pkgName: "Basic",
@@ -43,10 +41,6 @@ export default function PricingPlansPage() {
   const handleFilterChange = (key: keyof Filter, value: number) => {
     setFilter({ ...filter, [key]: value });
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

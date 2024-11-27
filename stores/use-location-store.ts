@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface LocationState {
+interface LocationStore {
   offset: number;
   pkgId: number | null;
   countryId: number | null;
@@ -16,7 +16,7 @@ interface LocationState {
   setOffset: (offset: number) => void;
 }
 
-export const useLocationStore = create<LocationState>((set) => ({
+export const useLocationStore = create<LocationStore>((set) => ({
   offset: 1,
   pkgId: 1,
   countryId: null,
