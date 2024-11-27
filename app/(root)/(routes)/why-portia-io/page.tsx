@@ -1,5 +1,7 @@
+import { Hero } from "./_components/hero";
+import { Features } from "./_components/features";
+import { Countries } from "./_components/countries";
 import { CTA, FAQs, Testimonials } from "@/components/sections";
-import { Countries, Features, Hero } from "./_components";
 
 export default function WhyPortiaIoPage() {
   return (

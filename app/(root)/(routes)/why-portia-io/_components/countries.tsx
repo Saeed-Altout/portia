@@ -5,10 +5,7 @@ import { countriesData } from "@/config/constants";
 
 export const Countries = () => {
   return (
-    <section
-      id="countries"
-      className="screen flex flex-col md:flex-row gap-x-16 gap-y-12 py-24"
-    >
+    <section id="countries" className="screen flex flex-col md:flex-row gap-x-16 gap-y-12 py-24">
       <div className="w-full max-w-[362.67px]">
         <Heading
           label="countries"
@@ -24,9 +21,7 @@ export const Countries = () => {
               <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
             </Avatar>
             <div>
-              <h3 className="text-[#0A0A0A] text-lg font-medium capitalize line-clamp-1 whitespace-nowrap">
-                {name}
-              </h3>
+              <h3 className="text-[#0A0A0A] text-lg font-medium capitalize line-clamp-1 whitespace-nowrap">{name}</h3>
               <p className="text-[#03055E]">{users} IPs</p>
             </div>
           </div>
