@@ -127,6 +127,35 @@ declare type Country = {
   id: number;
   country_name: string;
 };
+declare type IDepositsStatistics = {
+  monthly_deposits: number;
+  yearly_deposits: number;
+  all_time_deposits: number;
+};
+declare type IDepositsHistory = {
+  current_page: number;
+  data: {
+    id: number;
+    payment_method: string;
+    amount: string;
+    created_at: Date | string;
+  }[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: {
+    url: string;
+    label: string;
+    active: boolean;
+  }[];
+  next_page_url: string;
+  path: string;
+  per_page: number;
+  prev_page_url: string;
+  to: number;
+  total: number;
+};
 
 declare type City = {
   id: number;

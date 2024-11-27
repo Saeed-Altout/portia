@@ -1,7 +1,5 @@
+import { DepositsClient } from "./_components/client";
+
 export default function DepositsPage() {
-  return (
-    <>
-      <div>Deposit Page</div>
-    </>
-  );
+  return <DepositsClient />;
 }
