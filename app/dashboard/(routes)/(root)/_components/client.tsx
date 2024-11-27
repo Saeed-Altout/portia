@@ -31,8 +31,8 @@ export const RootClient = () => {
       title: "Your Balance",
       theme: "success",
       value: `${balance?.data.user_balance ?? 0}$`,
-      href: "/dashboard/deposit",
-      label: "View All Deposit",
+      href: "/dashboard/deposits",
+      label: "View All Deposits",
     },
   ];
 

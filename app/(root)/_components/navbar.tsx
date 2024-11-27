@@ -2,18 +2,18 @@
 
 import Link from "next/link";
 import * as React from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-dropdown";
+import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-
-import { usePathname } from "next/navigation";
-
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-dropdown";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,9 +24,7 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import { useAuthStore } from "@/stores";
-import { useEffect, useState } from "react";
 import { navbarLinks, navLinks, sidebarLinks } from "@/constants";
-import { Logo } from "@/components/ui/logo";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuthStore();

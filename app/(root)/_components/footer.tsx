@@ -9,7 +9,7 @@ const year = new Date().getFullYear();
 export const Footer = () => {
   return (
     <footer className="bg-black-300 pt-16 pb-12">
-      <div>
+      <div className="screen">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
           <div className="sm:col-span-2 space-y-3">
             <div className="h-[30] w-[100px]">
