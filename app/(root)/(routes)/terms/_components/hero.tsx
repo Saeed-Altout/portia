@@ -5,7 +5,7 @@ export const Hero = () => {
     <section className="bg-[#F5F5FA] py-24 text-center space-y-10">
       <div className="space-y-6 screen">
         <div className="space-y-3">
-          <span className="text-[#03055E] font-semibold text-sm">Privacy Policy</span>;
+          <span className="text-[#03055E] font-semibold text-sm">Privacy Policy</span>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">We care about your privacy</h1>
         </div>
         <p className="text lg:text-xl max-w-4xl mx-auto">

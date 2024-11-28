@@ -3,7 +3,7 @@ export const Hero = () => {
     <section id="hero" className="bg-[#F5F5FA] py-24">
       <div className="space-y-6 screen text-center">
         <div className="space-y-3">
-          <span className="text-[#03055E] font-semibold text-sm">Why Portia.io?</span>;
+          <span className="text-[#03055E] font-semibold text-sm">Why Portia.io?</span>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">Why To Choose Portia.io?</h1>
         </div>
         <p className="text lg:text-xl">

@@ -32,6 +32,8 @@ export const Customers = () => {
               <Image
                 src={customer.imgUrl}
                 alt={customer.agency}
+                width={1000}
+                height={1000}
                 className="object-cover w-full h-full absolute top-0 left-0"
               />
               <motion.div
