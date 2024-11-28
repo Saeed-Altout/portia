@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/dashboard/modal";
 
 import { useModalStore, useProxyStore } from "@/stores";
-import { useEditInfoProxy } from "@/hooks";
+import { useEditInfoProxy, useGetPorts } from "@/hooks";
 
 const editProxySchema = z.object({
   provider: z.string().min(2),
@@ -27,8 +27,9 @@ const editProxySchema = z.object({
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
   const { editProxyModalIsOpen, editProxyModalOnClose, setAction } = useModalStore();
-  const { ports, location, proxy, setProxy, setLocation } = useProxyStore();
+  const { location, proxy, setProxy, setLocation, pkgId } = useProxyStore();
   const { mutateAsync, isPending } = useEditInfoProxy();
+  const { data: ports } = useGetPorts({ id: pkgId });
 
   const form = useForm<z.infer<typeof editProxySchema>>({
     resolver: zodResolver(editProxySchema),
@@ -116,7 +117,7 @@ export const EditInfoProxyModal = () => {
                 <FormItem>
                   <FormLabel>Proxy Type</FormLabel>
                   <Select
-                    disabled={isPending || ports.length == 0}
+                    disabled={isPending || ports?.data.length == 0}
                     defaultValue={field.value}
                     onValueChange={field.onChange}
                   >
@@ -126,7 +127,7 @@ export const EditInfoProxyModal = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {ports.map((item, index) => (
+                      {ports?.data.map((item, index) => (
                         <SelectItem key={index} value={item}>
                           {item}
                         </SelectItem>

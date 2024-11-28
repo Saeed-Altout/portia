@@ -176,7 +176,7 @@ export const Content = () => {
             <SelectValue placeholder="IP Rotation" />
           </SelectTrigger>
           <SelectContent>
-            {ipRotations?.data?.map((ipRotation) => (
+            {ipRotations?.data.map((ipRotation) => (
               <SelectItem key={ipRotation} value={ipRotation}>
                 {ipRotation}
               </SelectItem>
