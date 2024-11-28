@@ -10,9 +10,10 @@ export const useLogout = () => {
     mutationKey: ["logout"],
     mutationFn: () => logout(),
     onSuccess(req) {
+      Success({ message: req.message });
       clear();
       localStorage.clear();
-      Success({ message: req.message, redirectTo: "/auth/login" });
+      location.reload();
     },
     onError(error) {
       Error({ error: error, message: "Something went wrong!" });

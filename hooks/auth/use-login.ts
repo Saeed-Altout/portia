@@ -12,7 +12,8 @@ export const useLogin = () => {
     onSuccess: (data) => {
       setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
       setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
-      Success({ message: data.message, redirectTo: "/dashboard" });
+      Success({ message: data.message });
+      location.reload();
     },
     onError(error) {
       Error({ error: error, message: "Something went wrong!" });
