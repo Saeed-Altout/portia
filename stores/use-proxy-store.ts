@@ -1,14 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-interface Costs {
-  plan: Array<{
-    value: number;
-    price: number;
-    duration: number;
-  }>;
-}
-
 const initialProxy: IProxy = {
   id: 0,
   proxy_id: "",
@@ -88,9 +80,6 @@ interface ProxyStore {
   plans: string[];
   setPlans: (plans: string[]) => void;
 
-  costs: Costs;
-  setCosts: (costs: Costs) => void;
-
   price: number;
   setPrice: (price: number) => void;
 
@@ -110,10 +99,12 @@ export const useProxyStore = create<ProxyStore>()(
     setLocation: (location) => set((state) => void (state.location = location)),
 
     activeProxies: [],
-    setActiveProxies: (proxies) => set((state) => void (state.activeProxies = proxies)),
+    setActiveProxies: (proxies) =>
+      set((state) => void (state.activeProxies = proxies)),
 
     inactiveProxies: [],
-    setInactiveProxies: (proxies) => set((state) => void (state.inactiveProxies = proxies)),
+    setInactiveProxies: (proxies) =>
+      set((state) => void (state.inactiveProxies = proxies)),
 
     activePage: 1,
     setActivePage: (page) =>
@@ -128,10 +119,12 @@ export const useProxyStore = create<ProxyStore>()(
       }),
 
     activeProxiesCount: 0,
-    setActiveProxiesCount: (count: number) => set({ activeProxiesCount: count }),
+    setActiveProxiesCount: (count: number) =>
+      set({ activeProxiesCount: count }),
 
     inactiveProxiesCount: 0,
-    setInactiveProxiesCount: (count: number) => set({ inactiveProxiesCount: count }),
+    setInactiveProxiesCount: (count: number) =>
+      set({ inactiveProxiesCount: count }),
 
     totalProxiesCount: 0,
     setTotalProxiesCount: (count: number) => set({ totalProxiesCount: count }),
@@ -142,7 +135,7 @@ export const useProxyStore = create<ProxyStore>()(
     protocol: 0,
     setProtocol: (protocol) => set({ protocol }),
 
-    pkgId: "1",
+    pkgId: "0",
     setPkgId: (pkgId) => set({ pkgId }),
 
     ports: [],
@@ -150,9 +143,6 @@ export const useProxyStore = create<ProxyStore>()(
 
     plans: [],
     setPlans: (plans) => set({ plans }),
-
-    costs: { plan: [] },
-    setCosts: (costs) => set({ costs }),
 
     price: 0,
     setPrice: (price) => set({ price }),
@@ -162,5 +152,5 @@ export const useProxyStore = create<ProxyStore>()(
 
     amounts: [],
     setAmounts: (amounts) => set({ amounts }),
-  })),
+  }))
 );

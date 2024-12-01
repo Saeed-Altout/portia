@@ -15,13 +15,15 @@ import { StepOne } from "./step-one";
 import { StepTwo } from "./step-two";
 import { StepThree } from "./step-three";
 
-import { useAddProxy } from "@/hooks/dashboard";
+import { useAddProxy } from "@/hooks";
 import { activateNewProxySchema } from "@/schemas";
 import { useModalStore, useProxyStore } from "@/stores";
 
 export const AddProxyModal = () => {
-  const { price, duration, location, protocol, setProxy, setLocation } = useProxyStore();
-  const { step, setStep, moveNextStep, movePrevStep, activeProxyModalIsOpen, activeProxyModalOnClose } =
+  const { price, duration, location, protocol, setProxy, setLocation } =
+    useProxyStore();
+
+  const { step, activeProxyModalIsOpen, setStep, activeProxyModalOnClose } =
     useModalStore();
 
   const { mutateAsync, isPending } = useAddProxy();
@@ -67,6 +69,67 @@ export const AddProxyModal = () => {
     activeProxyModalOnClose();
   };
 
+  const moveNextStep = () => {
+    const values = form.getValues();
+
+    if (step === 1) {
+      if (!values.pkg_id || !values.plan_id || !values.amount) {
+        form.setError("pkg_id", {
+          type: "required",
+          message: "Package is required.",
+        });
+        form.setError("plan_id", {
+          type: "required",
+          message: "Plan is required.",
+        });
+        form.setError("amount", {
+          type: "required",
+          message: "Amount is required.",
+        });
+        return;
+      }
+    }
+
+    if (step === 2) {
+      if (!values.provider || !values.ipRotation) {
+        form.setError("provider", {
+          type: "required",
+          message: "Provider is required.",
+        });
+        form.setError("ipRotation", {
+          type: "required",
+          message: "IP Rotation is required.",
+        });
+
+        return;
+      }
+    }
+
+    if (step === 3) {
+      if (!values.username || !values.password || !values.protocol) {
+        form.setError("username", {
+          type: "required",
+          message: "Username is required.",
+        });
+        form.setError("password", {
+          type: "required",
+          message: "Password is required.",
+        });
+        form.setError("protocol", {
+          type: "required",
+          message: "Protocol is required.",
+        });
+        return;
+      }
+    }
+
+    setStep(step + 1);
+  };
+
+  const movePrevStep = () => {
+    setStep(step - 1);
+  };
+
   useEffect(() => {
     if (step === 2 && location) {
       form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
@@ -74,14 +137,14 @@ export const AddProxyModal = () => {
     }
   }, [form, location, step]);
 
-  const renderStep = () => {
+  const renderStep = (form: any) => {
     switch (step) {
       case 1:
-        return <StepOne isLoading={isPending} />;
+        return <StepOne form={form} isLoading={isPending} />;
       case 2:
-        return <StepTwo isLoading={isPending} />;
+        return <StepTwo form={form} />;
       case 3:
-        return <StepThree isLoading={isPending} />;
+        return <StepThree form={form} isLoading={isPending} />;
       default:
         return null;
     }
@@ -98,27 +161,47 @@ export const AddProxyModal = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-4">
-            {renderStep()}
+            {renderStep(form)}
             <p className="text-lg font-semibold">Cost: {price}$</p>
           </div>
           <div className="flex flex-col items-center gap-4">
             {step == 3 && (
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? <BeatLoader color="#fff" size={12} /> : "Activate Proxy"}
+                {isPending ? (
+                  <BeatLoader color="#fff" size={12} />
+                ) : (
+                  "Activate Proxy"
+                )}
               </Button>
             )}
             {step !== 3 && (
-              <Button type="button" className="w-full" onClick={moveNextStep} disabled={step === 3}>
+              <Button
+                type="button"
+                className="w-full"
+                onClick={moveNextStep}
+                disabled={step === 3}
+              >
                 Next Step
               </Button>
             )}
             {step !== 1 && (
-              <Button type="button" variant="outline" className="w-full" onClick={movePrevStep}>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={movePrevStep}
+              >
                 Previous
               </Button>
             )}
             {step == 1 && (
-              <Button type="button" variant="outline" className="w-full" onClick={onClose} disabled={isPending}>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={onClose}
+                disabled={isPending}
+              >
                 Cancel
               </Button>
             )}

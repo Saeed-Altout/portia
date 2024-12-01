@@ -3,27 +3,40 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useFormContext } from "react-hook-form";
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
-import { useModalStore } from "@/stores";
+import { useModalStore, useProxyStore } from "@/stores";
+import { useEffect } from "react";
 
 interface StepTwoProps {
-  isLoading?: boolean;
+  form: any;
 }
 
-export const StepTwo = ({ isLoading }: StepTwoProps) => {
+export const StepTwo = ({ form }: StepTwoProps) => {
   const pathname = usePathname();
-  const { control } = useFormContext();
-  const { activeProxyModalOnClose, setAction } = useModalStore();
+  const { step, activeProxyModalOnClose, setAction } = useModalStore();
+  const { location } = useProxyStore();
+
+  useEffect(() => {
+    if (step === 2 && location) {
+      form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
+      form.setValue("provider", `${location.service_provider_name ?? ""}`);
+    }
+  }, [form, location, step]);
 
   return (
     <>
       <FormField
-        control={control}
+        control={form.control}
         name="provider"
         render={({ field }) => (
           <FormItem>
@@ -59,13 +72,18 @@ export const StepTwo = ({ isLoading }: StepTwoProps) => {
         )}
       />
       <FormField
-        control={control}
+        control={form.control}
         name="ipRotation"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Minimum time between IP rotation</FormLabel>
             <FormControl>
-              <Input disabled={isLoading} placeholder="IP rotation" {...field} />
+              <Input
+                disabled={true}
+                readOnly
+                placeholder="IP rotation"
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

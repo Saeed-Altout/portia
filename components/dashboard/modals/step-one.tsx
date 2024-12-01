@@ -1,14 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useEffect, useState } from "react";
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { useProxyStore } from "@/stores";
+import { useGetAllPackages, useGetCostPlans } from "@/hooks";
 
 interface StepOneProps {
+  form: any;
   isLoading?: boolean;
 }
 
@@ -18,53 +31,74 @@ interface ValuePlanProps {
   value: number;
 }
 
-export const StepOne = ({ isLoading }: StepOneProps) => {
+export const StepOne = ({ form, isLoading }: StepOneProps) => {
   const [valuePlan, setValuePlan] = useState<ValuePlanProps[]>([]);
-  const { control } = useFormContext();
-  const { packages, plans, costs, amounts, setPkgId, setPrice, setDuration, setAmounts } = useProxyStore();
+  const [costs, setCosts] = useState<Record<string, ValuePlanProps[]>>({});
+
+  const {
+    pkgId,
+    amounts,
+    setPkgId,
+    setPrice,
+    setDuration,
+    setAmounts,
+    plans,
+    setPlans,
+  } = useProxyStore();
+
+  const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
+  const {
+    data: costsData,
+    isFetching: costsDataIsFetching,
+    isSuccess: costsIsSuccess,
+  } = useGetCostPlans({
+    pkg_id: pkgId,
+  });
 
   const handlePackageSelect = (newPkgId: string) => {
     setPkgId(newPkgId);
-    // Clear State
-    setValuePlan([]);
-    setAmounts([]);
-    setDuration(0);
-    setPrice(0);
   };
+
   const handlePlanSelect = (plan: string) => {
-    const valuePlan = Object.entries(costs)
-      .filter(([key]) => key === plan)
-      .map(([, value]) => value)
-      .flat();
+    const selectedValuePlan = costs[plan] || [];
+    const newAmounts = selectedValuePlan.map(
+      (item) => `${item.value}::${plan}`
+    );
 
-    setValuePlan(valuePlan);
-
-    const amounts = valuePlan.map((item) => item.value);
-    setAmounts(amounts);
-
-    // Clear State
-    setDuration(0);
-    setPrice(0);
+    setValuePlan(selectedValuePlan);
+    setAmounts(newAmounts);
   };
 
-  const handleAmountSelect = (amount: number) => {
-    const values = valuePlan.filter((item) => item.value == amount && item)[0];
-    if (values) {
-      setDuration(values.duration);
-      setPrice(values.price);
+  const handleAmountSelect = (uniqueValue: string) => {
+    const [amount, plan] = uniqueValue.split("::");
+    const selectedValue = valuePlan.find(
+      (item) => item.value === Number(amount) && plan
+    );
+
+    if (selectedValue) {
+      setDuration(selectedValue.duration);
+      setPrice(selectedValue.price);
     }
   };
+
+  useEffect(() => {
+    if (costsIsSuccess) {
+      const fetchedCosts = costsData.data;
+      setCosts(fetchedCosts);
+      setPlans(Object.keys(fetchedCosts));
+    }
+  }, [pkgId, costsData, costsIsSuccess, form, setPlans]);
 
   return (
     <>
       <FormField
-        control={control}
+        control={form.control}
         name="pkg_id"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Packages</FormLabel>
             <Select
-              disabled={isLoading || packages.length === 0}
+              disabled={packagesIsLoading || packages?.data.length === 0}
               onValueChange={(value) => {
                 field.onChange(value);
                 handlePackageSelect(value);
@@ -77,7 +111,7 @@ export const StepOne = ({ isLoading }: StepOneProps) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {packages.map((item) => (
+                {packages?.data.map((item) => (
                   <SelectItem key={item.id} value={item.id.toString()}>
                     {item.name}
                   </SelectItem>
@@ -89,13 +123,13 @@ export const StepOne = ({ isLoading }: StepOneProps) => {
         )}
       />
       <FormField
-        control={control}
+        control={form.control}
         name="plan_id"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Plans</FormLabel>
             <Select
-              disabled={isLoading || plans.length === 0}
+              disabled={isLoading || costsDataIsFetching || plans.length === 0}
               onValueChange={(value) => {
                 field.onChange(value);
                 handlePlanSelect(value);
@@ -120,16 +154,16 @@ export const StepOne = ({ isLoading }: StepOneProps) => {
         )}
       />
       <FormField
-        control={control}
+        control={form.control}
         name="amount"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Amount</FormLabel>
             <Select
-              disabled={isLoading || amounts.length == 0}
+              disabled={isLoading || amounts.length === 0}
               onValueChange={(value) => {
                 field.onChange(value);
-                handleAmountSelect(+value);
+                handleAmountSelect(value);
               }}
               defaultValue={field.value}
             >
@@ -139,11 +173,14 @@ export const StepOne = ({ isLoading }: StepOneProps) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {amounts.map((amount, index) => (
-                  <SelectItem key={index} value={amount.toString()}>
-                    {amount}
-                  </SelectItem>
-                ))}
+                {amounts.map((uniqueValue) => {
+                  const [amount] = uniqueValue.split("::");
+                  return (
+                    <SelectItem key={uniqueValue} value={uniqueValue}>
+                      {amount}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
             <FormMessage />

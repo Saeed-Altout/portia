@@ -47,7 +47,9 @@ export const sendResetEmailSchema = z.object({
 
 export const newPasswordSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
-  password_confirmation: z.string().min(8, "Confirm Password must be at least 8 characters"),
+  password_confirmation: z
+    .string()
+    .min(8, "Confirm Password must be at least 8 characters"),
 });
 
 export const verifyCodeSchema = z.object({
@@ -71,8 +73,13 @@ export const activateNewProxySchema = z.object({
   ipRotation: z.string().min(1),
   protocol: z.string().min(1),
   re_new: z.boolean().default(false),
-  username: z.string().min(1),
-  password: z.string().min(1),
+  username: z
+    .string()
+    .min(1, { message: "Username is required." })
+    .regex(/^[a-zA-Z0-9]+$/, {
+      message: "Username must only contain letters and digits.",
+    }),
+  password: z.string().min(6),
 });
 
 export type ActivateNewProxySchema = z.infer<typeof activateNewProxySchema>;

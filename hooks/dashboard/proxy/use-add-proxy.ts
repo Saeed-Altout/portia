@@ -10,9 +10,11 @@ export const useAddProxy = () => {
   return useMutation({
     mutationKey: ["add-proxy"],
     mutationFn: (values: IAddProxyRequest) => addProxy(values),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
-      Success({ message: "Add proxy successful" });
+      queryClient.invalidateQueries({ queryKey: ["get-user-balance"] });
+      queryClient.invalidateQueries({ queryKey: ["get-proxies-counts"] });
+      Success({ message: data.message ?? "Success" });
     },
     onError: (error) => {
       Error({ error: error, message: "Something went wrong!" });

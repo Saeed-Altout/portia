@@ -7,6 +7,7 @@
 declare type ApiResponse<T> = {
   success: boolean; // Indicates whether the API call was successful.
   data: T; // Contains the data returned by the API.
+  message: string | string[];
 };
 
 interface AxiosErrorResponse {
@@ -82,7 +83,9 @@ declare type IProxyServiceProvider = {
   service_provider_name: string;
 };
 
-declare type IGetProxyServiceProvidersResponse = ApiResponse<IProxyServiceProvider[]>;
+declare type IGetProxyServiceProvidersResponse = ApiResponse<
+  IProxyServiceProvider[]
+>;
 declare type IAddProxyRequest = {
   parent_proxy_id: any;
   pkg_id: any;
@@ -187,7 +190,8 @@ declare type IAffiliateStatistics = {
   this_year_earnings: number;
   total_earnings: number;
 };
-declare type IGetAffiliateStatisticsResponse = ApiResponse<IAffiliateStatistics>;
+declare type IGetAffiliateStatisticsResponse =
+  ApiResponse<IAffiliateStatistics>;
 declare type IAffiliateHistories = {
   current_page: number;
   data: {
@@ -456,3 +460,11 @@ declare type IAffiliateHistory = {
   email: string;
   date: Date | string;
 };
+
+interface Costs {
+  plan: Array<{
+    value: number;
+    price: number;
+    duration: number;
+  }>;
+}
