@@ -33,6 +33,7 @@ import {
   getUserBalance,
   getUserDetails,
   getTablesData,
+  getExportData,
 } from "./dashboard";
 import {
   getFaqs,
@@ -84,4 +85,5 @@ export {
   getUserBalance,
   getUserDetails,
   getTablesData,
+  getExportData,
 };

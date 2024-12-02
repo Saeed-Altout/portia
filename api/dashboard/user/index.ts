@@ -44,3 +44,11 @@ export const getTablesData = async (): Promise<IGetTablesData> => {
     throw error;
   }
 };
+export const getExportData = async (): Promise<IGetExportData> => {
+  try {
+    const response = await apiClient.get(process.env.NEXT_PUBLIC_EXPORT!);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
