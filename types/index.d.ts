@@ -495,3 +495,6 @@ declare type IPlanOffer = {
 };
 
 declare type IGetPlansOffer = ApiResponse<IPlanOffer[]>;
+
+declare type ITableData = string;
+declare type IGetTablesData = ApiResponse<ITable[]>;

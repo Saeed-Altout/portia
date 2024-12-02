@@ -32,6 +32,7 @@ import {
   updateUserProfile,
   getUserBalance,
   getUserDetails,
+  getTablesData,
 } from "./dashboard";
 import {
   getFaqs,
@@ -82,4 +83,5 @@ export {
   updateUserProfile,
   getUserBalance,
   getUserDetails,
+  getTablesData,
 };

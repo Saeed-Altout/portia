@@ -20,7 +20,12 @@ import { getPricingPlans } from "./pricing";
 import { getAllPackages } from "./shared/get-all-packages";
 import { getPorts } from "./shared/get-ports";
 import { getCostPlans } from "./shared/get-cost-plans";
-import { updateUserProfile, getUserBalance, getUserDetails } from "./user";
+import {
+  updateUserProfile,
+  getUserBalance,
+  getUserDetails,
+  getTablesData,
+} from "./user";
 export {
   getAffiliateHistories,
   getAffiliateStatistics,
@@ -45,4 +50,5 @@ export {
   updateUserProfile,
   getUserBalance,
   getUserDetails,
+  getTablesData,
 };
