@@ -1,16 +1,20 @@
-import { toast } from "sonner";
+"use client";
 import { AxiosError } from "axios";
-
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export const useResponse = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
-  const showToast = (message: string | string[], type: "success" | "error") => {
+  const showToast = (
+    message: string | string[],
+    status: "success" | "error" | "new" | "warning"
+  ) => {
     if (Array.isArray(message)) {
-      message.forEach((msg) => (type === "success" ? toast.success(msg) : toast.error(msg)));
+      message.forEach((msg) => toast({ title: msg, status }));
     } else {
-      type === "success" ? toast.success(message) : toast.error(message);
+      toast({ title: message, status });
     }
   };
 
@@ -18,33 +22,34 @@ export const useResponse = () => {
     message,
     redirectTo,
     refresh = false,
+    status = "success",
   }: {
     message: string | string[];
     redirectTo?: string;
     refresh?: boolean;
+    status?: "success" | "new" | "warning";
   }) => {
-    showToast(message, "success");
-
+    showToast(message, status);
     if (redirectTo) {
       router.push(redirectTo);
     }
-
     if (refresh) {
       router.refresh();
     }
   };
 
-  const Error = ({ error, message }: { error: AxiosError | unknown; message?: string }) => {
+  const Error = ({
+    error,
+    message,
+  }: {
+    error: AxiosError | unknown;
+    message?: string;
+  }) => {
     if (error instanceof AxiosError) {
-      const serverMessage = (error.response?.data as { message?: string | string[] })?.message;
-
-      if (serverMessage) {
-        showToast(serverMessage, "error");
-      } else {
-        toast.error(message);
-      }
+      const messages = error.response?.data.message;
+      showToast(messages || message, "error");
     } else {
-      toast.error(message);
+      toast({ title: message, status: "error" });
     }
   };
 

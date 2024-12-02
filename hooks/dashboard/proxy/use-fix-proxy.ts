@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fixProxy } from "@/api";
 import { useResponse } from "@/hooks";
 import { useModalStore, useProxyStore } from "@/stores";
-
 export const useFixProxy = () => {
   const { Success, Error } = useResponse();
   const { fixProxyModalOnClose } = useModalStore();
@@ -13,14 +12,20 @@ export const useFixProxy = () => {
   return useMutation({
     mutationKey: ["fix-proxy"],
     mutationFn: (values: IFixProxyRequest) => fixProxy(values),
-    onSuccess: () => {
+    onSuccess: (data) => {
       fixProxyModalOnClose();
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
       setProxy({} as IProxy);
-      Success({ message: "Fix proxy completed." });
+      Success({
+        message: data.message || "Fix proxy Success.",
+        status: "success",
+      });
     },
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({
+        error,
+        message: "Fix proxy failed.",
+      });
     },
   });
 };

@@ -13,6 +13,7 @@ type ToasterToast = ToastProps & {
   title?: React.ReactNode;
   description?: React.ReactNode;
   action?: ToastActionElement;
+  status?: "success" | "error" | "new" | "warning";
 };
 
 const actionTypes = {
@@ -82,7 +83,9 @@ export const reducer = (state: State, action: Action): State => {
     case "UPDATE_TOAST":
       return {
         ...state,
-        toasts: state.toasts.map((t) => (t.id === action.toast.id ? { ...t, ...action.toast } : t)),
+        toasts: state.toasts.map((t) =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
+        ),
       };
 
     case "DISMISS_TOAST": {
@@ -106,7 +109,7 @@ export const reducer = (state: State, action: Action): State => {
                 ...t,
                 open: false,
               }
-            : t,
+            : t
         ),
       };
     }
