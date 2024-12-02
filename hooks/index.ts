@@ -6,6 +6,7 @@ import {
   useGetOffers,
   useGetReviews,
   useSendContactMessage,
+  useGetPlansOffer,
 } from "./root";
 
 import {
@@ -83,4 +84,5 @@ export {
   useGetUserBalance,
   useGetUserDetails,
   useUpdateUserProfile,
+  useGetPlansOffer,
 };

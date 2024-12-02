@@ -263,7 +263,7 @@ declare type IGetCostPlansResponse = ApiResponse<{
 declare type IPort = string;
 declare type IGetPortsResponse = ApiResponse<IPort[]>;
 
-declare type IPlan = {
+declare type Offer = {
   plan_name: string;
   offers: {
     id: number;
@@ -275,7 +275,7 @@ declare type IPlan = {
 };
 declare type IPricingPlan = {
   name: string;
-  plans: IPlan[];
+  plans: Offer[];
 };
 
 declare type IGetPricingPlansResponse = ApiResponse<IPricingPlan[]>;
@@ -468,3 +468,30 @@ interface Costs {
     duration: number;
   }>;
 }
+
+declare type IPlanOffer = {
+  id: number;
+  amount: number;
+  cost: string;
+  is_top: number;
+  plan: string;
+  package: {
+    id: number;
+    name: string;
+    description: string;
+    feature_groups: {
+      id: number;
+      name: string;
+      package_id: number;
+      features: {
+        id: number;
+        feature_group_id: number;
+        name: string;
+        description: string;
+        value: string;
+      }[];
+    }[];
+  };
+};
+
+declare type IGetPlansOffer = ApiResponse<IPlanOffer[]>;

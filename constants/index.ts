@@ -12,7 +12,13 @@ import {
   Github,
 } from "lucide-react";
 
-import { FaFacebook, FaGithub, FaTwitter, FaLinkedinIn, FaTelegram } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaGithub,
+  FaTwitter,
+  FaLinkedinIn,
+  FaTelegram,
+} from "react-icons/fa";
 
 export const navLinks = [
   {
@@ -35,7 +41,8 @@ export const navLinks = [
       {
         label: "Faqs",
         href: "/faqs",
-        description: "Learn & whatch our client questions and how we answer it .",
+        description:
+          "Learn & whatch our client questions and how we answer it .",
       },
       {
         label: "Testimonials",
@@ -94,7 +101,8 @@ export const sidebarLinks = [
 export const faqsData = [
   {
     question: "Is there a any trial available?",
-    answer: "Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can upgrade to one of our plans.",
+    answer:
+      "Yes, you can try us for only 0.25$ for 2 hours. and then if you want you can upgrade to one of our plans.",
   },
   {
     question: "Can I change my plan later?",
@@ -247,7 +255,8 @@ export const pricingData = [
     name: "Basic",
     price: "$15",
     isPopular: true,
-    description: "Basic features for protect browsing usage  with everything you need.",
+    description:
+      "Basic features for protect browsing usage  with everything you need.",
     url: "/",
     overview: {
       basic_features: true,
@@ -309,7 +318,8 @@ export const pricingData = [
     name: "Premium",
     price: "$40",
     isPopular: false,
-    description: "Personalized service and enterprise security for large teams.",
+    description:
+      "Personalized service and enterprise security for large teams.",
     url: "/",
     overview: {
       basic_features: true,
@@ -341,7 +351,8 @@ export const basicPlan = {
   name: "Basic",
   price: "$15",
   isPopular: true,
-  description: "Basic features for protect browsing usage  with everything you need.",
+  description:
+    "Basic features for protect browsing usage  with everything you need.",
   overview: {
     basic_features: true,
     users: "10",
@@ -468,7 +479,8 @@ export const blogsData = [
     published: "20 Jan 2022",
     title: "UX review presentations",
     url: "/",
-    description: "How do you create compelling presentations that wow your colleagues and impress your managers?",
+    description:
+      "How do you create compelling presentations that wow your colleagues and impress your managers?",
     categories: ["Design", "Research", "Presentation"],
     imgUrl: "/images/blogs/blog (1).jpg",
     isFavorite: true,
@@ -479,7 +491,8 @@ export const blogsData = [
     published: "19 Jan 2022",
     title: "Migrating to Linear 101",
     url: "/",
-    description: "Linear helps streamline software projects, sprints, tasks, and bug tracking. Here’s how to get...",
+    description:
+      "Linear helps streamline software projects, sprints, tasks, and bug tracking. Here’s how to get...",
     categories: ["Design", "Research"],
     imgUrl: "/images/blogs/blog (2).jpg",
     isFavorite: true,
@@ -490,7 +503,8 @@ export const blogsData = [
     published: "18 Jan 2022",
     title: "Building your API Stack",
     url: "/",
-    description: "The rise of RESTful APIs has been met by a rise in tools for creating, testing, and manag...",
+    description:
+      "The rise of RESTful APIs has been met by a rise in tools for creating, testing, and manag...",
     categories: ["Design", "Research"],
     imgUrl: "/images/blogs/blog (3).jpg",
     isFavorite: true,
@@ -501,7 +515,8 @@ export const blogsData = [
     published: "17 Jan 2022",
     title: "Bill Walsh leadership lessons",
     url: "/",
-    description: "Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?",
+    description:
+      "Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?",
     categories: ["Leadership", "Management"],
     imgUrl: "/images/blogs/blog (4).jpg",
     isFavorite: false,
@@ -512,7 +527,8 @@ export const blogsData = [
     published: "16 Jan 2022",
     title: "PM mental models",
     url: "/",
-    description: "Mental models are simple expressions of complex processes or relationships.",
+    description:
+      "Mental models are simple expressions of complex processes or relationships.",
     categories: ["Product", "Research", "Frameworks"],
     imgUrl: "/images/blogs/blog (5).jpg",
     isFavorite: false,
@@ -523,7 +539,8 @@ export const blogsData = [
     published: "15 Jan 2022",
     title: "What is Wireframing?",
     url: "/",
-    description: "Introduction to Wireframing and its Principles. Learn from the best in the industry.",
+    description:
+      "Introduction to Wireframing and its Principles. Learn from the best in the industry.",
     categories: ["Design", "Research"],
     imgUrl: "/images/blogs/blog (6).jpg",
     isFavorite: false,
@@ -534,7 +551,8 @@ export const blogsData = [
     published: "14 Jan 2022",
     title: "How collaboration makes us better designers",
     url: "/",
-    description: "Collaboration can make our teams stronger, and our individual designs better.",
+    description:
+      "Collaboration can make our teams stronger, and our individual designs better.",
     categories: ["Design", "Research"],
     imgUrl: "/images/blogs/blog (7).jpg",
     isFavorite: false,
@@ -545,7 +563,8 @@ export const blogsData = [
     published: "13 Jan 2022",
     title: "Our top 10 Javascript frameworks to use",
     url: "/",
-    description: "JavaScript frameworks make development easy with extensive features and functionalities.",
+    description:
+      "JavaScript frameworks make development easy with extensive features and functionalities.",
     categories: ["Software Development", "Tools", "SaaS"],
     imgUrl: "/images/blogs/blog (8).jpg",
     isFavorite: false,
@@ -556,7 +575,8 @@ export const blogsData = [
     published: "12 Jan 2022",
     title: "Podcast: Creating a better CX Community",
     url: "/",
-    description: "Starting a community doesn’t need to be complicated, but how do you get started?",
+    description:
+      "Starting a community doesn’t need to be complicated, but how do you get started?",
     categories: ["Podcasts", "Customer Success"],
     imgUrl: "/images/blogs/blog (9).jpg",
     isFavorite: false,
@@ -681,7 +701,8 @@ export const data = [
     package: {
       id: 21,
       name: "Basic",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ullam error ab?",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ullam error ab?",
       created_at: "2024-09-30T18:11:16.000000Z",
       updated_at: "2024-09-30T18:11:16.000000Z",
       feature_groups: [
@@ -891,7 +912,8 @@ export const data = [
     package: {
       id: 21,
       name: "Basic",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ullam error ab?",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ullam error ab?",
       created_at: "2024-09-30T18:11:16.000000Z",
       updated_at: "2024-09-30T18:11:16.000000Z",
       feature_groups: [
@@ -1101,7 +1123,8 @@ export const data = [
     package: {
       id: 21,
       name: "Basic",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ullam error ab?",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ullam error ab?",
       created_at: "2024-09-30T18:11:16.000000Z",
       updated_at: "2024-09-30T18:11:16.000000Z",
       feature_groups: [
@@ -2362,7 +2385,8 @@ export const termsOfUse = [
   {
     id: 1,
     title: "Introduction",
-    description: "Welcome to portia.pro! By using our site, you agree to comply with these terms.",
+    description:
+      "Welcome to portia.pro! By using our site, you agree to comply with these terms.",
   },
   {
     id: 2,
@@ -2379,12 +2403,14 @@ export const termsOfUse = [
   {
     id: 4,
     title: "Limitation of Liability",
-    description: "We are not liable for any damages resulting from your use of the site or inability to use it.",
+    description:
+      "We are not liable for any damages resulting from your use of the site or inability to use it.",
   },
   {
     id: 5,
     title: "Modifications",
-    description: "We reserve the right to modify these terms at any time, and you will be notified of any changes.",
+    description:
+      "We reserve the right to modify these terms at any time, and you will be notified of any changes.",
   },
   {
     id: 6,
@@ -2408,27 +2434,32 @@ export const privacyPolicy = [
   {
     id: 3,
     title: "How We Use Your Information",
-    description: "To improve our services. To communicate with you regarding orders and updates.",
+    description:
+      "To improve our services. To communicate with you regarding orders and updates.",
   },
   {
     id: 4,
     title: "Information Protection",
-    description: "We use security technologies to protect your personal information from unauthorized access.",
+    description:
+      "We use security technologies to protect your personal information from unauthorized access.",
   },
   {
     id: 5,
     title: "Your Rights",
-    description: "You have the right to access, correct, or delete your personal information.",
+    description:
+      "You have the right to access, correct, or delete your personal information.",
   },
   {
     id: 6,
     title: "Modifications",
-    description: "We reserve the right to modify this privacy policy, and you will be notified of any changes.",
+    description:
+      "We reserve the right to modify this privacy policy, and you will be notified of any changes.",
   },
   {
     id: 7,
     title: "Contact Us",
-    description: "If you have any questions, you can contact us at the available contacts on site.",
+    description:
+      "If you have any questions, you can contact us at the available contacts on site.",
   },
 ];
 
@@ -2441,12 +2472,14 @@ export const statisticData = [
   {
     value: "125+",
     name: "Proxy Locations",
-    description: "Switch between proxies quickly to access global content seamlessly.",
+    description:
+      "Switch between proxies quickly to access global content seamlessly.",
   },
   {
     value: "99.9%",
     name: "Uptime",
-    description: "Get proxies from different sources, like Portia's mobile network.",
+    description:
+      "Get proxies from different sources, like Portia's mobile network.",
   },
   {
     value: "200+",
@@ -2468,7 +2501,8 @@ export const featuresData = [
   {
     icon: ChartNoAxesColumn,
     title: "Ip Rotation",
-    description: "Change IPs easily with automatic, API, or manual rotation methods.",
+    description:
+      "Change IPs easily with automatic, API, or manual rotation methods.",
   },
   {
     icon: Grid2X2,
@@ -2488,53 +2522,13 @@ export const featuresData = [
       "Enjoy speeds around 15 Mbps with a ping less than 900 ms,perfect for seamless browsing and operations.",
   },
 ];
-export const plansData = [
-  {
-    price: "10/mth",
-    type: "Silver package",
-    features: [
-      "USA only",
-      "2 carriers (T-Mobile, AT&T)",
-      "Unlimited changes",
-      "Good speed & stability",
-      "Few ports",
-      "100,000+ IPs in the USA",
-      "Multiple states & cities",
-    ],
-    isPopular: false,
-  },
-  {
-    price: "14.5/mth",
-    type: "Golden package",
-    features: [
-      "8 countries",
-      "Unlimited changes",
-      "1M+ IPs globally",
-      "Multiple carriers, states & cities",
-      "Many ports",
-      "Great speed & stability",
-    ],
-    isPopular: true,
-  },
-  {
-    price: "20/mth",
-    type: "Platinum package",
-    features: [
-      "15 countries",
-      "Unlimited changes",
-      "5M+ IPs globally",
-      "Wide carrier & location support",
-      "Numerous ports",
-      "Premium speed & stability",
-    ],
-    isPopular: false,
-  },
-];
+
 export const plansData2 = [
   {
     type: "Silver plan",
     price: "$10",
-    description: "Essential features for users in the USA with good speed and stability.",
+    description:
+      "Essential features for users in the USA with good speed and stability.",
     features: [
       "USA only",
       "2 carriers (T-Mobile, AT&T)",
@@ -2550,7 +2544,8 @@ export const plansData2 = [
   {
     type: "Golden plan",
     price: "$14.5",
-    description: "A well-rounded package with global IP coverage, multiple carriers, and great speed.",
+    description:
+      "A well-rounded package with global IP coverage, multiple carriers, and great speed.",
     features: [
       "8 countries",
       "Unlimited changes",
@@ -2565,7 +2560,8 @@ export const plansData2 = [
   {
     type: "Platinum plan",
     price: "$20",
-    description: "Premium features with wide carrier and location support, offering top-tier speed and stability.",
+    description:
+      "Premium features with wide carrier and location support, offering top-tier speed and stability.",
     features: [
       "15 countries",
       "Unlimited changes",
@@ -2574,7 +2570,8 @@ export const plansData2 = [
       "Numerous ports",
       "Premium speed & stability",
     ],
-    message: "Everything in the Golden plan plus wider global coverage and premium speed.",
+    message:
+      "Everything in the Golden plan plus wider global coverage and premium speed.",
     isPopular: false,
   },
 ];

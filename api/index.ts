@@ -33,7 +33,15 @@ import {
   getUserBalance,
   getUserDetails,
 } from "./dashboard";
-import { getFaqs, getAllFaqs, getReviews, getFeaturesOffer, getOffers, sendContactMessage } from "./root";
+import {
+  getFaqs,
+  getAllFaqs,
+  getReviews,
+  getFeaturesOffer,
+  getOffers,
+  sendContactMessage,
+  getPlansOffer,
+} from "./root";
 
 export {
   login,
@@ -56,6 +64,7 @@ export {
   getActiveProxies,
   getInactiveProxies,
   getProxiesCounts,
+  getPlansOffer,
   addProxy,
   fixProxy,
   editAuthProxy,
