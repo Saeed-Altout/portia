@@ -8,11 +8,14 @@ export const useSendResetEmail = () => {
   return useMutation({
     mutationKey: ["send-reset-email"],
     mutationFn: (values: ISendResetEmailRequest) => sendResetEmail(values),
-    onSuccess(res, req) {
-      Success({ message: res.message, redirectTo: `/auth/verify-reset-email?email=${req.email}` });
+    onSuccess(data, req) {
+      Success({
+        message: data.message || "Send your email is Success.",
+        redirectTo: `/auth/verify-reset-email?email=${req.email}`,
+      });
     },
     onError(error) {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "Send your email is failed." });
     },
   });
 };

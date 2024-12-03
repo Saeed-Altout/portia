@@ -9,15 +9,15 @@ export const useRegister = () => {
   return useMutation({
     mutationKey: ["register"],
     mutationFn: (values: IRegisterRequest) => register(values),
-    onSuccess(res, req) {
+    onSuccess(data, req) {
       setEmail(req.email);
       Success({
-        message: res.message,
+        message: data.message || "Register is Success.",
         redirectTo: `/auth/verify-email?email=${req.email}`,
       });
     },
     onError(error) {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "Register is failed." });
     },
   });
 };

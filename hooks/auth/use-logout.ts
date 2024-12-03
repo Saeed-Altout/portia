@@ -9,14 +9,14 @@ export const useLogout = () => {
   return useMutation({
     mutationKey: ["logout"],
     mutationFn: () => logout(),
-    onSuccess(req) {
-      Success({ message: req.message });
+    onSuccess(data) {
+      Success({ message: data.message || "Logout is Success." });
       clear();
       localStorage.clear();
       location.reload();
     },
     onError(error) {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "logout is failed." });
     },
   });
 };

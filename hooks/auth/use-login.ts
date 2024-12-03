@@ -12,11 +12,12 @@ export const useLogin = () => {
     onSuccess: (data) => {
       setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
       setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
-      Success({ message: data.message });
+      Success({ message: data.message || "Login is Success." });
+
       location.reload();
     },
     onError(error) {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "Login is failed." });
     },
   });
 };

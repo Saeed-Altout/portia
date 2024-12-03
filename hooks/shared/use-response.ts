@@ -18,18 +18,16 @@ export const useResponse = () => {
     }
   };
 
-  const Success = ({
+  const Warning = ({
     message,
     redirectTo,
     refresh = false,
-    status = "success",
   }: {
     message: string | string[];
     redirectTo?: string;
     refresh?: boolean;
-    status?: "success" | "new" | "warning";
   }) => {
-    showToast(message, status);
+    showToast(message, "warning");
     if (redirectTo) {
       router.push(redirectTo);
     }
@@ -37,7 +35,40 @@ export const useResponse = () => {
       router.refresh();
     }
   };
-
+  const Success = ({
+    message,
+    redirectTo,
+    refresh = false,
+  }: {
+    message: string | string[];
+    redirectTo?: string;
+    refresh?: boolean;
+  }) => {
+    showToast(message, "success");
+    if (redirectTo) {
+      router.push(redirectTo);
+    }
+    if (refresh) {
+      router.refresh();
+    }
+  };
+  const New = ({
+    message,
+    redirectTo,
+    refresh = false,
+  }: {
+    message: string | string[];
+    redirectTo?: string;
+    refresh?: boolean;
+  }) => {
+    showToast(message, "new");
+    if (redirectTo) {
+      router.push(redirectTo);
+    }
+    if (refresh) {
+      router.refresh();
+    }
+  };
   const Error = ({
     error,
     message,
@@ -53,5 +84,5 @@ export const useResponse = () => {
     }
   };
 
-  return { Success, Error };
+  return { Success, Error, Warning, New };
 };

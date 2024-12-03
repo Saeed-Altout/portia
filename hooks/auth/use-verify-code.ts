@@ -9,12 +9,15 @@ export const useVerifyCode = () => {
   return useMutation({
     mutationKey: ["verification-code"],
     mutationFn: (values: IVerificationCodeRequest) => verificationCode(values),
-    onSuccess(res) {
-      setToken(res.access_token);
-      Success({ message: res.message, redirectTo: "/auth/email-confirmed" });
+    onSuccess(data) {
+      setToken(data.access_token);
+      Success({
+        message: data.message || "Verify code is success.",
+        redirectTo: "/auth/email-confirmed",
+      });
     },
     onError(error) {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "Verify code is failed." });
     },
   });
 };

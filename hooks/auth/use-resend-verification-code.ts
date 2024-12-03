@@ -8,12 +8,15 @@ export const useResendVerificationCode = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["resend-verification-code"],
-    mutationFn: (values: IResendVerificationCodeRequest) => resendVerificationCode(values),
-    onSuccess: (res) => {
-      Success({ message: res.message });
+    mutationFn: (values: IResendVerificationCodeRequest) =>
+      resendVerificationCode(values),
+    onSuccess: (data) => {
+      Success({
+        message: data.message || "Resend verification code is Success.",
+      });
     },
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "Resend verification code is failed." });
     },
   });
 };

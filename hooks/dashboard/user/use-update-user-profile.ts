@@ -7,12 +7,16 @@ export const useUpdateUserProfile = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["update-user-profile"],
-    mutationFn: (values: IUpdateUserProfileRequest) => updateUserProfile(values),
-    onSuccess: (res) => {
-      Success({ message: res.message });
+    mutationFn: (values: IUpdateUserProfileRequest) =>
+      updateUserProfile(values),
+    onSuccess: (data) => {
+      Success({ message: data.message || "Update profile Success." });
     },
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({
+        error,
+        message: "Update profile failed.",
+      });
     },
   });
 };

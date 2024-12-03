@@ -16,10 +16,7 @@ export const useFixProxy = () => {
       fixProxyModalOnClose();
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
       setProxy({} as IProxy);
-      Success({
-        message: data.message || "Fix proxy Success.",
-        status: "success",
-      });
+      Success({ message: data.message || "Fix proxy Success." });
     },
     onError: (error) => {
       Error({

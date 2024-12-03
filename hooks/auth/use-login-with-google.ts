@@ -9,7 +9,7 @@ export const useLoginWithGoogle = () => {
     mutationKey: ["login-with-google"],
     mutationFn: () => loginWithGoogle(),
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "Login with google is failed." });
     },
   });
 };

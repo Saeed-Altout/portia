@@ -14,10 +14,13 @@ export const useAddProxy = () => {
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
       queryClient.invalidateQueries({ queryKey: ["get-user-balance"] });
       queryClient.invalidateQueries({ queryKey: ["get-proxies-counts"] });
-      Success({ message: data.message ?? "Success" });
+      Success({ message: data.message || "Add proxy Success." });
     },
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({
+        error,
+        message: "Add proxy failed.",
+      });
     },
   });
 };

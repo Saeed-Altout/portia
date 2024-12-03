@@ -9,12 +9,15 @@ export const useSetNewPassword = () => {
   return useMutation({
     mutationKey: ["set-new-password"],
     mutationFn: (values: ISetNewPasswordRequest) => setNewPassword(values),
-    onSuccess(res) {
-      setToken(res.access_token);
-      Success({ message: res.message, redirectTo: "/auth/password-reset" });
+    onSuccess(data) {
+      setToken(data.access_token);
+      Success({
+        message: data.message || "Set new password is Success.",
+        redirectTo: "/auth/password-reset",
+      });
     },
     onError(error) {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({ error, message: "Sent new password is failed." });
     },
   });
 };

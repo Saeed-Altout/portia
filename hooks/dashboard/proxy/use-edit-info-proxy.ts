@@ -10,12 +10,15 @@ export const useEditInfoProxy = () => {
   return useMutation({
     mutationKey: ["edit-info-proxy"],
     mutationFn: (values: IEditInfoProxyRequest) => editInfoProxy(values),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
-      Success({ message: "Edit info proxy completed." });
+      Success({ message: data.message || "Edit info proxy Success." });
     },
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({
+        error,
+        message: "Edit auth proxy failed.",
+      });
     },
   });
 };

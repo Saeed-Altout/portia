@@ -10,12 +10,15 @@ export const useEditAuthProxy = () => {
   return useMutation({
     mutationKey: ["edit-auth-proxy"],
     mutationFn: (values: IEditAuthProxyRequest) => editAuthProxy(values),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
-      Success({ message: "Edit auth proxy completed." });
+      Success({ message: data.message || "Edit auth proxy Success." });
     },
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({
+        error,
+        message: "Edit auth proxy failed.",
+      });
     },
   });
 };

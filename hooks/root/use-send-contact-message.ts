@@ -7,12 +7,16 @@ export const useSendContactMessage = () => {
 
   return useMutation({
     mutationKey: ["send-contact-message"],
-    mutationFn: (values: ISendContactMessageRequest) => sendContactMessage(values),
-    onSuccess: (res) => {
-      Success({ message: res.message });
+    mutationFn: (values: ISendContactMessageRequest) =>
+      sendContactMessage(values),
+    onSuccess: (data) => {
+      Success({ message: data.message || "Send your message Success." });
     },
     onError: (error) => {
-      Error({ error: error, message: "Something went wrong!" });
+      Error({
+        error,
+        message: "Send your message failed.",
+      });
     },
   });
 };
