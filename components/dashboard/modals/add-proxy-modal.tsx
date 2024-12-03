@@ -137,7 +137,7 @@ export const AddProxyModal = () => {
     }
   }, [form, location, step]);
 
-  const renderStep = (form: any) => {
+  const renderStep = (step: any) => {
     switch (step) {
       case 1:
         return <StepOne form={form} isLoading={isPending} />;
