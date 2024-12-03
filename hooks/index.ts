@@ -44,6 +44,8 @@ import {
   useGetUserBalance,
   useGetUserDetails,
   useUpdateUserProfile,
+  useExportData,
+  useGetTablesData,
 } from "./dashboard";
 export {
   useResponse,
@@ -85,4 +87,6 @@ export {
   useGetUserDetails,
   useUpdateUserProfile,
   useGetPlansOffer,
+  useExportData,
+  useGetTablesData,
 };

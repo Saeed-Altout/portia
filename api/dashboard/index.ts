@@ -25,7 +25,7 @@ import {
   getUserBalance,
   getUserDetails,
   getTablesData,
-  getExportData,
+  exportData,
 } from "./user";
 export {
   getAffiliateHistories,
@@ -52,5 +52,5 @@ export {
   getUserBalance,
   getUserDetails,
   getTablesData,
-  getExportData,
+  exportData,
 };

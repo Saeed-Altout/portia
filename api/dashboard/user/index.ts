@@ -44,9 +44,17 @@ export const getTablesData = async (): Promise<IGetTablesData> => {
     throw error;
   }
 };
-export const getExportData = async (): Promise<IGetExportData> => {
+export const exportData = async (
+  values: IExportDataRequest
+): Promise<IExportDataResponse> => {
   try {
-    const response = await apiClient.get(process.env.NEXT_PUBLIC_EXPORT!);
+    const response = await apiClient.post(
+      process.env.NEXT_PUBLIC_EXPORT!,
+      values,
+      {
+        responseType: "blob",
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;

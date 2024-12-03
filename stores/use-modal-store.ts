@@ -1,6 +1,12 @@
+import { ModalType } from "@/config/enums";
 import { create } from "zustand";
 
 export interface ModalStoreProps {
+  isOpen: boolean;
+  type: string;
+  onOpen: (type: ModalType) => void;
+  onClose: (type: ModalType) => void;
+
   logoutModalIsOpen: boolean;
   logoutModalOnOpen: () => void;
   logoutModalOnClose: () => void;
@@ -35,6 +41,11 @@ export interface ModalStoreProps {
 }
 
 export const useModalStore = create<ModalStoreProps>((set) => ({
+  isOpen: false,
+  type: "",
+  onOpen: (type) => set({ isOpen: true, type }),
+  onClose: (type) => set({ isOpen: false, type }),
+
   logoutModalIsOpen: false,
   logoutModalOnOpen: () => set({ logoutModalIsOpen: true }),
   logoutModalOnClose: () => set({ logoutModalIsOpen: false }),

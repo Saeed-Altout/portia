@@ -8,10 +8,24 @@ import { Input } from "@/components/ui/input";
 
 import { onCopy } from "@/utils/on-copy";
 import { useOrigin } from "@/hooks/use-origin";
+import { useResponse } from "@/hooks";
 
 export const AffiliateCode = ({ code }: { code?: string }) => {
   const inputRef = useRef(null);
   const [http, host] = useOrigin().split("://");
+  const { Success, Error } = useResponse();
+
+  const onCopyHandler = (
+    ref: React.RefObject<HTMLInputElement>,
+    http: string
+  ) => {
+    if (!code) {
+      Error({ error: null, message: "Code not found!" });
+      return;
+    }
+    onCopy(ref, http);
+    Success({ message: "Copied to clipboard" });
+  };
 
   return (
     <div className="max-w-2xl space-y-2">
@@ -26,14 +40,17 @@ export const AffiliateCode = ({ code }: { code?: string }) => {
             value={`${host}/auth/register?code=${code}`}
           />
         </div>
-        <Button size="icon" variant="outline" type="button" onClick={() => onCopy(inputRef, http)}>
+        <Button
+          size="icon"
+          variant="outline"
+          type="button"
+          onClick={() => onCopyHandler(inputRef, http)}
+        >
           <Copy className="h-4 w-4" />
           <span className="sr-only">Copy</span>
         </Button>
       </div>
-      <p className="text-sm">
-        10% of all paid payments. from referred users. Over 60 days are credited into your balance.
-      </p>
+      <p className="text-sm">10% of all paid payments. from referred users.</p>
     </div>
   );
 };

@@ -499,4 +499,5 @@ declare type IGetPlansOffer = ApiResponse<IPlanOffer[]>;
 declare type ITableData = string;
 declare type IGetTablesData = ApiResponse<ITable[]>;
 
-declare type IGetExportData = ApiResponse<string>;
+declare type IExportDataRequest = { tables: string[] };
+declare type IExportDataResponse = ApiResponse<any>;

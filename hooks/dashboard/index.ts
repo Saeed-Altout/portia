@@ -27,7 +27,8 @@ import { useGetDepositsStatistics } from "./deposit/use-get-deposits-statistics"
 
 import { useGetAffiliateHistories } from "./affiliate/use-get-affiliate-histories";
 import { useGetAffiliateStatistics } from "./affiliate/use-get-affiliate-statistics";
-
+import { useExportData } from "./user/use-export-data";
+import { useGetTablesData } from "./user/use-get-tables-data";
 export {
   useAddProxy,
   useEditAuthProxy,
@@ -52,4 +53,6 @@ export {
   useGetUserBalance,
   useGetUserDetails,
   useUpdateUserProfile,
+  useExportData,
+  useGetTablesData,
 };
