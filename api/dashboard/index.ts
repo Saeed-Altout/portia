@@ -16,7 +16,11 @@ import {
   editAuthProxy,
   editInfoProxy,
 } from "./proxy";
-import { getPricingPlans } from "./pricing";
+import {
+  getPricingPlans,
+  getOffersPackage,
+  getPackageWithPlans,
+} from "./pricing";
 import { getAllPackages } from "./shared/get-all-packages";
 import { getPorts } from "./shared/get-ports";
 import { getCostPlans } from "./shared/get-cost-plans";
@@ -53,4 +57,6 @@ export {
   getUserDetails,
   getTablesData,
   exportData,
+  getOffersPackage,
+  getPackageWithPlans,
 };

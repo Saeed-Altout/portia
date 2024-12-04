@@ -29,6 +29,8 @@ import { useGetAffiliateHistories } from "./affiliate/use-get-affiliate-historie
 import { useGetAffiliateStatistics } from "./affiliate/use-get-affiliate-statistics";
 import { useExportData } from "./user/use-export-data";
 import { useGetTablesData } from "./user/use-get-tables-data";
+import { useGetPackageWithPlans } from "./pricing/use-get-package-with-plans";
+import { useGetOffersPackage } from "./pricing/use-get-offers-package";
 export {
   useAddProxy,
   useEditAuthProxy,
@@ -55,4 +57,6 @@ export {
   useUpdateUserProfile,
   useExportData,
   useGetTablesData,
+  useGetPackageWithPlans,
+  useGetOffersPackage,
 };

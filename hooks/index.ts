@@ -46,6 +46,8 @@ import {
   useUpdateUserProfile,
   useExportData,
   useGetTablesData,
+  useGetOffersPackage,
+  useGetPackageWithPlans,
 } from "./dashboard";
 export {
   useResponse,
@@ -89,4 +91,6 @@ export {
   useGetPlansOffer,
   useExportData,
   useGetTablesData,
+  useGetOffersPackage,
+  useGetPackageWithPlans,
 };

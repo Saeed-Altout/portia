@@ -34,6 +34,8 @@ import {
   getUserDetails,
   getTablesData,
   exportData,
+  getOffersPackage,
+  getPackageWithPlans,
 } from "./dashboard";
 import {
   getFaqs,
@@ -86,4 +88,6 @@ export {
   getUserDetails,
   getTablesData,
   exportData,
+  getOffersPackage,
+  getPackageWithPlans,
 };

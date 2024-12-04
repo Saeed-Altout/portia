@@ -501,3 +501,23 @@ declare type IGetTablesData = ApiResponse<ITable[]>;
 
 declare type IExportDataRequest = { tables: string[] };
 declare type IExportDataResponse = ArrayBuffer;
+
+declare type IPackageWithPlan = {
+  package_id: number;
+  package_name: string;
+  plans: {
+    id: number;
+    name: string;
+  }[];
+};
+
+declare type IGetPackageWithPlansResponse = ApiResponse<IPackageWithPlan[]>;
+declare type IOfferPackage = {
+  id: number;
+  cost: string;
+  description: string;
+  plan_id: number;
+  package_id: number;
+};
+
+declare type IGetOffersPackageResponse = ApiResponse<IOfferPackage[]>;
