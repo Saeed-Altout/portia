@@ -5,9 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useModalStore, useProxyStore } from "@/stores";
+import { ModalType } from "@/config/enums";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
-  const { activeProxyModalOnOpen, editProxyModalOnOpen, action } = useModalStore();
+  const { onOpen, type } = useModalStore();
   const { setLocation } = useProxyStore();
 
   const router = useRouter();
@@ -15,10 +16,12 @@ export const CellActions = ({ data }: { data: ILocation }) => {
 
   const onSelectProvider = () => {
     setLocation(data);
-    if (action === "add") {
-      activeProxyModalOnOpen();
-    } else if (action === "edit") {
-      editProxyModalOnOpen();
+    if (type === ModalType.ACTIVE_PROXY) {
+      onOpen(ModalType.ACTIVE_PROXY);
+    } else if (type === ModalType.EDIT_AUTH_PROXY) {
+      onOpen(ModalType.EDIT_AUTH_PROXY);
+    } else if (type === ModalType.EDIT_INFO_PROXY) {
+      onOpen(ModalType.EDIT_INFO_PROXY);
     }
     router.push(callback ?? "/dashboard");
   };

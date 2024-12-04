@@ -16,6 +16,7 @@ import {
 
 import { useModalStore, useProxyStore } from "@/stores";
 import { useEffect } from "react";
+import { ModalType } from "@/config/enums";
 
 interface StepTwoProps {
   form: any;
@@ -23,7 +24,7 @@ interface StepTwoProps {
 
 export const StepTwo = ({ form }: StepTwoProps) => {
   const pathname = usePathname();
-  const { step, activeProxyModalOnClose, setAction } = useModalStore();
+  const { step, onClose } = useModalStore();
   const { location } = useProxyStore();
 
   useEffect(() => {
@@ -54,10 +55,7 @@ export const StepTwo = ({ form }: StepTwoProps) => {
                   size="icon"
                   className="rounded-l-none"
                   type="button"
-                  onClick={() => {
-                    activeProxyModalOnClose();
-                    setAction("add");
-                  }}
+                  onClick={() => onClose(ModalType.ACTIVE_PROXY)}
                   asChild
                 >
                   <Link href={`/dashboard/locations?callback=${pathname}`}>

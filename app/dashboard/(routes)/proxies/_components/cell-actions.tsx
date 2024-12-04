@@ -5,9 +5,10 @@ import { Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/stores/use-modal-store";
 import { useProxyStore } from "@/stores";
+import { ModalType } from "@/config/enums";
 
 export const ActiveProxiesCellActions = ({ data }: { data: IProxy }) => {
-  const { fixProxyModalOnOpen } = useModalStore();
+  const { onOpen } = useModalStore();
   const { setProxy } = useProxyStore();
 
   return (
@@ -18,7 +19,7 @@ export const ActiveProxiesCellActions = ({ data }: { data: IProxy }) => {
           className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
           onClick={() => {
             setProxy(data);
-            fixProxyModalOnOpen();
+            onOpen(ModalType.FIX_PROXY);
           }}
         >
           <Activity className="h-4 w-4" />
