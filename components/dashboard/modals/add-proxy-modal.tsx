@@ -18,13 +18,14 @@ import { StepThree } from "./step-three";
 import { useAddProxy } from "@/hooks";
 import { activateNewProxySchema } from "@/schemas";
 import { useModalStore, useProxyStore } from "@/stores";
+import { ModalType } from "@/config/enums";
 
 export const AddProxyModal = () => {
   const { price, duration, location, protocol, setProxy, setLocation } =
     useProxyStore();
 
-  const { step, activeProxyModalIsOpen, setStep, activeProxyModalOnClose } =
-    useModalStore();
+  const { step, isOpen, type, setStep, onClose } = useModalStore();
+  const isOpenModal = isOpen && type === ModalType.ACTIVE_PROXY;
 
   const { mutateAsync, isPending } = useAddProxy();
 
@@ -55,7 +56,7 @@ export const AddProxyModal = () => {
         username: values.username,
         password: values.password,
       });
-      onClose();
+      onCancel();
       setProxy({} as IProxy);
       setLocation({} as ILocation);
     } catch (error) {
@@ -63,10 +64,10 @@ export const AddProxyModal = () => {
     }
   };
 
-  const onClose = () => {
+  const onCancel = () => {
     setStep(1);
     form.reset();
-    activeProxyModalOnClose();
+    onClose(ModalType.ACTIVE_PROXY);
   };
 
   const moveNextStep = () => {
@@ -154,8 +155,8 @@ export const AddProxyModal = () => {
     <Modal
       title="Activate a new proxy"
       description={`New order - ${location.service_provider_name ?? ""} proxy`}
-      isOpen={activeProxyModalIsOpen}
-      onClose={onClose}
+      isOpen={isOpenModal}
+      onClose={onCancel}
       progress={step * 35}
     >
       <Form {...form}>
@@ -199,7 +200,7 @@ export const AddProxyModal = () => {
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={onClose}
+                onClick={onCancel}
                 disabled={isPending}
               >
                 Cancel

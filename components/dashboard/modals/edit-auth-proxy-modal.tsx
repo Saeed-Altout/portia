@@ -8,23 +8,35 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/dashboard/modal";
 
 import { useModalStore, useProxyStore } from "@/stores";
 import { useEditAuthProxy } from "@/hooks/dashboard/proxy/use-edit-auth-proxy";
+import { ModalType } from "@/config/enums";
 
 const editAuthProxySchema = z.object({
   username: z.string().min(2),
-  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters." }),
 });
 
 export const EditAuthProxyModal = () => {
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");
 
-  const { editAuthProxyModalIsOpen, editAuthProxyModalOnClose } = useModalStore();
+  const { isOpen, type, onClose } = useModalStore();
+  const isOpenModal = isOpen && type === ModalType.EDIT_AUTH_PROXY;
+
   const { proxy, setProxy } = useProxyStore();
   const { mutateAsync, isPending } = useEditAuthProxy();
 
@@ -42,16 +54,16 @@ export const EditAuthProxyModal = () => {
         password: values.password,
       });
 
-      onClose();
+      onCancel();
       setProxy({} as IProxy);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const onClose = () => {
+  const onCancel = () => {
     form.reset();
-    editAuthProxyModalOnClose();
+    onClose(ModalType.EDIT_AUTH_PROXY);
   };
 
   useEffect(() => {
@@ -63,8 +75,8 @@ export const EditAuthProxyModal = () => {
   return (
     <Modal
       title={`Change my proxy (id:${proxy.proxy_id ?? ""}) Authentications`}
-      isOpen={editAuthProxyModalIsOpen}
-      onClose={onClose}
+      isOpen={isOpenModal}
+      onClose={onCancel}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -74,9 +86,18 @@ export const EditAuthProxyModal = () => {
               name="username"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel className="text-sm font-medium">Username</FormLabel>
+                  <FormLabel className="text-sm font-medium">
+                    Username
+                  </FormLabel>
                   <FormControl>
-                    <Input icon={User} type="text" readOnly placeholder="username" disabled={true} {...field} />
+                    <Input
+                      icon={User}
+                      type="text"
+                      readOnly
+                      placeholder="username"
+                      disabled={true}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,7 +108,9 @@ export const EditAuthProxyModal = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium">Password</FormLabel>
+                  <FormLabel className="text-sm font-medium">
+                    Password
+                  </FormLabel>
                   <FormControl>
                     <div className="flex items-center relative">
                       <Input
@@ -99,7 +122,11 @@ export const EditAuthProxyModal = () => {
                       />
                       <div
                         role="button"
-                        onClick={() => setPasswordType((prev) => (prev === "password" ? "text" : "password"))}
+                        onClick={() =>
+                          setPasswordType((prev) =>
+                            prev === "password" ? "text" : "password"
+                          )
+                        }
                         className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"
@@ -118,7 +145,13 @@ export const EditAuthProxyModal = () => {
             />
           </div>
           <div className="flex justify-between items-center gap-5">
-            <Button type="button" variant="outline" className="w-full" disabled={isPending} onClick={() => onClose()}>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              disabled={isPending}
+              onClick={onCancel}
+            >
               Cancel
             </Button>
             <Button type="submit" className="w-full" disabled={isPending}>

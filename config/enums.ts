@@ -1,6 +1,6 @@
 export enum ModalType {
   LOGOUT = "logout",
-  EDIT_PROXY = "edit-proxy",
+  EDIT_INFO_PROXY = "edit-info-proxy",
   EDIT_AUTH_PROXY = "edit-auth-proxy",
   RENEW_PROXY = "renew-proxy",
   FIX_PROXY = "fix-proxy",

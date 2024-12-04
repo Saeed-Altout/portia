@@ -4,6 +4,7 @@ import { ChartColumn, Plus } from "lucide-react";
 
 import { useModalStore } from "@/stores";
 import { Button } from "@/components/ui/button";
+import { ModalType } from "@/config/enums";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -23,7 +24,7 @@ export const Heading = ({
   drawEarning = false,
   children,
 }: HeadingProps) => {
-  const { activeProxyModalOnOpen } = useModalStore();
+  const { onOpen } = useModalStore();
 
   return (
     <div className="flex justify-between flex-col md:flex-row gap-4">
@@ -34,7 +35,11 @@ export const Heading = ({
       </div>
       <div className="flex items-center flex-wrap sm:flex-nowrap gap-3">
         {newProxy && (
-          <Button variant="outline" className="w-full" onClick={activeProxyModalOnOpen}>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => onOpen(ModalType.ACTIVE_PROXY)}
+          >
             <Plus className="h-4 w-4 mr-2" /> Activate Proxies
           </Button>
         )}

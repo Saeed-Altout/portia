@@ -10,14 +10,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/dashboard/modal";
 
 import { useModalStore, useProxyStore } from "@/stores";
 import { useEditInfoProxy, useGetPorts } from "@/hooks";
+import { ModalType } from "@/config/enums";
 
 const editProxySchema = z.object({
   provider: z.string().min(2),
@@ -26,7 +40,9 @@ const editProxySchema = z.object({
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
-  const { editProxyModalIsOpen, editProxyModalOnClose, setAction } = useModalStore();
+  const { isOpen, type, onClose } = useModalStore();
+  const isOpenModal = isOpen && type === ModalType.EDIT_INFO_PROXY;
+
   const { location, proxy, setProxy, setLocation, pkgId } = useProxyStore();
   const { mutateAsync, isPending } = useEditInfoProxy();
   const { data: ports } = useGetPorts({ id: pkgId });
@@ -46,7 +62,7 @@ export const EditInfoProxyModal = () => {
         proxy_id: proxy.proxy_id ? proxy.proxy_id : "",
         protocol: values.protocol,
       });
-      onClose();
+      onCancel();
       setProxy({} as IProxy);
       setLocation({} as ILocation);
     } catch (error) {
@@ -54,9 +70,9 @@ export const EditInfoProxyModal = () => {
     }
   };
 
-  const onClose = () => {
+  const onCancel = () => {
     form.reset();
-    editProxyModalOnClose();
+    onClose(ModalType.EDIT_INFO_PROXY);
   };
 
   useEffect(() => {
@@ -68,8 +84,8 @@ export const EditInfoProxyModal = () => {
   return (
     <Modal
       title={`Change my proxy (id:${proxy.proxy_id ?? ""}) Authentications`}
-      isOpen={editProxyModalIsOpen}
-      onClose={onClose}
+      isOpen={isOpenModal}
+      onClose={onCancel}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -93,13 +109,12 @@ export const EditInfoProxyModal = () => {
                         size="icon"
                         className="rounded-l-none"
                         type="button"
-                        onClick={() => {
-                          editProxyModalOnClose();
-                          setAction("edit");
-                        }}
+                        onClick={() => onClose(ModalType.EDIT_INFO_PROXY)}
                         asChild
                       >
-                        <Link href={`/dashboard/locations?callback=${pathname}`}>
+                        <Link
+                          href={`/dashboard/locations?callback=${pathname}`}
+                        >
                           <ArrowUpRight className="h-4 w-4" />
                           <span className="sr-only">ArrowUpRight Icon</span>
                         </Link>
@@ -140,7 +155,13 @@ export const EditInfoProxyModal = () => {
             />
           </div>
           <div className="flex justify-between items-center gap-5">
-            <Button type="button" variant="outline" className="w-full" disabled={isPending} onClick={() => onClose()}>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              disabled={isPending}
+              onClick={onCancel}
+            >
               Cancel
             </Button>
             <Button type="submit" className="w-full" disabled={isPending}>
