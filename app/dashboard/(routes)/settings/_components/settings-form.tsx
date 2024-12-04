@@ -36,7 +36,7 @@ export const SettingsForm = () => {
     useState<boolean>(true);
 
   const { user } = useAuthStore();
-  const { onOpen, logoutModalOnOpen } = useModalStore();
+  const { onOpen } = useModalStore();
   const { mutate, isPending } = useUpdateUserProfile();
 
   const onSubmit = async (data: z.infer<typeof userProfileSchema>) => {
@@ -290,7 +290,7 @@ export const SettingsForm = () => {
                   variant="destructive"
                   type="button"
                   className="w-full md:w-fit"
-                  onClick={logoutModalOnOpen}
+                  onClick={() => onOpen(ModalType.LOGOUT)}
                 >
                   Logout <LogOut className="ml-2 h-4 w-4" />
                 </Button>

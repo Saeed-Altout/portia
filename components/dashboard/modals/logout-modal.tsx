@@ -16,9 +16,12 @@ import { Button } from "@/components/ui/button";
 import { Circle, Icon } from "@/components/ui/circle-icon";
 import { useModalStore } from "@/stores";
 import { useLogout } from "@/hooks";
+import { ModalType } from "@/config/enums";
 
 export const LogoutModal = () => {
-  const { logoutModalIsOpen, logoutModalOnClose } = useModalStore();
+  const { isOpen, type, onClose } = useModalStore();
+  const isOpenModal = isOpen && type === ModalType.LOGOUT;
+
   const { mutateAsync, isPending } = useLogout();
 
   const onConfirm = async () => {
@@ -31,12 +34,12 @@ export const LogoutModal = () => {
 
   const onChange = (open: boolean) => {
     if (!open && !isPending) {
-      logoutModalOnClose();
+      onClose(ModalType.LOGOUT);
     }
   };
 
   return (
-    <Dialog open={logoutModalIsOpen} onOpenChange={onChange}>
+    <Dialog open={isOpenModal} onOpenChange={onChange}>
       <DialogContent className="max-w-sm sm:max-w-[480px]">
         <DialogHeader className="flex items-start justify-start flex-row gap-5">
           <Circle fill="alert" className="mx-auto sm:mx-0">
@@ -57,7 +60,7 @@ export const LogoutModal = () => {
             variant="outline"
             className="w-full"
             disabled={isPending}
-            onClick={logoutModalOnClose}
+            onClick={() => onClose(ModalType.LOGOUT)}
           >
             Cancel
           </Button>
