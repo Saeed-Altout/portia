@@ -1,4 +1,5 @@
 import { apiClient } from "@/api/config";
+import { headers } from "next/headers";
 
 export const updateUserProfile = async (
   values: IUpdateUserProfileRequest
@@ -52,11 +53,13 @@ export const exportData = async (
       process.env.NEXT_PUBLIC_EXPORT!,
       values,
       {
-        responseType: "blob",
+        responseType: "arraybuffer",
       }
     );
+
     return response.data;
   } catch (error) {
+    console.error("Error exporting data:", error);
     throw error;
   }
 };

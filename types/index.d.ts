@@ -500,4 +500,4 @@ declare type ITableData = string;
 declare type IGetTablesData = ApiResponse<ITable[]>;
 
 declare type IExportDataRequest = { tables: string[] };
-declare type IExportDataResponse = ApiResponse<any>;
+declare type IExportDataResponse = ArrayBuffer;

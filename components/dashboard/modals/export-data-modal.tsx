@@ -29,7 +29,7 @@ const exportDataSchema = z.object({
 });
 
 export const ExportDataModal = () => {
-  const { mutate, isPending } = useExportData();
+  const { mutateAsync, isPending } = useExportData();
   const { isOpen, onClose, type } = useModalStore();
   const { data: tables, isSuccess } = useGetTablesData();
   const isOpenModal = isOpen && type === ModalType.EXPORT_DATA && isSuccess;
@@ -42,7 +42,10 @@ export const ExportDataModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof exportDataSchema>) => {
-    mutate(values);
+    try {
+      await mutateAsync(values);
+      onClose(ModalType.EXPORT_DATA);
+    } catch (error) {}
   };
 
   return (
