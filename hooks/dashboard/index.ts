@@ -31,6 +31,7 @@ import { useExportData } from "./user/use-export-data";
 import { useGetTablesData } from "./user/use-get-tables-data";
 import { useGetPackageWithPlans } from "./pricing/use-get-package-with-plans";
 import { useGetOffersPackage } from "./pricing/use-get-offers-package";
+import { useGetProxyById } from "./proxy/use-get-proxy-by-id";
 export {
   useAddProxy,
   useEditAuthProxy,
@@ -59,4 +60,5 @@ export {
   useGetTablesData,
   useGetPackageWithPlans,
   useGetOffersPackage,
+  useGetProxyById,
 };

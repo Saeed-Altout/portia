@@ -11,26 +11,24 @@ import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/dashboard/modal";
 
-import { StepOne } from "./step-one";
-import { StepTwo } from "./step-two";
-import { StepThree } from "./step-three";
+import { StepOne } from "./add/step-one";
+import { StepTwo } from "./add/step-two";
+import { StepThree } from "./add/step-three";
 
 import { useAddProxy } from "@/hooks";
-import { activateNewProxySchema } from "@/schemas";
+import { addNewProxySchema } from "@/schemas";
 import { useModalStore, useProxyStore } from "@/stores";
 import { ModalType } from "@/config/enums";
 
 export const AddProxyModal = () => {
-  const { price, duration, location, protocol, setProxy, setLocation } =
-    useProxyStore();
-
+  const { price, duration, location, setProxy, setLocation } = useProxyStore();
   const { step, isOpen, type, setStep, onClose } = useModalStore();
-  const isOpenModal = isOpen && type === ModalType.ACTIVE_PROXY;
+  const isOpenModal = isOpen && type === ModalType.ADD_PROXY;
 
   const { mutateAsync, isPending } = useAddProxy();
 
-  const form = useForm<z.infer<typeof activateNewProxySchema>>({
-    resolver: zodResolver(activateNewProxySchema),
+  const form = useForm<z.infer<typeof addNewProxySchema>>({
+    resolver: zodResolver(addNewProxySchema),
     defaultValues: {
       pkg_id: "",
       plan_id: "",
@@ -44,14 +42,13 @@ export const AddProxyModal = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof activateNewProxySchema>) => {
+  const onSubmit = async (values: z.infer<typeof addNewProxySchema>) => {
     try {
       await mutateAsync({
         parent_proxy_id: location ? location?.id.toString() : "",
         pkg_id: values.pkg_id,
         re_new: values.re_new,
         protocol: values.protocol,
-        protocol_value: protocol,
         duration: duration ? duration.toString() : "",
         username: values.username,
         password: values.password,

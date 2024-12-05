@@ -8,6 +8,7 @@ import { EditInfoProxyModal } from "@/components/dashboard/modals/edit-info-prox
 import { EditAuthProxyModal } from "@/components/dashboard/modals/edit-auth-proxy-modal";
 import { LogoutModal } from "@/components/dashboard/modals/logout-modal";
 import { ExportDataModal } from "@/components/dashboard/modals/export-data-modal";
+import { ActivateProxyModal } from "@/components/dashboard/modals/activate-proxy-modal";
 
 export const ModalProviders = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -28,6 +29,7 @@ export const ModalProviders = () => {
       <EditAuthProxyModal />
       <ExportDataModal />
       <LogoutModal />
+      <ActivateProxyModal />
     </>
   );
 };

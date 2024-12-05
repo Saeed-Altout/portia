@@ -91,7 +91,6 @@ declare type IAddProxyRequest = {
   pkg_id: any;
   re_new: any;
   protocol: string;
-  protocol_value: any;
   duration: string;
   username: string;
   password: string;
@@ -184,6 +183,17 @@ declare type IProxiesCounts = {
   inactive: number;
 };
 declare type IGetProxiesCountsResponse = ApiResponse<IProxiesCounts>;
+declare type IGetProxyResponse = ApiResponse<{
+  parent_proxy_id: string;
+  package_id: number;
+  package_name: string;
+  duration: number;
+  port: string;
+  service_provider_name: string;
+  country_name: string;
+  city_name: string;
+  rotation_time: number;
+}>;
 
 declare type IAffiliateStatistics = {
   this_month_earnings: number;

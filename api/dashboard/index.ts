@@ -15,6 +15,7 @@ import {
   fixProxy,
   editAuthProxy,
   editInfoProxy,
+  getProxyById,
 } from "./proxy";
 import {
   getPricingPlans,
@@ -59,4 +60,5 @@ export {
   exportData,
   getOffersPackage,
   getPackageWithPlans,
+  getProxyById,
 };

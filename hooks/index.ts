@@ -48,6 +48,7 @@ import {
   useGetTablesData,
   useGetOffersPackage,
   useGetPackageWithPlans,
+  useGetProxyById,
 } from "./dashboard";
 export {
   useResponse,
@@ -93,4 +94,5 @@ export {
   useGetTablesData,
   useGetOffersPackage,
   useGetPackageWithPlans,
+  useGetProxyById,
 };

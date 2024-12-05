@@ -36,6 +36,7 @@ import {
   exportData,
   getOffersPackage,
   getPackageWithPlans,
+  getProxyById,
 } from "./dashboard";
 import {
   getFaqs,
@@ -90,4 +91,5 @@ export {
   exportData,
   getOffersPackage,
   getPackageWithPlans,
+  getProxyById,
 };

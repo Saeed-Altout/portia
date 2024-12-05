@@ -3,7 +3,13 @@
 import * as React from "react";
 import { LucideIcon, Zap } from "lucide-react";
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Circle, Icon } from "@/components/ui/circle-icon";
 
 interface ModalProps {
@@ -38,7 +44,7 @@ export const Modal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>
-      <DialogContent className="max-w-sm sm:max-w-[480px]">
+      <DialogContent className="w-full max-w-sm sm:max-w-md md:max-w-lg">
         {progress && (
           <div className="absolute top-0 left-0 bg-[#D4D4FF] w-full h-2 overflow-hidden">
             <span
@@ -55,7 +61,9 @@ export const Modal = ({
           </Circle>
           <div>
             <DialogTitle className="text-lg font-medium">{title}</DialogTitle>
-            <DialogDescription className="text-sm font-normal">{description}</DialogDescription>
+            <DialogDescription className="text-sm font-normal">
+              {description}
+            </DialogDescription>
           </div>
         </DialogHeader>
         <div>{children}</div>

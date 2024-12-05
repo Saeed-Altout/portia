@@ -20,9 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useStore } from "@/stores/use-store";
 
 export const PricingPlansClient = () => {
   const { user } = useAuthStore();
+  const { setProxyId, setProxyCost } = useStore();
 
   const {
     data: packages,
@@ -40,7 +42,6 @@ export const PricingPlansClient = () => {
 
   const { onOpen } = useModalStore();
 
-  // Automatically select the first package on load
   useEffect(() => {
     if (packagesIsSuccess && packages.data?.length > 0) {
       const firstPackage = packages.data[0];
@@ -51,11 +52,17 @@ export const PricingPlansClient = () => {
 
   const handlePackageSelect = (packageId: number) => {
     setSelectedPackage(packageId);
-    setSelectedPlan(null); // Reset selected plan when package changes
+    setSelectedPlan(null);
   };
 
   const handlePlanSelect = (planId: number) => {
     setSelectedPlan(planId);
+  };
+
+  const handleActiveProxy = (id: number, cost: string) => {
+    setProxyId(id);
+    setProxyCost(cost);
+    onOpen(ModalType.ACTIVE_PROXY);
   };
 
   return (
@@ -64,8 +71,6 @@ export const PricingPlansClient = () => {
         title={`Welcome back, ${user?.first_name || "User"}`}
         label="Explore Our Pricing Plans"
       />
-
-      {/* Tabs filter */}
       {packagesIsLoading && (
         <div className="hidden md:flex items-center gap-10">
           <div className="flex items-center gap-2">
@@ -80,7 +85,6 @@ export const PricingPlansClient = () => {
           </div>
         </div>
       )}
-
       {packagesIsSuccess && (
         <div className="hidden md:flex items-center gap-10">
           {/* Package Selector */}
@@ -126,15 +130,12 @@ export const PricingPlansClient = () => {
           )}
         </div>
       )}
-
-      {/* Mobile Select filter */}
       {packagesIsLoading && (
         <div className="flex md:hidden flex-col gap-4">
           <Skeleton className="h-12 w-full" />
           <Skeleton className="h-12 w-full" />
         </div>
       )}
-
       {packagesIsSuccess && (
         <div className="flex flex-col gap-2 md:hidden">
           <Select
@@ -173,8 +174,6 @@ export const PricingPlansClient = () => {
           </Select>
         </div>
       )}
-
-      {/* Offers */}
       {offersIsLoading && (
         <div className="grid grid-cols-1 gap-8">
           {[...Array(5)].map((_, index) => (
@@ -223,7 +222,7 @@ export const PricingPlansClient = () => {
                     ${offer.cost}
                   </p>
                   <Button
-                    onClick={() => onOpen(ModalType.ACTIVE_PROXY)}
+                    onClick={() => handleActiveProxy(offer.id, offer.cost)}
                     className="w-full md:w-auto"
                   >
                     Activate
