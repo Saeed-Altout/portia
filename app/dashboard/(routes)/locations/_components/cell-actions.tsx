@@ -16,7 +16,11 @@ export const CellActions = ({ data }: { data: ILocation }) => {
 
   const onSelectProvider = () => {
     setLocation(data);
-    if (type === ModalType.ACTIVE_PROXY) {
+    console.log(type);
+
+    if (type === ModalType.ADD_PROXY) {
+      onOpen(ModalType.ADD_PROXY);
+    } else if (type === ModalType.ACTIVE_PROXY) {
       onOpen(ModalType.ACTIVE_PROXY);
     } else if (type === ModalType.EDIT_AUTH_PROXY) {
       onOpen(ModalType.EDIT_AUTH_PROXY);

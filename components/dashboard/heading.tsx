@@ -38,7 +38,7 @@ export const Heading = ({
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => onOpen(ModalType.ACTIVE_PROXY)}
+            onClick={() => onOpen(ModalType.ADD_PROXY)}
           >
             <Plus className="h-4 w-4 mr-2" /> Activate Proxies
           </Button>

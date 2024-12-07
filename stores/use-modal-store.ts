@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 export interface ModalStoreProps {
   isOpen: boolean;
-  type: string;
+  type: ModalType;
   onOpen: (type: ModalType) => void;
   onClose: (type: ModalType) => void;
 
@@ -19,7 +19,7 @@ export interface ModalStoreProps {
 
 export const useModalStore = create<ModalStoreProps>((set) => ({
   isOpen: false,
-  type: "",
+  type: ModalType.ADD_PROXY,
   onOpen: (type) => set({ isOpen: true, type }),
   onClose: (type) => set({ isOpen: false, type }),
 

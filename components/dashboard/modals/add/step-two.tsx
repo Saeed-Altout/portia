@@ -55,7 +55,7 @@ export const StepTwo = ({ form }: StepTwoProps) => {
                   size="icon"
                   className="rounded-l-none"
                   type="button"
-                  onClick={() => onClose(ModalType.ACTIVE_PROXY)}
+                  onClick={() => onClose(ModalType.ADD_PROXY)}
                   asChild
                 >
                   <Link href={`/dashboard/locations?callback=${pathname}`}>
