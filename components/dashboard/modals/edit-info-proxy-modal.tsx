@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { BeatLoader } from "react-spinners";
 import { ArrowUpRight } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,24 +27,32 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/dashboard/modal";
+import { Loader } from "@/components/ui/loader";
 
-import { useModalStore, useProxyStore } from "@/stores";
-import { useEditInfoProxy, useGetPorts } from "@/hooks";
 import { ModalType } from "@/config/enums";
+import { useStore } from "@/stores/use-store";
+import { useModalStore } from "@/stores";
 
-const editProxySchema = z.object({
-  provider: z.string().min(2),
-  protocol: z.string().min(2),
-});
+import { editProxySchema } from "@/schemas";
+import { useEditInfoProxy, useGetPorts } from "@/hooks";
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
+
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.EDIT_INFO_PROXY;
 
-  const { location, proxy, setProxy, setLocation, pkgId } = useProxyStore();
+  const {
+    location,
+    proxy,
+    setProxyId,
+    setProxyParentId,
+    setProxyPackageId,
+    setLocationServiceProviderName,
+  } = useStore();
+
   const { mutateAsync, isPending } = useEditInfoProxy();
-  const { data: ports } = useGetPorts({ id: pkgId });
+  const { data: ports, isSuccess } = useGetPorts({ id: proxy.package_id });
 
   const form = useForm<z.infer<typeof editProxySchema>>({
     resolver: zodResolver(editProxySchema),
@@ -58,13 +65,17 @@ export const EditInfoProxyModal = () => {
   const onSubmit = async (values: z.infer<typeof editProxySchema>) => {
     try {
       await mutateAsync({
-        parent_proxy_id: location.id ? location.id.toString() : "",
-        proxy_id: proxy.proxy_id ? proxy.proxy_id : "",
+        parent_proxy_id: proxy.parent_proxy_id ?? "",
+        proxy_id: proxy.id ?? "",
         protocol: values.protocol,
       });
       onCancel();
-      setProxy({} as IProxy);
-      setLocation({} as ILocation);
+
+      // reset
+      setProxyId("");
+      setProxyParentId("");
+      setProxyPackageId("");
+      setLocationServiceProviderName("");
     } catch (error) {
       console.error(error);
     }
@@ -76,14 +87,13 @@ export const EditInfoProxyModal = () => {
   };
 
   useEffect(() => {
-    if (location && location.service_provider_name) {
+    if (location && location.service_provider_name)
       form.setValue("provider", `${location.service_provider_name}`);
-    }
   }, [form, location]);
 
   return (
     <Modal
-      title={`Change my proxy (id:${proxy.proxy_id ?? ""}) Authentications`}
+      title={`Change my proxy (id:${proxy.id ?? ""}) type`}
       isOpen={isOpenModal}
       onClose={onCancel}
     >
@@ -132,7 +142,7 @@ export const EditInfoProxyModal = () => {
                 <FormItem>
                   <FormLabel>Proxy Type</FormLabel>
                   <Select
-                    disabled={isPending || ports?.data.length == 0}
+                    disabled={isPending || !isSuccess}
                     defaultValue={field.value}
                     onValueChange={field.onChange}
                   >
@@ -165,7 +175,7 @@ export const EditInfoProxyModal = () => {
               Cancel
             </Button>
             <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? <BeatLoader color="#fff" size={12} /> : "Update"}
+              {isPending ? <Loader /> : "Update"}
             </Button>
           </div>
         </form>

@@ -4,14 +4,33 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { CellEdit } from "./cell-edit";
+import { CellInfoEdit } from "./cell-info-edit";
 import { CellRenew } from "./cell-renew";
 import { CellActions } from "./cell-actions";
 import { CellAuthEdit } from "./cell-auth-edit";
 
-export const activeColumns: ColumnDef<IProxy>[] = [
+export type Proxy = {
+  sequence: string;
+  id: number;
+  re_new: number;
+  is_active: number;
+  package_name: string;
+  protocol: string;
+  service_provider: string;
+  protocol_port: number;
+  expire_at: string;
+  username: string;
+  password: string;
+
+  // Additional for state
+  proxy_id: string;
+  parent_proxy_id: string;
+  package_id: string;
+};
+
+export const activeColumns: ColumnDef<Proxy>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "sequence",
     header: "#",
   },
   {
@@ -39,12 +58,18 @@ export const activeColumns: ColumnDef<IProxy>[] = [
   {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => <CellEdit data={row.original}>{row.original.protocol}</CellEdit>,
+    cell: ({ row }) => (
+      <CellInfoEdit data={row.original}>{row.original.protocol}</CellInfoEdit>
+    ),
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>,
+    cell: ({ row }) => (
+      <CellInfoEdit data={row.original}>
+        {row.original.service_provider}
+      </CellInfoEdit>
+    ),
   },
   {
     accessorKey: "protocol_port",
@@ -54,15 +79,17 @@ export const activeColumns: ColumnDef<IProxy>[] = [
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>{format(row.original.expire_at, "MMM dd, yyyy")}</p>
+      <p className={cn(row.original.expire_at && "text-[#801121]")}>
+        {format(row.original.expire_at, "MMM dd, yyyy")}
+      </p>
     ),
   },
   {
     accessorKey: "username",
-    header: "Username/Pass",
+    header: "Username:Password",
     cell: ({ row }) => (
       <CellAuthEdit data={row.original}>
-        {row.original.username}/{row.original.password}
+        {row.original.username}:{row.original.password}
       </CellAuthEdit>
     ),
   },

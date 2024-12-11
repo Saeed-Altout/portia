@@ -1,13 +1,27 @@
 "use client";
+
 import { Activity } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useModalStore, useProxyStore } from "@/stores";
-import { ModalType } from "@/config/enums";
 
-export const CellActions = ({ data }: { data: IProxy }) => {
+import { Proxy } from "./columns";
+import { useModalStore } from "@/stores";
+
+import { ModalType } from "@/config/enums";
+import { useStore } from "@/stores/use-store";
+
+interface CellActionsProps {
+  data: Proxy;
+}
+export const CellActions = ({ data }: CellActionsProps) => {
   const { onOpen } = useModalStore();
-  const { setProxy } = useProxyStore();
+  const { setProxyId, setProxyPackageId } = useStore();
+
+  const handlerFixProxy = () => {
+    setProxyId(data.proxy_id);
+    setProxyPackageId(data.package_id);
+    onOpen(ModalType.FIX_PROXY);
+  };
 
   return (
     <>
@@ -15,10 +29,7 @@ export const CellActions = ({ data }: { data: IProxy }) => {
         <Button
           size="sm"
           className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
-          onClick={() => {
-            setProxy(data);
-            onOpen(ModalType.FIX_PROXY);
-          }}
+          onClick={handlerFixProxy}
         >
           <Activity className="h-4 w-4" />
           <span className="sr-only">Activity Icon</span>

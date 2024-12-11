@@ -1,22 +1,26 @@
 "use client";
+
 import { Info } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useModalStore, useProxyStore } from "@/stores";
+
 import { ModalType } from "@/config/enums";
+import { useStore } from "@/stores/use-store";
+import { useModalStore, useProxyStore } from "@/stores";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
   const { onOpen, type } = useModalStore();
   const { setLocation } = useProxyStore();
+  const { setLocationServiceProviderName } = useStore();
 
   const router = useRouter();
   const callback = useSearchParams().get("callback");
 
   const onSelectProvider = () => {
     setLocation(data);
-    console.log(type);
+    setLocationServiceProviderName(data.service_provider_name);
 
     if (type === ModalType.ADD_PROXY) {
       onOpen(ModalType.ADD_PROXY);

@@ -25,7 +25,7 @@ export const ActivateProxyModal = () => {
   const { step, isOpen, type, setStep, moveNextStep, movePrevStep, onClose } =
     useModalStore();
   const isOpenModal = isOpen && type === ModalType.ACTIVE_PROXY;
-  const { data: currentProxy } = useGetProxyById({ id: proxy.id });
+  const { data: currentProxy } = useGetProxyById({ id: +proxy.id });
 
   const { mutateAsync, isPending } = useAddProxy();
 

@@ -1,10 +1,5 @@
 import { create } from "zustand";
 
-interface Proxy {
-  id: number;
-  cost: string;
-}
-
 interface Offer {
   parent_proxy_id: string;
   package_id: number;
@@ -17,20 +12,69 @@ interface Offer {
   rotation_time: number;
 }
 
+interface Proxy {
+  id: string;
+  cost: string;
+  username: string;
+  parent_proxy_id: string;
+  package_id: string;
+}
+type Location = {
+  id: number;
+  service_provider_name: string;
+};
+
 interface Store {
   proxy: Proxy;
   offer: Offer;
+  location: Location;
+  setLocation: (location: Location) => void;
+  setLocationId: (id: number) => void;
+  setLocationServiceProviderName: (service_provider_name: string) => void;
   setOffer: (offer: Offer) => void;
   setProxy: (proxy: Proxy) => void;
-  setProxyId: (id: number) => void;
+  setProxyId: (id: string) => void;
+  setProxyUsername: (username: string) => void;
+  setProxyParentId: (parentId: string) => void;
+  setProxyPackageId: (packageId: string) => void;
   setProxyCost: (cost: string) => void;
 }
 
 export const useStore = create<Store>((set) => ({
-  proxy: {
+  location: {
     id: 0,
-    cost: "",
+    service_provider_name: "",
   },
+
+  setLocation: (location: Location) => set({ location }),
+  setLocationId: (id: number) =>
+    set((state) => ({ location: { ...state.location, id } })),
+
+  setLocationServiceProviderName: (service_provider_name: string) =>
+    set((state) => ({
+      location: { ...state.location, service_provider_name },
+    })),
+
+  proxy: {
+    id: "0",
+    cost: "",
+    username: "",
+    parent_proxy_id: "",
+    package_id: "",
+  },
+
+  setProxy: (proxy: Proxy) => set({ proxy }),
+  setProxyId: (id: string) =>
+    set((state) => ({ proxy: { ...state.proxy, id } })),
+  setProxyUsername: (username: string) =>
+    set((state) => ({ proxy: { ...state.proxy, username } })),
+  setProxyParentId: (parentId: string) =>
+    set((state) => ({ proxy: { ...state.proxy, parent_proxy_id: parentId } })),
+  setProxyPackageId: (packageId: string) =>
+    set((state) => ({ proxy: { ...state.proxy, package_id: packageId } })),
+  setProxyCost: (cost: string) =>
+    set((state) => ({ proxy: { ...state.proxy, cost } })),
+
   offer: {
     parent_proxy_id: "",
     package_id: 0,
@@ -43,9 +87,4 @@ export const useStore = create<Store>((set) => ({
     rotation_time: 0,
   },
   setOffer: (offer: Offer) => set({ offer }),
-  setProxy: (proxy: Proxy) => set({ proxy }),
-  setProxyId: (id: number) =>
-    set((state) => ({ proxy: { ...state.proxy, id } })),
-  setProxyCost: (cost: string) =>
-    set((state) => ({ proxy: { ...state.proxy, cost } })),
 }));

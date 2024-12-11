@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BeatLoader } from "react-spinners";
 import { Eye, EyeOff, Key, User } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,17 +18,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/dashboard/modal";
+import { Loader } from "@/components/ui/loader";
 
-import { useModalStore, useProxyStore } from "@/stores";
-import { useEditAuthProxy } from "@/hooks/dashboard/proxy/use-edit-auth-proxy";
+import { useModalStore } from "@/stores";
+import { useEditAuthProxy } from "@/hooks";
+import { editAuthProxySchema } from "@/schemas";
+
 import { ModalType } from "@/config/enums";
-
-const editAuthProxySchema = z.object({
-  username: z.string().min(2),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters." }),
-});
+import { useStore } from "@/stores/use-store";
 
 export const EditAuthProxyModal = () => {
   const [passwordType, setPasswordType] = useState<"text" | "password">("text");
@@ -37,7 +33,7 @@ export const EditAuthProxyModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.EDIT_AUTH_PROXY;
 
-  const { proxy, setProxy } = useProxyStore();
+  const { proxy, setProxyId, setProxyUsername } = useStore();
   const { mutateAsync, isPending } = useEditAuthProxy();
 
   const form = useForm<z.infer<typeof editAuthProxySchema>>({
@@ -50,12 +46,14 @@ export const EditAuthProxyModal = () => {
   const onSubmit = async (values: z.infer<typeof editAuthProxySchema>) => {
     try {
       await mutateAsync({
-        proxy_id: proxy.proxy_id ? proxy.proxy_id : "",
+        proxy_id: proxy.id ?? "",
         password: values.password,
       });
-
       onCancel();
-      setProxy({} as IProxy);
+
+      // reset
+      setProxyId("");
+      setProxyUsername("");
     } catch (error) {
       console.error(error);
     }
@@ -67,14 +65,12 @@ export const EditAuthProxyModal = () => {
   };
 
   useEffect(() => {
-    if (proxy && proxy.username) {
-      form.setValue("username", proxy.username);
-    }
+    if (proxy && proxy.username) form.setValue("username", proxy.username);
   }, [form, proxy]);
 
   return (
     <Modal
-      title={`Change my proxy (id:${proxy.proxy_id ?? ""}) Authentications`}
+      title={`Change my proxy (id:${proxy.id ?? ""}) Authentications`}
       isOpen={isOpenModal}
       onClose={onCancel}
     >
@@ -155,7 +151,7 @@ export const EditAuthProxyModal = () => {
               Cancel
             </Button>
             <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? <BeatLoader color="#fff" size={12} /> : "Update"}
+              {isPending ? <Loader /> : "Update"}
             </Button>
           </div>
         </form>
