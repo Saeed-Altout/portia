@@ -68,7 +68,7 @@ export const StepThree = ({ form }: StepThreeProps) => {
               <Input
                 icon={Key}
                 type="password"
-                placeholder="username"
+                placeholder="password"
                 {...field}
               />
             </FormControl>

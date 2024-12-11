@@ -22,12 +22,13 @@ import { Loader } from "@/components/ui/loader";
 
 export const ActivateProxyModal = () => {
   const { proxy, offer, setOffer } = useStore();
+
   const { step, isOpen, type, setStep, moveNextStep, movePrevStep, onClose } =
     useModalStore();
   const isOpenModal = isOpen && type === ModalType.ACTIVE_PROXY;
-  const { data: currentProxy } = useGetProxyById({ id: +proxy.id });
 
-  const { mutateAsync, isPending } = useAddProxy();
+  const { data: currentProxy } = useGetProxyById({ id: +proxy.id });
+  const { mutateAsync, isPending, isSuccess } = useAddProxy();
 
   const form = useForm<z.infer<typeof activateNewProxySchema>>({
     resolver: zodResolver(activateNewProxySchema),
@@ -81,10 +82,10 @@ export const ActivateProxyModal = () => {
   };
 
   useEffect(() => {
-    if (currentProxy) {
+    if (currentProxy && isSuccess) {
       setOffer(currentProxy.data);
     }
-  }, [currentProxy, setOffer]);
+  }, [currentProxy, setOffer, isSuccess]);
 
   return (
     <Modal

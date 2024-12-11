@@ -3,16 +3,10 @@
 import { Zap } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { cn } from "@/lib/utils";
-import { useAuthStore, useModalStore } from "@/stores";
-import { useGetOffersPackage, useGetPackageWithPlans } from "@/hooks";
-import { ModalType } from "@/config/enums";
-
 import { Heading } from "@/components/dashboard";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Circle, Icon } from "@/components/ui/circle-icon";
-
 import {
   Select,
   SelectContent,
@@ -20,10 +14,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { cn } from "@/lib/utils";
+import { ModalType } from "@/config/enums";
 import { useStore } from "@/stores/use-store";
 
+import { useAuthStore, useModalStore } from "@/stores";
+import { useGetOffersPackage, useGetPackageWithPlans } from "@/hooks";
+
 export const PricingPlansClient = () => {
+  const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+
   const { user } = useAuthStore();
+  const { onOpen } = useModalStore();
   const { setProxyId, setProxyCost } = useStore();
 
   const {
@@ -36,11 +40,6 @@ export const PricingPlansClient = () => {
     isSuccess: offersIsSuccess,
     isLoading: offersIsLoading,
   } = useGetOffersPackage();
-
-  const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
-  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
-
-  const { onOpen } = useModalStore();
 
   useEffect(() => {
     if (packagesIsSuccess && packages.data?.length > 0) {
@@ -60,7 +59,7 @@ export const PricingPlansClient = () => {
   };
 
   const handleActiveProxy = (id: number, cost: string) => {
-    setProxyId(id);
+    setProxyId(id.toString());
     setProxyCost(cost);
     onOpen(ModalType.ACTIVE_PROXY);
   };
