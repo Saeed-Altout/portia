@@ -32,7 +32,7 @@ export const StepTwo = ({ form }: StepTwoProps) => {
                 disabled={true}
                 readOnly
                 {...field}
-                value={offer.service_provider_name}
+                value={`${offer.service_provider_name} / ${offer.country_name}`}
               />
             </FormControl>
             <FormMessage />

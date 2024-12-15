@@ -11,7 +11,6 @@ export const TabSkeleton = () => {
         <Skeleton className="h-12 w-32" />
         <Skeleton className="h-12 w-32" />
         <Skeleton className="h-12 w-32" />
-        <Skeleton className="h-12 w-32" />
       </div>
     </div>
   );

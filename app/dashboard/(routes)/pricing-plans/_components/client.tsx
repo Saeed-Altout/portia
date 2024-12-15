@@ -146,7 +146,7 @@ export const PricingPlansClient = () => {
       {/* Offers */}
       {offersIsLoading && (
         <div className="grid grid-cols-1 gap-8">
-          {[...Array(5)].map((_, index) => (
+          {[...Array(3)].map((_, index) => (
             <OfferSkeleton key={index} />
           ))}
         </div>
