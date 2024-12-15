@@ -1,12 +1,7 @@
 "use client";
 
-import { Zap } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { Heading } from "@/components/dashboard";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Circle, Icon } from "@/components/ui/circle-icon";
 import {
   Select,
   SelectContent,
@@ -14,12 +9,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Heading } from "@/components/dashboard";
+import { OfferCard } from "@/components/cards/offer-card";
+import { TabSkeleton } from "@/components/skeletons/tab-skeleton";
+import { SelectSkeleton } from "@/components/skeletons/select-skeleton";
+import { OfferSkeleton } from "@/components/skeletons/offer-skeleton";
 
 import { cn } from "@/lib/utils";
 import { ModalType } from "@/config/enums";
-import { useStore } from "@/stores/use-store";
 
-import { useAuthStore, useModalStore } from "@/stores";
+import { useAuthStore, useModalStore, useStore } from "@/stores";
 import { useGetOffersPackage, useGetPackageWithPlans } from "@/hooks";
 
 export const PricingPlansClient = () => {
@@ -71,71 +70,40 @@ export const PricingPlansClient = () => {
         title={`Welcome back, ${user?.first_name || "User"}`}
         label="Explore Our Pricing Plans"
       />
-      {packagesIsLoading && (
-        <div className="hidden md:flex items-center gap-10">
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-12 w-32" />
-            <Skeleton className="h-12 w-32" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-12 w-32" />
-            <Skeleton className="h-12 w-32" />
-            <Skeleton className="h-12 w-32" />
-            <Skeleton className="h-12 w-32" />
-          </div>
-        </div>
-      )}
+      {/* Tabs */}
+      {packagesIsLoading && <TabSkeleton />}
       {packagesIsSuccess && (
         <div className="hidden md:flex items-center gap-10">
-          {/* Package Selector */}
           <div className="flex items-center gap-4 bg-muted w-fit p-2 rounded-md">
             {packages.data.map((pkg) => (
-              <div
+              <TabItem
                 key={pkg.package_id}
-                role="button"
-                className={cn(
-                  "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
-                  selectedPackage === pkg.package_id
-                    ? "bg-white text-black-default shadow-md"
-                    : "bg-transparent text-muted-foreground"
-                )}
-                onClick={() => handlePackageSelect(pkg.package_id)}
-              >
-                {pkg.package_name}
-              </div>
+                handleSelect={() => handlePackageSelect(pkg.package_id)}
+                name={pkg.package_name}
+                active={selectedPackage === pkg.package_id}
+              />
             ))}
           </div>
 
-          {/* Plan Selector */}
           {selectedPackage && (
             <div className="flex items-center gap-4 bg-muted w-fit p-2 rounded-md">
               {packages.data
                 .find((pkg) => pkg.package_id === selectedPackage)
                 ?.plans.map((plan) => (
-                  <div
+                  <TabItem
                     key={plan.id}
-                    role="button"
-                    onClick={() => handlePlanSelect(plan.id)}
-                    className={cn(
-                      "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
-                      selectedPlan === plan.id
-                        ? "bg-white text-black-default shadow-md"
-                        : "bg-transparent text-muted-foreground"
-                    )}
-                  >
-                    {plan.name}
-                  </div>
+                    handleSelect={() => handlePlanSelect(plan.id)}
+                    name={plan.name}
+                    active={selectedPlan === plan.id}
+                  />
                 ))}
             </div>
           )}
         </div>
       )}
-      {packagesIsLoading && (
-        <div className="flex md:hidden flex-col gap-4">
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-12 w-full" />
-        </div>
-      )}
+
+      {/* Select */}
+      {packagesIsLoading && <SelectSkeleton />}
       {packagesIsSuccess && (
         <div className="flex flex-col gap-2 md:hidden">
           <Select
@@ -174,25 +142,12 @@ export const PricingPlansClient = () => {
           </Select>
         </div>
       )}
+
+      {/* Offers */}
       {offersIsLoading && (
         <div className="grid grid-cols-1 gap-8">
           {[...Array(5)].map((_, index) => (
-            <div
-              key={index}
-              className="p-4 w-full flex flex-col md:flex-row items-center justify-between gap-4 border rounded-md"
-            >
-              <div className="w-full flex items-center gap-4 md:max-w-md">
-                <Skeleton className="h-[50px] w-[50px] rounded-full flex-shrink-0" />
-                <div className="space-y-2 w-full">
-                  <Skeleton className="h-5 w-full" />
-                  <Skeleton className="h-5 w-full" />
-                </div>
-              </div>
-              <div className="w-full flex flex-row md:flex-col gap-4 items-center md:items-start md:max-w-xs">
-                <Skeleton className="h-5 w-1/2" />
-                <Skeleton className="h-12 w-full" />
-              </div>
-            </div>
+            <OfferSkeleton key={index} />
           ))}
         </div>
       )}
@@ -205,30 +160,11 @@ export const PricingPlansClient = () => {
                 (!selectedPlan || offer.plan_id === selectedPlan)
             )
             .map((offer) => (
-              <div
+              <OfferCard
                 key={offer.id}
-                className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border rounded-lg gap-4 shadow-sm"
-              >
-                <div className="w-full flex items-center gap-x-4">
-                  <Circle fill="primary">
-                    <Icon icon={Zap} theme="primary" />
-                  </Circle>
-                  <p className="text-sm text-muted-foreground">
-                    {offer.description}
-                  </p>
-                </div>
-                <div className="w-full md:w-auto flex flex-row md:flex-col items-center gap-4">
-                  <p className="text-lg font-semibold text-primary">
-                    ${offer.cost}
-                  </p>
-                  <Button
-                    onClick={() => handleActiveProxy(offer.id, offer.cost)}
-                    className="w-full md:w-auto"
-                  >
-                    Activate
-                  </Button>
-                </div>
-              </div>
+                offer={offer}
+                handleClick={() => handleActiveProxy(offer.id, offer.cost)}
+              />
             ))}
           {offers.data.filter(
             (offer) =>
@@ -242,5 +178,27 @@ export const PricingPlansClient = () => {
         </div>
       )}
     </>
+  );
+};
+
+interface TabItemProps {
+  active: boolean;
+  handleSelect: () => void;
+  name: string;
+}
+const TabItem = ({ active, handleSelect, name }: TabItemProps) => {
+  return (
+    <div
+      role="button"
+      className={cn(
+        "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
+        active
+          ? "bg-white text-black-default shadow-md"
+          : "bg-transparent text-muted-foreground"
+      )}
+      onClick={handleSelect}
+    >
+      {name}
+    </div>
   );
 };

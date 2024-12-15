@@ -8,17 +8,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/dashboard/modal";
+import { Loader } from "@/components/ui/loader";
 
 import { StepOne } from "./activate/step-one";
 import { StepTwo } from "./activate/step-two";
 import { StepThree } from "./activate/step-three";
 
-import { useAddProxy, useGetProxyById } from "@/hooks";
-import { activateNewProxySchema } from "@/schemas";
-import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/enums";
-import { useStore } from "@/stores/use-store";
-import { Loader } from "@/components/ui/loader";
+
+import { useModalStore, useStore } from "@/stores";
+import { activateNewProxySchema } from "@/schemas";
+import { useAddProxy, useGetProxyById } from "@/hooks";
 
 export const ActivateProxyModal = () => {
   const { proxy, offer, setOffer } = useStore();
@@ -37,7 +37,7 @@ export const ActivateProxyModal = () => {
       pkg_id: "",
       plan_id: "",
       amount: "",
-      provider: "First available uk network & location",
+      provider: "",
       ipRotation: "",
       protocol: "",
       re_new: false,
@@ -94,7 +94,7 @@ export const ActivateProxyModal = () => {
       description={
         currentProxyIsSuccess
           ? `New order - ${offer.parent_proxy_id ?? ""} proxy`
-          : "please wetting data is fetching..."
+          : "Please wait to fetch data..."
       }
       isOpen={isOpenModal}
       onClose={onCancel}
