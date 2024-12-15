@@ -50,7 +50,7 @@ export const NotificationModal = () => {
       <p>{notification.message}</p>
       <div className="flex items-center justify-between gap-4 pt-2">
         {renderLabel(notification.type)}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center flex-wrap gap-2">
           <span className="text-sm text-[#24242B]">
             {format("2024-12-15T10:30:00Z", "dd/MM/yyy")}
           </span>
