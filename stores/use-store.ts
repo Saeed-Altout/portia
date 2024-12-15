@@ -10,6 +10,8 @@ interface Offer {
   country_name: string;
   city_name: string;
   rotation_time: number;
+  plan_id: number;
+  plan: string;
 }
 
 interface Proxy {
@@ -32,6 +34,7 @@ interface Store {
   setLocationId: (id: number) => void;
   setLocationServiceProviderName: (service_provider_name: string) => void;
   setOffer: (offer: Offer) => void;
+  setOfferId: (offerId: number) => void;
   setProxy: (proxy: Proxy) => void;
   setProxyId: (id: string) => void;
   setProxyUsername: (username: string) => void;
@@ -85,6 +88,10 @@ export const useStore = create<Store>((set) => ({
     country_name: "",
     city_name: "",
     rotation_time: 0,
+    plan_id: 0,
+    plan: "",
   },
   setOffer: (offer: Offer) => set({ offer }),
+  setOfferId: (offerId: number) =>
+    set((state) => ({ offer: { ...state.offer, package_id: offerId } })),
 }));

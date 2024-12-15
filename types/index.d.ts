@@ -193,6 +193,8 @@ declare type IGetProxyResponse = ApiResponse<{
   country_name: string;
   city_name: string;
   rotation_time: number;
+  plan_id: number;
+  plan: string;
 }>;
 
 declare type IAffiliateStatistics = {
@@ -528,6 +530,9 @@ declare type IOfferPackage = {
   description: string;
   plan_id: number;
   package_id: number;
+  title: string;
+  is_available: boolean;
+  color: string;
 };
 
 declare type IGetOffersPackageResponse = ApiResponse<IOfferPackage[]>;

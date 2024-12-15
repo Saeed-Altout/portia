@@ -45,7 +45,12 @@ export const StepOne = ({ form }: StepOneProps) => {
           <FormItem>
             <FormLabel>Plans</FormLabel>
             <FormControl>
-              <Input placeholder="plan" readOnly {...field} value={"hour"} />
+              <Input
+                placeholder="plan"
+                readOnly
+                {...field}
+                value={offer.plan}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

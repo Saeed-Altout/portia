@@ -27,7 +27,7 @@ export const PricingPlansClient = () => {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
 
   const { user } = useAuthStore();
-  const { onOpen } = useModalStore();
+  const { onOpen, setStep } = useModalStore();
   const { setProxyId, setProxyCost } = useStore();
 
   const {
@@ -62,6 +62,7 @@ export const PricingPlansClient = () => {
     setProxyId(id.toString());
     setProxyCost(cost);
     onOpen(ModalType.ACTIVE_PROXY);
+    setStep(3);
   };
 
   return (
