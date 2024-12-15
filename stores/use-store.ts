@@ -34,6 +34,7 @@ type Notification = {
   timestamp: string | Date;
   read: boolean;
 };
+
 interface Store {
   proxy: Proxy;
   offer: Offer;
