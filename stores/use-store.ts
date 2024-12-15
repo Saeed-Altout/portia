@@ -26,6 +26,14 @@ type Location = {
   service_provider_name: string;
 };
 
+type Notification = {
+  id: number;
+  title: string;
+  message: string;
+  type: string;
+  timestamp: string | Date;
+  read: boolean;
+};
 interface Store {
   proxy: Proxy;
   offer: Offer;
@@ -41,6 +49,9 @@ interface Store {
   setProxyParentId: (parentId: string) => void;
   setProxyPackageId: (packageId: string) => void;
   setProxyCost: (cost: string) => void;
+
+  notification: Notification;
+  setNotification: (notification: Notification) => void;
 }
 
 export const useStore = create<Store>((set) => ({
@@ -94,4 +105,17 @@ export const useStore = create<Store>((set) => ({
   setOffer: (offer: Offer) => set({ offer }),
   setOfferId: (offerId: number) =>
     set((state) => ({ offer: { ...state.offer, package_id: offerId } })),
+
+  notification: {
+    id: 0,
+    message: "",
+    read: false,
+    timestamp: "",
+    title: "",
+    type: "",
+  },
+
+  setNotification: (notification) => {
+    set({ notification });
+  },
 }));
