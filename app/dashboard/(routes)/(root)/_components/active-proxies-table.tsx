@@ -31,6 +31,7 @@ export const ActiveProxiesTable = () => {
         proxy_id: proxy.proxy_id,
         parent_proxy_id: proxy.parent_proxy_id,
         package_id: proxy.package_id,
+        duration: proxy.duration,
       }))
     : [];
 

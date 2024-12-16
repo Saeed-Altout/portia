@@ -1,13 +1,25 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
-import { useModalStore } from "@/stores";
 import { Proxy } from "./columns";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useRenewProxy } from "@/hooks/dashboard/proxy/use-renew-proxy";
 
 export const CellRenew = ({ data }: { data: Proxy }) => {
-  const { renewProxyModalOnOpen } = useModalStore();
+  const { mutate, isPending } = useRenewProxy();
 
   return (
-    <Checkbox checked={!!data.re_new} onCheckedChange={renewProxyModalOnOpen} />
+    <Checkbox
+      disabled={isPending}
+      checked={!!data.re_new}
+      onCheckedChange={() =>
+        mutate({
+          proxy_id: data.proxy_id,
+          duration: data.duration.toString(),
+          parent_proxy_id: data.parent_proxy_id,
+          protocol: data.protocol,
+          password: data.password,
+        })
+      }
+    />
   );
 };

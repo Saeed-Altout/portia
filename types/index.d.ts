@@ -536,3 +536,12 @@ declare type IOfferPackage = {
 };
 
 declare type IGetOffersPackageResponse = ApiResponse<IOfferPackage[]>;
+
+declare type IRenewProxyResponse = ApiResponse<{}>;
+declare type IRenewProxyRequest = {
+  proxy_id: string;
+  duration: string;
+  parent_proxy_id: string;
+  protocol: string;
+  password: string;
+};
