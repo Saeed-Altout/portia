@@ -24,10 +24,12 @@ import {
 
 import { useLocationStore } from "@/stores/use-location-store";
 import { useProxyStore } from "@/stores";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
 
 export default function LocationsPage() {
-  const { pkgId, setPkgId } = useProxyStore();
   const [totalPages, setTotalPages] = useState<number>(1);
+
+  const { pkgId, setPkgId } = useProxyStore();
   const {
     offset,
     countryId,
@@ -40,37 +42,38 @@ export default function LocationsPage() {
     setIpRotationId,
     setOffset,
   } = useLocationStore();
+
   const {
     data: packages,
     isLoading: packagesIsLoading,
     isSuccess: packagesIsSuccess,
+    isError: packagesIsError,
   } = useGetAllPackages();
-
-  const { data: locations, isSuccess: locationsIsSuccess } =
-    useGetProxyLocations({
-      offset,
-      pkg_id: pkgId,
-      country_id: countryId,
-      city_id: cityId,
-      service_provider_id: serviceProviderId,
-      ip_rotation: ipRotationId,
-    });
-
+  const {
+    data: locations,
+    isSuccess: locationsIsSuccess,
+    isLoading: locationsIsLoading,
+    isError: locationsIsError,
+  } = useGetProxyLocations({
+    offset,
+    pkg_id: pkgId,
+    country_id: countryId,
+    city_id: cityId,
+    service_provider_id: serviceProviderId,
+    ip_rotation: ipRotationId,
+  });
   const { data: countries, isLoading: countriesIsLoading } =
     useGetProxyCountries({ pkg_id: pkgId });
-
   const { data: cities, isLoading: citiesIsLoading } = useGetProxyCities({
     pkg_id: pkgId,
     country_id: countryId,
   });
-
   const { data: serviceProviders, isLoading: serviceProvidersIsLoading } =
     useGetProxyServiceProvider({
       pkg_id: pkgId,
       country_id: countryId,
       city_id: cityId,
     });
-
   const { data: ipRotations, isLoading: ipRotationsIsLoading } =
     useGetProxyIpRotations({
       pkg_id: pkgId,
@@ -78,6 +81,8 @@ export default function LocationsPage() {
       city_id: cityId,
     });
 
+  const isLoading = packagesIsLoading || locationsIsLoading;
+  const isError = packagesIsError || locationsIsError;
   useEffect(() => {
     setOffset(1);
   }, [pkgId, countryId, cityId, serviceProviderId, ipRotationId, setOffset]);
@@ -125,6 +130,9 @@ export default function LocationsPage() {
     }
   }, [packages, packagesIsSuccess, setPkgId]);
 
+  if (isLoading || isError) {
+    return <PageSkelton />;
+  }
   return (
     <>
       <Heading

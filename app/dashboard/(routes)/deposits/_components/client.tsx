@@ -11,16 +11,30 @@ import { DepositsCard } from "@/components/dashboard/cards/deposits-card";
 
 import { useAuthStore } from "@/stores";
 import { useGetDepositsHistories, useGetDepositsStatistics } from "@/hooks";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
 export const DepositsClient = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [data, setDate] = useState<IHistory[]>([]);
 
   const { user } = useAuthStore();
-  const { data: statistics } = useGetDepositsStatistics();
-  const { data: history, isSuccess: historyIsSuccess } = useGetDepositsHistories({
+
+  const {
+    data: statistics,
+    isLoading: statisticsIsLoading,
+    isError: statisticsIsError,
+  } = useGetDepositsStatistics();
+  const {
+    data: history,
+    isSuccess: historyIsSuccess,
+    isLoading: historyIsLoading,
+    isError: historyIsError,
+  } = useGetDepositsHistories({
     page: currentPage,
   });
+
+  const isLoading = statisticsIsLoading || historyIsLoading;
+  const isError = statisticsIsError || historyIsError;
 
   useEffect(() => {
     if (historyIsSuccess) {
@@ -43,13 +57,29 @@ export const DepositsClient = () => {
     }
   }, [history, historyIsSuccess]);
 
+  if (isLoading || isError) {
+    return <PageSkelton />;
+  }
+
   return (
     <>
       <Heading title={`Welcome back, ${user.first_name}`} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <DepositsCard color="#26a6a4" amount={statistics?.data.monthly_deposits ?? 0} label="This Month" />
-        <DepositsCard color="#f63d68" amount={statistics?.data.yearly_deposits ?? 0} label="This Year" />
-        <DepositsCard color="#7a5af8" amount={statistics?.data.all_time_deposits ?? 0} label="All Time" />
+        <DepositsCard
+          color="#26a6a4"
+          amount={statistics?.data.monthly_deposits ?? 0}
+          label="This Month"
+        />
+        <DepositsCard
+          color="#f63d68"
+          amount={statistics?.data.yearly_deposits ?? 0}
+          label="This Year"
+        />
+        <DepositsCard
+          color="#7a5af8"
+          amount={statistics?.data.all_time_deposits ?? 0}
+          label="All Time"
+        />
       </div>
       <DataTable
         columns={columns}

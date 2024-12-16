@@ -7,15 +7,28 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/dashboard";
 import { Separator } from "@/components/ui/separator";
 import { Circle, Icon } from "@/components/ui/circle-icon";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
 
 import { ActiveProxiesTable } from "./active-proxies-table";
 
 import { useAuthStore } from "@/stores";
 import { useGetProxiesCounts, useGetUserBalance } from "@/hooks";
+
 export const RootClient = () => {
   const { user } = useAuthStore();
-  const { data: proxiesCount } = useGetProxiesCounts();
-  const { data: balance } = useGetUserBalance();
+  const {
+    data: proxiesCount,
+    isLoading: proxiesCountIsLoading,
+    isError: proxiesCountIsError,
+  } = useGetProxiesCounts();
+  const {
+    data: balance,
+    isLoading: balanceIsLoading,
+    isError: balanceIsError,
+  } = useGetUserBalance();
+
+  const isLoading = proxiesCountIsLoading || balanceIsLoading;
+  const isError = proxiesCountIsError || balanceIsError;
 
   const formattedStatistic = [
     {
@@ -35,6 +48,10 @@ export const RootClient = () => {
       label: "View All Deposits",
     },
   ];
+
+  if (isLoading || isError) {
+    return <PageSkelton />;
+  }
 
   return (
     <>

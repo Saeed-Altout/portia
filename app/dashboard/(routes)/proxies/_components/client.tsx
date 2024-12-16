@@ -10,10 +10,11 @@ import { InactiveProxiesTable } from "./inactive-proxies-table";
 
 import { useAuthStore } from "@/stores";
 import { useGetProxiesCounts } from "@/hooks";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
 
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
-  const { data: proxiesCount } = useGetProxiesCounts();
+  const { data: proxiesCount, isLoading, isError } = useGetProxiesCounts();
 
   const formattedStatistic = [
     {
@@ -35,6 +36,10 @@ export const ProxiesClient = () => {
       value: `${proxiesCount?.data.total ?? 0} Proxies`,
     },
   ];
+
+  if (isLoading || isError) {
+    return <PageSkelton />;
+  }
 
   return (
     <>

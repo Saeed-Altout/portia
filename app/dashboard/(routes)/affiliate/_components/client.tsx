@@ -11,6 +11,7 @@ import { Heading, AffiliateCode, StatisticCard } from "@/components/dashboard";
 import { useAuthStore } from "@/stores";
 import { getEmail } from "@/utils/cookie";
 import { useGetAffiliateHistories, useGetAffiliateStatistics } from "@/hooks";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
 
 export const AffiliateClient = () => {
   const [email, setEmail] = useState<string>("un known");
@@ -19,11 +20,23 @@ export const AffiliateClient = () => {
   const [data, setDate] = useState<IAffiliateHistory[]>([]);
 
   const { user } = useAuthStore();
-  const { data: statistics } = useGetAffiliateStatistics();
-  const { data: history, isSuccess: historyIsSuccess } =
-    useGetAffiliateHistories({
-      page: currentPage,
-    });
+
+  const {
+    data: statistics,
+    isLoading: statisticsIsLoading,
+    isError: statisticsIsError,
+  } = useGetAffiliateStatistics();
+  const {
+    data: history,
+    isSuccess: historyIsSuccess,
+    isLoading: historyIsLoading,
+    isError: historyIsError,
+  } = useGetAffiliateHistories({
+    page: currentPage,
+  });
+
+  const isLoading = statisticsIsLoading || historyIsLoading;
+  const isError = statisticsIsError || historyIsError;
 
   useEffect(() => {
     if (historyIsSuccess) {
@@ -54,6 +67,10 @@ export const AffiliateClient = () => {
       setEmail(email);
     }
   }, []);
+
+  if (isLoading || isError) {
+    return <PageSkelton />;
+  }
 
   return (
     <>
