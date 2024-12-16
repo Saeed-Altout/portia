@@ -34,11 +34,26 @@ const markers: MarkerData[] = [
     coordinates: [-46.6333, -23.5505],
   },
   { markerOffset: -25, name: "Mumbai, IND", coordinates: [72.8777, 19.076] },
+  { markerOffset: -25, name: "Moscow, RUS", coordinates: [37.6173, 55.7558] },
+  { markerOffset: -25, name: "Beijing, CHN", coordinates: [116.4074, 39.9042] },
+  { markerOffset: -25, name: "Berlin, GER", coordinates: [13.405, 52.52] },
+  { markerOffset: -25, name: "Paris, FRA", coordinates: [2.3522, 48.8566] },
+  { markerOffset: -25, name: "Madrid, ESP", coordinates: [-3.7038, 40.4168] },
+  { markerOffset: -25, name: "Toronto, CAN", coordinates: [-79.3832, 43.6532] },
+  { markerOffset: -25, name: "Seoul, KOR", coordinates: [126.978, 37.5665] },
+  {
+    markerOffset: -25,
+    name: "Buenos Aires, ARG",
+    coordinates: [-58.3816, -34.6037],
+  },
+  { markerOffset: -25, name: "Bangkok, THA", coordinates: [100.5018, 13.7563] },
+  { markerOffset: -25, name: "Rome, ITA", coordinates: [12.4964, 41.9028] },
 ];
+
 export const Map = () => {
   return (
-    <section id="map" className="screen pb-20">
-      <ComposableMap>
+    <section id="map" className="screen">
+      <ComposableMap className="overflow-visible">
         <Geographies geography="/features.json">
           {({ geographies }) =>
             geographies.map((geo) => (
@@ -59,13 +74,17 @@ export const Map = () => {
             <circle r={10} fill="#2628A6" opacity={0.1} />
             <circle r={6} fill="#2628A6" opacity={0.2} />
             <circle r={3} fill="#2628A6" />
-            <text
-              textAnchor="middle"
-              y={markerOffset}
-              className="text-[10px] hidden group-hover:block"
+            <foreignObject
+              x={"-75px"}
+              y={"-120px"}
+              className="relative hidden transition-all group-hover:block w-[150px] h-[100px] bg-white py-3 px-4 rounded-xl shadow-lg text-[12px] text-center space-y-2 after:content-[''] after:absolute after:bottom-[-14px] after:left-1/2 after:-translate-x-1/2 after:border-[8px] after:border-transparent after:border-t-white overflow-visible"
             >
-              {name}
-            </text>
+              <div className="h-5 w-5 rounded-full bg-primary mx-auto" />
+              <div className="font-medium line-clamp-1">{name}</div>
+              <div className="text-[#727282] line-clamp-1">
+                20 available proxies
+              </div>
+            </foreignObject>
           </Marker>
         ))}
       </ComposableMap>
