@@ -473,6 +473,21 @@ declare type IPlanOffer = {
 
 declare type IGetPlansOffer = ApiResponse<IPlanOffer[]>;
 
+declare type IMap = {
+  id: number;
+  name: string;
+  cities_count: number;
+  parents_count: number;
+  latitude: number;
+  longitude: number;
+  country_key: string;
+  flag_url: string;
+};
+declare type IGetDataMap = {
+  status: boolean;
+  countries: IMap[];
+};
+
 declare type ITableData = string;
 declare type IGetTablesData = ApiResponse<ITable[]>;
 

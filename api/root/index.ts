@@ -73,3 +73,11 @@ export const getPlansOffer = async (): Promise<IGetPlansOffer> => {
     throw error;
   }
 };
+export const getDataMap = async (): Promise<IGetDataMap> => {
+  try {
+    const response = await apiClient.get(process.env.NEXT_PUBLIC_MAP!);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
