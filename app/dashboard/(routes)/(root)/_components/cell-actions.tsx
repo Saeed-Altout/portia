@@ -25,7 +25,7 @@ export const CellActions = ({ data }: CellActionsProps) => {
     <>
       <div className="flex justify-end items-center gap-4">
         <Button
-          size="sm"
+          size="icon"
           className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
           onClick={handlerFixProxy}
         >

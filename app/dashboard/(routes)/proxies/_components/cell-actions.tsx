@@ -2,25 +2,32 @@
 
 import { Activity } from "lucide-react";
 
+import { Proxy } from "./columns";
 import { Button } from "@/components/ui/button";
-import { useModalStore } from "@/stores/use-modal-store";
-import { useProxyStore } from "@/stores";
+
+import { useModalStore, useStore } from "@/stores";
 import { ModalType } from "@/config/enums";
 
-export const ActiveProxiesCellActions = ({ data }: { data: IProxy }) => {
+interface CellActionsProps {
+  data: Proxy;
+}
+export const CellActions = ({ data }: CellActionsProps) => {
   const { onOpen } = useModalStore();
-  const { setProxy } = useProxyStore();
+  const { setProxyId, setProxyPackageId } = useStore();
+
+  const handlerFixProxy = () => {
+    setProxyId(data.proxy_id);
+    setProxyPackageId(data.package_id);
+    onOpen(ModalType.FIX_PROXY);
+  };
 
   return (
     <>
       <div className="flex justify-end items-center gap-4">
         <Button
-          size="sm"
+          size="icon"
           className="bg-[#D4D4FF] hover:bg-[#D4D4FF]/90 text-primary"
-          onClick={() => {
-            setProxy(data);
-            onOpen(ModalType.FIX_PROXY);
-          }}
+          onClick={handlerFixProxy}
         >
           <Activity className="h-4 w-4" />
           <span className="sr-only">Activity Icon</span>
@@ -28,16 +35,5 @@ export const ActiveProxiesCellActions = ({ data }: { data: IProxy }) => {
         <Button size="sm">Manage</Button>
       </div>
     </>
-  );
-};
-
-export const InactiveProxiesCellActions = ({ data }: { data: IProxy }) => {
-  const { renewProxyModalOnOpen } = useModalStore();
-  return (
-    <div className="flex justify-end items-center gap-4">
-      <Button size="sm" onClick={renewProxyModalOnOpen}>
-        Renew
-      </Button>
-    </div>
   );
 };

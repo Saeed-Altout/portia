@@ -4,13 +4,33 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { ActiveProxiesCellActions, InactiveProxiesCellActions } from "./cell-actions";
-import { CellRenew } from "./cell-renew";
-import { CellEdit } from "./cell-edit";
+import { CellActions } from "./cell-actions";
+import { CellButtonRenew, CellRenew } from "./cell-renew";
+import { CellInfoEdit } from "./cell-info-edit";
+import { CellAuthEdit } from "./cell-auth-edit";
+export type Proxy = {
+  sequence: string;
+  id: number;
+  re_new: number;
+  is_active: number;
+  package_name: string;
+  protocol: string;
+  service_provider: string;
+  protocol_port: number;
+  expire_at: string;
+  username: string;
+  password: string;
+  plan_name: string;
 
-export const activeColumns: ColumnDef<IProxy>[] = [
+  // Additional for state
+  proxy_id: string;
+  parent_proxy_id: string;
+  package_id: string;
+  duration: number;
+};
+export const activeColumns: ColumnDef<Proxy>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "sequence",
     header: "#",
   },
   {
@@ -32,18 +52,28 @@ export const activeColumns: ColumnDef<IProxy>[] = [
     ),
   },
   {
-    accessorKey: "package_id",
+    accessorKey: "package_name",
     header: "Package",
+  },
+  {
+    accessorKey: "plan_name",
+    header: "Plan",
   },
   {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => <CellEdit data={row.original}>{row.original.protocol}</CellEdit>,
+    cell: ({ row }) => (
+      <CellInfoEdit data={row.original}>{row.original.protocol}</CellInfoEdit>
+    ),
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>,
+    cell: ({ row }) => (
+      <CellInfoEdit data={row.original}>
+        {row.original.service_provider}
+      </CellInfoEdit>
+    ),
   },
   {
     accessorKey: "protocol_port",
@@ -53,34 +83,31 @@ export const activeColumns: ColumnDef<IProxy>[] = [
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>{format(row.original.expire_at, "MMM dd, yyyy")}</p>
+      <p className={cn(row.original.expire_at && "text-[#801121]")}>
+        {format(row.original.expire_at, "MMM dd, yyyy")}
+      </p>
     ),
   },
   {
     accessorKey: "username",
-    header: "Username/Pass",
+    header: "Username:Password",
     cell: ({ row }) => (
-      <p className="text-primary whitespace-nowrap line-clamp-1">
-        {row.original.username}/{row.original.password}
-      </p>
+      <CellAuthEdit data={row.original}>
+        {row.original.username}:{row.original.password}
+      </CellAuthEdit>
     ),
   },
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <ActiveProxiesCellActions data={row.original} />,
+    cell: ({ row }) => <CellActions data={row.original} />,
   },
 ];
 
-export const inactiveColumns: ColumnDef<IProxy>[] = [
+export const inactiveColumns: ColumnDef<Proxy>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "sequence",
     header: "#",
-  },
-  {
-    accessorKey: "re_new",
-    header: "Renew",
-    cell: ({ row }) => <CellRenew data={row.original} />,
   },
   {
     accessorKey: "is_active",
@@ -96,18 +123,28 @@ export const inactiveColumns: ColumnDef<IProxy>[] = [
     ),
   },
   {
-    accessorKey: "package_id",
+    accessorKey: "package_name",
     header: "Package",
+  },
+  {
+    accessorKey: "plan_name",
+    header: "Plan",
   },
   {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => <CellEdit data={row.original}>{row.original.protocol}</CellEdit>,
+    cell: ({ row }) => (
+      <CellInfoEdit data={row.original}>{row.original.protocol}</CellInfoEdit>
+    ),
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => <CellEdit data={row.original}>{row.original.service_provider}</CellEdit>,
+    cell: ({ row }) => (
+      <CellInfoEdit data={row.original}>
+        {row.original.service_provider}
+      </CellInfoEdit>
+    ),
   },
   {
     accessorKey: "protocol_port",
@@ -117,21 +154,23 @@ export const inactiveColumns: ColumnDef<IProxy>[] = [
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>{format(row.original.expire_at, "MMM dd, yyyy")}</p>
+      <p className={cn(row.original.expire_at && "text-[#801121]")}>
+        {format(row.original.expire_at, "MMM dd, yyyy")}
+      </p>
     ),
   },
   {
     accessorKey: "username",
-    header: "Username/Pass",
+    header: "Username:Password",
     cell: ({ row }) => (
-      <p className="text-primary whitespace-nowrap line-clamp-1">
-        {row.original.username}/{row.original.password}
-      </p>
+      <CellAuthEdit data={row.original}>
+        {row.original.username}:{row.original.password}
+      </CellAuthEdit>
     ),
   },
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <InactiveProxiesCellActions data={row.original} />,
+    cell: ({ row }) => <CellButtonRenew data={row.original} />,
   },
 ];

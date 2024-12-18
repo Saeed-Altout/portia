@@ -5,7 +5,7 @@ import {
   useGetUserBalance,
 } from "@/hooks";
 
-export const useRootData = () => {
+export const useData = () => {
   const proxiesCount = useGetProxiesCounts();
   const balance = useGetUserBalance();
   const proxiesActive = useGetActiveProxies();

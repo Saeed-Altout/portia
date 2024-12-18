@@ -141,25 +141,7 @@ declare type IEditInfoProxyResponse = ApiResponse<IProxy[]>;
 declare type IEditAuthProxyResponse = ApiResponse<IProxy[]>;
 declare type IFixProxyResponse = ApiResponse<IProxy[]>;
 declare type IGetProxiesActiveResponse = ApiResponse<IProxy[]>;
-declare type IGetProxiesInactiveResponse = ApiResponse<{
-  current_page: number;
-  data: IProxy[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: {
-    url: string;
-    label: string;
-    active: boolean;
-  }[];
-  next_page_url: string;
-  path: string;
-  per_page: number;
-  prev_page_url: string;
-  to: number;
-  total: number;
-}>;
+declare type IGetProxiesInactiveResponse = ApiResponse<IProxy[]>;
 declare type IProxiesCounts = {
   total: number;
   active: number;

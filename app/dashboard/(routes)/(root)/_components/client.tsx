@@ -4,7 +4,7 @@ import { Zap } from "lucide-react";
 import { format } from "date-fns";
 
 import { columns } from "./columns";
-import { useRootData } from "./data";
+import { useData } from "./use-data";
 import { DataTable } from "./data-table";
 import { RootCard } from "./root-card";
 
@@ -16,7 +16,7 @@ import { useAuthStore } from "@/stores";
 export const RootClient = () => {
   const { user } = useAuthStore();
   const { proxiesCount, balance, proxiesActive, isLoading, isError } =
-    useRootData();
+    useData();
 
   const formattedStatistic = [
     {

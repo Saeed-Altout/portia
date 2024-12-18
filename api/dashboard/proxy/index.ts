@@ -63,27 +63,17 @@ export const getActiveProxies =
       throw error;
     }
   };
-export const getInactiveProxies = async (
-  params: Record<string, any>
-): Promise<IGetProxiesInactiveResponse> => {
-  const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(
-      ([, value]) => value !== undefined && value !== null
-    )
-  );
-
-  try {
-    const response = await apiClient.get(
-      process.env.NEXT_PUBLIC_GET_INACTIVE_PROXIES!,
-      {
-        params: { ...filteredParams },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
+export const getInactiveProxies =
+  async (): Promise<IGetProxiesInactiveResponse> => {
+    try {
+      const response = await apiClient.get(
+        process.env.NEXT_PUBLIC_GET_INACTIVE_PROXIES!
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
 export const getProxiesCounts =
   async (): Promise<IGetProxiesCountsResponse> => {
     try {
