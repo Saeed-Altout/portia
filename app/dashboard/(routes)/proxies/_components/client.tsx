@@ -9,9 +9,9 @@ import { ProxiesCard } from "./proxies-card";
 import { activeColumns, inactiveColumns } from "./columns";
 
 import { Heading } from "@/components/dashboard";
-import { CircleLoader } from "@/components/ui/loader";
 
 import { useAuthStore } from "@/stores";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
 
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
@@ -80,7 +80,7 @@ export const ProxiesClient = () => {
   }));
 
   if (isLoading || isError) {
-    return <CircleLoader />;
+    return <PageSkelton />;
   }
 
   return (

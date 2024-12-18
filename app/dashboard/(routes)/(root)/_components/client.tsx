@@ -9,7 +9,7 @@ import { DataTable } from "./data-table";
 import { RootCard } from "./root-card";
 
 import { Heading } from "@/components/dashboard";
-import { CircleLoader } from "@/components/ui/loader";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
 
 import { useAuthStore } from "@/stores";
 
@@ -59,7 +59,7 @@ export const RootClient = () => {
   }));
 
   if (isLoading || isError) {
-    return <CircleLoader />;
+    return <PageSkelton />;
   }
 
   return (
