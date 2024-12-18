@@ -7,6 +7,10 @@ import { CellActions } from "./cell-actions";
 
 export const columns: ColumnDef<ILocation>[] = [
   {
+    accessorKey: "package_name",
+    header: "Package",
+  },
+  {
     accessorKey: "country_name",
     header: "Country",
   },

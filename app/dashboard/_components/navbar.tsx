@@ -243,7 +243,7 @@ export const Navbar = () => {
             </div>
             <Button
               onClick={onClickShowAll}
-              className="fixed bottom-0 left-0 rounded-none text-[#03055E] bg-[#D4D4FF] hover:bg-[#D4D4FF] w-full text-[10.81px]"
+              className="fixed bottom-0 left-0 rounded-none text-[#03055E] bg-[#D4D4FF] hover:bg-[#D4D4FF] w-full text-[10.81px] rounded-b-md"
             >
               {showMore ? "Show less" : "Show all notifications"}
             </Button>

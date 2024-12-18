@@ -64,6 +64,12 @@ declare type ILocation = {
   city_name: string;
   rotation_time: number;
   is_available: boolean;
+  service_provider_id: number;
+  country_id: number;
+  city_id: number;
+  status: string;
+  package_id: number;
+  package_name: string;
 };
 
 declare type IProxyLocation = {
@@ -72,7 +78,7 @@ declare type IProxyLocation = {
   has_more: boolean;
 };
 
-declare type IGetProxyLocationsResponse = ApiResponse<IProxyLocation>;
+declare type IGetProxyLocationsResponse = ApiResponse<ILocation[]>;
 declare type IProxyIpRotation = string;
 
 declare type IGetProxyIpRotationsResponse = ApiResponse<IProxyIpRotation[]>;
