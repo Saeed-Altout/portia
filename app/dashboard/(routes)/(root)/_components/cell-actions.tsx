@@ -2,13 +2,11 @@
 
 import { Activity } from "lucide-react";
 
+import { Proxy } from "./columns";
 import { Button } from "@/components/ui/button";
 
-import { Proxy } from "./columns";
-import { useModalStore } from "@/stores";
-
+import { useModalStore, useStore } from "@/stores";
 import { ModalType } from "@/config/enums";
-import { useStore } from "@/stores/use-store";
 
 interface CellActionsProps {
   data: Proxy;

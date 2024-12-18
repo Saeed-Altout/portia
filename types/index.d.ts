@@ -98,7 +98,8 @@ declare type IAddProxyRequest = {
 declare type IProxy = {
   id: number;
   proxy_id: string;
-  parent_proxy_id: string;
+  plan_id: number;
+  plan_name: string;
   package_id: string;
   package_name: string;
   rotation_time: string;
@@ -117,7 +118,7 @@ declare type IProxy = {
   expire_at: Date | string;
   created_at: Date | string;
   updated_at: Date | string;
-  user_id: number;
+  parent_proxy_id: string;
 };
 
 declare type IAddProxyResponse = ApiResponse<IProxy[]>;
@@ -139,25 +140,7 @@ declare type IFixProxyRequest = {
 declare type IEditInfoProxyResponse = ApiResponse<IProxy[]>;
 declare type IEditAuthProxyResponse = ApiResponse<IProxy[]>;
 declare type IFixProxyResponse = ApiResponse<IProxy[]>;
-declare type IGetProxiesActiveResponse = ApiResponse<{
-  current_page: number;
-  data: IProxy[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: {
-    url: string;
-    label: string;
-    active: boolean;
-  }[];
-  next_page_url: string;
-  path: string;
-  per_page: number;
-  prev_page_url: string;
-  to: number;
-  total: number;
-}>;
+declare type IGetProxiesActiveResponse = ApiResponse<IProxy[]>;
 declare type IGetProxiesInactiveResponse = ApiResponse<{
   current_page: number;
   data: IProxy[];

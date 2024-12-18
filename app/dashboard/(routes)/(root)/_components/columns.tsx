@@ -21,6 +21,7 @@ export type Proxy = {
   expire_at: string;
   username: string;
   password: string;
+  plan_name: string;
 
   // Additional for state
   proxy_id: string;
@@ -29,7 +30,7 @@ export type Proxy = {
   duration: number;
 };
 
-export const activeColumns: ColumnDef<Proxy>[] = [
+export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "sequence",
     header: "#",
@@ -51,6 +52,10 @@ export const activeColumns: ColumnDef<Proxy>[] = [
         )}
       </>
     ),
+  },
+  {
+    accessorKey: "plan_name",
+    header: "Plan",
   },
   {
     accessorKey: "package_name",
