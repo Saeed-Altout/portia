@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { CellActions } from "./cell-actions";
-import { CellButtonRenew, CellRenew } from "./cell-renew";
+import { CellButtonRenew } from "./cell-renew";
 import { CellInfoEdit } from "./cell-info-edit";
 import { CellAuthEdit } from "./cell-auth-edit";
 export type Proxy = {
@@ -32,11 +32,6 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "sequence",
     header: "#",
-  },
-  {
-    accessorKey: "re_new",
-    header: "Renew",
-    cell: ({ row }) => <CellRenew data={row.original} />,
   },
   {
     accessorKey: "is_active",

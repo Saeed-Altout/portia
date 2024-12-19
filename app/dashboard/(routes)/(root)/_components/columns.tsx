@@ -36,11 +36,6 @@ export const columns: ColumnDef<Proxy>[] = [
     header: "#",
   },
   {
-    accessorKey: "re_new",
-    header: "Renew",
-    cell: ({ row }) => <CellRenew data={row.original} />,
-  },
-  {
     accessorKey: "is_active",
     header: "Status",
     cell: ({ row }) => (
