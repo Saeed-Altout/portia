@@ -12,6 +12,14 @@ import { Heading } from "@/components/dashboard";
 
 import { useAuthStore } from "@/stores";
 import { PageSkelton } from "@/components/skeletons/page-skeleton";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
@@ -57,6 +65,8 @@ export const ProxiesClient = () => {
     parent_proxy_id: proxy.parent_proxy_id,
     package_id: proxy.package_id,
     duration: proxy.duration,
+    rotation_time: proxy.rotation_time,
+    country_name: proxy.country_name,
   }));
   const formattedProxiesInactive = proxiesInactive.map((proxy, index) => ({
     sequence: `${index + 1}`,
@@ -77,6 +87,8 @@ export const ProxiesClient = () => {
     parent_proxy_id: proxy.parent_proxy_id,
     package_id: proxy.package_id,
     duration: proxy.duration,
+    rotation_time: proxy.rotation_time,
+    country_name: proxy.country_name,
   }));
 
   if (isLoading || isError) {

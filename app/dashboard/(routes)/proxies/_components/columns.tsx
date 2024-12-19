@@ -27,6 +27,8 @@ export type Proxy = {
   parent_proxy_id: string;
   package_id: string;
   duration: number;
+  country_name: string;
+  rotation_time: string;
 };
 export const activeColumns: ColumnDef<Proxy>[] = [
   {
