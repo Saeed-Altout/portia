@@ -23,7 +23,8 @@ const initialProxy: IProxy = {
   expire_at: "",
   created_at: "",
   updated_at: "",
-  user_id: 0,
+  plan_id: 0,
+  plan_name: "",
 };
 
 const initialLocation: ILocation = {
@@ -35,6 +36,12 @@ const initialLocation: ILocation = {
   city_name: "",
   rotation_time: 0,
   is_available: false,
+  service_provider_id: 0,
+  country_id: 0,
+  city_id: 0,
+  status: "",
+  package_id: 0,
+  package_name: "",
 };
 
 interface ProxyStore {

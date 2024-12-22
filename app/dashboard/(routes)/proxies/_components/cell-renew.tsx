@@ -1,9 +1,14 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowUpRight, Key, User, Zap } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import Link from "next/link";
+
 import {
   Form,
   FormControl,
@@ -12,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -20,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -29,22 +32,31 @@ import {
   SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Circle, Icon } from "@/components/ui/circle-icon";
-import { ArrowUpRight, Key, User, Zap } from "lucide-react";
-import { renewProxySchema } from "@/schemas";
-import { Proxy } from "./columns";
-import { useGetAllPackages, useGetCostPlans } from "@/hooks";
-import { useProxyStore } from "@/stores";
-import { useEffect, useState } from "react";
 
-interface ValuePlanProps {
-  price: number;
-  duration: number;
-  value: number;
-}
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { CircleLoader, Loader } from "@/components/ui/loader";
+import { Circle, Icon } from "@/components/ui/circle-icon";
+
+import { Proxy } from "./columns";
+import { ModalType } from "@/config/enums";
+import { useGetCostPlans, useGetPorts, useRenewProxy } from "@/hooks";
+import { useModalStore, useProxyStore } from "@/stores";
+
+const formSchema = z.object({
+  plan: z.string(),
+  amount: z.string(),
+  provider: z.string(),
+  ipRotation: z.string(),
+  protocol: z.string(),
+  username: z.string(),
+  password: z.string(),
+});
+
 export const CellButtonRenew = ({ data }: { data: Proxy }) => {
-  const [valuePlan, setValuePlan] = useState<ValuePlanProps[]>([]);
-  const [costs, setCosts] = useState<Record<string, ValuePlanProps[]>>({});
+  const pathname = usePathname();
+  const [currentPlan, setCurrentPlan] = useState<any[]>([]);
+  const [costs, setCosts] = useState<Record<string, any[]>>({});
 
   const {
     pkgId,
@@ -54,62 +66,80 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
     setDuration,
     setAmounts,
     plans,
+    duration,
     setPlans,
+    location,
+    setProtocol,
+    protocol,
   } = useProxyStore();
 
-  const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
-  const {
-    data: costsData,
-    isFetching: costsDataIsFetching,
-    isSuccess: costsIsSuccess,
-  } = useGetCostPlans({
+  const { data: ports, isSuccess: portsIsSuccess } = useGetPorts({ id: pkgId });
+  const { data: costsData, isSuccess: costsIsSuccess } = useGetCostPlans({
     pkg_id: pkgId,
   });
+  const { mutate, isPending } = useRenewProxy();
+  const isSuccess = costsIsSuccess || portsIsSuccess;
 
-  const handlePackageSelect = (newPkgId: string) => {
-    setPkgId(newPkgId);
-  };
-
-  const handlePlanSelect = (plan: string) => {
-    const selectedValuePlan = costs[plan] || [];
-    const newAmounts = selectedValuePlan.map(
-      (item) => `${item.value}::${plan}`
-    );
-
-    setValuePlan(selectedValuePlan);
-    setAmounts(newAmounts);
-  };
-
-  const handleAmountSelect = (uniqueValue: string) => {
-    const [amount, plan] = uniqueValue.split("::");
-    const selectedValue = valuePlan.find(
-      (item) => item.value === Number(amount) && plan
-    );
-
-    if (selectedValue) {
-      setDuration(selectedValue.duration);
-      setPrice(selectedValue.price);
-    }
-  };
-
-  const form = useForm<z.infer<typeof renewProxySchema>>({
-    resolver: zodResolver(renewProxySchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      pkg_id: data.package_id || "",
-      plan_id: data.plan_name || "",
-      amount: data.duration?.toString() || "",
+      plan: data.plan_name || "",
+      amount: `${data.amount}` || "",
       provider: `${data.service_provider}/${data.country_name}` || "",
       ipRotation: data.rotation_time || "",
       protocol: data.protocol || "",
-      re_new: false,
       username: data.username || "",
       password: data.password || "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof renewProxySchema>) => {
-    console.log(values);
+  const onSelectProtocol = (protocol: string) => {
+    if (location) {
+      const protocolValue = protocol.includes("http")
+        ? location.http_port
+        : location.socks_port;
+      setProtocol(protocolValue);
+    }
   };
+
+  const handleSelectPlan = useCallback(
+    (plan: string) => {
+      const valueCurrentPlan = costs[plan] || [];
+      setCurrentPlan(valueCurrentPlan);
+      const amounts = valueCurrentPlan.map((item) => `${item.value}`);
+      setAmounts(amounts);
+    },
+    [costs, setAmounts]
+  );
+
+  const handleSelectAmount = useCallback(
+    (amount: string) => {
+      const currentObject = currentPlan.find(
+        (item) => item.value === Number(amount)
+      );
+
+      if (currentObject) {
+        setDuration(currentObject.duration);
+        setPrice(currentObject.price);
+      }
+    },
+    [currentPlan, setDuration, setPrice]
+  );
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    mutate({
+      proxy_id: data.proxy_id,
+      parent_proxy_id: data.parent_proxy_id,
+      protocol: values.protocol,
+      duration: duration ? duration.toString() : "",
+      password: values.password,
+    });
+  };
+
+  useEffect(() => {
+    form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
+    form.setValue("provider", `${location.service_provider_name ?? ""}`);
+  }, [form, location]);
 
   useEffect(() => {
     if (costsIsSuccess) {
@@ -118,254 +148,263 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
       setPlans(Object.keys(fetchedCosts));
     }
   }, [pkgId, costsData, costsIsSuccess, form, setPlans]);
+
+  useEffect(() => {
+    if (data.plan_name) {
+      handleSelectPlan(data.plan_name);
+    }
+  }, [data.plan_name, handleSelectPlan]);
+  useEffect(() => {
+    if (data.amount) {
+      handleSelectAmount(data.amount);
+    }
+  }, [data.amount, handleSelectAmount]);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="sm">Renew</Button>
+        <Button
+          size="sm"
+          onClick={() => {
+            setPkgId(data.package_id);
+          }}
+        >
+          Renew
+        </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col h-screen px-0 w-full sm:w-3/4">
-        <div className="sticky top-0 z-10 border-b p-4 pt-0">
-          <SheetHeader>
-            <Circle fill="primary">
-              <Icon icon={Zap} theme="primary" />
-            </Circle>
-            <div>
-              <SheetTitle>Renew Proxy</SheetTitle>
-              <SheetDescription>
-                You can renew your proxy here.
-              </SheetDescription>
+        {isSuccess ? (
+          <>
+            <div className="sticky top-0 z-10 border-b p-4 pt-0">
+              <SheetHeader>
+                <Circle fill="primary">
+                  <Icon icon={Zap} theme="primary" />
+                </Circle>
+                <div>
+                  <SheetTitle>Renew Proxy</SheetTitle>
+                  <SheetDescription>
+                    You can renew your proxy here.
+                  </SheetDescription>
+                </div>
+              </SheetHeader>
             </div>
+
+            <div className="flex-1 overflow-y-auto p-4 pb-0">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <div className="space-y-4 pb-10">
+                    <FormField
+                      control={form.control}
+                      name="plan"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Plan</FormLabel>
+                          <Select
+                            disabled={isPending}
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                              handleSelectPlan(value);
+                            }}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a plan" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {plans.map((plan) => (
+                                <SelectItem key={plan} value={plan}>
+                                  {plan}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="amount"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Amount</FormLabel>
+                          <Select
+                            disabled={isPending}
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                              handleSelectAmount(value);
+                            }}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select an amount" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {amounts.map((amount, key) => (
+                                <SelectItem key={key} value={amount}>
+                                  {amount}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="protocol"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Proxy Type</FormLabel>
+                          <Select
+                            disabled={isPending}
+                            defaultValue={field.value}
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                              onSelectProtocol(value);
+                            }}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a proxy type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {ports?.data.map((item, index) => (
+                                <SelectItem key={index} value={item}>
+                                  {item}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="provider"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Provider & Location</FormLabel>
+                          <FormControl>
+                            <div className="flex justify-between items-center">
+                              <Input
+                                placeholder="Provider & Location"
+                                className="flex-1 rounded-r-none"
+                                disabled={true}
+                                {...field}
+                              />
+                              <Button
+                                size="icon"
+                                className="rounded-l-none"
+                                type="button"
+                                asChild
+                              >
+                                <Link
+                                  href={`/dashboard/locations?callback=${pathname}`}
+                                >
+                                  <ArrowUpRight className="h-4 w-4" />
+                                  <span className="sr-only">
+                                    ArrowUpRight Icon
+                                  </span>
+                                </Link>
+                              </Button>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="ipRotation"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Minimum time between IP rotation
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              disabled={true}
+                              placeholder="IP rotation"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="username"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Username</FormLabel>
+                          <FormControl>
+                            <Input
+                              icon={User}
+                              type="text"
+                              disabled={true}
+                              placeholder="username"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              icon={Key}
+                              type="password"
+                              disabled={isPending}
+                              placeholder="password"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="bg-white sticky bottom-0 border-t pt-2 px-4 flex justify-end gap-4">
+                    <Button
+                      disabled={isPending}
+                      type="submit"
+                      className="w-full md:w-auto"
+                    >
+                      {isPending ? <Loader /> : "Renew"}
+                    </Button>
+                    <Button
+                      disabled={isPending}
+                      type="button"
+                      variant="outline"
+                      className="w-full md:w-auto"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </div>
+          </>
+        ) : (
+          <SheetHeader>
+            <CircleLoader />
           </SheetHeader>
-        </div>
-
-        <div className="flex-1 overflow-y-auto p-4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="pkg_id"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Packages</FormLabel>
-                    <Select
-                      disabled={
-                        packagesIsLoading || packages?.data.length === 0
-                      }
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        handlePackageSelect(value);
-                      }}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a package" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {packages?.data.map((item) => (
-                          <SelectItem key={item.id} value={item.id.toString()}>
-                            {item.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="plan_id"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Plans</FormLabel>
-                    <Select
-                      disabled={costsDataIsFetching || plans.length === 0}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        handlePlanSelect(value);
-                      }}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a plan" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {plans.map((plan) => (
-                          <SelectItem
-                            key={plan}
-                            value={plan}
-                            className="capitalize"
-                          >
-                            {plan}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="amount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Amount</FormLabel>
-                    <Select
-                      disabled={amounts.length === 0}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        handleAmountSelect(value);
-                      }}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select an amount" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {amounts.map((uniqueValue) => {
-                          const [amount] = uniqueValue.split("::");
-                          return (
-                            <SelectItem key={uniqueValue} value={uniqueValue}>
-                              {amount}
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="protocol"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Proxy Type</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value || data.protocol}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a proxy type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {/* Add proxy type options here */}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="provider"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Provider & Location</FormLabel>
-                    <FormControl>
-                      <div className="flex justify-between items-center">
-                        <Input
-                          placeholder="Provider & Location"
-                          className="flex-1 rounded-r-none"
-                          disabled={true}
-                          readOnly
-                          {...field}
-                        />
-                        <Button
-                          size="icon"
-                          className="rounded-l-none"
-                          type="button"
-                          asChild
-                        >
-                          <Link
-                            href={`/dashboard/locations?callback=${window.location.href}`}
-                          >
-                            <ArrowUpRight className="h-4 w-4" />
-                            <span className="sr-only">ArrowUpRight Icon</span>
-                          </Link>
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="ipRotation"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Minimum time between IP rotation</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={true}
-                        readOnly
-                        placeholder="IP rotation"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input
-                        icon={User}
-                        type="text"
-                        placeholder="username"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        icon={Key}
-                        type="password"
-                        placeholder="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </form>
-          </Form>
-        </div>
-
-        <div className="sticky bottom-0 border-t p-4 pb-0 flex justify-end gap-4">
-          <Button type="submit" className="w-full md:w-auto">
-            Renew
-          </Button>
-          <Button type="button" variant="outline" className="w-full md:w-auto">
-            Cancel
-          </Button>
-        </div>
+        )}
       </SheetContent>
     </Sheet>
   );

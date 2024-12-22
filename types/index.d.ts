@@ -120,6 +120,7 @@ declare type IProxy = {
   password: string;
   ip_addr: string;
   duration: number;
+  amount: string;
   price: string;
   expire_at: Date | string;
   created_at: Date | string;

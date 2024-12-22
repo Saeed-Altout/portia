@@ -29,6 +29,7 @@ export type Proxy = {
   duration: number;
   country_name: string;
   rotation_time: string;
+  amount: string;
 };
 export const activeColumns: ColumnDef<Proxy>[] = [
   {
@@ -97,7 +98,7 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <CellActions data={row.original} />,
+    cell: ({ row }) => <CellButtonRenew data={row.original} />,
   },
 ];
 

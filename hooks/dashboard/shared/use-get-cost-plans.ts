@@ -5,6 +5,6 @@ export const useGetCostPlans = (params: Record<string, any>) => {
   return useQuery({
     queryKey: ["get-cost", params],
     queryFn: () => getCostPlans(params),
-    enabled: !!params.pkg_id,
+    enabled: !!params.pkg_id && params.pkg_id !== "0",
   });
 };

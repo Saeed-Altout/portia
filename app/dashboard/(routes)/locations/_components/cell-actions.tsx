@@ -28,6 +28,8 @@ export const CellActions = ({ data }: { data: ILocation }) => {
       onOpen(ModalType.ACTIVE_PROXY);
     } else if (type === ModalType.EDIT_AUTH_PROXY) {
       onOpen(ModalType.EDIT_AUTH_PROXY);
+    } else if (type === ModalType.RENEW_PROXY) {
+      onOpen(ModalType.RENEW_PROXY);
     } else if (type === ModalType.EDIT_INFO_PROXY) {
       onOpen(ModalType.EDIT_INFO_PROXY);
     }

@@ -20,6 +20,8 @@ import {
   useResendVerificationCode,
 } from "./auth";
 
+import { useRenewProxy } from "./dashboard/proxy/use-renew-proxy";
+
 import {
   useAddProxy,
   useEditAuthProxy,
@@ -95,4 +97,5 @@ export {
   useGetOffersPackage,
   useGetPackageWithPlans,
   useGetProxyById,
+  useRenewProxy,
 };
