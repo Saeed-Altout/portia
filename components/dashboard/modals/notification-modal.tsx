@@ -51,10 +51,10 @@ export const NotificationModal = () => {
       <div className="flex items-center justify-between gap-4 pt-2">
         {renderLabel(notification.type)}
         <div className="flex items-center flex-wrap gap-2">
-          <span className="text-sm text-[#24242B]">
+          <span className="text-xs md:text-sm text-[#24242B]">
             {format("2024-12-15T10:30:00Z", "dd/MM/yyy")}
           </span>
-          <span className="text-sm text-[#24242B]">
+          <span className="text-xs md:text-sm text-[#24242B]">
             {formatDistanceToNow("2024-12-15T10:30:00Z", {
               addSuffix: true,
             })}
