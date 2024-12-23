@@ -167,3 +167,7 @@ export const editProxySchema = z.object({
   provider: z.string().min(2),
   protocol: z.string().min(2),
 });
+export const paymentMethodSchema = z.object({
+  payment_method: z.string().min(2),
+  amount: z.string().min(1),
+});

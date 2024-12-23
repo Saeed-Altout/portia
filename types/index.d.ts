@@ -524,7 +524,7 @@ declare type IOfferPackage = {
 
 declare type IGetOffersPackageResponse = ApiResponse<IOfferPackage[]>;
 
-declare type IRenewProxyResponse = ApiResponse<{}>;
+declare type IRenewProxyResponse = ApiResponse<null>;
 declare type IRenewProxyRequest = {
   proxy_id: string;
   duration: string;
@@ -532,3 +532,10 @@ declare type IRenewProxyRequest = {
   protocol: string;
   password: string;
 };
+declare type IGetWayPaymentResponse = ApiResponse<string[]>;
+declare type IDepositRequest = {
+  payment_method: string;
+  amount: string;
+};
+
+declare type IDepositResponse = ApiResponse<null>;
