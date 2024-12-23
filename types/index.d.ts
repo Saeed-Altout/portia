@@ -538,4 +538,4 @@ declare type IDepositRequest = {
   amount: string;
 };
 
-declare type IDepositResponse = ApiResponse<null>;
+declare type IDepositResponse = ApiResponse<{ url: string }>;

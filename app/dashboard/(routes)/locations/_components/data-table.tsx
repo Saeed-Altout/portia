@@ -34,7 +34,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { package_name: string }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -102,6 +102,10 @@ export function DataTable<TData, TValue>({
     return Array.from(uniqueValues);
   };
 
+  const uniquePackageNames = Array.from(
+    new Set(data.map((item) => item.package_name))
+  );
+
   const packages = extractUniqueColumnValues("package_name");
   const countries = extractUniqueColumnValues("country_name");
   const cities = extractUniqueColumnValues("city_name");
@@ -135,7 +139,7 @@ export function DataTable<TData, TValue>({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={"clear"}>Clear selection</SelectItem>
-            {packages.map((item, index) => (
+            {uniquePackageNames.map((item, index) => (
               <SelectItem key={index} value={item}>
                 {item}
               </SelectItem>
@@ -191,7 +195,7 @@ export function DataTable<TData, TValue>({
           }
         >
           <SelectTrigger>
-            <SelectValue placeholder="Select a city" />
+            <SelectValue placeholder="Select a state" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={"clear"}>Clear selection</SelectItem>

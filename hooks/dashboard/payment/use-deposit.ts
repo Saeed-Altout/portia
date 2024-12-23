@@ -4,13 +4,13 @@ import { useResponse } from "@/hooks";
 import { deposit } from "@/api/dashboard/payment";
 
 export const useDeposit = () => {
-  const { Success, Error } = useResponse();
+  const { Error } = useResponse();
 
   return useMutation({
     mutationKey: ["deposit"],
     mutationFn: (values: IDepositRequest) => deposit(values),
     onSuccess: (data) => {
-      Success({ message: data.message || "Deposit Success." });
+      window.open(data.data.url, "_blank");
     },
     onError: (error) => {
       Error({
