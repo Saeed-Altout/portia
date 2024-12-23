@@ -2,14 +2,13 @@
 
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { setToken, setUser } from "@/utils/cookie";
 import { useGetUserDetails } from "@/hooks";
 export const GoogleForm = () => {
   const token = useSearchParams().get("callback");
-  const router = useRouter();
   const { data, isPending, isSuccess, refetch } = useGetUserDetails();
 
   useEffect(() => {
@@ -17,14 +16,14 @@ export const GoogleForm = () => {
       setToken(token);
       if (isSuccess) {
         setUser(data.data);
-        router.push("/dashboard");
+        location.assign("/dashboard");
       } else {
         refetch();
       }
     } else {
-      router.push("/auth/login");
+      location.assign("/auth/login");
     }
-  }, [data, isSuccess, refetch, router, token]);
+  }, [data, isSuccess, refetch, token]);
 
   return (
     <div className="h-full flex justify-center items-center">
