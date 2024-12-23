@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useProxyStore } from "@/stores";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +54,8 @@ export function DataTable<TData extends { package_name: string }, TValue>({
       columnFilters,
     },
   });
+
+  const { pkgName } = useProxyStore();
 
   const currentPage = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();
@@ -112,6 +115,12 @@ export function DataTable<TData extends { package_name: string }, TValue>({
   const servicesProvider = extractUniqueColumnValues("service_provider_name");
   const rotationsTime = extractUniqueColumnValues("rotation_time");
 
+  React.useEffect(() => {
+    if (pkgName) {
+      table.getColumn("package_name")?.setFilterValue(pkgName);
+    }
+  }, [pkgName, table]);
+
   return (
     <div className="rounded-md border overflow-hidden">
       <div className="bg-white rounded-t-md p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
@@ -131,7 +140,9 @@ export function DataTable<TData extends { package_name: string }, TValue>({
             }
           }}
           defaultValue={
-            (table.getColumn("package_name")?.getFilterValue() as string) || ""
+            pkgName ||
+            (table.getColumn("package_name")?.getFilterValue() as string) ||
+            ""
           }
           disabled={uniquePackageNames.length === 0}
         >

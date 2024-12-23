@@ -81,6 +81,8 @@ interface ProxyStore {
 
   pkgId: string;
   setPkgId: (pkgId: string) => void;
+  pkgName: string;
+  setPkgName: (pkgName: string) => void;
 
   ports: string[];
   setPorts: (ports: string[]) => void;
@@ -148,6 +150,8 @@ export const useProxyStore = create<ProxyStore>()(
 
     pkgId: "0",
     setPkgId: (pkgId) => set({ pkgId }),
+    pkgName: "",
+    setPkgName: (pkgName) => set({ pkgName }),
 
     ports: [],
     setPorts: (ports) => set({ ports }),

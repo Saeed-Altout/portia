@@ -45,6 +45,7 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
     setAmounts,
     plans,
     setPlans,
+    setPkgName,
   } = useProxyStore();
 
   const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
@@ -56,8 +57,9 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
     pkg_id: pkgId,
   });
 
-  const handlePackageSelect = (newPkgId: string) => {
+  const handlePackageSelect = (newPkgId: string, pkgName: string) => {
     setPkgId(newPkgId);
+    setPkgName(pkgName);
   };
 
   const handlePlanSelect = (plan: string) => {
@@ -101,8 +103,9 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
             <Select
               disabled={packagesIsLoading || packages?.data.length === 0}
               onValueChange={(value) => {
-                field.onChange(value);
-                handlePackageSelect(value);
+                const [pkgId, pkgName] = value.split("::");
+                field.onChange(pkgId);
+                handlePackageSelect(pkgId, pkgName);
               }}
               defaultValue={field.value}
             >
@@ -113,7 +116,7 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
               </FormControl>
               <SelectContent>
                 {packages?.data.map((item) => (
-                  <SelectItem key={item.id} value={item.id.toString()}>
+                  <SelectItem key={item.id} value={`${item.id}::${item.name}`}>
                     {item.name}
                   </SelectItem>
                 ))}
