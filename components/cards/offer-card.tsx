@@ -9,12 +9,12 @@ interface OfferCardProps {
 }
 export const OfferCard = ({ offer, handleClick }: OfferCardProps) => {
   return (
-    <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border rounded-lg gap-4 shadow-sm">
+    <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border rounded-lg gap-4 shadow-sm overflow-hidden">
       <div className="w-full flex items-center gap-x-4">
-        <Circle fill="primary">
+        <Circle fill="primary" className="flex-shrink-0">
           <Icon icon={Zap} theme="primary" />
         </Circle>
-        <div>
+        <div className="flex-1">
           <h3 className="text-lg font-medium capitalize">{offer.title}</h3>
           <p className="text-sm text-muted-foreground">{offer.description}</p>
         </div>
