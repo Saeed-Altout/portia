@@ -40,7 +40,7 @@ import { Circle, Icon } from "@/components/ui/circle-icon";
 
 import { Proxy } from "./columns";
 import { useGetCostPlans, useGetPorts, useRenewProxy } from "@/hooks";
-import { useProxyStore } from "@/stores";
+import { useModalStore, useProxyStore } from "@/stores";
 
 const formSchema = z.object({
   plan: z.string(),
@@ -56,6 +56,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
   const pathname = usePathname();
   const [currentPlan, setCurrentPlan] = useState<any[]>([]);
   const [costs, setCosts] = useState<Record<string, any[]>>({});
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const {
     pkgId,
@@ -68,6 +69,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
     duration,
     setPlans,
     location,
+    setLocation,
   } = useProxyStore();
 
   const { data: ports, isSuccess: portsIsSuccess } = useGetPorts({ id: pkgId });
@@ -75,7 +77,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
     pkg_id: pkgId,
   });
 
-  const { mutate, isPending } = useRenewProxy();
+  const { mutateAsync, isPending } = useRenewProxy();
   const isSuccess = costsIsSuccess || portsIsSuccess;
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -114,14 +116,19 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
     [currentPlan, setDuration, setPrice]
   );
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate({
-      proxy_id: data.proxy_id,
-      parent_proxy_id: data.parent_proxy_id,
-      protocol: values.protocol,
-      duration: duration ? duration.toString() : "",
-      password: values.password,
-    });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutateAsync({
+        proxy_id: data.proxy_id,
+        parent_proxy_id: data.parent_proxy_id,
+        protocol: values.protocol,
+        duration: duration ? duration.toString() : "",
+        password: values.password,
+      });
+      form.reset();
+      setIsOpen(false);
+      setLocation({} as ILocation);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -151,11 +158,12 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
   }, [data.amount, handleSelectAmount]);
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
           size="sm"
           onClick={() => {
+            setIsOpen(true);
             setPkgId(data.package_id);
           }}
         >
