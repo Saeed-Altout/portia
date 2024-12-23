@@ -75,7 +75,7 @@ export const AffiliateClient = () => {
   return (
     <>
       <Heading title={`Welcome back ${user.first_name}`} />
-      <AffiliateCode code={user.referred_code} />
+      <AffiliateCode code={user.referred_code ?? ""} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <StatisticCard
           color="#26a6a4"

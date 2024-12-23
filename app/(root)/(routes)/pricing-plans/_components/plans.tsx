@@ -113,7 +113,7 @@ export const Plans = () => {
             </div>
           ))}
       </div>
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full flex items-center justify-center flex-col md:flex-row gap-y-4">
         <p className="text-[#727282]">Need more details about our plans?</p>
         <Link href="/our-plans" className="text-[#111280] underline ml-2">
           check compare plans page

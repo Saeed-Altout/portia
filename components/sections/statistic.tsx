@@ -27,7 +27,7 @@ export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
             );
             return newCounts;
           });
-        }, 30);
+        }, 15);
       });
 
       return () => intervals.forEach((interval) => clearInterval(interval));
