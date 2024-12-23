@@ -62,7 +62,7 @@ declare type ILocation = {
   service_provider_name: string;
   country_name: string;
   city_name: string;
-  rotation_time: number;
+  rotation_time: any;
   is_available: boolean;
   service_provider_id: number;
   country_id: number;

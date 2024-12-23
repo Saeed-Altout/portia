@@ -106,7 +106,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
     new Set(data.map((item) => item.package_name))
   );
 
-  const packages = extractUniqueColumnValues("package_name");
+  // const packages = extractUniqueColumnValues("package_name");
   const countries = extractUniqueColumnValues("country_name");
   const cities = extractUniqueColumnValues("city_name");
   const servicesProvider = extractUniqueColumnValues("service_provider_name");
@@ -133,6 +133,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
           defaultValue={
             (table.getColumn("package_name")?.getFilterValue() as string) || ""
           }
+          disabled={uniquePackageNames.length === 0}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a package" />
@@ -164,6 +165,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
           defaultValue={
             (table.getColumn("country_name")?.getFilterValue() as string) || ""
           }
+          disabled={countries.length === 0}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a country" />
@@ -193,6 +195,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
           defaultValue={
             (table.getColumn("city_name")?.getFilterValue() as string) || ""
           }
+          disabled={cities.length === 0}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a state" />
@@ -221,6 +224,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
               .getColumn("service_provider_name")
               ?.getFilterValue() as string) || ""
           }
+          disabled={servicesProvider.length === 0}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a provider" />
@@ -243,6 +247,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
           defaultValue={
             table.getColumn("rotation_time")?.getFilterValue()?.toString() || ""
           }
+          disabled={rotationsTime.length === 0}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select an IP Rotation" />
