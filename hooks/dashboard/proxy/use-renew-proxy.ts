@@ -15,7 +15,7 @@ export const useRenewProxy = () => {
     mutationFn: (values: IRenewProxyRequest) => renewProxy(values),
     onSuccess: (data) => {
       onClose(ModalType.RENEW_PROXY);
-      queryClient.invalidateQueries({ queryKey: ["get-active-proxies"] });
+      queryClient.invalidateQueries({ queryKey: ["get-inactive-proxies"] });
       setProxy({} as IProxy);
       Success({ message: data.message || "Renew proxy Success." });
     },

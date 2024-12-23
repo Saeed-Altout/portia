@@ -25,6 +25,7 @@ const initialProxy: IProxy = {
   updated_at: "",
   plan_id: 0,
   plan_name: "",
+  amount: "",
 };
 
 const initialLocation: ILocation = {
@@ -86,6 +87,9 @@ interface ProxyStore {
 
   plans: string[];
   setPlans: (plans: string[]) => void;
+
+  plan: string;
+  setPlan: (plan: string) => void;
 
   price: number;
   setPrice: (price: number) => void;
@@ -150,6 +154,9 @@ export const useProxyStore = create<ProxyStore>()(
 
     plans: [],
     setPlans: (plans) => set({ plans }),
+
+    plan: "",
+    setPlan: (plan) => set({ plan }),
 
     price: 0,
     setPrice: (price) => set({ price }),

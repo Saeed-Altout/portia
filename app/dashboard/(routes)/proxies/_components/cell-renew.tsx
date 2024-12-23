@@ -39,9 +39,8 @@ import { CircleLoader, Loader } from "@/components/ui/loader";
 import { Circle, Icon } from "@/components/ui/circle-icon";
 
 import { Proxy } from "./columns";
-import { ModalType } from "@/config/enums";
 import { useGetCostPlans, useGetPorts, useRenewProxy } from "@/hooks";
-import { useModalStore, useProxyStore } from "@/stores";
+import { useProxyStore } from "@/stores";
 
 const formSchema = z.object({
   plan: z.string(),
@@ -69,14 +68,13 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
     duration,
     setPlans,
     location,
-    setProtocol,
-    protocol,
   } = useProxyStore();
 
   const { data: ports, isSuccess: portsIsSuccess } = useGetPorts({ id: pkgId });
   const { data: costsData, isSuccess: costsIsSuccess } = useGetCostPlans({
     pkg_id: pkgId,
   });
+
   const { mutate, isPending } = useRenewProxy();
   const isSuccess = costsIsSuccess || portsIsSuccess;
 
@@ -93,19 +91,11 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
     },
   });
 
-  const onSelectProtocol = (protocol: string) => {
-    if (location) {
-      const protocolValue = protocol.includes("http")
-        ? location.http_port
-        : location.socks_port;
-      setProtocol(protocolValue);
-    }
-  };
-
   const handleSelectPlan = useCallback(
     (plan: string) => {
       const valueCurrentPlan = costs[plan] || [];
       setCurrentPlan(valueCurrentPlan);
+      // Extract amounts from plan
       const amounts = valueCurrentPlan.map((item) => `${item.value}`);
       setAmounts(amounts);
     },
@@ -114,9 +104,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
 
   const handleSelectAmount = useCallback(
     (amount: string) => {
-      const currentObject = currentPlan.find(
-        (item) => item.value === Number(amount)
-      );
+      const currentObject = currentPlan.find((item) => item.value === +amount);
 
       if (currentObject) {
         setDuration(currentObject.duration);
@@ -137,8 +125,10 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
   };
 
   useEffect(() => {
-    form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
-    form.setValue("provider", `${location.service_provider_name ?? ""}`);
+    if (location.service_provider_name && location.rotation_time) {
+      form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
+      form.setValue("provider", `${location.service_provider_name ?? ""}`);
+    }
   }, [form, location]);
 
   useEffect(() => {
@@ -264,10 +254,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
                           <Select
                             disabled={isPending}
                             defaultValue={field.value}
-                            onValueChange={(value) => {
-                              field.onChange(value);
-                              onSelectProtocol(value);
-                            }}
+                            onValueChange={field.onChange}
                           >
                             <FormControl>
                               <SelectTrigger>
@@ -379,7 +366,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
                       )}
                     />
                   </div>
-                  <div className="bg-white sticky bottom-0 border-t pt-2 px-4 flex justify-end gap-4">
+                  <div className="bg-white sticky bottom-0 border-t py-2 px-4 flex justify-end gap-4">
                     <Button
                       disabled={isPending}
                       type="submit"
@@ -401,9 +388,9 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
             </div>
           </>
         ) : (
-          <SheetHeader>
+          <div className="h-full flex justify-center items-center">
             <CircleLoader />
-          </SheetHeader>
+          </div>
         )}
       </SheetContent>
     </Sheet>
