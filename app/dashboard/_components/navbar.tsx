@@ -35,6 +35,7 @@ export const Navbar = () => {
   const pathname = usePathname();
   const [showMore, setShowMore] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenSheet, setIsOpenSheet] = useState(false);
   const { setNotification } = useStore();
   const { onOpen } = useModalStore();
   const notificationsRef = useRef<HTMLDivElement>(null);
@@ -145,7 +146,7 @@ export const Navbar = () => {
           ))}
         </div>
       </nav>
-      <Sheet>
+      <Sheet open={isOpenSheet} onOpenChange={setIsOpenSheet}>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
             <Menu className="h-5 w-5" />
@@ -163,9 +164,10 @@ export const Navbar = () => {
                 variant="ghost"
                 size="sm"
                 className={cn(
-                  "w-full",
-                  href === pathname && "bg-secondary transition-all"
+                  "w-full justify-start",
+                  `${href}/` == pathname && "bg-secondary transition-all"
                 )}
+                onClick={() => setIsOpenSheet(false)}
                 asChild
               >
                 <Link key={index} href={href}>
