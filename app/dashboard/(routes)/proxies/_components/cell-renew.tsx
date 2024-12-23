@@ -295,7 +295,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
                                 disabled={true}
                                 {...field}
                               />
-                              <Button
+                              {/* <Button
                                 size="icon"
                                 className="rounded-l-none"
                                 type="button"
@@ -309,7 +309,7 @@ export const CellButtonRenew = ({ data }: { data: Proxy }) => {
                                     ArrowUpRight Icon
                                   </span>
                                 </Link>
-                              </Button>
+                              </Button> */}
                             </div>
                           </FormControl>
                           <FormMessage />
