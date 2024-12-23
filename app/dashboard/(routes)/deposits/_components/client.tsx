@@ -24,17 +24,13 @@ export const DepositsClient = () => {
     isLoading: statisticsIsLoading,
     isError: statisticsIsError,
   } = useGetDepositsStatistics();
-  const {
-    data: history,
-    isSuccess: historyIsSuccess,
-    isLoading: historyIsLoading,
-    isError: historyIsError,
-  } = useGetDepositsHistories({
-    page: currentPage,
-  });
+  const { data: history, isSuccess: historyIsSuccess } =
+    useGetDepositsHistories({
+      page: currentPage,
+    });
 
-  const isLoading = statisticsIsLoading || historyIsLoading;
-  const isError = statisticsIsError || historyIsError;
+  const isLoading = statisticsIsLoading;
+  const isError = statisticsIsError;
 
   useEffect(() => {
     if (historyIsSuccess) {
