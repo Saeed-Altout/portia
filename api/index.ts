@@ -1,13 +1,12 @@
-import {
-  login,
-  register,
-  loginWithGoogle,
-  logout,
-  sendResetEmail,
-  setNewPassword,
-  verificationCode,
-  resendVerificationCode,
-} from "./auth";
+import { login } from "./auth/login";
+import { register } from "./auth/register";
+import { logout } from "./auth/logout";
+import { verificationCode } from "./auth/verification-code";
+import { resendVerificationCode } from "./auth/resend-verification-code";
+import { setNewPassword } from "./auth/set-new-password";
+import { sendResetEmail } from "./auth/send-reset-email";
+import { loginWithGoogle } from "./auth/login-with-google";
+
 import {
   getAffiliateHistories,
   getAffiliateStatistics,
