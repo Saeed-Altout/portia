@@ -37,17 +37,14 @@ import { getProxiesCounts } from "./dashboard/get-proxies-counts";
 import { addProxy } from "./dashboard/add-proxy";
 import { editAuthProxy } from "./dashboard/edit-auth-proxy";
 import { editInfoProxy } from "./dashboard/edit-info-proxy";
-
-import {
-  getFaqs,
-  getAllFaqs,
-  getReviews,
-  getFeaturesOffer,
-  getOffers,
-  sendContactMessage,
-  getPlansOffer,
-} from "./root";
-
+import { getAllFaqs } from "./root/get-all-faqs";
+import { getFaqs } from "./root/get-faqs";
+import { getDataMap } from "./root/get-data-map";
+import { getFeaturesOffer } from "./root/get-features-offer";
+import { getPlansOffer } from "./root/get-plans-offer";
+import { getReviews } from "./root/get-reviews";
+import { sendContactMessage } from "./root/send-contact-message";
+import { getOffers } from "./root/get-offers";
 export {
   login,
   register,
@@ -95,4 +92,5 @@ export {
   getOffersPackage,
   getPackageWithPlans,
   getProxyById,
+  getDataMap,
 };

@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { getToken } from "@/utils/cookie";
+import { clear, getToken } from "@/utils/cookie";
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -36,9 +36,9 @@ apiClient.interceptors.response.use(
         break;
 
       case 401:
-        console.error(
-          "Unauthorized: You need to login to access this resource."
-        );
+        clear();
+        localStorage.clear();
+        location.reload();
         break;
 
       case 403:
