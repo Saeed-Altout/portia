@@ -25,20 +25,19 @@ import { getUserDetails } from "./dashboard/get-user-details";
 import { getTablesData } from "./dashboard/get-tables-data";
 import { updateUserProfile } from "./dashboard/update-user-profile";
 import { exportData } from "./dashboard/export-data";
+import { getAllPackages } from "./dashboard/get-all-packages";
+import { getCostPlans } from "./dashboard/get-cost-plans";
+import { getPorts } from "./dashboard/get-ports";
+import { getActiveProxies } from "./dashboard/get-active-proxies";
+import { getInactiveProxies } from "./dashboard/get-inactive-proxies";
+import { getProxyById } from "./dashboard/get-proxy";
+import { renewProxy } from "./dashboard/renew-proxy";
+import { fixProxy } from "./dashboard/fix-proxy";
+import { getProxiesCounts } from "./dashboard/get-proxies-counts";
+import { addProxy } from "./dashboard/add-proxy";
+import { editAuthProxy } from "./dashboard/edit-auth-proxy";
+import { editInfoProxy } from "./dashboard/edit-info-proxy";
 
-import {
-  getActiveProxies,
-  getInactiveProxies,
-  getProxiesCounts,
-  addProxy,
-  fixProxy,
-  editAuthProxy,
-  editInfoProxy,
-  getAllPackages,
-  getCostPlans,
-  getPorts,
-  getProxyById,
-} from "./dashboard";
 import {
   getFaqs,
   getAllFaqs,
@@ -88,6 +87,7 @@ export {
   getWayPayment,
   deposit,
   updateUserProfile,
+  renewProxy,
   getUserBalance,
   getUserDetails,
   getTablesData,
