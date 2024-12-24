@@ -1,12 +1,3 @@
-import { getAffiliateHistories, getAffiliateStatistics } from "./affiliate";
-import { getDepositHistories, getDepositStatistics } from "./deposit";
-import {
-  getProxyCities,
-  getProxyCountries,
-  getProxyIpRotations,
-  getProxyLocations,
-  getProxyServiceProviders,
-} from "./location";
 import {
   getActiveProxies,
   getInactiveProxies,
@@ -33,15 +24,6 @@ import {
   exportData,
 } from "./user";
 export {
-  getAffiliateHistories,
-  getAffiliateStatistics,
-  getDepositHistories,
-  getDepositStatistics,
-  getProxyCities,
-  getProxyCountries,
-  getProxyIpRotations,
-  getProxyLocations,
-  getProxyServiceProviders,
   getActiveProxies,
   getInactiveProxies,
   getProxiesCounts,

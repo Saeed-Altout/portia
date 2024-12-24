@@ -6,17 +6,17 @@ import { resendVerificationCode } from "./auth/resend-verification-code";
 import { setNewPassword } from "./auth/set-new-password";
 import { sendResetEmail } from "./auth/send-reset-email";
 import { loginWithGoogle } from "./auth/login-with-google";
+import { getAffiliateHistories } from "./dashboard/get-affiliate-histories";
+import { getAffiliateStatistics } from "./dashboard/get-affiliate-statistics";
+import { getDepositHistories } from "./dashboard/get-deposit-histories";
+import { getDepositStatistics } from "./dashboard/get-deposit-statistics";
+import { getProxyCities } from "./dashboard/get-proxy-cities";
+import { getProxyCountries } from "./dashboard/get-proxy-countries";
+import { getProxyIpRotations } from "./dashboard/get-proxy-ip-rotations";
+import { getProxyLocations } from "./dashboard/get-proxy-locations";
+import { getProxyServiceProviders } from "./dashboard/get-proxy-service-providers";
 
 import {
-  getAffiliateHistories,
-  getAffiliateStatistics,
-  getDepositHistories,
-  getDepositStatistics,
-  getProxyCities,
-  getProxyCountries,
-  getProxyIpRotations,
-  getProxyLocations,
-  getProxyServiceProviders,
   getActiveProxies,
   getInactiveProxies,
   getProxiesCounts,
