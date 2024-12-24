@@ -15,6 +15,16 @@ import { getProxyCountries } from "./dashboard/get-proxy-countries";
 import { getProxyIpRotations } from "./dashboard/get-proxy-ip-rotations";
 import { getProxyLocations } from "./dashboard/get-proxy-locations";
 import { getProxyServiceProviders } from "./dashboard/get-proxy-service-providers";
+import { getWayPayment } from "./dashboard/get-way-payment";
+import { deposit } from "./dashboard/deposit";
+import { getPricingPlans } from "./dashboard/get-pricing-plans";
+import { getPackageWithPlans } from "./dashboard/get-package-with-plans";
+import { getOffersPackage } from "./dashboard/get-offers-package";
+import { getUserBalance } from "./dashboard/get-user-balance";
+import { getUserDetails } from "./dashboard/get-user-details";
+import { getTablesData } from "./dashboard/get-tables-data";
+import { updateUserProfile } from "./dashboard/update-user-profile";
+import { exportData } from "./dashboard/export-data";
 
 import {
   getActiveProxies,
@@ -24,17 +34,9 @@ import {
   fixProxy,
   editAuthProxy,
   editInfoProxy,
-  getPricingPlans,
   getAllPackages,
   getCostPlans,
   getPorts,
-  updateUserProfile,
-  getUserBalance,
-  getUserDetails,
-  getTablesData,
-  exportData,
-  getOffersPackage,
-  getPackageWithPlans,
   getProxyById,
 } from "./dashboard";
 import {
@@ -83,6 +85,8 @@ export {
   getFeaturesOffer,
   getOffers,
   sendContactMessage,
+  getWayPayment,
+  deposit,
   updateUserProfile,
   getUserBalance,
   getUserDetails,
