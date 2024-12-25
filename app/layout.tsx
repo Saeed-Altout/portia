@@ -5,6 +5,7 @@ import { siteConfig } from "@/config";
 
 import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/providers/query-provider";
+import { NotificationProviders } from "@/providers/notification-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -25,6 +26,7 @@ export default function RootLayout({
         <QueryProvider>
           {children}
           <Toaster />
+          <NotificationProviders />
         </QueryProvider>
       </body>
     </html>

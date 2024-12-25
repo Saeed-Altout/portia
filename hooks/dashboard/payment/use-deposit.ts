@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { useResponse } from "@/hooks";
-import { deposit } from "@/api/dashboard/payment";
+import { deposit } from "@/api";
 
 export const useDeposit = () => {
   const { Error } = useResponse();

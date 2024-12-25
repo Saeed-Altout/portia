@@ -1,4 +1,4 @@
-import { getWayPayment } from "@/api/dashboard/payment";
+import { getWayPayment } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetWayPayment = () => {
