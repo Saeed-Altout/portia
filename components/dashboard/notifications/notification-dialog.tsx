@@ -33,7 +33,7 @@ export const NotificationDialog = ({
                 notification.type === "error"
                   ? "destructive"
                   : notification.type === "success"
-                  ? "success"
+                  ? "secondary"
                   : "default"
               }
             >
