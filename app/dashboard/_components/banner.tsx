@@ -2,55 +2,72 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-export const Banner = () => {
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+interface BannerProps {
+  storageKey?: string;
+  gradientFrom?: string;
+  gradientTo?: string;
+}
 
-  const onClose = () => {
-    setIsOpen(false);
-    localStorage.setItem("banner", "close");
-  };
+export const Banner = ({
+  storageKey = "banner",
+  gradientFrom = "[#03055E]",
+  gradientTo = "[#111280]",
+}: BannerProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     setIsMounted(true);
-    const bannerState = localStorage.getItem("banner");
-    if (bannerState) {
-      setIsOpen(false);
+    const bannerState = localStorage.getItem(storageKey);
+    if (bannerState === "dismissed") {
+      setIsVisible(false);
     }
     return () => setIsMounted(false);
-  }, []);
+  }, [storageKey]);
 
-  if (!isMounted) {
+  const handleDismiss = () => {
+    setIsVisible(false);
+    localStorage.setItem(storageKey, "dismissed");
+  };
+
+  if (!isMounted || !isVisible) {
     return null;
   }
 
   return (
     <div
       className={cn(
-        "relative text-white bg-gradient-to-t from-[#03055E] to-[#111280] h-[62px] md:h-[62px] px-4 flex justify-center items-center",
-        !isOpen && "hidden",
+        "relative min-h-[62px] px-3 py-2 md:py-0 md:px-4 flex items-center justify-center",
+        `bg-gradient-to-t from-${gradientFrom} to-${gradientTo}`
       )}
     >
-      <p className="text-xs md:text-base text-white">
-        <span className="mr-2 font-medium">We&apos;ve just launched a new feature!</span>
-        Check out the
-        <Link href="/" className="ml-0 md:ml-2 underline underline-offset-4 inline-block text-white">
-          new dashboard.
+      <div className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-white max-w-[90%] md:max-w-none text-center md:text-left">
+        <p className="text-xs text-white md:text-base leading-tight">
+          <span className="font-medium whitespace-nowrap">
+            We&apos;ve just launched a new feature!
+          </span>
+          <span className="hidden md:inline ml-1">Check out the</span>
+        </p>
+        <Link
+          href="/"
+          className="text-xs md:text-base underline underline-offset-4 hover:opacity-90 transition-opacity whitespace-nowrap"
+        >
+          new dashboard
         </Link>
-      </p>
+      </div>
+
       <Button
-        className="!bg-transparent hover:!text-white absolute right-4 top-[50%] translate-y-[-50%]"
+        onClick={handleDismiss}
         size="icon"
         variant="ghost"
-        onClick={onClose}
+        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 h-8 w-8 md:h-9 md:w-9"
       >
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close Banner</span>
+        <X className="h-3.5 w-3.5 md:h-4 md:w-4" />
+        <span className="sr-only">Dismiss banner</span>
       </Button>
     </div>
   );
