@@ -73,7 +73,7 @@ export const NotificationsPopover = () => {
         </div>
         <Button
           onClick={handleShowMore}
-          className="sticky bottom-0 w-full py-3 text-[#03055E] bg-gradient-to-t from-[#D4D4FF] to-[#E8E8FF] hover:from-[#C0C0FF] hover:to-[#D4D4FF] transition-all duration-300 overflow-hidden"
+          className="sticky bottom-0 rounded-none w-full py-3 text-[#03055E] bg-gradient-to-t from-[#D4D4FF] to-[#E8E8FF] hover:from-[#C0C0FF] hover:to-[#D4D4FF] transition-all duration-300 overflow-hidden"
         >
           <motion.div
             className="flex items-center justify-center gap-2"
@@ -92,7 +92,7 @@ export const NotificationsPopover = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-sm"
               >
                 <EyeOff className="h-4 w-4" />
                 <span>Show Less</span>
@@ -102,7 +102,7 @@ export const NotificationsPopover = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-sm"
               >
                 <Eye className="h-4 w-4" />
                 <span>View All Notifications</span>
