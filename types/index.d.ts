@@ -306,6 +306,7 @@ declare type IRegisterRequest = {
   email: string;
   password: string;
   referred_by?: string;
+  fcm_token: string;
 };
 
 declare type IRegisterResponse = {
