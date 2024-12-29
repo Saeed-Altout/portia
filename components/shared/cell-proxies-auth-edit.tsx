@@ -1,12 +1,11 @@
 "use client";
 
-import { Proxy } from "../../app/dashboard/(routes)/(root)/_components/columns";
 import { useModalStore } from "@/stores";
-import { useStore } from "@/stores/use-store";
 import { ModalType } from "@/config/enums";
+import { useEditAuthProxyStore } from "@/stores/reducers/edit-auth-proxy-store";
 
 interface CellProxiesAuthEditProps {
-  data: Proxy;
+  data: any;
   children: React.ReactNode;
 }
 
@@ -15,11 +14,10 @@ export const CellProxiesAuthEdit = ({
   children,
 }: CellProxiesAuthEditProps) => {
   const { onOpen } = useModalStore();
-  const { setProxyId, setProxyUsername } = useStore();
+  const { setProxy } = useEditAuthProxyStore();
 
   const handleAuthEdit = () => {
-    setProxyId(data.proxy_id);
-    setProxyUsername(data.username);
+    setProxy(data);
     onOpen(ModalType.EDIT_AUTH_PROXY);
   };
 

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Eye, EyeOff, Key, User } from "lucide-react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -22,9 +23,9 @@ import { Loader } from "@/components/ui/loader";
 import { useModalStore } from "@/stores";
 import { editAuthProxySchema } from "@/schemas";
 import { ModalType } from "@/config/enums";
-import { useStore } from "@/stores/use-store";
 import { useEditAuthProxyMutation } from "@/services/proxies/hooks";
 import { usePasswordControl } from "@/hooks/dashboard/use-password-control";
+import { useEditAuthProxyStore } from "@/stores/reducers/edit-auth-proxy-store";
 
 export const EditAuthProxyModal = () => {
   const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
@@ -34,7 +35,7 @@ export const EditAuthProxyModal = () => {
       },
     });
 
-  const { proxy, setProxyId, setProxyUsername } = useStore();
+  const { proxy, resetProxy } = useEditAuthProxyStore();
   const { mutateAsync, isPending } = useEditAuthProxyMutation();
 
   const { isOpen, type, onClose } = useModalStore();
@@ -49,18 +50,17 @@ export const EditAuthProxyModal = () => {
 
   const handleClose = () => {
     form.reset();
+    resetProxy();
     onClose(ModalType.EDIT_AUTH_PROXY);
   };
 
   const onSubmit = async (values: z.infer<typeof editAuthProxySchema>) => {
     try {
       await mutateAsync({
-        proxy_id: proxy.id ?? "",
+        proxy_id: proxy.proxy_id ?? "",
         password: values.password,
       });
       handleClose();
-      setProxyId("");
-      setProxyUsername("");
     } catch (error) {
       console.error(error);
     }
