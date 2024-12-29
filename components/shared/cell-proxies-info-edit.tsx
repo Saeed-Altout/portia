@@ -1,17 +1,19 @@
 "use client";
 
-import { Proxy } from "./columns";
-
+import { Proxy } from "../../app/dashboard/(routes)/(root)/_components/columns";
 import { useModalStore } from "@/stores";
-
-import { ModalType } from "@/config/enums";
 import { useStore } from "@/stores/use-store";
+import { ModalType } from "@/config/enums";
 
-interface CellInfoEditProps {
+interface CellProxiesInfoEditProps {
   data: Proxy;
   children: React.ReactNode;
 }
-export const CellInfoEdit = ({ data, children }: CellInfoEditProps) => {
+
+export const CellProxiesInfoEdit = ({
+  data,
+  children,
+}: CellProxiesInfoEditProps) => {
   const { onOpen } = useModalStore();
   const {
     setProxyId,
@@ -20,7 +22,7 @@ export const CellInfoEdit = ({ data, children }: CellInfoEditProps) => {
     setLocationServiceProviderName,
   } = useStore();
 
-  const handlerClick = () => {
+  const handleEditClick = () => {
     setProxyId(data.proxy_id);
     setProxyPackageId(data.package_id);
     setProxyParentId(data.parent_proxy_id);
@@ -30,8 +32,9 @@ export const CellInfoEdit = ({ data, children }: CellInfoEditProps) => {
 
   return (
     <p
+      role="button"
+      onClick={handleEditClick}
       className="text-primary capitalize cursor-pointer hover:underline"
-      onClick={handlerClick}
     >
       {children}
     </p>

@@ -21,3 +21,25 @@ export const getProxiesCount = async (): Promise<Root<IProxiesCount>> => {
     throw error;
   }
 };
+
+export const editAuthProxy = async (
+  values: IEditAuthProxyCredentials
+): Promise<Root<IProxies>> => {
+  try {
+    const res = await apiClient.post("/edit-password-proxy", values);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const editInfoProxy = async (
+  values: IEditInfoProxyCredentials
+): Promise<Root<IProxies>> => {
+  try {
+    const res = await apiClient.post("/edite-parent-proxy", values);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

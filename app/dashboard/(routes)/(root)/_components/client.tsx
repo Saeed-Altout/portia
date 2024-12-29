@@ -4,12 +4,14 @@ import { Zap } from "lucide-react";
 import { format } from "date-fns";
 
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
-import { RootCard } from "./root-card";
-import { Heading } from "@/components/dashboard";
-import { PageSkelton } from "@/components/skeletons/page-skeleton";
-import { useAuthStore } from "@/stores";
 import { useData } from "./use-data";
+
+import { Heading } from "@/components/dashboard";
+import { DataTable } from "@/components/shared/data-table";
+import { RootCard } from "@/components/dashboard/cards/root-card";
+import { PageSkelton } from "@/components/skeletons/page-skeleton";
+
+import { useAuthStore } from "@/stores";
 
 export const RootClient = () => {
   const { user } = useAuthStore();

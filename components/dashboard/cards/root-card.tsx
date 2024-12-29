@@ -5,7 +5,7 @@ import { LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { CircleIcon } from "./circle-icon";
+import { CircleIcon } from "../../shared/circle-icon";
 
 interface RootCardProps {
   icon: LucideIcon;

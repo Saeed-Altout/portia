@@ -4,12 +4,11 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { CellInfoEdit } from "./cell-info-edit";
-import { CellRenew } from "./cell-renew";
-import { CellActions } from "./cell-actions";
-import { CellAuthEdit } from "./cell-auth-edit";
+import { CellProxiesInfoEdit } from "@/components/shared/cell-proxies-info-edit";
+import { CellProxiesAuthEdit } from "@/components/shared/cell-proxies-auth-edit";
+import { CellProxiesActions } from "@/components/shared/cell-proxies-actions";
 
-export type Proxy = {
+export interface Proxy {
   sequence: string;
   id: number;
   re_new: number;
@@ -22,13 +21,37 @@ export type Proxy = {
   username: string;
   password: string;
   plan_name: string;
-
-  // Additional for state
   proxy_id: string;
   parent_proxy_id: string;
   package_id: string;
   duration: number;
+}
+
+const STATUS_STYLES = {
+  active:
+    "text-[#035E5C] bg-[#D4FFFE] font-medium text-xs px-2 py-1 rounded-full leading-none",
 };
+
+const renderStatus = (isActive: number) => {
+  if (isActive === 1) {
+    return <span className={STATUS_STYLES.active}>Active</span>;
+  }
+  return null;
+};
+
+const renderInfoCell = (data: Proxy, content: string) => (
+  <CellProxiesInfoEdit data={data}>{content}</CellProxiesInfoEdit>
+);
+
+const renderAuthCell = (data: Proxy) => (
+  <CellProxiesAuthEdit
+    data={data}
+  >{`${data.username}:${data.password}`}</CellProxiesAuthEdit>
+);
+
+const renderExpireDate = (date: string) => (
+  <p className={cn(date && "text-[#801121]")}>{format(date, "MMM dd, yyyy")}</p>
+);
 
 export const columns: ColumnDef<Proxy>[] = [
   {
@@ -38,15 +61,7 @@ export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "is_active",
     header: "Status",
-    cell: ({ row }) => (
-      <>
-        {row.original.is_active === 1 && (
-          <span className="text-[#035E5C] bg-[#D4FFFE] font-medium text-xs px-2 py-1 rounded-full leading-none">
-            Active
-          </span>
-        )}
-      </>
-    ),
+    cell: ({ row }) => renderStatus(row.original.is_active),
   },
   {
     accessorKey: "plan_name",
@@ -59,18 +74,13 @@ export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => (
-      <CellInfoEdit data={row.original}>{row.original.protocol}</CellInfoEdit>
-    ),
+    cell: ({ row }) => renderInfoCell(row.original, row.original.protocol),
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => (
-      <CellInfoEdit data={row.original}>
-        {row.original.service_provider}
-      </CellInfoEdit>
-    ),
+    cell: ({ row }) =>
+      renderInfoCell(row.original, row.original.service_provider),
   },
   {
     accessorKey: "protocol_port",
@@ -79,24 +89,16 @@ export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
-    cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>
-        {format(row.original.expire_at, "MMM dd, yyyy")}
-      </p>
-    ),
+    cell: ({ row }) => renderExpireDate(row.original.expire_at),
   },
   {
     accessorKey: "username",
     header: "Username:Password",
-    cell: ({ row }) => (
-      <CellAuthEdit data={row.original}>
-        {row.original.username}:{row.original.password}
-      </CellAuthEdit>
-    ),
+    cell: ({ row }) => renderAuthCell(row.original),
   },
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <CellActions data={row.original} />,
+    cell: ({ row }) => <CellProxiesActions data={row.original} />,
   },
 ];

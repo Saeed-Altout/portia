@@ -37,3 +37,14 @@ declare type IProxiesCount = {
   active: number;
   inactive: number;
 };
+
+declare type IEditAuthProxyCredentials = {
+  proxy_id: string;
+  password: string;
+};
+
+declare type IEditInfoProxyCredentials = {
+  parent_proxy_id: string;
+  proxy_id: string;
+  protocol: string;
+};
