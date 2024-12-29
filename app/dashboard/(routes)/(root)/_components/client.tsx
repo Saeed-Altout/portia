@@ -72,6 +72,7 @@ export const RootClient = () => {
         ))}
       </div>
       <DataTable
+        isLoading={isLoading}
         columns={columns}
         data={formattedProxiesActive ?? []}
         title="My Active Proxies"
