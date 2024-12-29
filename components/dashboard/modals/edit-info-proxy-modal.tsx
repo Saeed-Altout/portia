@@ -33,8 +33,8 @@ import { ModalType } from "@/config/enums";
 import { useStore } from "@/stores/use-store";
 import { useModalStore } from "@/stores";
 import { editProxySchema } from "@/schemas";
-import { useGetPorts } from "@/hooks";
 import { useEditInfoProxyMutation } from "@/services/proxies/hooks";
+import { useGetPortsQuery } from "@/services/settings/hooks";
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
@@ -49,7 +49,7 @@ export const EditInfoProxyModal = () => {
   } = useStore();
 
   const { mutateAsync, isPending } = useEditInfoProxyMutation();
-  const { data: ports, isSuccess } = useGetPorts({ id: proxy.package_id });
+  const { data: ports, isSuccess } = useGetPortsQuery();
 
   const isOpenModal = isOpen && type === ModalType.EDIT_INFO_PROXY;
 

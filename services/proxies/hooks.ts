@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   editAuthProxy,
   editInfoProxy,
+  fixProxy,
   getProxies,
   getProxiesCount,
 } from "./apis";
@@ -58,6 +59,25 @@ export const useEditInfoProxyMutation = () => {
       Error({
         error,
         message: "Edit info proxy failed.",
+      });
+    },
+  });
+};
+
+export const useFixProxyMutation = () => {
+  const queryClient = useQueryClient();
+  const { Success, Error } = useResponse();
+  return useMutation({
+    mutationKey: ["fix-proxy"],
+    mutationFn: (values: IFixProxyCredentials) => fixProxy(values),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["proxies"] });
+      Success({ message: data.message || "Fix proxy Success." });
+    },
+    onError: (error) => {
+      Error({
+        error,
+        message: "Fix proxy failed.",
       });
     },
   });

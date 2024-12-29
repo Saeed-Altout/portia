@@ -53,3 +53,8 @@ declare type IEditInfoProxyCredentials = {
   proxy_id: string;
   protocol: string;
 };
+
+declare type IFixProxyCredentials = {
+  pkg_id: string;
+  proxy_id: string;
+};

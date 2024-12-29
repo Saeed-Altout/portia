@@ -43,3 +43,14 @@ export const editInfoProxy = async (
     throw error;
   }
 };
+
+export const fixProxy = async (
+  values: IFixProxyCredentials
+): Promise<RootResponse<IProxies>> => {
+  try {
+    const res = await apiClient.post("/fix-proxy", values);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
