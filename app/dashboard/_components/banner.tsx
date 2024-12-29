@@ -6,32 +6,22 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-interface BannerProps {
-  storageKey?: string;
-  gradientFrom?: string;
-  gradientTo?: string;
-}
-
-export const Banner = ({
-  storageKey = "banner",
-  gradientFrom = "[#03055E]",
-  gradientTo = "[#111280]",
-}: BannerProps) => {
+export const Banner = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     setIsMounted(true);
-    const bannerState = localStorage.getItem(storageKey);
+    const bannerState = localStorage.getItem("banner");
     if (bannerState === "dismissed") {
       setIsVisible(false);
     }
     return () => setIsMounted(false);
-  }, [storageKey]);
+  }, []);
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem(storageKey, "dismissed");
+    localStorage.setItem("banner", "dismissed");
   };
 
   if (!isMounted || !isVisible) {
@@ -42,7 +32,7 @@ export const Banner = ({
     <div
       className={cn(
         "relative min-h-[62px] px-3 py-2 md:py-0 md:px-4 flex items-center justify-center",
-        `bg-gradient-to-t from-${gradientFrom} to-${gradientTo}`
+        `bg-gradient-to-t from-[#03055E] to-[#111280]`
       )}
     >
       <div className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-white max-w-[90%] md:max-w-none text-center md:text-left">
