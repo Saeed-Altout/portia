@@ -6,12 +6,9 @@ import { format } from "date-fns";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { RootCard } from "./root-card";
-
 import { Heading } from "@/components/dashboard";
 import { PageSkelton } from "@/components/skeletons/page-skeleton";
-
 import { useAuthStore } from "@/stores";
-
 import { useData } from "./use-data";
 
 export const RootClient = () => {
@@ -19,7 +16,7 @@ export const RootClient = () => {
   const { balance, proxiesCount, proxiesActive, isLoading, isError } =
     useData();
 
-  const formattedStatistic = [
+  const statistics = [
     {
       icon: Zap,
       title: "Paid Proxies",
@@ -38,7 +35,7 @@ export const RootClient = () => {
     },
   ];
 
-  const formattedProxiesActive = proxiesActive?.map((proxy, index) => ({
+  const formattedProxies = proxiesActive?.map((proxy, index) => ({
     sequence: `${index + 1}`,
     id: proxy.id,
     re_new: proxy.re_new,
@@ -51,8 +48,6 @@ export const RootClient = () => {
     username: proxy.username,
     password: proxy.password,
     plan_name: proxy.plan_name,
-
-    // Additional for state
     proxy_id: proxy.proxy_id,
     parent_proxy_id: proxy.parent_proxy_id,
     package_id: proxy.package_id,
@@ -67,15 +62,15 @@ export const RootClient = () => {
     <>
       <Heading title={`Welcome back ${user.first_name}`} newProxy addFunds />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {formattedStatistic.map((item, index) => (
-          <RootCard item={item} key={index} />
+        {statistics.map((item, index) => (
+          <RootCard key={index} item={item} />
         ))}
       </div>
       <DataTable
-        isLoading={isLoading}
         columns={columns}
-        data={formattedProxiesActive ?? []}
+        data={formattedProxies ?? []}
         title="My Active Proxies"
+        isLoading={isLoading}
       />
     </>
   );

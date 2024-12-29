@@ -1,10 +1,10 @@
 "use client";
 
 import { Plus } from "lucide-react";
+import { ModalType } from "@/config/enums";
 
 import { useModalStore } from "@/stores";
 import { Button } from "@/components/ui/button";
-import { ModalType } from "@/config/enums";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -25,11 +25,13 @@ export const Heading = ({
   const { onOpen } = useModalStore();
 
   return (
-    <div className="flex justify-between flex-col md:flex-row gap-4">
+    <header className="flex justify-between flex-col md:flex-row gap-4">
       <div className="space-y-2">
-        <p className="text-sm">{label}</p>
+        {label && <p className="text-sm text-muted-foreground">{label}</p>}
         <h1 className="text-2xl md:text-3xl font-medium capitalize">{title}</h1>
-        <p className="text-sm">{description}</p>
+        {description && (
+          <p className="text-sm text-muted-foreground">{description}</p>
+        )}
       </div>
       <div className="flex items-center flex-wrap sm:flex-nowrap gap-3">
         {newProxy && (
@@ -37,8 +39,10 @@ export const Heading = ({
             variant="outline"
             className="w-full"
             onClick={() => onOpen(ModalType.ADD_PROXY)}
+            aria-label="Activate proxies"
           >
-            <Plus className="h-4 w-4 mr-2" /> Activate Proxies
+            <Plus className="h-4 w-4 mr-2" aria-hidden="true" />
+            Activate Proxies
           </Button>
         )}
         {addFunds && (
@@ -46,13 +50,14 @@ export const Heading = ({
             variant="outline"
             className="w-full"
             onClick={() => onOpen(ModalType.ADD_FUNDS)}
+            aria-label="Add funds"
           >
-            <Plus className="h-4 w-4 mr-2" /> Add Fund
+            <Plus className="h-4 w-4 mr-2" aria-hidden="true" />
+            Add Fund
           </Button>
         )}
-
         {children}
       </div>
-    </div>
+    </header>
   );
 };
