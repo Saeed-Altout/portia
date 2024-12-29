@@ -5,12 +5,12 @@ import { LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Circle, Icon } from "@/components/ui/circle-icon";
+import { CircleIcon } from "./circle-icon";
 
 interface RootCardProps {
   icon: LucideIcon;
   title: string;
-  theme: any;
+  theme: string;
   value: string;
   href: string;
   label: string;
@@ -18,20 +18,18 @@ interface RootCardProps {
 
 export const RootCard = ({ item }: { item: RootCardProps }) => {
   return (
-    <div className="border rounded-lg">
-      <div className="p-6 space-y-5">
-        <div className="flex items-center justify-start gap-x-2">
-          <Circle fill={item.theme as any}>
-            <Icon icon={item.icon} theme={item.theme as any} />
-          </Circle>
+    <div className="rounded-lg border">
+      <div className="space-y-5 p-6">
+        <div className="flex items-center gap-x-2">
+          <CircleIcon icon={item.icon} theme={item.theme} />
           <p className="font-medium">{item.title}</p>
         </div>
         <h4 className="text-4xl font-semibold">{item.value}</h4>
       </div>
       <Separator />
-      <div className="flex items-center justify-end py-2 px-6">
+      <div className="flex items-center justify-end px-6 py-2">
         <Button variant="ghost" asChild>
-          <Link href={item.href} className="text-primary capitalize">
+          <Link href={item.href} className="capitalize text-primary">
             {item.label}
           </Link>
         </Button>
