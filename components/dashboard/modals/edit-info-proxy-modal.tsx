@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+
 import { ArrowUpRight } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,27 +31,20 @@ import { Modal } from "@/components/dashboard/modal";
 import { Loader } from "@/components/ui/loader";
 
 import { ModalType } from "@/config/enums";
-import { useStore } from "@/stores/use-store";
 import { useModalStore } from "@/stores";
 import { editProxySchema } from "@/schemas";
 import { useEditInfoProxyMutation } from "@/services/proxies/hooks";
 import { useGetPortsQuery } from "@/services/settings/hooks";
+import { useEditInfoProxyStore } from "@/stores/reducers/edit-info-proxy-store";
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
-  const { isOpen, type, onClose } = useModalStore();
-  const {
-    location,
-    proxy,
-    setProxyId,
-    setProxyParentId,
-    setProxyPackageId,
-    setLocationServiceProviderName,
-  } = useStore();
 
+  const { proxy, resetProxy } = useEditInfoProxyStore();
   const { mutateAsync, isPending } = useEditInfoProxyMutation();
-  const { data: ports, isSuccess } = useGetPortsQuery();
+  const { data: ports, isSuccess } = useGetPortsQuery({ id: proxy.package_id });
 
+  const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.EDIT_INFO_PROXY;
 
   const form = useForm<z.infer<typeof editProxySchema>>({
@@ -63,6 +57,7 @@ export const EditInfoProxyModal = () => {
 
   const handleClose = () => {
     form.reset();
+    resetProxy();
     onClose(ModalType.EDIT_INFO_PROXY);
   };
 
@@ -70,24 +65,20 @@ export const EditInfoProxyModal = () => {
     try {
       await mutateAsync({
         parent_proxy_id: proxy.parent_proxy_id ?? "",
-        proxy_id: proxy.id ?? "",
+        proxy_id: proxy.proxy_id ?? "",
         protocol: values.protocol,
       });
       handleClose();
-      setProxyId("");
-      setProxyParentId("");
-      setProxyPackageId("");
-      setLocationServiceProviderName("");
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    if (location?.service_provider_name) {
-      form.setValue("provider", location.service_provider_name);
+    if (proxy.service_provider) {
+      form.setValue("provider", proxy.service_provider);
     }
-  }, [form, location]);
+  }, [form, proxy]);
 
   return (
     <Modal

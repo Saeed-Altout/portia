@@ -36,8 +36,8 @@ export const EditAuthProxyModal = () => {
 
   const { proxy, setProxyId, setProxyUsername } = useStore();
   const { mutateAsync, isPending } = useEditAuthProxyMutation();
-  const { isOpen, type, onClose } = useModalStore();
 
+  const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.EDIT_AUTH_PROXY;
 
   const form = useForm<z.infer<typeof editAuthProxySchema>>({
