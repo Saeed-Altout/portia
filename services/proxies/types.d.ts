@@ -2,6 +2,11 @@ declare type Root<T> = {
   status: boolean;
   data: T;
 };
+declare type RootResponse<T> = {
+  status: boolean;
+  message: string;
+  data: T;
+};
 
 declare type IProxy = {
   id: number;

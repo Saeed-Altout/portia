@@ -24,7 +24,7 @@ export const getProxiesCount = async (): Promise<Root<IProxiesCount>> => {
 
 export const editAuthProxy = async (
   values: IEditAuthProxyCredentials
-): Promise<Root<IProxies>> => {
+): Promise<RootResponse<IProxies>> => {
   try {
     const res = await apiClient.post("/edit-password-proxy", values);
     return res.data;
@@ -35,7 +35,7 @@ export const editAuthProxy = async (
 
 export const editInfoProxy = async (
   values: IEditInfoProxyCredentials
-): Promise<Root<IProxies>> => {
+): Promise<RootResponse<IProxies>> => {
   try {
     const res = await apiClient.post("/edite-parent-proxy", values);
     return res.data;

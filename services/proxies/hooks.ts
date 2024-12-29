@@ -5,6 +5,7 @@ import {
   getProxies,
   getProxiesCount,
 } from "./apis";
+import { useResponse } from "@/hooks";
 
 export const useGetProxiesQuery = ({
   state,
@@ -26,22 +27,38 @@ export const useGetProxiesCountQuery = () => {
 
 export const useEditAuthProxyMutation = () => {
   const queryClient = useQueryClient();
+  const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["edit-auth-proxy"],
     mutationFn: (values: IEditAuthProxyCredentials) => editAuthProxy(values),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
+      Success({ message: data.message || "Edit auth proxy Success." });
+    },
+    onError: (error) => {
+      Error({
+        error,
+        message: "Edit auth proxy failed.",
+      });
     },
   });
 };
 
 export const useEditInfoProxyMutation = () => {
   const queryClient = useQueryClient();
+  const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["edit-info-proxy"],
     mutationFn: (values: IEditInfoProxyCredentials) => editInfoProxy(values),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
+      Success({ message: data.message || "Edit info proxy Success." });
+    },
+    onError: (error) => {
+      Error({
+        error,
+        message: "Edit info proxy failed.",
+      });
     },
   });
 };
