@@ -16,6 +16,7 @@ import {
 import { useModalStore } from "@/stores/use-modal-store";
 import { ModalType } from "@/config/enums";
 import { motion } from "framer-motion";
+import { useGetNotificationsQuery } from "@/services/notifications/hooks";
 
 export const NotificationsPopover = () => {
   const [isOpen, setIsOpen] = useState(false);

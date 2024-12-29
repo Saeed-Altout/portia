@@ -9,5 +9,15 @@ export const useLogin = () => {
   return useMutation({
     mutationKey: ["login"],
     mutationFn: (data: ILoginRequest) => login(data),
+    onSuccess: (data) => {
+      setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
+      setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
+      Success({ message: data.message || "Login is Success." });
+
+      location.reload();
+    },
+    onError(error) {
+      Error({ error, message: "Login is failed." });
+    },
   });
 };
