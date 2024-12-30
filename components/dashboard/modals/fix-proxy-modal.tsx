@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { Loader } from "@/components/ui/loader";
 
-import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/enums";
-import { useStore } from "@/stores/use-store";
+import { useModalStore } from "@/stores";
 import { useFixProxyMutation } from "@/services/proxies/hooks";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 export const FixProxyModal = () => {
-  const { proxy } = useStore();
+  const { proxy, resetProxy } = useProxyStore();
   const { mutateAsync, isPending } = useFixProxyMutation();
 
   const { isOpen, type, onClose } = useModalStore();
@@ -18,13 +18,14 @@ export const FixProxyModal = () => {
 
   const handleClose = () => {
     onClose(ModalType.FIX_PROXY);
+    resetProxy();
   };
 
   const handleSubmit = async () => {
     try {
       await mutateAsync({
         pkg_id: proxy.package_id,
-        proxy_id: proxy.id,
+        proxy_id: proxy.proxy_id,
       });
       handleClose();
     } catch (error) {
@@ -34,7 +35,7 @@ export const FixProxyModal = () => {
 
   return (
     <Modal
-      title={`Fixing proxy (id:${proxy.id ?? ""}) troubleshoot`}
+      title={`Fixing proxy (id:${proxy.proxy_id ?? ""}) troubleshoot`}
       description="If the proxy doesn't work for any reason, click the button below to run diagnostics"
       isOpen={isOpenModal}
       onClose={handleClose}

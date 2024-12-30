@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { ModalType } from "@/config/enums";
 import { useModalStore, useStore } from "@/stores";
 import { useRenewProxy } from "@/hooks/dashboard/proxy/use-renew-proxy";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 interface CellProxiesActionsProps {
   data: Proxy;
@@ -20,12 +21,11 @@ interface CellProxiesActionsProps {
 
 export const CellProxiesActions = ({ data }: CellProxiesActionsProps) => {
   const { onOpen } = useModalStore();
-  const { setProxyId, setProxyPackageId } = useStore();
+  const { setProxy } = useProxyStore();
   const { mutate, isPending } = useRenewProxy();
 
   const handleFixProxy = () => {
-    setProxyId(data.proxy_id);
-    setProxyPackageId(data.package_id);
+    setProxy(data);
     onOpen(ModalType.FIX_PROXY);
   };
 
