@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { CreditCard } from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -26,11 +28,9 @@ import { Loader } from "@/components/ui/loader";
 
 import { ModalType } from "@/config/enums";
 import { useModalStore } from "@/stores";
-
 import { paymentMethodSchema } from "@/schemas";
 import { useGetWayPayment } from "@/hooks/dashboard/payment/use-get-way";
 import { useDeposit } from "@/hooks/dashboard/payment/use-deposit";
-import { CreditCard } from "lucide-react";
 
 export const AddFundsModal = () => {
   const { isOpen, type, onClose } = useModalStore();
@@ -57,8 +57,8 @@ export const AddFundsModal = () => {
   };
 
   const onCancel = () => {
-    form.reset();
     onClose(ModalType.ADD_FUNDS);
+    form.reset();
   };
 
   return (
