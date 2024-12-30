@@ -9,8 +9,8 @@ import {
   Eye,
   EyeOff,
   Check,
-  Trash2,
   Loader2,
+  CheckCheck,
   Circle,
 } from "lucide-react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
@@ -34,6 +34,7 @@ import { Badge } from "@/components/ui/badge";
 import { NotificationDialog } from "./notification-dialog";
 import {
   useGetNotificationsQuery,
+  useMarkAllNotificationsMutation,
   useMarkNotificationByIdMutation,
 } from "@/services/notifications/hooks";
 import { cn } from "@/lib/utils";
@@ -52,14 +53,7 @@ export const NotificationsPopover = () => {
   } = useGetNotificationsQuery();
 
   const { mutate: markAsRead } = useMarkNotificationByIdMutation();
-
-  const handleShowMore = () => {
-    setShowMore((prev) => !prev);
-    notificationsRef.current?.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const { mutate: markAllAsRead } = useMarkAllNotificationsMutation();
 
   const displayedNotifications =
     isSuccess && showMore
@@ -70,8 +64,16 @@ export const NotificationsPopover = () => {
     markAsRead(id);
   };
 
-  const handleDelete = (id: string) => {
-    // deleteNotification(id);
+  const handleMarkAllAsRead = () => {
+    markAllAsRead();
+  };
+
+  const handleShowMore = () => {
+    setShowMore((prev) => !prev);
+    notificationsRef.current?.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const renderLabel = (type: INotification["type"]) => {
@@ -106,10 +108,32 @@ export const NotificationsPopover = () => {
       <PopoverContent align="end" className="w-80 p-0">
         <div className="flex justify-between items-center py-2 px-4">
           <h3 className="text-lg font-semibold">Notifications</h3>
-          <Button onClick={() => setIsOpen(false)} variant="ghost" size="icon">
-            <XCircle className="h-5 w-5" />
-            <span className="sr-only">Close</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={handleMarkAllAsRead}
+                    variant="ghost"
+                    size="icon"
+                    className="hover:text-[#03055B]"
+                  >
+                    <CheckCheck className="h-4 w-4" />
+                    <span className="sr-only">Mark all as read</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Mark all as read</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <Button
+              onClick={() => setIsOpen(false)}
+              variant="ghost"
+              size="icon"
+            >
+              <XCircle className="h-5 w-5" />
+              <span className="sr-only">Close</span>
+            </Button>
+          </div>
         </div>
         <Separator />
         <div
@@ -204,6 +228,9 @@ export const NotificationsPopover = () => {
                                         }}
                                       >
                                         <Check className="h-3.5 w-3.5" />
+                                        <span className="sr-only">
+                                          Mark as read
+                                        </span>
                                       </Button>
                                     </TooltipTrigger>
                                     <TooltipContent>
@@ -212,26 +239,6 @@ export const NotificationsPopover = () => {
                                   </Tooltip>
                                 </TooltipProvider>
                               )}
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Button
-                                      size="icon"
-                                      variant="ghost"
-                                      className="h-6 w-6 hover:text-rose-600 transition-colors"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        // onDelete(+notification.id);
-                                      }}
-                                    >
-                                      <Trash2 className="h-3.5 w-3.5" />
-                                    </Button>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    Delete notification
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
                             </div>
                           </motion.div>
                         </div>
