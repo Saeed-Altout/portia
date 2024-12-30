@@ -5,20 +5,20 @@ export const PageSkelton = () => {
     <div className="space-y-8">
       <div className="flex items-center justify-between flex-col md:flex-row gap-5">
         <div className="w-full space-y-2">
-          <Skeleton className="h-8 w-[180px]" />
+          <Skeleton className="h-8 w-[180px] border" />
         </div>
 
         <div className="w-full flex items-center justify-end gap-4">
-          <Skeleton className="h-10 w-full md:w-[120px]" />
-          <Skeleton className="h-10 w-full md:w-[120px]" />
+          <Skeleton className="h-10 w-full md:w-[120px] border" />
+          <Skeleton className="h-10 w-full md:w-[120px] border" />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Skeleton className="h-[150px] rounded-lg" />
-        <Skeleton className="h-[150px] rounded-lg" />
-        <Skeleton className="h-[150px] rounded-lg" />
-        <Skeleton className="h-[150px] rounded-lg" />
+        <Skeleton className="h-[150px] rounded-lg border" />
+        <Skeleton className="h-[150px] rounded-lg border" />
+        <Skeleton className="h-[150px] rounded-lg border" />
+        <Skeleton className="h-[150px] rounded-lg border" />
       </div>
 
       <div className="rounded-lg border overflow-x-auto">
