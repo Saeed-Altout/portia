@@ -23,11 +23,11 @@ export const useMarkAllNotificationsMutation = () => {
   });
 };
 
-export const useMarkNotificationByIdMutation = (id: string) => {
+export const useMarkNotificationByIdMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: ["mark-notification-by-id", `id:${id}`],
-    mutationFn: () => markNotificationById(id),
+    mutationKey: ["mark-notification-by-id"],
+    mutationFn: (id: string) => markNotificationById(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },

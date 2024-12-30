@@ -2,7 +2,7 @@
 
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/enums";
-import { useEditInfoProxyStore } from "@/stores/reducers/edit-info-proxy-store";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 interface CellProxiesInfoEditProps {
   data: any;
@@ -14,7 +14,7 @@ export const CellProxiesInfoEdit = ({
   children,
 }: CellProxiesInfoEditProps) => {
   const { onOpen } = useModalStore();
-  const { setProxy } = useEditInfoProxyStore();
+  const { setProxy } = useProxyStore();
 
   const handleEditClick = () => {
     setProxy(data);

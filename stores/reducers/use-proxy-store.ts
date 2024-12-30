@@ -38,13 +38,13 @@ const initialProxy: Proxy = {
   duration: 0,
 };
 
-interface EditAuthProxyStore {
+interface ProxyStore {
   proxy: Proxy;
   setProxy: (proxy: Proxy) => void;
   resetProxy: () => void;
 }
 
-export const useEditAuthProxyStore = create<EditAuthProxyStore>((set) => ({
+export const useProxyStore = create<ProxyStore>((set) => ({
   proxy: initialProxy,
   setProxy: (proxy) => set({ proxy }),
   resetProxy: () => set({ proxy: initialProxy }),

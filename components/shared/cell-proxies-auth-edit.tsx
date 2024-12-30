@@ -2,7 +2,7 @@
 
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/enums";
-import { useEditAuthProxyStore } from "@/stores/reducers/edit-auth-proxy-store";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 interface CellProxiesAuthEditProps {
   data: any;
@@ -14,7 +14,7 @@ export const CellProxiesAuthEdit = ({
   children,
 }: CellProxiesAuthEditProps) => {
   const { onOpen } = useModalStore();
-  const { setProxy } = useEditAuthProxyStore();
+  const { setProxy } = useProxyStore();
 
   const handleAuthEdit = () => {
     setProxy(data);

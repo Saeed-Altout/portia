@@ -25,7 +25,7 @@ import { editAuthProxySchema } from "@/schemas";
 import { ModalType } from "@/config/enums";
 import { useEditAuthProxyMutation } from "@/services/proxies/hooks";
 import { usePasswordControl } from "@/hooks/dashboard/use-password-control";
-import { useEditAuthProxyStore } from "@/stores/reducers/edit-auth-proxy-store";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 export const EditAuthProxyModal = () => {
   const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
@@ -35,7 +35,7 @@ export const EditAuthProxyModal = () => {
       },
     });
 
-  const { proxy, resetProxy } = useEditAuthProxyStore();
+  const { proxy, resetProxy } = useProxyStore();
   const { mutateAsync, isPending } = useEditAuthProxyMutation();
 
   const { isOpen, type, onClose } = useModalStore();

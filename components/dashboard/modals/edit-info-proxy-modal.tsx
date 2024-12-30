@@ -35,12 +35,15 @@ import { useModalStore } from "@/stores";
 import { editProxySchema } from "@/schemas";
 import { useEditInfoProxyMutation } from "@/services/proxies/hooks";
 import { useGetPortsQuery } from "@/services/settings/hooks";
-import { useEditInfoProxyStore } from "@/stores/reducers/edit-info-proxy-store";
+import { useLocationStore } from "@/stores/reducers/use-location-store";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
 
-  const { proxy, resetProxy } = useEditInfoProxyStore();
+  const { proxy, resetProxy } = useProxyStore();
+  const { location, resetLocation } = useLocationStore();
+
   const { mutateAsync, isPending } = useEditInfoProxyMutation();
   const { data: ports, isSuccess } = useGetPortsQuery({ id: proxy.package_id });
 
@@ -58,13 +61,17 @@ export const EditInfoProxyModal = () => {
   const handleClose = () => {
     form.reset();
     resetProxy();
+    resetLocation();
     onClose(ModalType.EDIT_INFO_PROXY);
   };
 
   const onSubmit = async (values: z.infer<typeof editProxySchema>) => {
     try {
       await mutateAsync({
-        parent_proxy_id: proxy.parent_proxy_id ?? "",
+        parent_proxy_id:
+          (!!location.id && location.id.toString()) ||
+          proxy.parent_proxy_id ||
+          "",
         proxy_id: proxy.proxy_id ?? "",
         protocol: values.protocol,
       });
@@ -76,9 +83,12 @@ export const EditInfoProxyModal = () => {
 
   useEffect(() => {
     if (proxy.service_provider) {
-      form.setValue("provider", proxy.service_provider);
+      form.setValue(
+        "provider",
+        location.service_provider_name || proxy.service_provider
+      );
     }
-  }, [form, proxy]);
+  }, [form, location, proxy]);
 
   return (
     <Modal

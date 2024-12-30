@@ -9,12 +9,12 @@ import { Button } from "@/components/ui/button";
 import { ModalType } from "@/config/enums";
 import { useStore } from "@/stores/use-store";
 import { useModalStore, useProxyStore } from "@/stores";
+import { useLocationStore } from "@/stores/reducers/use-location-store";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
   const { onOpen, type } = useModalStore();
-  const { setLocation } = useProxyStore();
   const { setLocationServiceProviderName } = useStore();
-
+  const { setLocation } = useLocationStore();
   const router = useRouter();
   const callback = useSearchParams().get("callback");
 

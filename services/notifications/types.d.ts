@@ -8,7 +8,7 @@ declare type INotification = {
   title: string;
   message: string;
   type: string;
-  data: Date | string;
+  date: Date | string;
   read_at: string | null;
 };
 

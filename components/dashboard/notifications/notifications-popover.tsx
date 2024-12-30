@@ -1,40 +1,57 @@
 "use client";
+
 import { useState, useRef } from "react";
-import { Bell, XCircle, ChevronDown, Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
+import {
+  Bell,
+  XCircle,
+  ChevronDown,
+  Eye,
+  EyeOff,
+  Check,
+  Trash2,
+  Loader2,
+  Circle,
+} from "lucide-react";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { formatDistanceToNow } from "date-fns";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { NotificationList } from "./notification-list";
 import {
-  INotification,
-  useNotificationsStore,
-} from "@/stores/use-notifications-store";
-import { useModalStore } from "@/stores/use-modal-store";
-import { ModalType } from "@/config/enums";
-import { motion } from "framer-motion";
-import { useGetNotificationsQuery } from "@/services/notifications/hooks";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
+import { NotificationDialog } from "./notification-dialog";
+import {
+  useGetNotificationsQuery,
+  useMarkNotificationByIdMutation,
+} from "@/services/notifications/hooks";
+import { cn } from "@/lib/utils";
 
 export const NotificationsPopover = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showMore, setShowMore] = useState(false);
+  const [selectedNotification, setSelectedNotification] =
+    useState<INotification | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [showMore, setShowMore] = useState<boolean>(false);
   const notificationsRef = useRef<HTMLDivElement>(null);
 
   const {
-    notifications,
-    setSelectedNotification,
-    markAsRead,
-    deleteNotification,
-  } = useNotificationsStore();
-  const { onOpen } = useModalStore();
+    data: notifications,
+    isSuccess,
+    isLoading,
+  } = useGetNotificationsQuery();
 
-  const handleNotificationClick = (notification: INotification) => {
-    onOpen(ModalType.NOTIFICATION);
-    setSelectedNotification(notification);
-  };
+  const { mutate: markAsRead } = useMarkNotificationByIdMutation();
 
   const handleShowMore = () => {
     setShowMore((prev) => !prev);
@@ -42,6 +59,40 @@ export const NotificationsPopover = () => {
       top: 0,
       behavior: "smooth",
     });
+  };
+
+  const displayedNotifications =
+    isSuccess && showMore
+      ? notifications?.data
+      : notifications?.data?.slice(0, 5);
+
+  const handleMarkAsRead = (id: string) => {
+    markAsRead(id);
+  };
+
+  const handleDelete = (id: string) => {
+    // deleteNotification(id);
+  };
+
+  const renderLabel = (type: INotification["type"]) => {
+    const badges = {
+      success: "bg-emerald-50 text-emerald-700",
+      warning: "bg-amber-50/50 text-amber-700 rounded-full",
+      new: "bg-blue-50 text-blue-700",
+      error: "bg-rose-50 text-rose-700",
+    };
+
+    return (
+      <Badge
+        variant="outline"
+        className={cn(
+          "text-[10px] font-medium px-2.5 py-0.5",
+          badges[type as keyof typeof badges]
+        )}
+      >
+        {type}
+      </Badge>
+    );
   };
 
   return (
@@ -65,12 +116,137 @@ export const NotificationsPopover = () => {
           ref={notificationsRef}
           className="max-h-[375px] overflow-y-auto p-4"
         >
-          <NotificationList
-            notifications={notifications}
-            onDelete={deleteNotification}
-            onMarkAsRead={markAsRead}
-            showMore={showMore}
-          />
+          {isLoading ? (
+            <div className="flex items-center justify-center h-[30px]">
+              <Loader2 className="h-5 w-5 animate-spin" />
+            </div>
+          ) : (
+            <LayoutGroup>
+              <motion.div
+                layout
+                initial={false}
+                className={cn(
+                  "space-y-4 transition-all",
+                  showMore ? "max-h-[800px]" : "max-h-[375px]"
+                )}
+                animate={{
+                  height: showMore ? "auto" : "375px",
+                  transition: {
+                    duration: 0.4,
+                    ease: [0.4, 0, 0.2, 1],
+                  },
+                }}
+              >
+                <AnimatePresence mode="wait">
+                  {displayedNotifications?.map((notification) => (
+                    <motion.div
+                      key={notification.id}
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{
+                        opacity: 0,
+                        y: -20,
+                        transition: { duration: 0.3 },
+                      }}
+                      className={cn(
+                        "group relative p-3 rounded-lg cursor-pointer transition-all duration-200",
+                        !notification.read_at
+                          ? "bg-white shadow-sm"
+                          : "hover:bg-slate-50"
+                      )}
+                      onClick={() => setSelectedNotification(notification)}
+                    >
+                      <div className="flex gap-3">
+                        {!notification.read_at && (
+                          <motion.div layoutId={`unread-${notification.id}`}>
+                            <Circle className="h-2 w-2 mt-1 fill-[#03055B]" />
+                          </motion.div>
+                        )}
+                        <div className="flex-1 space-y-1">
+                          <motion.h2
+                            layout="position"
+                            className="text-sm font-medium text-slate-900"
+                          >
+                            {notification.title}
+                          </motion.h2>
+                          <motion.p
+                            layout="position"
+                            className="text-xs text-slate-500 line-clamp-2"
+                          >
+                            {notification.message}
+                          </motion.p>
+                          <motion.div
+                            layout="position"
+                            className="flex items-center justify-between pt-2"
+                          >
+                            <div className="flex items-center gap-2">
+                              {renderLabel(notification.type)}
+                              <span className="text-[10px] text-slate-400">
+                                {formatDistanceToNow(
+                                  new Date(notification.date),
+                                  { addSuffix: true }
+                                )}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                              {!notification.read_at && (
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <Button
+                                        size="icon"
+                                        variant="ghost"
+                                        className="h-6 w-6 hover:text-[#03055B]"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleMarkAsRead(notification.id);
+                                        }}
+                                      >
+                                        <Check className="h-3.5 w-3.5" />
+                                      </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      Mark as read
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              )}
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      size="icon"
+                                      variant="ghost"
+                                      className="h-6 w-6 hover:text-rose-600 transition-colors"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        // onDelete(+notification.id);
+                                      }}
+                                    >
+                                      <Trash2 className="h-3.5 w-3.5" />
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    Delete notification
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            </div>
+                          </motion.div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+              <NotificationDialog
+                notification={selectedNotification}
+                isOpen={!!selectedNotification}
+                onClose={() => setSelectedNotification(null)}
+              />
+            </LayoutGroup>
+          )}
         </div>
         <Button
           onClick={handleShowMore}
