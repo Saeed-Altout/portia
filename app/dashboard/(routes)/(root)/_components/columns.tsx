@@ -49,10 +49,6 @@ const renderAuthCell = (data: Proxy) => (
   >{`${data.username}:${data.password}`}</CellProxiesAuthEdit>
 );
 
-const renderExpireDate = (date: string) => (
-  <p className={cn(date && "text-[#801121]")}>{format(date, "MMM dd, yyyy")}</p>
-);
-
 export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "sequence",
@@ -89,7 +85,9 @@ export const columns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
-    cell: ({ row }) => renderExpireDate(row.original.expire_at),
+    cell: ({ row }) => (
+      <p className="text-[#801121]">{row.original.expire_at}</p>
+    ),
   },
   {
     accessorKey: "username",

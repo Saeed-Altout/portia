@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { CellActions } from "./cell-actions";
 import { CellButtonRenew } from "./cell-renew";
 import { CellInfoEdit } from "./cell-info-edit";
 import { CellAuthEdit } from "./cell-auth-edit";
@@ -21,15 +20,10 @@ export type Proxy = {
   username: string;
   password: string;
   plan_name: string;
-
-  // Additional for state
   proxy_id: string;
   parent_proxy_id: string;
   package_id: string;
   duration: number;
-  country_name: string;
-  rotation_time: string;
-  amount: string;
 };
 export const activeColumns: ColumnDef<Proxy>[] = [
   {
@@ -81,9 +75,7 @@ export const activeColumns: ColumnDef<Proxy>[] = [
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>
-        {format(row.original.expire_at, "MMM dd, yyyy")}
-      </p>
+      <p className="text-[#801121]">{row.original.expire_at}</p>
     ),
   },
   {
@@ -152,9 +144,7 @@ export const inactiveColumns: ColumnDef<Proxy>[] = [
     accessorKey: "expire_at",
     header: () => <p className="whitespace-nowrap">Expired Date</p>,
     cell: ({ row }) => (
-      <p className={cn(row.original.expire_at && "text-[#801121]")}>
-        {format(row.original.expire_at, "MMM dd, yyyy")}
-      </p>
+      <p className="text-[#801121]">{row.original.expire_at}</p>
     ),
   },
   {

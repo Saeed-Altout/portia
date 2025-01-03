@@ -1,10 +1,10 @@
 "use client";
 
 import { Zap } from "lucide-react";
-import { format } from "date-fns";
 
 import { useData } from "./use-data";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/components/shared/data-table";
+
 import { ProxiesCard } from "./proxies-card";
 import { activeColumns, inactiveColumns } from "./columns";
 
@@ -12,14 +12,6 @@ import { Heading } from "@/components/dashboard";
 
 import { useAuthStore } from "@/stores";
 import { PageSkelton } from "@/components/skeletons/page-skeleton";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
@@ -55,19 +47,14 @@ export const ProxiesClient = () => {
     protocol: proxy.protocol,
     service_provider: proxy.service_provider,
     protocol_port: proxy.protocol_port,
-    expire_at: format(proxy.expire_at, "MMM dd, yyyy"),
+    expire_at: proxy.expire_at,
     username: proxy.username,
     password: proxy.password,
     plan_name: proxy.plan_name,
-
-    // Additional for state
     proxy_id: proxy.proxy_id,
     parent_proxy_id: proxy.parent_proxy_id,
     package_id: proxy.package_id,
     duration: proxy.duration,
-    rotation_time: proxy.rotation_time,
-    country_name: proxy.country_name,
-    amount: proxy.amount,
   }));
   const formattedProxiesInactive = proxiesInactive.map((proxy, index) => ({
     sequence: `${index + 1}`,
@@ -78,19 +65,14 @@ export const ProxiesClient = () => {
     protocol: proxy.protocol,
     service_provider: proxy.service_provider,
     protocol_port: proxy.protocol_port,
-    expire_at: format(proxy.expire_at, "MMM dd, yyyy"),
+    expire_at: proxy.expire_at,
     username: proxy.username,
     password: proxy.password,
     plan_name: proxy.plan_name,
-
-    // Additional for state
     proxy_id: proxy.proxy_id,
     parent_proxy_id: proxy.parent_proxy_id,
     package_id: proxy.package_id,
     duration: proxy.duration,
-    rotation_time: proxy.rotation_time,
-    country_name: proxy.country_name,
-    amount: proxy.amount,
   }));
 
   if (isLoading || isError) {
@@ -107,13 +89,16 @@ export const ProxiesClient = () => {
       </div>
       <DataTable
         columns={activeColumns}
-        data={formattedProxiesActive}
+        data={formattedProxiesActive ?? []}
         title="My Active Proxies"
+        isLoading={isLoading}
       />
+
       <DataTable
         columns={inactiveColumns}
-        data={formattedProxiesInactive}
+        data={formattedProxiesInactive ?? []}
         title="My Inactive Proxies"
+        isLoading={isLoading}
       />
     </>
   );

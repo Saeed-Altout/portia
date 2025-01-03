@@ -1,7 +1,6 @@
 "use client";
 
 import { Zap } from "lucide-react";
-import { format } from "date-fns";
 
 import { columns } from "./columns";
 import { useData } from "./use-data";
@@ -46,7 +45,7 @@ export const RootClient = () => {
     protocol: proxy.protocol,
     service_provider: proxy.service_provider,
     protocol_port: proxy.protocol_port,
-    expire_at: format(proxy.expire_at, "MMM dd, yyyy"),
+    expire_at: proxy.expire_at,
     username: proxy.username,
     password: proxy.password,
     plan_name: proxy.plan_name,
