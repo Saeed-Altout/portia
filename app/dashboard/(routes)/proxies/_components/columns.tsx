@@ -24,6 +24,7 @@ export interface Proxy {
   parent_proxy_id: string;
   package_id: string;
   duration: number;
+  ip_addr: any;
 }
 
 const STATUS_STYLES = {
@@ -80,6 +81,13 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "protocol_port",
     header: "Port",
+    cell: ({ row }) => (
+      <p>{`${row.original.protocol}:${row.original.protocol_port}`}</p>
+    ),
+  },
+  {
+    accessorKey: "ip_addr",
+    header: "IP Address",
   },
   {
     accessorKey: "expire_at",
@@ -141,6 +149,13 @@ export const inactiveColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "protocol_port",
     header: "Port",
+    cell: ({ row }) => (
+      <p>{`${row.original.protocol}:${row.original.protocol_port}`}</p>
+    ),
+  },
+  {
+    accessorKey: "ip_addr",
+    header: "IP Address",
   },
   {
     accessorKey: "expire_at",

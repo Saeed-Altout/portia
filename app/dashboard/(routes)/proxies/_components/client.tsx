@@ -60,6 +60,7 @@ export const ProxiesClient = () => {
     amount: proxy.amount,
     rotation_time: proxy.rotation_time,
     country_name: proxy.country_name,
+    ip_addr: proxy.ip_addr,
   }));
   const formattedProxiesInactive = proxiesInactive.map((proxy, index) => ({
     sequence: `${index + 1}`,
@@ -81,6 +82,7 @@ export const ProxiesClient = () => {
     amount: proxy.amount,
     rotation_time: proxy.rotation_time,
     country_name: proxy.country_name,
+    ip_addr: proxy.ip_addr,
   }));
 
   if (isLoading || isError) {

@@ -11,6 +11,7 @@ import { RootCard } from "@/components/dashboard/cards/root-card";
 import { PageSkelton } from "@/components/skeletons/page-skeleton";
 
 import { useAuthStore } from "@/stores";
+import { ManageSheet } from "./manage-sheet";
 
 export const RootClient = () => {
   const { user } = useAuthStore();
@@ -53,6 +54,10 @@ export const RootClient = () => {
     parent_proxy_id: proxy.parent_proxy_id,
     package_id: proxy.package_id,
     duration: proxy.duration,
+    amount: proxy.amount,
+    rotation_time: proxy.rotation_time,
+    country_name: proxy.country_name,
+    ip_addr: proxy.ip_addr,
   }));
 
   if (isLoading || isError) {
@@ -61,6 +66,7 @@ export const RootClient = () => {
 
   return (
     <>
+      <ManageSheet />
       <Heading title={`Welcome back ${user.first_name}`} newProxy addFunds />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {statistics.map((item, index) => (
