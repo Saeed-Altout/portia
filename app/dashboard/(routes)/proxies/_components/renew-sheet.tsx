@@ -71,7 +71,6 @@ export const RenewSheet = ({
     }[]
   >([]);
   const [duration, setDuration] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
 
   const { data: ports } = useGetPorts({ id: proxy.package_id });
@@ -100,7 +99,11 @@ export const RenewSheet = ({
     try {
       await mutateAsync({
         proxy_id: proxy?.proxy_id,
-        parent_proxy_id: location?.id.toString() || proxy?.parent_proxy_id,
+        parent_proxy_id: !!proxy.parent_proxy_id
+          ? !!location.id
+            ? location.id.toString()
+            : proxy.parent_proxy_id
+          : "",
         protocol: values.protocol,
         password: values.password,
         duration: duration,
@@ -113,6 +116,7 @@ export const RenewSheet = ({
 
   useEffect(() => {
     if (costsData && costsData.data && proxy.plan_name) {
+      //@ts-ignore
       const currentRecords = costsData?.data[proxy.plan_name];
       if (currentRecords) {
         setRecordsPlan(currentRecords);
@@ -132,7 +136,6 @@ export const RenewSheet = ({
       });
 
       if (currentRecord) {
-        setPrice(currentRecord.price.toString());
         setDuration(currentRecord.duration.toString());
         setAmount(currentRecord.value.toString());
       }
@@ -140,24 +143,27 @@ export const RenewSheet = ({
   }, [proxy.amount, recordsPlan]);
 
   useEffect(() => {
-    if (
-      (location.service_provider_name && location.rotation_time) ||
-      (proxy.rotation_time && proxy.service_provider)
-    ) {
-      form.setValue(
-        "ipRotation",
-        `${proxy.rotation_time ?? location.rotation_time ?? ""}`
-      );
-      form.setValue(
-        "provider",
-        `${proxy.service_provider ?? location.service_provider_name ?? ""}`
-      );
+    if (proxy.rotation_time && proxy.service_provider) {
+      if (location.service_provider_name && location.rotation_time) {
+        form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
+        form.setValue("provider", `${location.service_provider_name ?? ""}`);
+      } else {
+        form.setValue("ipRotation", `${proxy.rotation_time ?? ""}`);
+        form.setValue("provider", `${proxy.service_provider ?? ""}`);
+      }
     }
   }, [form, proxy, location]);
 
   useEffect(() => {
-    if (proxy.plan_name && proxy.amount && proxy.username && proxy.password) {
+    if (
+      proxy.plan_name &&
+      proxy.amount &&
+      proxy.username &&
+      proxy.password &&
+      proxy.protocol
+    ) {
       form.setValue("plan", proxy.plan_name);
+      form.setValue("username", proxy.username);
       form.setValue("password", proxy.password);
       form.setValue("protocol", proxy.protocol);
       form.setValue("amount", proxy.amount.toString());
@@ -194,11 +200,11 @@ export const RenewSheet = ({
                     onValueChange={(value) => {
                       setRecordsPlan([]);
                       setAmounts([]);
-                      setPrice("");
                       setDuration("");
                       setAmount(""); // Reset amount
 
                       if (costsData && costsData.data) {
+                        //@ts-ignore
                         const currentRecords = costsData.data[value];
                         if (currentRecords) {
                           setRecordsPlan(currentRecords);
@@ -241,7 +247,6 @@ export const RenewSheet = ({
                     value={amount} // Controlled value
                     disabled={isPending || amounts.length == 0}
                     onValueChange={(value) => {
-                      setPrice("");
                       setAmount("");
                       setDuration("");
 
@@ -251,7 +256,6 @@ export const RenewSheet = ({
                         );
 
                         if (currentRecord) {
-                          setPrice(currentRecord.price.toString());
                           setDuration(currentRecord.duration.toString());
                           setAmount(currentRecord.value.toString());
                         }
