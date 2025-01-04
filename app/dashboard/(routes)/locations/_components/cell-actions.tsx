@@ -13,14 +13,12 @@ import { useLocationStore } from "@/stores/reducers/use-location-store";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
   const { onOpen, type } = useModalStore();
-  const { setLocationServiceProviderName } = useStore();
   const { setLocation } = useLocationStore();
   const router = useRouter();
   const callback = useSearchParams().get("callback");
 
   const onSelectProvider = () => {
     setLocation(data);
-    setLocationServiceProviderName(data.service_provider_name);
 
     if (type === ModalType.ADD_PROXY) {
       onOpen(ModalType.ADD_PROXY);

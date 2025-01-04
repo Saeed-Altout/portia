@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useProxyStore } from "@/stores";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -55,7 +55,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
     },
   });
 
-  const { pkgName } = useProxyStore();
+  const { proxy } = useProxyStore();
 
   const currentPage = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();
@@ -116,10 +116,10 @@ export function DataTable<TData extends { package_name: string }, TValue>({
   const rotationsTime = extractUniqueColumnValues("rotation_time");
 
   React.useEffect(() => {
-    if (pkgName) {
-      table.getColumn("package_name")?.setFilterValue(pkgName);
+    if (proxy.package_name) {
+      table.getColumn("package_name")?.setFilterValue(proxy.package_name);
     }
-  }, [pkgName, table]);
+  }, [proxy.package_name, table]);
 
   return (
     <div className="rounded-md border overflow-hidden">
@@ -140,7 +140,7 @@ export function DataTable<TData extends { package_name: string }, TValue>({
             }
           }}
           defaultValue={
-            pkgName ||
+            proxy.package_name ||
             (table.getColumn("package_name")?.getFilterValue() as string) ||
             ""
           }

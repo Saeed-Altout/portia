@@ -37,7 +37,6 @@ import { Loader } from "@/components/ui/loader";
 import { Circle, Icon } from "@/components/ui/circle-icon";
 
 import { useGetCostPlans, useGetPorts, useRenewProxy } from "@/hooks";
-import { Proxy } from "./columns";
 import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 import { useLocationStore } from "@/stores/reducers/use-location-store";
 
@@ -52,11 +51,9 @@ const formSchema = z.object({
 });
 
 export const RenewSheet = ({
-  data,
   isOpen,
   onClose,
 }: {
-  data: Proxy;
   isOpen: boolean;
   onClose: () => void;
 }) => {
@@ -77,9 +74,7 @@ export const RenewSheet = ({
   const [price, setPrice] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
 
-  const { data: ports, isSuccess: portsIsSuccess } = useGetPorts({
-    id: proxy.package_id,
-  });
+  const { data: ports } = useGetPorts({ id: proxy.package_id });
   const { data: costsData, isSuccess: costsIsSuccess } = useGetCostPlans({
     pkg_id: proxy.package_id,
   });
@@ -91,32 +86,34 @@ export const RenewSheet = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      plan: data.plan_name || "",
-      provider: data.service_provider || "",
-      protocol: data.protocol || "",
-      username: data.username || "",
-      password: data.password || "",
-      amount: data.amount.toString() || "",
-      ipRotation: data.rotation_time || "",
+      plan: proxy?.plan_name || "",
+      provider: proxy?.service_provider || "",
+      protocol: proxy?.protocol || "",
+      username: proxy?.username || "",
+      password: proxy?.password || "",
+      amount: proxy?.amount.toString() || "",
+      ipRotation: proxy?.rotation_time || "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({
-        proxy_id: data.proxy_id,
-        parent_proxy_id: data.parent_proxy_id,
+        proxy_id: proxy?.proxy_id,
+        parent_proxy_id: location?.id.toString() || proxy?.parent_proxy_id,
         protocol: values.protocol,
         password: values.password,
         duration: duration,
       });
       form.reset();
+      resetProxy();
+      resetLocation();
     } catch (error) {}
   };
 
   useEffect(() => {
-    if (costsData && costsData.data && data.plan_name) {
-      const currentRecords = costsData?.data[data.plan_name];
+    if (costsData && costsData.data && proxy.plan_name) {
+      const currentRecords = costsData?.data[proxy.plan_name];
       if (currentRecords) {
         setRecordsPlan(currentRecords);
 
@@ -126,12 +123,12 @@ export const RenewSheet = ({
         setAmounts(amounts);
       }
     }
-  }, [costsData, data.plan_name]);
+  }, [costsData, proxy.plan_name]);
 
   useEffect(() => {
-    if (data.amount && recordsPlan) {
+    if (proxy.amount && recordsPlan) {
       const currentRecord = recordsPlan.find((record: any) => {
-        return record.value.toString() === data.amount.toString();
+        return record.value.toString() === proxy.amount.toString();
       });
 
       if (currentRecord) {
@@ -140,7 +137,7 @@ export const RenewSheet = ({
         setAmount(currentRecord.value.toString());
       }
     }
-  }, [data.amount, recordsPlan]);
+  }, [proxy.amount, recordsPlan]);
 
   useEffect(() => {
     if (location.service_provider_name && location.rotation_time) {
@@ -158,252 +155,249 @@ export const RenewSheet = ({
           </Circle>
           <div>
             <SheetTitle>Renew Proxy</SheetTitle>
-            <p>
-              price:{price} - duration:{duration} - amount:{amount}
-            </p>
             <SheetDescription>You can renew your proxy here.</SheetDescription>
           </div>
         </SheetHeader>
 
-        {!!data && (
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex-1 overflow-y-auto p-4 space-y-4"
-            >
-              <FormField
-                control={form.control}
-                name="plan"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Plan</FormLabel>
-                    <Select
-                      value={field.value} // Controlled value
-                      disabled={isPending || plans.length === 0}
-                      onValueChange={(value) => {
-                        setRecordsPlan([]);
-                        setAmounts([]);
-                        setPrice("");
-                        setDuration("");
-                        setAmount(""); // Reset amount
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex-1 overflow-y-auto p-4 space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="plan"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Plan</FormLabel>
+                  <Select
+                    value={field.value} // Controlled value
+                    disabled={isPending || plans.length === 0}
+                    onValueChange={(value) => {
+                      setRecordsPlan([]);
+                      setAmounts([]);
+                      setPrice("");
+                      setDuration("");
+                      setAmount(""); // Reset amount
 
-                        if (costsData && costsData.data) {
-                          const currentRecords = costsData.data[value];
-                          if (currentRecords) {
-                            setRecordsPlan(currentRecords);
-                            setAmounts(
-                              currentRecords.map((obj: any) =>
-                                obj.value.toString()
-                              )
-                            );
-                          }
-                        }
-
-                        field.onChange(value); // Update form value
-                      }}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a plan" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {plans.map((plan) => (
-                          <SelectItem key={plan} value={plan}>
-                            {plan}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="amount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Amount</FormLabel>
-                    <Select
-                      value={amount} // Controlled value
-                      disabled={isPending || amounts.length == 0}
-                      onValueChange={(value) => {
-                        setPrice("");
-                        setAmount("");
-                        setDuration("");
-
-                        if (recordsPlan) {
-                          const currentRecord = recordsPlan.find(
-                            (record) => record.value.toString() === value
+                      if (costsData && costsData.data) {
+                        const currentRecords = costsData.data[value];
+                        if (currentRecords) {
+                          setRecordsPlan(currentRecords);
+                          setAmounts(
+                            currentRecords.map((obj: any) =>
+                              obj.value.toString()
+                            )
                           );
-
-                          if (currentRecord) {
-                            setPrice(currentRecord.price.toString());
-                            setDuration(currentRecord.duration.toString());
-                            setAmount(currentRecord.value.toString());
-                          }
                         }
+                      }
 
-                        field.onChange(value); // Update form value
-                      }}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select an amount" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {amounts.map((amount, key) => (
-                          <SelectItem key={key} value={amount}>
-                            {amount}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="protocol"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Proxy Type</FormLabel>
-                    <Select
-                      disabled={isPending || ports?.data.length == 0}
-                      defaultValue={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a proxy type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {ports?.data.map((item, index) => (
-                          <SelectItem key={index} value={item}>
-                            {item}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="provider"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Provider & Location</FormLabel>
+                      field.onChange(value); // Update form value
+                    }}
+                  >
                     <FormControl>
-                      <div className="flex justify-between items-center">
-                        <Input
-                          placeholder="Provider & Location"
-                          className="flex-1 rounded-r-none"
-                          disabled={true}
-                          {...field}
-                        />
-                        <Button
-                          size="icon"
-                          className="rounded-l-none"
-                          type="button"
-                          asChild
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a plan" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {plans.map((plan) => (
+                        <SelectItem key={plan} value={plan}>
+                          {plan}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Amount</FormLabel>
+                  <Select
+                    value={amount} // Controlled value
+                    disabled={isPending || amounts.length == 0}
+                    onValueChange={(value) => {
+                      setPrice("");
+                      setAmount("");
+                      setDuration("");
+
+                      if (recordsPlan) {
+                        const currentRecord = recordsPlan.find(
+                          (record) => record.value.toString() === value
+                        );
+
+                        if (currentRecord) {
+                          setPrice(currentRecord.price.toString());
+                          setDuration(currentRecord.duration.toString());
+                          setAmount(currentRecord.value.toString());
+                        }
+                      }
+
+                      field.onChange(value); // Update form value
+                    }}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select an amount" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {amounts.map((amount, key) => (
+                        <SelectItem key={key} value={amount}>
+                          {amount}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="protocol"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Proxy Type</FormLabel>
+                  <Select
+                    disabled={isPending || ports?.data.length == 0}
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a proxy type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {ports?.data.map((item, index) => (
+                        <SelectItem key={index} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="provider"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Provider & Location</FormLabel>
+                  <FormControl>
+                    <div className="flex justify-between items-center">
+                      <Input
+                        placeholder="Provider & Location"
+                        className="flex-1 rounded-r-none"
+                        disabled={true}
+                        {...field}
+                      />
+                      <Button
+                        size="icon"
+                        className="rounded-l-none"
+                        type="button"
+                        asChild
+                        onClick={onClose}
+                      >
+                        <Link
+                          href={`/dashboard/locations?callback=${pathname}`}
                         >
-                          <Link
-                            href={`/dashboard/locations?callback=${pathname}`}
-                          >
-                            <ArrowUpRight className="h-4 w-4" />
-                            <span className="sr-only">ArrowUpRight Icon</span>
-                          </Link>
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="ipRotation"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Minimum time between IP rotation</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={true}
-                        placeholder="IP rotation"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input
-                        icon={User}
-                        type="text"
-                        disabled={true}
-                        placeholder="username"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        icon={Key}
-                        type="password"
-                        disabled={isPending}
-                        placeholder="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex items-center gap-4">
-                <Button
-                  disabled={isPending}
-                  type="submit"
-                  className="w-full md:w-auto"
-                >
-                  {isPending ? <Loader /> : "Renew"}
-                </Button>
-                <Button
-                  disabled={isPending}
-                  type="button"
-                  variant="outline"
-                  className="w-full md:w-auto"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </Form>
-        )}
+                          <ArrowUpRight className="h-4 w-4" />
+                          <span className="sr-only">ArrowUpRight Icon</span>
+                        </Link>
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ipRotation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Minimum time between IP rotation</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={true}
+                      placeholder="IP rotation"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      icon={User}
+                      type="text"
+                      disabled={true}
+                      placeholder="username"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      icon={Key}
+                      type="password"
+                      disabled={isPending}
+                      placeholder="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex items-center gap-4">
+              <Button
+                disabled={isPending}
+                type="submit"
+                className="w-full md:w-auto"
+              >
+                {isPending ? <Loader /> : "Renew"}
+              </Button>
+              <Button
+                disabled={isPending}
+                type="button"
+                variant="outline"
+                className="w-full md:w-auto"
+                onClick={onClose}
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </Form>
       </SheetContent>
     </Sheet>
   );

@@ -1,33 +1,23 @@
 "use client";
 
-import { useState } from "react";
-
 import { Proxy } from "./columns";
-import { RenewSheet } from "./renew-sheet";
 import { Button } from "@/components/ui/button";
 import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useModalStore } from "@/stores";
+import { ModalType } from "@/config/enums";
 
 export const CellButtonRenew = ({ data }: { data: Proxy }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { proxy, setProxy } = useProxyStore();
+  const { setProxy } = useProxyStore();
+  const { onOpen } = useModalStore();
 
   const handleSelect = (data: Proxy) => {
     setProxy(data);
-    setIsOpen(true);
+    onOpen(ModalType.RENEW_PROXY);
   };
 
   return (
-    <>
-      <Button size="sm" onClick={() => handleSelect(data)}>
-        Renew
-      </Button>
-      {isOpen && !!data && (
-        <RenewSheet
-          data={data}
-          isOpen={isOpen && !!data}
-          onClose={() => setIsOpen(false)}
-        />
-      )}
-    </>
+    <Button size="sm" onClick={() => handleSelect(data)}>
+      Renew
+    </Button>
   );
 };

@@ -10,8 +10,10 @@ import { activeColumns, inactiveColumns } from "./columns";
 
 import { Heading } from "@/components/dashboard";
 
-import { useAuthStore } from "@/stores";
+import { useAuthStore, useModalStore } from "@/stores";
 import { PageSkelton } from "@/components/skeletons/page-skeleton";
+import { RenewSheet } from "./renew-sheet";
+import { ModalType } from "@/config/enums";
 
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
@@ -37,6 +39,9 @@ export const ProxiesClient = () => {
       value: `${proxiesCount?.total ?? 0} Proxies`,
     },
   ];
+
+  const { isOpen, type, onClose } = useModalStore();
+  const isOpenModal = isOpen && type === ModalType.RENEW_PROXY;
 
   const formattedProxiesActive = proxiesActive.map((proxy, index) => ({
     sequence: `${index + 1}`,
@@ -87,6 +92,10 @@ export const ProxiesClient = () => {
 
   return (
     <>
+      <RenewSheet
+        isOpen={isOpenModal}
+        onClose={() => onClose(ModalType.RENEW_PROXY)}
+      />
       <Heading title={`Welcome back ${user.first_name}`} newProxy addFunds />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {formattedStatistic.map((item, index) => (
@@ -99,7 +108,6 @@ export const ProxiesClient = () => {
         title="My Active Proxies"
         isLoading={isLoading}
       />
-
       <DataTable
         columns={inactiveColumns}
         data={formattedProxiesInactive ?? []}
