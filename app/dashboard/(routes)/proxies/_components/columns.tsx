@@ -1,12 +1,11 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { CellButtonRenew } from "./cell-renew";
 import { CellInfoEdit } from "./cell-info-edit";
 import { CellAuthEdit } from "./cell-auth-edit";
+
 export type Proxy = {
   sequence: string;
   id: number;
@@ -24,7 +23,11 @@ export type Proxy = {
   parent_proxy_id: string;
   package_id: string;
   duration: number;
+  amount: number;
+  rotation_time: string;
+  country_name: string;
 };
+
 export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "sequence",
@@ -93,7 +96,6 @@ export const activeColumns: ColumnDef<Proxy>[] = [
     cell: ({ row }) => <CellButtonRenew data={row.original} />,
   },
 ];
-
 export const inactiveColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "sequence",

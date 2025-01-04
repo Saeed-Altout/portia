@@ -17,6 +17,9 @@ interface Proxy {
   parent_proxy_id: string;
   package_id: string;
   duration: number;
+  amount: number;
+  rotation_time: string;
+  country_name: string;
 }
 
 const initialProxy: Proxy = {
@@ -28,7 +31,7 @@ const initialProxy: Proxy = {
   protocol: "",
   service_provider: "",
   protocol_port: 0,
-  expire_at: null,
+  expire_at: "",
   username: "",
   password: "",
   plan_name: "",
@@ -36,6 +39,9 @@ const initialProxy: Proxy = {
   parent_proxy_id: "",
   package_id: "",
   duration: 0,
+  rotation_time: "",
+  amount: 0,
+  country_name: "",
 };
 
 interface ProxyStore {

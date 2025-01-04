@@ -32,7 +32,7 @@ export const Modal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>
-      <DialogContent className="max-w-sm sm:max-w-[480px]">
+      <DialogContent className="max-w-sm sm:max-w-[480px] max-h-[50vh]">
         <DialogHeader>
           <DialogTitle className="text-lg font-medium">{title}</DialogTitle>
           <DialogDescription className="text-sm font-normal">
