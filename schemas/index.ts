@@ -169,7 +169,10 @@ export const editProxySchema = z.object({
 });
 export const paymentMethodSchema = z.object({
   payment_method: z.string().min(2),
-  amount: z.string().min(1).regex(/^\d+$/, {
-    message: "Amount must be a valid number",
-  }),
+  amount: z
+    .string()
+    .min(1)
+    .regex(/^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$/, {
+      message: "Amount must be a valid number greater than 0",
+    }),
 });
