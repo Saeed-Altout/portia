@@ -11,10 +11,22 @@ const firebaseConfig = {
   measurementId: "G-FQD36DDW6Q",
 };
 
+// Initialize Firebase App
 const firebaseApp = initializeApp(firebaseConfig);
-export const messaging = getMessaging(firebaseApp);
 
+// Check for `window` before initializing messaging to prevent SSR issues
+export const messaging =
+  typeof window !== "undefined" && "serviceWorker" in navigator
+    ? getMessaging(firebaseApp)
+    : null;
+
+// Request permissions and generate FCM token
 export const requestPermissions = async () => {
+  if (!messaging) {
+    console.error("Firebase Messaging is not supported in this environment.");
+    return;
+  }
+
   try {
     const permission = await Notification.requestPermission();
 
@@ -22,8 +34,14 @@ export const requestPermissions = async () => {
       const token = await getToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       });
-      localStorage.setItem("fcm_token", token);
-    } else if (permission === "denied") {
+
+      if (token) {
+        localStorage.setItem("fcm_token", token);
+        console.log("FCM Token:", token);
+      } else {
+        console.error("Failed to retrieve FCM token.");
+      }
+    } else {
       console.error(
         "Permission for notifications was denied. Please enable it from browser settings."
       );
@@ -33,10 +51,17 @@ export const requestPermissions = async () => {
   }
 };
 
+// Listener for incoming messages
 export const onMessageListener = () => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    if (!messaging) {
+      console.error("Firebase Messaging is not initialized.");
+      reject(new Error("Firebase Messaging is not initialized."));
+      return;
+    }
+
     onMessage(messaging, (payload) => {
-      console.log(payload);
+      console.log("Message received:", payload);
       resolve(payload);
     });
   });

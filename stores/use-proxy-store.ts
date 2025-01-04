@@ -25,7 +25,7 @@ const initialProxy: IProxy = {
   updated_at: "",
   plan_id: 0,
   plan_name: "",
-  amount: "",
+  amount: 0,
 };
 
 const initialLocation: ILocation = {
