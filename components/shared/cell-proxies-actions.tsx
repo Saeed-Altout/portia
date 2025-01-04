@@ -2,7 +2,6 @@
 
 import { Activity, RefreshCw } from "lucide-react";
 
-import { Proxy } from "../../app/dashboard/(routes)/(root)/_components/columns";
 import {
   Tooltip,
   TooltipContent,
@@ -11,15 +10,11 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { ModalType } from "@/config/enums";
-import { useModalStore, useStore } from "@/stores";
+import { useModalStore } from "@/stores";
 import { useRenewProxy } from "@/hooks/dashboard/proxy/use-renew-proxy";
 import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
-interface CellProxiesActionsProps {
-  data: Proxy;
-}
-
-export const CellProxiesActions = ({ data }: CellProxiesActionsProps) => {
+export const CellProxiesActions = ({ data }: { data: any }) => {
   const { onOpen } = useModalStore();
   const { setProxy } = useProxyStore();
   const { mutate, isPending } = useRenewProxy();
@@ -37,6 +32,11 @@ export const CellProxiesActions = ({ data }: CellProxiesActionsProps) => {
       protocol: data.protocol,
       password: data.password,
     });
+  };
+
+  const handleManageProxy = () => {
+    setProxy(data);
+    onOpen(ModalType.MANAGE_PROXY);
   };
 
   const renderActionButton = (
@@ -77,7 +77,7 @@ export const CellProxiesActions = ({ data }: CellProxiesActionsProps) => {
         )}
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button disabled={isPending} size="sm">
+            <Button disabled={isPending} size="sm" onClick={handleManageProxy}>
               Manage
             </Button>
           </TooltipTrigger>

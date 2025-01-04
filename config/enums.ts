@@ -8,5 +8,6 @@ export enum ModalType {
   ADD_PROXY = "add-proxy",
   EXPORT_DATA = "export-data",
   NOTIFICATION = "notification",
+  MANAGE_PROXY = "manage-proxy",
   ADD_FUNDS = "add-funds",
 }

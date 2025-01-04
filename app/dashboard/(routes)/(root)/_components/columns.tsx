@@ -1,7 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { CellProxiesInfoEdit } from "@/components/shared/cell-proxies-info-edit";

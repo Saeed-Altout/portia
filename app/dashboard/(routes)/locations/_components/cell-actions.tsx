@@ -30,6 +30,8 @@ export const CellActions = ({ data }: { data: ILocation }) => {
       onOpen(ModalType.RENEW_PROXY);
     } else if (type === ModalType.EDIT_INFO_PROXY) {
       onOpen(ModalType.EDIT_INFO_PROXY);
+    } else if (type === ModalType.MANAGE_PROXY) {
+      onOpen(ModalType.MANAGE_PROXY);
     }
     router.push(callback ?? "/dashboard");
   };

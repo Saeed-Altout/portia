@@ -2,11 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
+import { CellProxiesInfoEdit } from "@/components/shared/cell-proxies-info-edit";
+import { CellProxiesAuthEdit } from "@/components/shared/cell-proxies-auth-edit";
+import { CellProxiesActions } from "@/components/shared/cell-proxies-actions";
 import { CellButtonRenew } from "./cell-renew";
-import { CellInfoEdit } from "./cell-info-edit";
-import { CellAuthEdit } from "./cell-auth-edit";
 
-export type Proxy = {
+export interface Proxy {
   sequence: string;
   id: number;
   re_new: number;
@@ -23,10 +24,29 @@ export type Proxy = {
   parent_proxy_id: string;
   package_id: string;
   duration: number;
-  amount: number;
-  rotation_time: string;
-  country_name: string;
+}
+
+const STATUS_STYLES = {
+  active:
+    "text-[#035E5C] bg-[#D4FFFE] font-medium text-xs px-2 py-1 rounded-full leading-none",
 };
+
+const renderStatus = (isActive: number) => {
+  if (isActive === 1) {
+    return <span className={STATUS_STYLES.active}>Active</span>;
+  }
+  return null;
+};
+
+const renderInfoCell = (data: Proxy, content: string) => (
+  <CellProxiesInfoEdit data={data}>{content}</CellProxiesInfoEdit>
+);
+
+const renderAuthCell = (data: Proxy) => (
+  <CellProxiesAuthEdit
+    data={data}
+  >{`${data.username}:${data.password}`}</CellProxiesAuthEdit>
+);
 
 export const activeColumns: ColumnDef<Proxy>[] = [
   {
@@ -36,39 +56,26 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "is_active",
     header: "Status",
-    cell: ({ row }) => (
-      <>
-        {row.original.is_active === 1 && (
-          <span className="text-[#035E5C] bg-[#D4FFFE] font-medium text-xs px-2 py-1 rounded-full leading-none">
-            Active
-          </span>
-        )}
-      </>
-    ),
-  },
-  {
-    accessorKey: "package_name",
-    header: "Package",
+    cell: ({ row }) => renderStatus(row.original.is_active),
   },
   {
     accessorKey: "plan_name",
     header: "Plan",
   },
   {
+    accessorKey: "package_name",
+    header: "Package",
+  },
+  {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => (
-      <CellInfoEdit data={row.original}>{row.original.protocol}</CellInfoEdit>
-    ),
+    cell: ({ row }) => renderInfoCell(row.original, row.original.protocol),
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => (
-      <CellInfoEdit data={row.original}>
-        {row.original.service_provider}
-      </CellInfoEdit>
-    ),
+    cell: ({ row }) =>
+      renderInfoCell(row.original, row.original.service_provider),
   },
   {
     accessorKey: "protocol_port",
@@ -84,18 +91,15 @@ export const activeColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "username",
     header: "Username:Password",
-    cell: ({ row }) => (
-      <CellAuthEdit data={row.original}>
-        {row.original.username}:{row.original.password}
-      </CellAuthEdit>
-    ),
+    cell: ({ row }) => renderAuthCell(row.original),
   },
   {
     accessorKey: "id",
     header: "",
-    cell: ({ row }) => <CellButtonRenew data={row.original} />,
+    cell: ({ row }) => <CellProxiesActions data={row.original} />,
   },
 ];
+
 export const inactiveColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "sequence",
@@ -114,29 +118,25 @@ export const inactiveColumns: ColumnDef<Proxy>[] = [
       </>
     ),
   },
-  {
-    accessorKey: "package_name",
-    header: "Package",
-  },
+
   {
     accessorKey: "plan_name",
     header: "Plan",
   },
   {
+    accessorKey: "package_name",
+    header: "Package",
+  },
+  {
     accessorKey: "protocol",
     header: "Type",
-    cell: ({ row }) => (
-      <CellInfoEdit data={row.original}>{row.original.protocol}</CellInfoEdit>
-    ),
+    cell: ({ row }) => renderInfoCell(row.original, row.original.protocol),
   },
   {
     accessorKey: "service_provider",
     header: "Network",
-    cell: ({ row }) => (
-      <CellInfoEdit data={row.original}>
-        {row.original.service_provider}
-      </CellInfoEdit>
-    ),
+    cell: ({ row }) =>
+      renderInfoCell(row.original, row.original.service_provider),
   },
   {
     accessorKey: "protocol_port",
@@ -152,12 +152,9 @@ export const inactiveColumns: ColumnDef<Proxy>[] = [
   {
     accessorKey: "username",
     header: "Username:Password",
-    cell: ({ row }) => (
-      <CellAuthEdit data={row.original}>
-        {row.original.username}:{row.original.password}
-      </CellAuthEdit>
-    ),
+    cell: ({ row }) => renderAuthCell(row.original),
   },
+
   {
     accessorKey: "id",
     header: "",

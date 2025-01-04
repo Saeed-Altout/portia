@@ -41,10 +41,9 @@ import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 import { useLocationStore } from "@/stores/reducers/use-location-store";
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/enums";
+import { useManageProxy } from "@/hooks/dashboard/proxy/use-manage-proxy";
 
 const formSchema = z.object({
-  plan: z.string(),
-  amount: z.string(),
   provider: z.string(),
   ipRotation: z.string(),
   protocol: z.string(),
@@ -52,43 +51,25 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export const RenewSheet = () => {
+export const ManageSheet = () => {
   const pathname = usePathname();
   const { isOpen, type, onClose } = useModalStore();
-  const isOpenModal = isOpen && type === ModalType.RENEW_PROXY;
+  const isOpenModal = isOpen && type === ModalType.MANAGE_PROXY;
 
   const { proxy, resetProxy } = useProxyStore();
   const { location, resetLocation } = useLocationStore();
 
-  const [amounts, setAmounts] = useState<string[]>([]);
-  const [recordsPlan, setRecordsPlan] = useState<
-    {
-      value: number;
-      price: number;
-      duration: number;
-    }[]
-  >([]);
-  const [duration, setDuration] = useState<string>("");
-  const [amount, setAmount] = useState<string>("");
-
   const { data: ports } = useGetPorts({ id: proxy.package_id });
-  const { data: costsData, isSuccess: costsIsSuccess } = useGetCostPlans({
-    pkg_id: proxy.package_id,
-  });
 
-  const plans = costsIsSuccess ? Object.keys(costsData.data) : [];
-
-  const { mutateAsync, isPending } = useRenewProxy();
+  const { mutateAsync, isPending } = useManageProxy();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      plan: "",
       provider: "",
       protocol: "",
       username: "",
       password: "",
-      amount: "",
       ipRotation: "",
     },
   });
@@ -104,41 +85,12 @@ export const RenewSheet = () => {
           : "",
         protocol: values.protocol,
         password: values.password,
-        duration: duration,
       });
       form.reset();
       resetProxy();
       resetLocation();
     } catch (error) {}
   };
-
-  useEffect(() => {
-    if (costsData && costsData.data && proxy.plan_name) {
-      //@ts-ignore
-      const currentRecords = costsData?.data[proxy.plan_name];
-      if (currentRecords) {
-        setRecordsPlan(currentRecords);
-
-        const amounts = currentRecords.map((obj: any) => {
-          return obj.value.toString();
-        });
-        setAmounts(amounts);
-      }
-    }
-  }, [costsData, proxy.plan_name]);
-
-  useEffect(() => {
-    if (proxy.amount && recordsPlan) {
-      const currentRecord = recordsPlan.find((record: any) => {
-        return record.value.toString() === proxy.amount.toString();
-      });
-
-      if (currentRecord) {
-        setDuration(currentRecord.duration.toString());
-        setAmount(currentRecord.value.toString());
-      }
-    }
-  }, [proxy.amount, recordsPlan]);
 
   useEffect(() => {
     if (proxy.rotation_time && proxy.service_provider) {
@@ -153,25 +105,17 @@ export const RenewSheet = () => {
   }, [form, proxy, location]);
 
   useEffect(() => {
-    if (
-      proxy.plan_name &&
-      proxy.amount &&
-      proxy.username &&
-      proxy.password &&
-      proxy.protocol
-    ) {
-      form.setValue("plan", proxy.plan_name);
+    if (proxy.username && proxy.password && proxy.protocol) {
       form.setValue("username", proxy.username);
       form.setValue("password", proxy.password);
       form.setValue("protocol", proxy.protocol);
-      form.setValue("amount", proxy.amount.toString());
     }
   }, [form, proxy]);
 
   return (
     <Sheet
       open={isOpenModal}
-      onOpenChange={() => onClose(ModalType.RENEW_PROXY)}
+      onOpenChange={() => onClose(ModalType.MANAGE_PROXY)}
     >
       <SheetContent className="flex flex-col h-screen px-0 w-full sm:w-3/4">
         <SheetHeader className="px-4">
@@ -179,8 +123,8 @@ export const RenewSheet = () => {
             <Icon icon={Zap} theme="primary" />
           </Circle>
           <div>
-            <SheetTitle>Renew Proxy</SheetTitle>
-            <SheetDescription>You can renew your proxy here.</SheetDescription>
+            <SheetTitle>Manage Proxy</SheetTitle>
+            <SheetDescription>You can manage your proxy here.</SheetDescription>
           </div>
         </SheetHeader>
 
@@ -189,100 +133,6 @@ export const RenewSheet = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex-1 overflow-y-auto p-4 space-y-4"
           >
-            <FormField
-              control={form.control}
-              name="plan"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Plan</FormLabel>
-                  <Select
-                    value={field.value} // Controlled value
-                    disabled={isPending || plans.length === 0}
-                    onValueChange={(value) => {
-                      setRecordsPlan([]);
-                      setAmounts([]);
-                      setDuration("");
-                      setAmount(""); // Reset amount
-
-                      if (costsData && costsData.data) {
-                        //@ts-ignore
-                        const currentRecords = costsData.data[value];
-                        if (currentRecords) {
-                          setRecordsPlan(currentRecords);
-                          setAmounts(
-                            currentRecords.map((obj: any) =>
-                              obj.value.toString()
-                            )
-                          );
-                        }
-                      }
-
-                      field.onChange(value); // Update form value
-                    }}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a plan" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {plans.map((plan) => (
-                        <SelectItem key={plan} value={plan}>
-                          {plan}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <Select
-                    value={amount} // Controlled value
-                    disabled={isPending || amounts.length == 0}
-                    onValueChange={(value) => {
-                      setAmount("");
-                      setDuration("");
-
-                      if (recordsPlan) {
-                        const currentRecord = recordsPlan.find(
-                          (record) => record.value.toString() === value
-                        );
-
-                        if (currentRecord) {
-                          setDuration(currentRecord.duration.toString());
-                          setAmount(currentRecord.value.toString());
-                        }
-                      }
-
-                      field.onChange(value); // Update form value
-                    }}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select an amount" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {amounts.map((amount, key) => (
-                        <SelectItem key={key} value={amount}>
-                          {amount}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name="protocol"
@@ -323,7 +173,7 @@ export const RenewSheet = () => {
                       <Input
                         placeholder="Provider & Location"
                         className="flex-1 rounded-r-none"
-                        disabled={true}
+                        disabled
                         {...field}
                       />
                       <Button
@@ -331,7 +181,7 @@ export const RenewSheet = () => {
                         className="rounded-l-none"
                         type="button"
                         asChild
-                        onClick={() => onClose(ModalType.RENEW_PROXY)}
+                        onClick={() => onClose(ModalType.MANAGE_PROXY)}
                       >
                         <Link
                           href={`/dashboard/locations?callback=${pathname}`}
@@ -353,11 +203,7 @@ export const RenewSheet = () => {
                 <FormItem>
                   <FormLabel>Minimum time between IP rotation</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={true}
-                      placeholder="IP rotation"
-                      {...field}
-                    />
+                    <Input disabled placeholder="IP rotation" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -373,7 +219,7 @@ export const RenewSheet = () => {
                     <Input
                       icon={User}
                       type="text"
-                      disabled={true}
+                      disabled
                       placeholder="username"
                       {...field}
                     />
@@ -407,14 +253,14 @@ export const RenewSheet = () => {
                 type="submit"
                 className="w-full md:w-auto"
               >
-                {isPending ? <Loader /> : "Renew"}
+                {isPending ? <Loader /> : "Update"}
               </Button>
               <Button
                 disabled={isPending}
                 type="button"
                 variant="outline"
                 className="w-full md:w-auto"
-                onClick={() => onClose(ModalType.RENEW_PROXY)}
+                onClick={() => onClose(ModalType.MANAGE_PROXY)}
               >
                 Cancel
               </Button>

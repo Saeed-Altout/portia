@@ -533,6 +533,13 @@ declare type IRenewProxyRequest = {
   protocol: string;
   password: string;
 };
+declare type IManageProxyResponse = ApiResponse<null>;
+declare type IManageProxyRequest = {
+  proxy_id: string;
+  parent_proxy_id: string;
+  protocol: string;
+  password: string;
+};
 declare type IGetWayPaymentResponse = ApiResponse<string[]>;
 declare type IDepositRequest = {
   payment_method: string;
