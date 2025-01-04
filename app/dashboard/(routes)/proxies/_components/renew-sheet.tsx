@@ -86,13 +86,13 @@ export const RenewSheet = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      plan: proxy?.plan_name || "",
-      provider: proxy?.service_provider || "",
-      protocol: proxy?.protocol || "",
-      username: proxy?.username || "",
-      password: proxy?.password || "",
-      amount: proxy?.amount.toString() || "",
-      ipRotation: proxy?.rotation_time || "",
+      plan: "",
+      provider: "",
+      protocol: "",
+      username: "",
+      password: "",
+      amount: "",
+      ipRotation: "",
     },
   });
 
@@ -140,11 +140,29 @@ export const RenewSheet = ({
   }, [proxy.amount, recordsPlan]);
 
   useEffect(() => {
-    if (location.service_provider_name && location.rotation_time) {
-      form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
-      form.setValue("provider", `${location.service_provider_name ?? ""}`);
+    if (
+      (location.service_provider_name && location.rotation_time) ||
+      (proxy.rotation_time && proxy.service_provider)
+    ) {
+      form.setValue(
+        "ipRotation",
+        `${proxy.rotation_time ?? location.rotation_time ?? ""}`
+      );
+      form.setValue(
+        "provider",
+        `${proxy.service_provider ?? location.service_provider_name ?? ""}`
+      );
     }
-  }, [form, location]);
+  }, [form, proxy, location]);
+
+  useEffect(() => {
+    if (proxy.plan_name && proxy.amount && proxy.username && proxy.password) {
+      form.setValue("plan", proxy.plan_name);
+      form.setValue("password", proxy.password);
+      form.setValue("protocol", proxy.protocol);
+      form.setValue("amount", proxy.amount.toString());
+    }
+  }, [form, proxy]);
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>

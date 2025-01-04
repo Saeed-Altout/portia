@@ -19,8 +19,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { useProxyStore } from "@/stores";
 import { useGetPorts } from "@/hooks";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useLocationStore } from "@/stores/reducers/use-location-store";
 
 interface StepThreeProps {
   isLoading?: boolean;
@@ -28,15 +29,16 @@ interface StepThreeProps {
 }
 
 export const StepThree = ({ form, isLoading }: StepThreeProps) => {
-  const { pkgId, location, setProtocol } = useProxyStore();
-  const { data: ports, isFetching } = useGetPorts({ id: pkgId });
+  const { proxy, setProxy } = useProxyStore();
+  const { location } = useLocationStore();
+  const { data: ports, isFetching } = useGetPorts({ id: proxy.package_id });
 
   const onProtocolSelect = (protocolName: string) => {
     if (location) {
       const protocolValue = protocolName.includes("http")
         ? location.http_port
         : location.socks_port;
-      setProtocol(protocolValue);
+      setProxy({ ...proxy, protocol_port: +protocolValue });
     }
   };
 

@@ -48,10 +48,22 @@ interface ProxyStore {
   proxy: Proxy;
   setProxy: (proxy: Proxy) => void;
   resetProxy: () => void;
+
+  price: string;
+  setPrice: (price: string) => void;
+
+  duration: string;
+  setDuration: (duration: string) => void;
 }
 
 export const useProxyStore = create<ProxyStore>((set) => ({
   proxy: initialProxy,
   setProxy: (proxy) => set({ proxy }),
   resetProxy: () => set({ proxy: initialProxy }),
+
+  price: "",
+  setPrice: (price) => set({ price }),
+
+  duration: "",
+  setDuration: (duration) => set({ duration }),
 }));

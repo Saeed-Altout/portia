@@ -13,6 +13,8 @@ interface Location {
   service_provider_id: number;
   service_provider_name: string;
   status: string;
+  http_port: number;
+  socks_port: number;
 }
 
 const initialLocation: Location = {
@@ -28,6 +30,8 @@ const initialLocation: Location = {
   service_provider_id: 0,
   service_provider_name: "",
   status: "",
+  http_port: 0,
+  socks_port: 0,
 };
 
 interface LocationStore {

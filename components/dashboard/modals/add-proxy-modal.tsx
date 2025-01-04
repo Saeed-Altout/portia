@@ -17,11 +17,14 @@ import { StepThree } from "./add/step-three";
 
 import { useAddProxy } from "@/hooks";
 import { addNewProxySchema } from "@/schemas";
-import { useModalStore, useProxyStore } from "@/stores";
+import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/enums";
+import { useLocationStore } from "@/stores/reducers/use-location-store";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 export const AddProxyModal = () => {
-  const { price, duration, location, setProxy, setLocation } = useProxyStore();
+  const { location } = useLocationStore();
+  const { price, duration } = useProxyStore();
   const { step, isOpen, type, setStep, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.ADD_PROXY;
 
@@ -54,8 +57,6 @@ export const AddProxyModal = () => {
         password: values.password,
       });
       onCancel();
-      setProxy({} as IProxy);
-      setLocation({} as ILocation);
     } catch (error) {
       console.error(error);
     }

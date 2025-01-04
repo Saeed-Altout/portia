@@ -17,9 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useProxyStore } from "@/stores";
 import { useGetAllPackages, useGetCostPlans } from "@/hooks";
-import { useStore } from "@/stores/use-store";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 
 interface StepOneProps {
   form: any;
@@ -35,18 +34,9 @@ interface ValuePlanProps {
 export const StepOne = ({ form, isLoading }: StepOneProps) => {
   const [valuePlan, setValuePlan] = useState<ValuePlanProps[]>([]);
   const [costs, setCosts] = useState<Record<string, ValuePlanProps[]>>({});
+  const [amounts, setAmounts] = useState<string[]>([]);
 
-  const {
-    pkgId,
-    amounts,
-    setPkgId,
-    setPrice,
-    setDuration,
-    setAmounts,
-    plans,
-    setPlans,
-    setPkgName,
-  } = useProxyStore();
+  const { proxy, setProxy, setPrice, setDuration } = useProxyStore();
 
   const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
   const {
@@ -54,12 +44,13 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
     isFetching: costsDataIsFetching,
     isSuccess: costsIsSuccess,
   } = useGetCostPlans({
-    pkg_id: pkgId,
+    pkg_id: proxy.package_id,
   });
 
+  const plans = Object.keys(costs); // Derive plans from costs
+
   const handlePackageSelect = (newPkgId: string, pkgName: string) => {
-    setPkgId(newPkgId);
-    setPkgName(pkgName);
+    setProxy({ ...proxy, package_id: newPkgId, package_name: pkgName });
   };
 
   const handlePlanSelect = (plan: string) => {
@@ -79,21 +70,20 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
     );
 
     if (selectedValue) {
-      setDuration(selectedValue.duration);
-      setPrice(selectedValue.price);
+      setDuration(selectedValue.duration.toString());
+      setPrice(selectedValue.price.toString());
     }
   };
 
   useEffect(() => {
-    if (costsIsSuccess) {
-      const fetchedCosts = costsData.data;
-      setCosts(fetchedCosts);
-      setPlans(Object.keys(fetchedCosts));
+    if (costsIsSuccess && costsData?.data) {
+      setCosts(costsData.data);
     }
-  }, [pkgId, costsData, costsIsSuccess, form, setPlans]);
+  }, [costsData, costsIsSuccess]);
 
   return (
     <>
+      {/* Package Selector */}
       <FormField
         control={form.control}
         name="pkg_id"
@@ -107,7 +97,7 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
                 field.onChange(pkgId);
                 handlePackageSelect(pkgId, pkgName);
               }}
-              defaultValue={field.value}
+              defaultValue={field.value || ""}
             >
               <FormControl>
                 <SelectTrigger>
@@ -126,6 +116,8 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
           </FormItem>
         )}
       />
+
+      {/* Plan Selector */}
       <FormField
         control={form.control}
         name="plan_id"
@@ -138,7 +130,7 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
                 field.onChange(value);
                 handlePlanSelect(value);
               }}
-              defaultValue={field.value}
+              defaultValue={field.value || ""}
             >
               <FormControl>
                 <SelectTrigger>
@@ -157,6 +149,8 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
           </FormItem>
         )}
       />
+
+      {/* Amount Selector */}
       <FormField
         control={form.control}
         name="amount"
@@ -169,7 +163,7 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
                 field.onChange(value);
                 handleAmountSelect(value);
               }}
-              defaultValue={field.value}
+              defaultValue={field.value || ""}
             >
               <FormControl>
                 <SelectTrigger>

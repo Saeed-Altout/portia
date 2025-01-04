@@ -14,9 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { useModalStore, useProxyStore } from "@/stores";
+import { useModalStore } from "@/stores";
 import { useEffect } from "react";
 import { ModalType } from "@/config/enums";
+import { useLocationStore } from "@/stores/reducers/use-location-store";
 
 interface StepTwoProps {
   form: any;
@@ -25,7 +26,7 @@ interface StepTwoProps {
 export const StepTwo = ({ form }: StepTwoProps) => {
   const pathname = usePathname();
   const { step, onClose } = useModalStore();
-  const { location } = useProxyStore();
+  const { location } = useLocationStore();
 
   useEffect(() => {
     if (step === 2 && location) {
