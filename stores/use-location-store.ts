@@ -1,62 +1,47 @@
 import { create } from "zustand";
 
+interface Location {
+  city_id: number;
+  city_name: string;
+  country_id: number;
+  country_name: string;
+  id: number;
+  is_available: boolean;
+  package_id: number;
+  package_name: string;
+  rotation_time: string;
+  service_provider_id: number;
+  service_provider_name: string;
+  status: string;
+  http_port: number;
+  socks_port: number;
+}
+
+const initialLocation: Location = {
+  city_id: 0,
+  city_name: "",
+  country_id: 0,
+  country_name: "",
+  id: 0,
+  is_available: false,
+  package_id: 0,
+  package_name: "",
+  rotation_time: "",
+  service_provider_id: 0,
+  service_provider_name: "",
+  status: "",
+  http_port: 0,
+  socks_port: 0,
+};
+
 interface LocationStore {
-  offset: number;
-  pkgId: number | null;
-  countryId: number | null;
-  cityId: number | null;
-  serviceProviderId: number | null;
-  ipRotationId: number | null;
-  refetchAll: () => void;
-  setPkgId: (pkgId: number) => void;
-  setCountryId: (countryId: number | null) => void;
-  setCityId: (cityId: number | null) => void;
-  setServiceProviderId: (serviceProviderId: number | null) => void;
-  setIpRotationId: (ipRotation: number | null) => void;
-  setOffset: (offset: number) => void;
+  location: Location;
+  setLocation: (location: Location) => void;
+  resetLocation: () => void;
 }
 
 export const useLocationStore = create<LocationStore>((set) => ({
-  offset: 1,
-  pkgId: 1,
-  countryId: null,
-  cityId: null,
-  serviceProviderId: null,
-  ipRotationId: null,
-  refetchAll: () => {},
-
-  setOffset: (offset) => set((state) => ({ ...state, offset })),
-
-  setPkgId: (pkgId) =>
-    set((state) => ({
-      ...state,
-      pkgId,
-      countryId: null,
-      cityId: null,
-    })),
-
-  setCountryId: (countryId) =>
-    set((state) => ({
-      ...state,
-      countryId,
-      cityId: null,
-    })),
-
-  setCityId: (cityId) =>
-    set((state) => ({
-      ...state,
-      cityId,
-    })),
-
-  setServiceProviderId: (serviceProviderId) =>
-    set((state) => ({
-      ...state,
-      serviceProviderId,
-    })),
-
-  setIpRotationId: (ipRotationId) =>
-    set((state) => ({
-      ...state,
-      ipRotationId,
-    })),
+  location: initialLocation,
+  setLocation: (location) => set({ location }),
+  resetLocation: () => set({ location: initialLocation }),
 }));

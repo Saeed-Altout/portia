@@ -43,8 +43,8 @@ import { ModalType } from "@/config/constants";
 import { useGetPortsQuery } from "@/services/settings/hooks";
 
 import { useModalStore } from "@/stores/use-modal-store";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
-import { useLocationStore } from "@/stores/reducers/use-location-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
+import { useLocationStore } from "@/stores/use-location-store";
 import { useManageProxyMutation } from "@/services/proxies/hooks";
 
 const formSchema = z.object({

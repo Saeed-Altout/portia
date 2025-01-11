@@ -19,8 +19,8 @@ import { useAddProxy } from "@/hooks";
 import { addNewProxySchema } from "@/schemas";
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/constants";
-import { useLocationStore } from "@/stores/reducers/use-location-store";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useLocationStore } from "@/stores/use-location-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 export const AddProxyModal = () => {
   const { location } = useLocationStore();

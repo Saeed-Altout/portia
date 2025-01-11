@@ -7,7 +7,7 @@ import {
   getProxiesCount,
   manageProxy,
 } from "./apis";
-import { useResponse } from "@/hooks";
+import { useResponse } from "@/hooks/use-response";
 
 export const useGetProxiesQuery = ({
   state,

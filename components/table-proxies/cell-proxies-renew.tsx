@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/constants";
 

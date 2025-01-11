@@ -17,7 +17,7 @@ import {
 import { useModalStore } from "@/stores";
 import { useEffect } from "react";
 import { ModalType } from "@/config/constants";
-import { useLocationStore } from "@/stores/reducers/use-location-store";
+import { useLocationStore } from "@/stores/use-location-store";
 
 interface StepTwoProps {
   form: any;

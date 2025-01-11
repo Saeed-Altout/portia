@@ -24,8 +24,8 @@ import { useModalStore } from "@/stores";
 import { editAuthProxySchema } from "@/schemas";
 import { ModalType } from "@/config/constants";
 import { useEditAuthProxyMutation } from "@/services/proxies/hooks";
-import { usePasswordControl } from "@/hooks/dashboard/use-password-control";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { usePasswordControl } from "@/hooks/use-password-control";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 export const EditAuthProxyModal = () => {
   const { passwordType, togglePasswordVisibility, handleSubjectPassword } =

@@ -7,7 +7,7 @@ import { Loader } from "@/components/ui/loader";
 import { ModalType } from "@/config/constants";
 import { useModalStore } from "@/stores";
 import { useFixProxyMutation } from "@/services/proxies/hooks";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 export const FixProxyModal = () => {
   const { proxy, resetProxy } = useProxyStore();

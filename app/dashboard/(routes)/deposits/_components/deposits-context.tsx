@@ -5,7 +5,7 @@ import {
   useGetDepositsHistoriesQuery,
   useGetDepositsStatisticsQuery,
 } from "@/services/deposits/hooks";
-import { formatDepositsStatistics } from "@/helpers/formatter";
+import { formatDepositsStatistics } from "@/utils/formatters";
 
 interface FormattedType {
   color: string;

@@ -1,4 +1,4 @@
-import { apiClient } from "@/api/config";
+import { apiClient } from "@/lib/api";
 
 export const getPackages = async (): Promise<RootResponse<TPackage[]>> => {
   try {

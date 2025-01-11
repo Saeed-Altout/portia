@@ -20,8 +20,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { useGetPorts } from "@/hooks";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
-import { useLocationStore } from "@/stores/reducers/use-location-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
+import { useLocationStore } from "@/stores/use-location-store";
 
 interface StepThreeProps {
   isLoading?: boolean;

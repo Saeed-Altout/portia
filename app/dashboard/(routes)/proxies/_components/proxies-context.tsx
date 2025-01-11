@@ -6,7 +6,7 @@ import {
   useGetProxiesQuery,
 } from "@/services/proxies/hooks";
 import { useGetUserBalanceQuery } from "@/services/user/hooks";
-import { formatProxiesData, formatStatistics } from "@/helpers/formatter";
+import { formatProxiesData, formatStatistics } from "@/utils/formatters";
 
 interface ProxiesContextType {
   isLoading: boolean;

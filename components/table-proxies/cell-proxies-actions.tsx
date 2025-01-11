@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ModalType } from "@/config/constants";
 import { useModalStore } from "@/stores";
 import { useRenewProxy } from "@/hooks/dashboard/proxy/use-renew-proxy";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 export const CellProxiesActions = ({ data }: { data: any }) => {
   const { onOpen } = useModalStore();

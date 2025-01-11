@@ -19,7 +19,7 @@ import { useData } from "./plans-context";
 
 import { useAuthStore } from "@/stores/use-auth-store";
 import { useModalStore } from "@/stores/use-modal-store";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
 import { CircleIcon } from "@/components/circle-icon";

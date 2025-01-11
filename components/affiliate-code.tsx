@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 
 import { onCopy } from "@/utils/on-copy";
 import { useOrigin } from "@/hooks/use-origin";
-import { useResponse } from "@/hooks";
+import { useResponse } from "@/hooks/use-response";
 
 export const AffiliateCode = ({ code }: { code?: string }) => {
   const inputRef = useRef(null);

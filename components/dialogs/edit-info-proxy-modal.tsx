@@ -35,8 +35,8 @@ import { useModalStore } from "@/stores";
 import { editProxySchema } from "@/schemas";
 import { useEditInfoProxyMutation } from "@/services/proxies/hooks";
 import { useGetPortsQuery } from "@/services/settings/hooks";
-import { useLocationStore } from "@/stores/reducers/use-location-store";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useLocationStore } from "@/stores/use-location-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();

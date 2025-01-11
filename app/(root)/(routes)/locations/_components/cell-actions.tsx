@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import { ModalType } from "@/config/constants";
 import { useModalStore } from "@/stores/use-modal-store";
-import { useLocationStore } from "@/stores/reducers/use-location-store";
+import { useLocationStore } from "@/stores/use-location-store";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
   const router = useRouter();

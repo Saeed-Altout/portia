@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card";
 import { BackButton } from "@/components";
 
-import { setToken } from "@/utils/cookie";
+import { setToken } from "@/lib/cookie";
 
 export const EmailConfirmedForm = () => {
   const token = useSearchParams().get("token");

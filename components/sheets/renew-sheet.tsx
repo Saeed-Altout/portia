@@ -37,8 +37,8 @@ import { Loader } from "@/components/ui/loader";
 import { Circle, Icon } from "@/components/ui/circle-icon";
 
 import { useGetCostPlans, useGetPorts, useRenewProxy } from "@/hooks";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
-import { useLocationStore } from "@/stores/reducers/use-location-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
+import { useLocationStore } from "@/stores/use-location-store";
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/constants";
 

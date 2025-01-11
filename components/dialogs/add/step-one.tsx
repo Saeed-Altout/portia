@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 
 import { useGetAllPackages, useGetCostPlans } from "@/hooks";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 interface StepOneProps {
   form: any;

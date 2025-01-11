@@ -1,6 +1,6 @@
 "use client";
 
-import { formatAffiliateStatistics } from "@/helpers/formatter";
+import { formatAffiliateStatistics } from "@/utils/formatters";
 import {
   useGetAffiliateHistoriesQuery,
   useGetAffiliateStatisticsQuery,

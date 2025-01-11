@@ -5,7 +5,7 @@ import { Loader } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { setToken, setUser } from "@/utils/cookie";
+import { setToken, setUser } from "@/lib/cookie";
 import { useGetUserDetails } from "@/hooks";
 export const GoogleForm = () => {
   const token = useSearchParams().get("callback");

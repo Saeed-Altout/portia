@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { clear, getToken } from "@/utils/cookie";
+import { clear, getToken } from "@/lib/cookie";
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

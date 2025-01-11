@@ -7,10 +7,6 @@ export interface ModalStoreProps {
   onOpen: (type: ModalType) => void;
   onClose: () => void;
 
-  renewProxyModalIsOpen: boolean;
-  renewProxyModalOnOpen: () => void;
-  renewProxyModalOnClose: () => void;
-
   step: number;
   setStep: (step: number) => void;
   moveNextStep: () => void;
@@ -22,10 +18,6 @@ export const useModalStore = create<ModalStoreProps>((set) => ({
   type: ModalType.ADD_PROXY,
   onOpen: (type) => set({ isOpen: true, type }),
   onClose: () => set({ isOpen: false }),
-
-  renewProxyModalIsOpen: false,
-  renewProxyModalOnOpen: () => set({ renewProxyModalIsOpen: true }),
-  renewProxyModalOnClose: () => set({ renewProxyModalIsOpen: false }),
 
   step: 1,
   setStep: (step) => set({ step }),

@@ -1,4 +1,4 @@
-import { apiClient } from "@/api/config";
+import { apiClient } from "@/lib/api";
 
 export const getNotifications = async (): Promise<Root<INotifications>> => {
   try {

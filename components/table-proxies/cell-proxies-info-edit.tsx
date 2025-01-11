@@ -2,7 +2,7 @@
 
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/constants";
-import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 interface CellProxiesInfoEditProps {
   data: any;

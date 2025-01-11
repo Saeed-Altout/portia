@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getToken, getUser } from "@/utils/cookie";
+import { getToken, getUser } from "@/lib/cookie";
 
 const initialUser: IUser = {
   id: 0,
@@ -21,10 +21,12 @@ interface AuthStore {
 
 export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: Boolean(getToken()),
-  setAuthenticated: (isAuthenticated) => set((state) => ({ ...state, isAuthenticated })),
+  setAuthenticated: (isAuthenticated) =>
+    set((state) => ({ ...state, isAuthenticated })),
 
   user: getUser() ?? initialUser,
-  setUser: (user) => set((state) => ({ ...state, user: { ...state.user, ...user } })),
+  setUser: (user) =>
+    set((state) => ({ ...state, user: { ...state.user, ...user } })),
 
   resetAuth: () => set({ isAuthenticated: false, user: initialUser }),
 }));
