@@ -37,8 +37,7 @@ import { getProxiesCounts } from "./dashboard/get-proxies-counts";
 import { addProxy } from "./dashboard/add-proxy";
 import { editAuthProxy } from "./dashboard/edit-auth-proxy";
 import { editInfoProxy } from "./dashboard/edit-info-proxy";
-import { getAllFaqs } from "./root/get-all-faqs";
-import { getFaqs } from "./root/get-faqs";
+
 import { getDataMap } from "./root/get-data-map";
 import { getFeaturesOffer } from "./root/get-features-offer";
 import { getPlansOffer } from "./root/get-plans-offer";
@@ -75,8 +74,6 @@ export {
   getAllPackages,
   getCostPlans,
   getPorts,
-  getFaqs,
-  getAllFaqs,
   getReviews,
   getFeaturesOffer,
   getOffers,
