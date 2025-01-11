@@ -14,3 +14,11 @@ export const CircleLoader = () => {
     </div>
   );
 };
+
+export const Loader2 = () => {
+  return (
+    <div className="w-full flex justify-center items-center">
+      <div className="w-16 h-16 border-[6px] border-[#D4D4FF] border-l-[#111280] rounded-full animate-spin"></div>
+    </div>
+  );
+};

@@ -2,9 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import { CellProxiesInfoEdit } from "@/components/shared/cell-proxies-info-edit";
-import { CellProxiesAuthEdit } from "@/components/shared/cell-proxies-auth-edit";
-import { CellProxiesActions } from "@/components/shared/cell-proxies-actions";
+import { CellProxiesInfoEdit } from "@/components/dashboard/table/cell-proxies-info-edit";
+import { CellProxiesAuthEdit } from "@/components/dashboard/table/cell-proxies-auth-edit";
+import { CellProxiesActions } from "@/components/dashboard/table/cell-proxies-actions";
 import { CellButtonRenew } from "./cell-renew";
 
 export interface Proxy {

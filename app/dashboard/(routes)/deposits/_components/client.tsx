@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 
 import { DataTable } from "@/components/ui/data-table";
-import { Heading } from "@/components/dashboard/heading";
+import { Heading } from "@/components/dashboard/ui/heading";
 import { DepositsCard } from "@/components/dashboard/cards/deposits-card";
 
 import { useAuthStore } from "@/stores";

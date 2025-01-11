@@ -5,6 +5,7 @@ import {
   fixProxy,
   getProxies,
   getProxiesCount,
+  manageProxy,
 } from "./apis";
 import { useResponse } from "@/hooks";
 
@@ -78,6 +79,26 @@ export const useFixProxyMutation = () => {
       Error({
         error,
         message: "Fix proxy failed.",
+      });
+    },
+  });
+};
+
+export const useManageProxyMutation = () => {
+  const queryClient = useQueryClient();
+  const { Success, Error } = useResponse();
+
+  return useMutation({
+    mutationKey: ["manage-proxy"],
+    mutationFn: (values: IManageProxyCredentials) => manageProxy(values),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["proxies"] });
+      Success({ message: data.message || "Manage proxy Success." });
+    },
+    onError: (error) => {
+      Error({
+        error,
+        message: "Manage proxy failed.",
       });
     },
   });

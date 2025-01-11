@@ -3,7 +3,7 @@
 import { Zap } from "lucide-react";
 
 import { useData } from "./use-data";
-import { DataTable } from "@/components/shared/data-table";
+import { DataTable } from "@/components/dashboard/table/data-table";
 
 import { ProxiesCard } from "./proxies-card";
 import { activeColumns, inactiveColumns } from "./columns";

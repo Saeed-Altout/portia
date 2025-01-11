@@ -2,9 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import { CellProxiesInfoEdit } from "@/components/shared/cell-proxies-info-edit";
-import { CellProxiesAuthEdit } from "@/components/shared/cell-proxies-auth-edit";
-import { CellProxiesActions } from "@/components/shared/cell-proxies-actions";
+import { CellProxiesInfoEdit } from "@/components/dashboard/table/cell-proxies-info-edit";
+import { CellProxiesAuthEdit } from "@/components/dashboard/table/cell-proxies-auth-edit";
+import { CellProxiesActions } from "@/components/dashboard/table/cell-proxies-actions";
 
 export interface Proxy {
   sequence: string;
@@ -81,12 +81,8 @@ export const columns: ColumnDef<Proxy>[] = [
     accessorKey: "protocol_port",
     header: "Port",
     cell: ({ row }) => (
-      <p>{`${row.original.protocol}:${row.original.protocol_port}`}</p>
+      <p>{`${row.original.ip_addr}:${row.original.protocol_port}`}</p>
     ),
-  },
-  {
-    accessorKey: "ip_addr",
-    header: "IP Address",
   },
   {
     accessorKey: "expire_at",

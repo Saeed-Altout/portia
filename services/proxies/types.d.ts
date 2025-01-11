@@ -58,3 +58,10 @@ declare type IFixProxyCredentials = {
   pkg_id: string;
   proxy_id: string;
 };
+
+declare type IManageProxyCredentials = {
+  proxy_id: string;
+  parent_proxy_id: string;
+  protocol: string;
+  password: string;
+};
