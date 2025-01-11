@@ -12,7 +12,7 @@ interface RootContextType {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  formattedProxies: any[];
+  formattedActiveProxies: any[];
   formattedStatistics: any[];
 }
 
@@ -32,7 +32,7 @@ export const RootProvider: React.FC<{ children: ReactNode }> = ({
   const isSuccess =
     userBalance.isSuccess || ProxiesCount.isSuccess || proxies.isSuccess;
 
-  const formattedProxies = formatProxiesData(proxies.data?.data ?? []);
+  const formattedActiveProxies = formatProxiesData(proxies.data?.data ?? []);
   const formattedStatistics = formatStatistics(
     ProxiesCount.data?.data,
     userBalance.data?.data
@@ -44,7 +44,7 @@ export const RootProvider: React.FC<{ children: ReactNode }> = ({
         isLoading,
         isError,
         isSuccess,
-        formattedProxies,
+        formattedActiveProxies,
         formattedStatistics,
       }}
     >
