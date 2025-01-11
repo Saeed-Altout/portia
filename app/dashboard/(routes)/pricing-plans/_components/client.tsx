@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Key } from "react";
 
 import {
   Select,
@@ -11,194 +11,161 @@ import {
 } from "@/components/ui/select";
 import { Heading } from "@/components/dashboard";
 import { OfferCard } from "@/components/cards/offer-card";
-import { TabSkeleton } from "@/components/skeletons/tab-skeleton";
-import { SelectSkeleton } from "@/components/skeletons/select-skeleton";
-import { OfferSkeleton } from "@/components/skeletons/offer-skeleton";
+import { LoadingApi2 } from "@/components/pages/loading-api";
+import { ErrorApi } from "@/components/pages/error-api";
 
 import { cn } from "@/lib/utils";
 import { ModalType } from "@/config/enums";
 
-import { useAuthStore, useModalStore, useStore } from "@/stores";
-import { useGetOffersPackage, useGetPackageWithPlans } from "@/hooks";
+import { useData } from "./plans-context";
 
-export const PricingPlansClient = () => {
+import { useAuthStore } from "@/stores/use-auth-store";
+import { useModalStore } from "@/stores/use-modal-store";
+import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+
+export const PlansClient = () => {
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
 
   const { user } = useAuthStore();
   const { onOpen, setStep } = useModalStore();
-  const { setProxyId, setProxyCost } = useStore();
+  const { proxy, setProxy, setPrice } = useProxyStore();
+  const { isLoading, isError, isSuccess, packages, offers } = useData();
 
-  const {
-    data: packages,
-    isSuccess: packagesIsSuccess,
-    isLoading: packagesIsLoading,
-  } = useGetPackageWithPlans();
-  const {
-    data: offers,
-    isSuccess: offersIsSuccess,
-    isLoading: offersIsLoading,
-  } = useGetOffersPackage();
-
-  useEffect(() => {
-    if (packagesIsSuccess && packages.data?.length > 0) {
-      const firstPackage = packages.data[0];
-      setSelectedPackage(firstPackage.package_id);
-      setSelectedPlan(null);
-    }
-  }, [packagesIsSuccess, packages]);
-
-  const handlePackageSelect = (packageId: number) => {
-    setSelectedPackage(packageId);
+  const handlePackageSelect = (id: number) => {
+    setSelectedPackage(id);
     setSelectedPlan(null);
   };
 
-  const handlePlanSelect = (planId: number) => {
-    setSelectedPlan(planId);
+  const handlePlanSelect = (id: number) => {
+    setSelectedPlan(id);
   };
 
   const handleActiveProxy = (id: number, cost: string) => {
-    setProxyId(id.toString());
-    setProxyCost(cost);
+    setProxy({ ...proxy, proxy_id: id.toString() });
+    setPrice(cost);
     onOpen(ModalType.ACTIVE_PROXY);
     setStep(3);
   };
 
+  useEffect(() => {
+    if (isSuccess && packages.length > 0) {
+      const firstPackage = packages[0];
+      setSelectedPackage(firstPackage.package_id);
+      setSelectedPlan(null);
+    }
+  }, [isSuccess, packages]);
+
+  if (isLoading || !isSuccess) {
+    return <LoadingApi2 />;
+  }
+
+  if (isError) {
+    return <ErrorApi />;
+  }
+
   return (
     <>
       <Heading
-        title={`Welcome back, ${user?.first_name || "User"}`}
+        title={`Welcome back, ${user?.first_name || ""}`}
         label="Explore Our Pricing Plans"
       />
-      {/* Tabs */}
-      {packagesIsLoading && <TabSkeleton />}
-      {packagesIsSuccess && (
-        <div className="hidden md:flex items-center gap-10">
-          <div className="flex items-center gap-4 bg-muted w-fit p-2 rounded-md">
-            {packages.data.map((pkg) => (
-              <TabItem
-                key={pkg.package_id}
-                handleSelect={() => handlePackageSelect(pkg.package_id)}
-                name={pkg.package_name}
-                active={selectedPackage === pkg.package_id}
-              />
-            ))}
-          </div>
-
-          {selectedPackage && (
-            <div className="flex items-center gap-4 bg-muted w-fit p-2 rounded-md">
-              {packages.data
-                .find((pkg) => pkg.package_id === selectedPackage)
-                ?.plans.map((plan) => (
-                  <TabItem
-                    key={plan.id}
-                    handleSelect={() => handlePlanSelect(plan.id)}
-                    name={plan.name}
-                    active={selectedPlan === plan.id}
-                  />
-                ))}
+      <div className="hidden md:flex items-center gap-10">
+        <div className="flex items-center gap-4 bg-muted w-fit p-2 rounded-md">
+          {packages.map((pkg, key) => (
+            <div
+              key={key}
+              role="button"
+              className={cn(
+                "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
+                selectedPackage === pkg.package_id
+                  ? "bg-white text-black-default shadow-md"
+                  : "bg-transparent text-muted-foreground"
+              )}
+              onClick={() => handlePackageSelect(pkg.package_id)}
+            >
+              {pkg.package_name}
             </div>
-          )}
-        </div>
-      )}
-
-      {/* Select */}
-      {packagesIsLoading && <SelectSkeleton />}
-      {packagesIsSuccess && (
-        <div className="flex flex-col gap-2 md:hidden">
-          <Select
-            onValueChange={(value: string) => handlePackageSelect(+value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Package" />
-            </SelectTrigger>
-            <SelectContent>
-              {packages.data.map((pkg) => (
-                <SelectItem
-                  key={pkg.package_id}
-                  value={pkg.package_id.toString()}
-                >
-                  {pkg.package_name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select
-            onValueChange={(value: string) => handlePlanSelect(+value)}
-            disabled={!selectedPackage}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Plan" />
-            </SelectTrigger>
-            <SelectContent>
-              {packages.data
-                .find((pkg) => pkg.package_id === selectedPackage)
-                ?.plans.map((plan) => (
-                  <SelectItem key={plan.id} value={plan.id.toString()}>
-                    {plan.name}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
-
-      {/* Offers */}
-      {offersIsLoading && (
-        <div className="grid grid-cols-1 gap-8">
-          {[...Array(3)].map((_, index) => (
-            <OfferSkeleton key={index} />
           ))}
         </div>
-      )}
-      {offersIsSuccess && (
-        <div className="grid grid-cols-1 gap-6">
-          {offers.data
-            .filter(
-              (offer) =>
-                offer.package_id === selectedPackage &&
-                (!selectedPlan || offer.plan_id === selectedPlan)
-            )
-            .map((offer) => (
-              <OfferCard
-                key={offer.id}
-                offer={offer}
-                handleClick={() => handleActiveProxy(offer.id, offer.cost)}
-              />
+        <div className="flex items-center gap-4 bg-muted w-fit p-2 rounded-md">
+          {packages
+            .find((pkg) => pkg.package_id === selectedPackage)
+            ?.plans.map((plan: any, key: Key) => (
+              <div
+                key={key}
+                role="button"
+                className={cn(
+                  "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
+                  selectedPlan === plan.id
+                    ? "bg-white text-black-default shadow-md"
+                    : "bg-transparent text-muted-foreground"
+                )}
+                onClick={() => handlePlanSelect(plan.id)}
+              >
+                {plan.name}
+              </div>
             ))}
-          {offers.data.filter(
+        </div>
+      </div>
+      <div className="flex flex-col gap-2 md:hidden">
+        <Select onValueChange={(value: string) => handlePackageSelect(+value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select Package" />
+          </SelectTrigger>
+          <SelectContent>
+            {packages.map((pkg) => (
+              <SelectItem
+                key={pkg.package_id}
+                value={pkg.package_id.toString()}
+              >
+                {pkg.package_name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          onValueChange={(value: string) => handlePlanSelect(+value)}
+          disabled={!selectedPackage}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select Plan" />
+          </SelectTrigger>
+          <SelectContent>
+            {packages
+              .find((pkg) => pkg.package_id === selectedPackage)
+              ?.plans.map((plan: any) => (
+                <SelectItem key={plan.id} value={plan.id.toString()}>
+                  {plan.name}
+                </SelectItem>
+              ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="grid grid-cols-1 gap-6">
+        {offers
+          .filter(
             (offer) =>
               offer.package_id === selectedPackage &&
               (!selectedPlan || offer.plan_id === selectedPlan)
-          ).length === 0 && (
-            <div className="py-20 text-center text-muted-foreground">
-              No offers available for the selected package and plan.
-            </div>
-          )}
-        </div>
-      )}
+          )
+          .map((offer) => (
+            <OfferCard
+              key={offer.id}
+              offer={offer}
+              handleClick={() => handleActiveProxy(offer.id, offer.cost)}
+            />
+          ))}
+        {offers.filter(
+          (offer) =>
+            offer.package_id === selectedPackage &&
+            (!selectedPlan || offer.plan_id === selectedPlan)
+        ).length === 0 && (
+          <div className="py-20 text-center text-muted-foreground">
+            No offers available for the selected package and plan.
+          </div>
+        )}
+      </div>
     </>
-  );
-};
-
-interface TabItemProps {
-  active: boolean;
-  handleSelect: () => void;
-  name: string;
-}
-const TabItem = ({ active, handleSelect, name }: TabItemProps) => {
-  return (
-    <div
-      role="button"
-      className={cn(
-        "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
-        active
-          ? "bg-white text-black-default shadow-md"
-          : "bg-transparent text-muted-foreground"
-      )}
-      onClick={handleSelect}
-    >
-      {name}
-    </div>
   );
 };
