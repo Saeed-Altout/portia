@@ -31,7 +31,7 @@ import { Modal } from "@/components/modal";
 import { Loader } from "@/components/ui/loader";
 
 import { ModalType } from "@/config/constants";
-import { useModalStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { editProxySchema } from "@/schemas";
 import { useEditInfoProxyMutation } from "@/services/proxies/hooks";
 import { useGetPortsQuery } from "@/services/settings/hooks";

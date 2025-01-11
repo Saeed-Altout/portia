@@ -21,7 +21,7 @@ export const useGetDepositsStatisticsQuery = () => {
   });
 };
 
-export const useDepositMutation = () => {
+export const useAddDepositMutation = () => {
   const { Error } = useResponse();
 
   return useMutation({
@@ -39,7 +39,7 @@ export const useDepositMutation = () => {
   });
 };
 
-export const useGetWayPayment = () => {
+export const useGetWayPaymentQuery = () => {
   return useQuery({
     queryKey: ["get-way-payment"],
     queryFn: () => getWayPayment(),

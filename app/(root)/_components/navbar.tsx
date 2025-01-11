@@ -33,8 +33,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
-import { useAuthStore } from "@/stores";
-import { navbarLinks, navLinks, sidebarLinks } from "@/constants/constants";
+import { useAuthStore } from "@/stores/use-auth-store";
+import { navbarLinks, navLinks, sidebarLinks } from "@/config/constants";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuthStore();

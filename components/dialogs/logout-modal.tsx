@@ -14,15 +14,15 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { Circle, Icon } from "@/components/ui/circle-icon";
-import { useModalStore } from "@/stores";
-import { useLogout } from "@/hooks";
+import { useModalStore } from "@/stores/use-modal-store";
 import { ModalType } from "@/config/constants";
+import { useLogoutMutation } from "@/services/auth/hooks";
 
 export const LogoutModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.LOGOUT;
 
-  const { mutateAsync, isPending } = useLogout();
+  const { mutateAsync, isPending } = useLogoutMutation();
 
   const onConfirm = async () => {
     try {

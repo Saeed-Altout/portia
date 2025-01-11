@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
-import { Loader } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
+import { Loader } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+
 import { setToken, setUser } from "@/lib/cookie";
-import { useGetUserDetails } from "@/hooks";
+import { useGetUserQuery } from "@/services/user/hooks";
+
 export const GoogleForm = () => {
   const token = useSearchParams().get("callback");
-  const { data, isPending, isSuccess, refetch } = useGetUserDetails();
+  const { data, isPending, isSuccess, refetch } = useGetUserQuery();
 
   useEffect(() => {
     if (token) {

@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/modal";
 import { Loader } from "@/components/ui/loader";
 
-import { useModalStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { editAuthProxySchema } from "@/schemas";
 import { ModalType } from "@/config/constants";
 import { useEditAuthProxyMutation } from "@/services/proxies/hooks";

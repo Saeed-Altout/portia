@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  addProxy,
   editAuthProxy,
   editInfoProxy,
   fixProxy,
   getProxies,
   getProxiesCount,
+  getProxyById,
   manageProxy,
 } from "./apis";
 import { useResponse } from "@/hooks/use-response";
@@ -24,6 +26,12 @@ export const useGetProxiesCountQuery = () => {
   return useQuery({
     queryKey: ["proxies-count"],
     queryFn: () => getProxiesCount(),
+  });
+};
+export const useGetProxyByIdQuery = (id: string) => {
+  return useQuery({
+    queryKey: ["proxy", id],
+    queryFn: () => getProxyById(id),
   });
 };
 
@@ -99,6 +107,25 @@ export const useManageProxyMutation = () => {
       Error({
         error,
         message: "Manage proxy failed.",
+      });
+    },
+  });
+};
+export const useAddProxyMutation = () => {
+  const queryClient = useQueryClient();
+  const { Success, Error } = useResponse();
+
+  return useMutation({
+    mutationKey: ["add-proxy"],
+    mutationFn: (values: IAddProxyCredentials) => addProxy(values),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["proxies"] });
+      Success({ message: data.message || "Add proxy Success." });
+    },
+    onError: (error) => {
+      Error({
+        error,
+        message: "Add proxy failed.",
       });
     },
   });

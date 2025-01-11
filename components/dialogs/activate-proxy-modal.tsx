@@ -16,20 +16,24 @@ import { StepThree } from "./activate/step-three";
 
 import { ModalType } from "@/config/constants";
 
-import { useModalStore, useStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { activateNewProxySchema } from "@/schemas";
-import { useAddProxy, useGetProxyById } from "@/hooks";
+import { useProxyStore } from "@/stores/use-proxy-store";
+import {
+  useAddProxyMutation,
+  useGetProxyByIdQuery,
+} from "@/services/proxies/hooks";
 
 export const ActivateProxyModal = () => {
-  const { proxy, offer, setOffer } = useStore();
+  const { proxy, price, offer, setOffer } = useProxyStore();
 
   const { step, isOpen, type, setStep, moveNextStep, movePrevStep, onClose } =
     useModalStore();
   const isOpenModal = isOpen && type === ModalType.ACTIVE_PROXY;
 
   const { data: currentProxy, isSuccess: currentProxyIsSuccess } =
-    useGetProxyById({ id: +proxy.id });
-  const { mutateAsync, isPending } = useAddProxy();
+    useGetProxyByIdQuery(proxy.id.toString());
+  const { mutateAsync, isPending } = useAddProxyMutation();
 
   const form = useForm<z.infer<typeof activateNewProxySchema>>({
     resolver: zodResolver(activateNewProxySchema),
@@ -105,7 +109,7 @@ export const ActivateProxyModal = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-4">
               {renderStep(form)}
-              <p className="text-lg font-semibold">Cost: {proxy.cost}$</p>
+              <p className="text-lg font-semibold">Cost: {price ?? 0}$</p>
             </div>
             <div className="flex flex-col items-center gap-4">
               {step == 3 && (

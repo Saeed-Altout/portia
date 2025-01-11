@@ -27,17 +27,19 @@ import { Modal } from "@/components/modal";
 import { Loader } from "@/components/ui/loader";
 
 import { ModalType } from "@/config/constants";
-import { useModalStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { paymentMethodSchema } from "@/schemas";
-import { useGetWayPayment } from "@/hooks/dashboard/payment/use-get-way";
-import { useDeposit } from "@/hooks/dashboard/payment/use-deposit";
+import {
+  useAddDepositMutation,
+  useGetWayPaymentQuery,
+} from "@/services/deposits/hooks";
 
 export const AddFundsModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.ADD_FUNDS;
 
-  const { mutateAsync, isPending } = useDeposit();
-  const { data: methods, isSuccess } = useGetWayPayment();
+  const { mutateAsync, isPending } = useAddDepositMutation();
+  const { data: methods, isSuccess } = useGetWayPaymentQuery();
 
   const form = useForm<z.infer<typeof paymentMethodSchema>>({
     resolver: zodResolver(paymentMethodSchema),

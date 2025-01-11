@@ -15,23 +15,38 @@ import { StepOne } from "./add/step-one";
 import { StepTwo } from "./add/step-two";
 import { StepThree } from "./add/step-three";
 
-import { useAddProxy } from "@/hooks";
-import { addNewProxySchema } from "@/schemas";
-import { useModalStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { ModalType } from "@/config/constants";
 import { useLocationStore } from "@/stores/use-location-store";
 import { useProxyStore } from "@/stores/use-proxy-store";
+import { useAddProxyMutation } from "@/services/proxies/hooks";
 
+export const formSchema = z.object({
+  pkg_id: z.string().min(1),
+  plan_id: z.string().min(1),
+  amount: z.string().min(1),
+  provider: z.string().min(1),
+  ipRotation: z.string().min(1),
+  protocol: z.string().min(1),
+  re_new: z.boolean().default(false),
+  username: z
+    .string()
+    .min(1, { message: "Username is required." })
+    .regex(/^[a-zA-Z0-9]+$/, {
+      message: "Username must only contain letters and digits.",
+    }),
+  password: z.string().min(6),
+});
 export const AddProxyModal = () => {
   const { location } = useLocationStore();
   const { price, duration } = useProxyStore();
   const { step, isOpen, type, setStep, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.ADD_PROXY;
 
-  const { mutateAsync, isPending } = useAddProxy();
+  const { mutateAsync, isPending } = useAddProxyMutation();
 
-  const form = useForm<z.infer<typeof addNewProxySchema>>({
-    resolver: zodResolver(addNewProxySchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       pkg_id: "",
       plan_id: "",
@@ -45,7 +60,7 @@ export const AddProxyModal = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof addNewProxySchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({
         parent_proxy_id: location ? location?.id.toString() : "",

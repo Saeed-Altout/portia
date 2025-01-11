@@ -5,7 +5,7 @@ import { Modal } from "@/components/ui/modal";
 import { Loader } from "@/components/ui/loader";
 
 import { ModalType } from "@/config/constants";
-import { useModalStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { useFixProxyMutation } from "@/services/proxies/hooks";
 import { useProxyStore } from "@/stores/use-proxy-store";
 

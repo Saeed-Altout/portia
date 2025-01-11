@@ -3,13 +3,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
 import { ModalType } from "@/config/constants";
-import { useModalStore, useStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
+import { useNotificationsStore } from "@/stores/use-notifications-store";
 import { formatDistanceToNow, format } from "date-fns";
 export const NotificationModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.NOTIFICATION;
 
-  const { notification } = useStore();
+  const { notification } = useNotificationsStore();
 
   const renderLabel = (label: string) => {
     switch (label) {

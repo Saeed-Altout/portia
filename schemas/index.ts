@@ -81,22 +81,7 @@ export const renewProxySchema = z.object({
     }),
   password: z.string().min(6),
 });
-export const addNewProxySchema = z.object({
-  pkg_id: z.string().min(1),
-  plan_id: z.string().min(1),
-  amount: z.string().min(1),
-  provider: z.string().min(1),
-  ipRotation: z.string().min(1),
-  protocol: z.string().min(1),
-  re_new: z.boolean().default(false),
-  username: z
-    .string()
-    .min(1, { message: "Username is required." })
-    .regex(/^[a-zA-Z0-9]+$/, {
-      message: "Username must only contain letters and digits.",
-    }),
-  password: z.string().min(6),
-});
+
 export const activateNewProxySchema = z.object({
   pkg_id: z.string().optional(),
   plan_id: z.string().optional(),

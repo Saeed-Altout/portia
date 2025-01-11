@@ -65,3 +65,12 @@ declare type IManageProxyCredentials = {
   protocol: string;
   password: string;
 };
+declare type IAddProxyCredentials = {
+  parent_proxy_id: any;
+  pkg_id: any;
+  re_new: any;
+  protocol: string;
+  duration: string;
+  username: string;
+  password: string;
+};

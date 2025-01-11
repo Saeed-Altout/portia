@@ -11,7 +11,7 @@ import {
   setNewPassword,
   verificationCode,
 } from "./apis";
-export const useLogin = () => {
+export const useLoginMutation = () => {
   const { Success, Error } = useResponse();
 
   return useMutation({
@@ -30,7 +30,7 @@ export const useLogin = () => {
   });
 };
 
-export const useLoginWithGoogle = () => {
+export const useLoginWithGoogleMutation = () => {
   const { Error } = useResponse();
   return useMutation({
     mutationKey: ["login-with-google"],
@@ -41,7 +41,7 @@ export const useLoginWithGoogle = () => {
   });
 };
 
-export const useLogout = () => {
+export const useLogoutMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["logout"],
@@ -58,7 +58,7 @@ export const useLogout = () => {
   });
 };
 
-export const useRegister = () => {
+export const useRegisterMutation = () => {
   const { Success, Error } = useResponse();
 
   return useMutation({
@@ -77,7 +77,7 @@ export const useRegister = () => {
   });
 };
 
-export const useResendVerificationCode = () => {
+export const useResendVerificationCodeMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["resend-verification-code"],
@@ -94,7 +94,7 @@ export const useResendVerificationCode = () => {
   });
 };
 
-export const useSendResetEmail = () => {
+export const useSendResetEmailMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["send-reset-email"],
@@ -111,7 +111,7 @@ export const useSendResetEmail = () => {
   });
 };
 
-export const useSetNewPassword = () => {
+export const useSetNewPasswordMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["set-new-password"],
@@ -129,7 +129,7 @@ export const useSetNewPassword = () => {
   });
 };
 
-export const useVerifyCode = () => {
+export const useVerifyCodeMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["verification-code"],

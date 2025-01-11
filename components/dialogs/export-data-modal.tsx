@@ -18,9 +18,12 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Modal } from "@/components/modal";
 
-import { useModalStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { ModalType } from "@/config/constants";
-import { useGetTablesData, useExportData } from "@/hooks";
+import {
+  useExportTablesMutation,
+  useGetTablesQuery,
+} from "@/services/settings/hooks";
 
 const exportDataSchema = z.object({
   tables: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -29,9 +32,9 @@ const exportDataSchema = z.object({
 });
 
 export const ExportDataModal = () => {
-  const { mutateAsync, isPending } = useExportData();
+  const { mutateAsync, isPending } = useExportTablesMutation();
   const { isOpen, onClose, type } = useModalStore();
-  const { data: tables, isSuccess } = useGetTablesData();
+  const { data: tables, isSuccess } = useGetTablesQuery();
   const isOpenModal = isOpen && type === ModalType.EXPORT_DATA && isSuccess;
 
   const form = useForm<z.infer<typeof exportDataSchema>>({
