@@ -1,7 +1,7 @@
 import { Heading } from "@/components/ui/heading";
 import { Circle, Icon } from "@/components/ui/circle-icon";
 
-import { featuresData } from "@/constants";
+import { featuresData } from "@/constants/constants";
 
 export const Features = () => {
   return (
@@ -17,7 +17,9 @@ export const Features = () => {
               <Icon icon={icon} />
             </Circle>
             <div className="space-y-2">
-              <h2 className="text-[#0A0A0A] text-lg md:text-xl font-medium">{title}</h2>
+              <h2 className="text-[#0A0A0A] text-lg md:text-xl font-medium">
+                {title}
+              </h2>
               <p className="text-[#727282]">{description}</p>
             </div>
           </div>

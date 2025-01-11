@@ -5,8 +5,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { customersData } from "@/constants";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { customersData } from "@/constants/constants";
 
 export const Customers = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -44,19 +50,32 @@ export const Customers = () => {
               >
                 <div className="text-left p-6 pb-8 space-y-1">
                   {hoveredIndex !== index && (
-                    <motion.div {...fadeTransition} className="flex items-center justify-start gap-x-1 py-4">
+                    <motion.div
+                      {...fadeTransition}
+                      className="flex items-center justify-start gap-x-1 py-4"
+                    >
                       {[...Array(customer.rate)].map((_, starIndex) => (
-                        <FaStar key={starIndex} className="text-white h-4 w-4" />
+                        <FaStar
+                          key={starIndex}
+                          className="text-white h-4 w-4"
+                        />
                       ))}
                     </motion.div>
                   )}
                   {hoveredIndex === index && (
-                    <motion.p {...fadeTransition} className="text-white text-lg py-4">
+                    <motion.p
+                      {...fadeTransition}
+                      className="text-white text-lg py-4"
+                    >
                       {customer.comment}
                     </motion.p>
                   )}
-                  <p className="text-white text-3xl font-semibold">{customer.name}</p>
-                  <p className="text-white text-lg font-medium pt-2">{customer.position}</p>
+                  <p className="text-white text-3xl font-semibold">
+                    {customer.name}
+                  </p>
+                  <p className="text-white text-lg font-medium pt-2">
+                    {customer.position}
+                  </p>
                   <p className="text-white">{customer.agency}</p>
                 </div>
               </motion.div>

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
 
-import { footerLinks } from "@/constants";
+import { footerLinks } from "@/constants/constants";
 import { useGetSocialMediaAccountsQuery } from "@/services/social-media-accounts/hooks";
 
 interface FooterLinkProps {

@@ -12,8 +12,18 @@ import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion-dropdown";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion-dropdown";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,7 +34,7 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import { useAuthStore } from "@/stores";
-import { navbarLinks, navLinks, sidebarLinks } from "@/constants";
+import { navbarLinks, navLinks, sidebarLinks } from "@/constants/constants";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuthStore();
@@ -77,7 +87,7 @@ export const NavMain = () => {
                 <NavigationMenuTrigger
                   className={cn(
                     "text-base font-medium text-muted-foreground/80 hover:text-primary transition-all",
-                    pathname.includes(href) && "text-primary",
+                    pathname.includes(href) && "text-primary"
                   )}
                 >
                   {label}
@@ -93,7 +103,12 @@ export const NavMain = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ) : (
-              <NavItem key={index} href={href} label={label} active={pathname.startsWith(href)} />
+              <NavItem
+                key={index}
+                href={href}
+                label={label}
+                active={pathname.startsWith(href)}
+              />
             )}
           </div>
         ))}
@@ -102,27 +117,30 @@ export const NavMain = () => {
   );
 };
 
-const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-              className,
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    );
-  },
-);
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
 ListItem.displayName = "ListItem";
 
 export const NavMobile = () => {
@@ -154,12 +172,16 @@ export const NavMobile = () => {
                             <Link
                               href={href}
                               className={cn(
-                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                               )}
                               onClick={() => setIsOpen(false)}
                             >
-                              <h3 className="text-sm font-medium leading-none">{label}</h3>
-                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{description}</p>
+                              <h3 className="text-sm font-medium leading-none">
+                                {label}
+                              </h3>
+                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                {description}
+                              </p>
                             </Link>
                           </li>
                         ))}
@@ -169,7 +191,11 @@ export const NavMobile = () => {
                 </Accordion>
               ) : (
                 <ul key={index} className="w-full py-3">
-                  <Link onClick={() => setIsOpen(false)} href={href} className="font-medium">
+                  <Link
+                    onClick={() => setIsOpen(false)}
+                    href={href}
+                    className="font-medium"
+                  >
                     {label}
                   </Link>
                 </ul>
@@ -194,7 +220,11 @@ export const NavMobile = () => {
           </div>
           <div className="flex flex-col gap-y-5">
             {sidebarLinks.map(({ name, href }, index) => (
-              <Link key={index} href={href} className="flex justify-start items-center gap-4">
+              <Link
+                key={index}
+                href={href}
+                className="flex justify-start items-center gap-4"
+              >
                 {name}
               </Link>
             ))}
@@ -225,7 +255,12 @@ export const NavItem = ({
     <NavigationMenuItem className="w-full">
       <Link href={href} legacyBehavior passHref>
         <NavigationMenuLink
-          className={cn("text-base font-medium", active && "text-black", "text-muted-foreground/80", className)}
+          className={cn(
+            "text-base font-medium",
+            active && "text-black",
+            "text-muted-foreground/80",
+            className
+          )}
         >
           {label}
         </NavigationMenuLink>

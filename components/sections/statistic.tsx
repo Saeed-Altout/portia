@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useIntersectionObserver } from "usehooks-ts";
 
 import { cn } from "@/lib/utils";
-import { statisticData } from "@/constants";
+import { statisticData } from "@/constants/constants";
 
 export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
   const [counts, setCounts] = useState<number[]>(statisticData.map(() => 0));
