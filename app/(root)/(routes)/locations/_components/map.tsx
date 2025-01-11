@@ -1,6 +1,5 @@
 "use client";
 
-import { useGetDataMap } from "@/hooks/root/use-get-map";
 import {
   ComposableMap,
   Geographies,
@@ -8,9 +7,10 @@ import {
   Marker,
 } from "react-simple-maps";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useGetDataMapQuery } from "@/services/map/hooks";
 
 export const Map = () => {
-  const { data } = useGetDataMap();
+  const { data } = useGetDataMapQuery();
 
   return (
     <section id="map" className="screen">

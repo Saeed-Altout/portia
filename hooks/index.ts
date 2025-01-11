@@ -1,13 +1,4 @@
 import { useResponse } from "./shared/use-response";
-import {
-  useGetAllFaqs,
-  useGetFaqs,
-  useGetFeaturesOffers,
-  useGetOffers,
-  useGetReviews,
-  useSendContactMessage,
-  useGetPlansOffer,
-} from "./root";
 
 import {
   useLogin,
@@ -54,12 +45,6 @@ import {
 } from "./dashboard";
 export {
   useResponse,
-  useGetAllFaqs,
-  useGetFaqs,
-  useGetFeaturesOffers,
-  useGetOffers,
-  useGetReviews,
-  useSendContactMessage,
   useLogin,
   useRegister,
   useLogout,
@@ -91,7 +76,6 @@ export {
   useGetUserBalance,
   useGetUserDetails,
   useUpdateUserProfile,
-  useGetPlansOffer,
   useExportData,
   useGetTablesData,
   useGetOffersPackage,

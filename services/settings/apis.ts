@@ -29,3 +29,14 @@ export const updateUserProfile = async (
     throw error;
   }
 };
+
+export const sendContactMessage = async (
+  values: ISendContactMessageRequest
+): Promise<ISendContactMessageResponse> => {
+  try {
+    const response = await apiClient.post("/contact-us", values);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

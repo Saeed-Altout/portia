@@ -38,12 +38,6 @@ import { addProxy } from "./dashboard/add-proxy";
 import { editAuthProxy } from "./dashboard/edit-auth-proxy";
 import { editInfoProxy } from "./dashboard/edit-info-proxy";
 
-import { getDataMap } from "./root/get-data-map";
-import { getFeaturesOffer } from "./root/get-features-offer";
-import { getPlansOffer } from "./root/get-plans-offer";
-import { getReviews } from "./root/get-reviews";
-import { sendContactMessage } from "./root/send-contact-message";
-import { getOffers } from "./root/get-offers";
 export {
   login,
   register,
@@ -65,7 +59,6 @@ export {
   getActiveProxies,
   getInactiveProxies,
   getProxiesCounts,
-  getPlansOffer,
   addProxy,
   fixProxy,
   editAuthProxy,
@@ -74,10 +67,6 @@ export {
   getAllPackages,
   getCostPlans,
   getPorts,
-  getReviews,
-  getFeaturesOffer,
-  getOffers,
-  sendContactMessage,
   getWayPayment,
   deposit,
   updateUserProfile,
@@ -89,5 +78,4 @@ export {
   getOffersPackage,
   getPackageWithPlans,
   getProxyById,
-  getDataMap,
 };
