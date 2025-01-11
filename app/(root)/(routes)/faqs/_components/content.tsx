@@ -1,16 +1,17 @@
 "use client";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { useGetFaqsQuery } from "@/services/faqs/hooks";
+import { ROUTES } from "@/config/constants";
 
 export const Content = () => {
   const { data: faqs, isLoading, isError, isSuccess } = useGetFaqsQuery();
@@ -57,7 +58,7 @@ export const Content = () => {
             </p>
           </div>
           <Button className="w-full md:w-fit" asChild>
-            <Link href="/contact-us">Contact us</Link>
+            <Link href={ROUTES.CONTACT_US}>Contact us</Link>
           </Button>
         </div>
       </div>

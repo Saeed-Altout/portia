@@ -1,7 +1,6 @@
 import { Heading } from "@/components/ui/heading";
 import { Circle, Icon } from "@/components/ui/circle-icon";
-
-import { featuresData } from "@/constants/constants";
+import { featuresData } from "@/config/constants";
 
 export const Features = () => {
   return (

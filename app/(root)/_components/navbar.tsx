@@ -1,17 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import * as React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { Menu } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 
-import { Logo } from "@/components/ui/logo";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -32,9 +27,17 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Logo } from "@/components/ui/logo";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 import { useAuthStore } from "@/stores/use-auth-store";
-import { navbarLinks, navLinks, sidebarLinks } from "@/config/constants";
+import {
+  navbarLinks,
+  navLinks,
+  ROUTES,
+  sidebarLinks,
+} from "@/config/constants";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuthStore();
@@ -42,13 +45,13 @@ export const Navbar = () => {
   return (
     <header className="shadow-md h-20 flex justify-center items-center">
       <div className="screen w-full flex justify-between items-center">
-        <Logo redirectTo="/" />
+        <Logo redirectTo={ROUTES.HOME} />
         <NavMain />
         <NavMobile />
         <div className="hidden lg:flex items-center justify-end gap-x-4">
           {!isAuthenticated && <LoginButton />}
           <Button asChild>
-            <Link href="/dashboard">Get Started</Link>
+            <Link href={ROUTES.DASHBOARD_HOME}>Get Started</Link>
           </Button>
         </div>
       </div>
@@ -69,7 +72,7 @@ const LoginButton = () => {
   }
   return (
     <Button variant="ghost" className="text-gray-500" asChild>
-      <Link href="/auth/login">Log in</Link>
+      <Link href={ROUTES.LOGIN}>Log in</Link>
     </Button>
   );
 };
@@ -156,7 +159,7 @@ export const NavMobile = () => {
       </SheetTrigger>
       <SheetContent className="w-full flex flex-col gap-y-3 overflow-y-auto">
         <SheetHeader>
-          <Logo redirectTo="/" />
+          <Logo redirectTo={ROUTES.HOME} />
         </SheetHeader>
         <div className="flex flex-col gap-y-2">
           {navLinks.map(({ label, href, links }, index) => (
@@ -167,8 +170,8 @@ export const NavMobile = () => {
                     <AccordionTrigger>{label}</AccordionTrigger>
                     <AccordionContent>
                       <ul className="space-y-2">
-                        {links.map(({ href, label, description }, index) => (
-                          <li key={href} className="w-full">
+                        {links.map(({ href, label, description }, key) => (
+                          <li key={key} className="w-full">
                             <Link
                               href={href}
                               className={cn(
@@ -206,9 +209,9 @@ export const NavMobile = () => {
         <Separator />
         <div className="w-full grid grid-cols-2 gap-x-6 gap-y-5 py-5">
           <div className="flex flex-col gap-y-5">
-            {navbarLinks.map(({ name, icon: Icon, href }, index) => (
+            {navbarLinks.map(({ name, icon: Icon, href }, key) => (
               <Link
-                key={index}
+                key={key}
                 href={href}
                 onClick={() => setIsOpen(false)}
                 className="flex justify-start items-center gap-4"
@@ -219,9 +222,9 @@ export const NavMobile = () => {
             ))}
           </div>
           <div className="flex flex-col gap-y-5">
-            {sidebarLinks.map(({ name, href }, index) => (
+            {sidebarLinks.map(({ name, href }, key) => (
               <Link
-                key={index}
+                key={key}
                 href={href}
                 className="flex justify-start items-center gap-4"
               >
@@ -233,7 +236,7 @@ export const NavMobile = () => {
         <div className="space-y-3">
           <Button className="w-full">Get started</Button>
           <Button variant="secondary" className="w-full">
-            <Link href="/auth/login">Login</Link>
+            <Link href={ROUTES.LOGIN}>Login</Link>
           </Button>
         </div>
       </SheetContent>

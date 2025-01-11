@@ -1,10 +1,10 @@
 "use client";
 
-import { Heading } from "@/components/heading";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-
 import { useData } from "./locations-context";
+
+import { Heading } from "@/components/heading";
 import { ErrorApi } from "@/components/pages/error-api";
 
 export const Content = () => {

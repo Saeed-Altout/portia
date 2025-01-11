@@ -4,22 +4,40 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { BeatLoader } from "react-spinners";
 import { PhoneInput } from "react-international-phone";
 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-
-import { formContactSchema } from "@/schemas";
-import { useSendContactMessage } from "@/hooks";
 import { Heading } from "@/components/ui/heading";
+import { useSendContactMessageMutation } from "@/services/settings/hooks";
+import { Loader } from "@/components/ui/loader";
+
+export const formSchema = z.object({
+  first_name: z.string().min(2, {
+    message: "First Name must be at least 2 characters.",
+  }),
+  last_name: z.string().min(2, {
+    message: "Last Name must be at least 2 characters.",
+  }),
+  email: z.string().email(),
+  phone: z.string(),
+  message: z.string(),
+});
 
 export const ContactForm = () => {
-  const { mutate, isPending } = useSendContactMessage();
-  const form = useForm<z.infer<typeof formContactSchema>>({
-    resolver: zodResolver(formContactSchema),
+  const { mutate, isPending } = useSendContactMessageMutation();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       first_name: "",
       last_name: "",
@@ -28,13 +46,20 @@ export const ContactForm = () => {
       message: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof formContactSchema>) => mutate(values);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => mutate(values);
 
   return (
     <section id="contact-form" className="screen pt-16 pb-24 space-y-12">
-      <Heading title="Get in touch" description="Our friendly team would love to hear from you." />
+      <Heading
+        title="Get in touch"
+        description="Our friendly team would love to hear from you."
+      />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full space-y-8"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
             <FormField
               control={form.control}
@@ -43,7 +68,12 @@ export const ContactForm = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="first name" disabled={isPending} {...field} />
+                    <Input
+                      type="text"
+                      placeholder="first name"
+                      disabled={isPending}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -56,7 +86,12 @@ export const ContactForm = () => {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="last name" disabled={isPending} {...field} />
+                    <Input
+                      type="text"
+                      placeholder="last name"
+                      disabled={isPending}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -69,7 +104,12 @@ export const ContactForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="email" disabled={isPending} {...field} />
+                    <Input
+                      type="email"
+                      placeholder="email"
+                      disabled={isPending}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,7 +140,12 @@ export const ContactForm = () => {
                 <FormItem className="col-span-1 md:col-span-2">
                   <FormLabel>Message</FormLabel>
                   <FormControl>
-                    <Textarea rows={6} placeholder="write here your message" disabled={isPending} {...field} />
+                    <Textarea
+                      rows={6}
+                      placeholder="write here your message"
+                      disabled={isPending}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,7 +153,7 @@ export const ContactForm = () => {
             />
           </div>
           <Button type="submit" disabled={isPending}>
-            Send message {isPending && <BeatLoader color="#fff" size={12} className="ml-2" />}
+            {isPending ? <Loader /> : "Send message"}
           </Button>
         </form>
       </Form>

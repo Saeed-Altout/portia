@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { useIntersectionObserver } from "usehooks-ts";
 
 import { cn } from "@/lib/utils";
-import { statisticData } from "@/constants/constants";
+import { statisticData } from "@/config/constants";
 
 export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
   const [counts, setCounts] = useState<number[]>(statisticData.map(() => 0));
+
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.5,
   });

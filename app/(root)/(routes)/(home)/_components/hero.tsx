@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/config/constants";
 
 export const Hero = () => {
   return (
@@ -21,15 +22,16 @@ export const Hero = () => {
         </span>
       </h1>
       <p className="text-[#727282] capitalize text-base leading-[28px] sm:text-lg sm:leading-[29px] lg:text-xl lg:leading-[30px] max-w-[640px]">
-        Get ultra-stable mobile proxies with unlimited data and effortless country switching ⎯⎯ perfectly tailored for
-        developers, social media managers, E-commerce, and digital marketing professionals.
+        Get ultra-stable mobile proxies with unlimited data and effortless
+        country switching ⎯⎯ perfectly tailored for developers, social media
+        managers, E-commerce, and digital marketing professionals.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-3 w-full md:w-fit">
         <Button variant="outline" size="lg" className="w-full" asChild>
-          <Link href="/contact-us">Contact Sales</Link>
+          <Link href={ROUTES.CONTACT_US}>Contact Sales</Link>
         </Button>
         <Button size="lg" className="-order-1 md:order-1 w-full" asChild>
-          <Link href="/dashboard">Get Started</Link>
+          <Link href={ROUTES.DASHBOARD_HOME}>Get Started</Link>
         </Button>
       </div>
     </section>

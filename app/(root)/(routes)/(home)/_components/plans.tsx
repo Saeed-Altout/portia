@@ -9,10 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { useGetPlansOffer } from "@/hooks";
+import { useGetOffersPlansQuery } from "@/services/offers/hooks";
+import { ROUTES } from "@/config/constants";
 
 export const Plans = () => {
-  const { data: plans, isLoading, isSuccess } = useGetPlansOffer();
+  const { data: plans, isLoading, isSuccess } = useGetOffersPlansQuery();
 
   return (
     <section id="plans" className="screen py-24 space-y-24">
@@ -104,7 +105,7 @@ export const Plans = () => {
                   ))}
                 </div>
                 <Button className="w-full mt-auto" asChild>
-                  <Link href="/dashboard">Get Started</Link>
+                  <Link href={ROUTES.DASHBOARD_HOME}>Get Started</Link>
                 </Button>
               </div>
             </div>

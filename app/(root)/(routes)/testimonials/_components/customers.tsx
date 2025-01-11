@@ -12,7 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { customersData } from "@/constants/constants";
+import { customersData } from "@/config/constants";
 
 export const Customers = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

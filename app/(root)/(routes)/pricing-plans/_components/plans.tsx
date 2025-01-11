@@ -1,18 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { Check } from "lucide-react";
 import { Fragment } from "react";
+
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { cn } from "@/lib/utils";
-import { useGetPlansOffer } from "@/hooks";
+import { useGetOffersPlansQuery } from "@/services/offers/hooks";
+import { ROUTES } from "@/config/constants";
 
 export const Plans = () => {
-  const { data: plans, isLoading, isSuccess } = useGetPlansOffer();
+  const { data: plans, isLoading, isSuccess } = useGetOffersPlansQuery();
 
   return (
     <section id="pricing plans" className="screen pb-24 space-y-28">
@@ -83,10 +85,10 @@ export const Plans = () => {
                 </p>
                 <div className="w-full flex flex-col gap-3">
                   <Button className="w-full" asChild>
-                    <Link href="/dashboard">Get Started</Link>
+                    <Link href={ROUTES.DASHBOARD_HOME}>Get Started</Link>
                   </Button>
                   <Button className="w-full" variant="outline">
-                    <Link href="/contact-us">Contact sales</Link>
+                    <Link href={ROUTES.CONTACT_US}>Contact sales</Link>
                   </Button>
                 </div>
               </div>
@@ -115,7 +117,7 @@ export const Plans = () => {
       </div>
       <div className="w-full flex items-center justify-center flex-col md:flex-row gap-y-4">
         <p className="text-[#727282]">Need more details about our plans?</p>
-        <Link href="/our-plans" className="text-[#111280] underline ml-2">
+        <Link href={ROUTES.OUR_PLANS} className="text-[#111280] underline ml-2">
           check compare plans page
         </Link>
       </div>

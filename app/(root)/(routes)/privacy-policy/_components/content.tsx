@@ -1,5 +1,5 @@
 import { TabsContent } from "@/components/ui/tabs";
-import { privacyPolicy, termsOfUse } from "@/constants/constants";
+import { privacyPolicy, termsOfUse } from "@/config/constants";
 
 export const Content = () => {
   return (

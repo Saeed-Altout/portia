@@ -1,12 +1,11 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
 
-import { footerLinks } from "@/constants/constants";
+import { footerLinks, navLinks } from "@/config/constants";
 import { useGetSocialMediaAccountsQuery } from "@/services/social-media-accounts/hooks";
 
 interface FooterLinkProps {
@@ -58,7 +57,6 @@ export const Footer = () => {
     <footer className="bg-[#1C1C1F] pb-12 pt-16" role="contentinfo">
       <div className="screen">
         <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
-          {/* Logo and Description */}
           <div className="space-y-3 sm:col-span-2">
             <div className="h-[30px] w-[100px]">
               <Logo redirectTo="/" dark />
@@ -66,7 +64,6 @@ export const Footer = () => {
             <p className="text-gray-200">Your Gateway to Unlimited Browsing.</p>
           </div>
 
-          {/* Footer Links */}
           {footerLinks.map(({ title, links }, sectionIndex) => (
             <div
               className="col-span-1 space-y-3"
@@ -77,7 +74,7 @@ export const Footer = () => {
               </h2>
               <nav aria-label={`${title} navigation`}>
                 <ul className="flex flex-col gap-3">
-                  {links.map((link, linkIndex) => (
+                  {navLinks.map((link, linkIndex) => (
                     <li key={`${title}-link-${linkIndex}`}>
                       <FooterLink href={link.href}>{link.label}</FooterLink>
                     </li>
@@ -94,7 +91,6 @@ export const Footer = () => {
           aria-orientation="horizontal"
         />
 
-        {/* Copyright and Social Links */}
         <div className="flex w-full flex-col items-center justify-center gap-5 md:flex-row md:justify-between">
           <p className="text-gray-400">
             © {year} Portia.io. All rights reserved.

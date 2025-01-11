@@ -6,6 +6,7 @@ import {
   Geography,
   Marker,
 } from "react-simple-maps";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetDataMapQuery } from "@/services/map/hooks";
 

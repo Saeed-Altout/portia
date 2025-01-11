@@ -1,25 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { CircleHelp } from "lucide-react";
 import { Key, useEffect, useState } from "react";
 
+import { CircleHelp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-import { useGetOffers } from "@/hooks";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetOffersQuery } from "@/services/offers/hooks";
+import { ROUTES } from "@/config/constants";
 
 export const Content = () => {
   const [features, setFeatures] = useState<any[]>([]);
-  const { data: offers, isSuccess, isLoading } = useGetOffers();
+  const { data: offers, isSuccess, isLoading } = useGetOffersQuery();
 
   useEffect(() => {
     if (isSuccess) {
@@ -165,7 +165,7 @@ export const Content = () => {
                       {offer.package.description}
                     </p>
                     <Button className="w-full" asChild>
-                      <Link href="/">Get started</Link>
+                      <Link href={ROUTES.DASHBOARD_HOME}>Get started</Link>
                     </Button>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import { Hero } from "./_components/hero";
-import { Map } from "./_components/map";
+import { Map } from "@/components/sections/map";
 import { Content } from "./_components/content";
 import { CTA } from "./_components/cta";
 import { LocationsProvider } from "./_components/locations-context";

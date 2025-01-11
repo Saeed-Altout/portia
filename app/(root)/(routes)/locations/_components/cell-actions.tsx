@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-import { ModalType } from "@/config/constants";
+import { ModalType, ROUTES } from "@/config/constants";
 import { useModalStore } from "@/stores/use-modal-store";
 import { useLocationStore } from "@/stores/use-location-store";
 
@@ -32,7 +32,7 @@ export const CellActions = ({ data }: { data: ILocation }) => {
     } else if (type === ModalType.MANAGE_PROXY) {
       onOpen(ModalType.MANAGE_PROXY);
     }
-    router.push(callback ?? "/dashboard");
+    router.push(callback ?? ROUTES.DASHBOARD_HOME);
   };
 
   return (
