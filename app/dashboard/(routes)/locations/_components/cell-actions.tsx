@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-import { ModalType } from "@/config/enums";
+import { ModalType } from "@/config/constants";
 import { useModalStore } from "@/stores/use-modal-store";
 import { useLocationStore } from "@/stores/reducers/use-location-store";
 

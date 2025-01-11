@@ -1,3 +1,5 @@
+import { ROUTES } from "./constants";
+
 export const siteConfig = {
   name: "Portia",
   description:
@@ -15,22 +17,22 @@ export enum QueryKeys {
 export const routes = [
   {
     label: "Dashboard",
-    href: "/dashboard",
+    href: ROUTES.DASHBOARD_HOME,
   },
   {
     label: "My Proxies",
-    href: "/dashboard/proxies",
+    href: ROUTES.DASHBOARD_PROXIES,
   },
   {
     label: "Pricing Plans",
-    href: "/dashboard/pricing-plans",
+    href: ROUTES.DASHBOARD_PLANS,
   },
   {
     label: "Deposits",
-    href: "/dashboard/deposits",
+    href: ROUTES.DASHBOARD_DEPOSITS,
   },
   {
     label: "My Affiliate",
-    href: "/dashboard/affiliate",
+    href: ROUTES.DASHBOARD_AFFILIATE,
   },
 ];

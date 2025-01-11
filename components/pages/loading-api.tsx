@@ -1,7 +1,4 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { TabSkeleton } from "../skeletons/tab-skeleton";
-import { SelectSkeleton } from "../skeletons/select-skeleton";
-import { OfferSkeleton } from "../skeletons/offer-skeleton";
 
 export const LoadingApi = () => {
   return (
@@ -73,11 +70,39 @@ export const LoadingApi2 = () => {
           <Skeleton className="h-10 w-full md:w-[120px] border" />
         </div>
       </div>
-      <TabSkeleton />
-      <SelectSkeleton />
+      <div className="hidden md:flex items-center gap-10">
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-12 w-32" />
+          <Skeleton className="h-12 w-32" />
+        </div>
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-12 w-32" />
+          <Skeleton className="h-12 w-32" />
+          <Skeleton className="h-12 w-32" />
+        </div>
+      </div>
+      <div className="flex md:hidden flex-col gap-4">
+        <Skeleton className="h-12 w-full" />
+        <Skeleton className="h-12 w-full" />
+      </div>
       <div className="grid grid-cols-1 gap-8">
-        {[...Array(3)].map((_, index) => (
-          <OfferSkeleton key={index} />
+        {[...Array(3)].map((_, key) => (
+          <div
+            key={key}
+            className="p-4 w-full flex flex-col md:flex-row items-center justify-between gap-4 border rounded-md"
+          >
+            <div className="w-full flex items-center gap-4 md:max-w-md">
+              <Skeleton className="h-[50px] w-[50px] rounded-full flex-shrink-0" />
+              <div className="space-y-2 w-full">
+                <Skeleton className="h-5 w-full" />
+                <Skeleton className="h-5 w-full" />
+              </div>
+            </div>
+            <div className="w-full flex flex-row md:flex-col gap-4 items-center md:items-start md:max-w-xs">
+              <Skeleton className="h-5 w-1/2" />
+              <Skeleton className="h-12 w-full" />
+            </div>
+          </div>
         ))}
       </div>
     </div>

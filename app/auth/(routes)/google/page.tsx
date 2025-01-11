@@ -1,4 +1,4 @@
-import { GoogleForm } from "@/components/auth";
+import { GoogleForm } from "@/components";
 
 export default function GooglePage() {
   return <GoogleForm />;

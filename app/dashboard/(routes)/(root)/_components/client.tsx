@@ -3,11 +3,11 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { CircleIcon } from "@/components/dashboard/table/circle-icon";
-import { columns } from "@/components/dashboard/table/columns";
-import { DataTable } from "@/components/dashboard/table/data-table";
-import { ManageSheet } from "@/components/dashboard/sheets/manage-sheet";
-import { Heading } from "@/components/dashboard/ui/heading";
+import { CircleIcon } from "@/components/circle-icon";
+import { columns } from "@/components/table-proxies/columns";
+import { DataTable } from "@/components/table-proxies/data-table";
+import { ManageSheet } from "@/components/sheets/manage-sheet";
+import { Heading } from "@/components/heading";
 import { ErrorApi } from "@/components/pages/error-api";
 import { LoadingApi } from "@/components/pages/loading-api";
 

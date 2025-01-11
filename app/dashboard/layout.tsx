@@ -11,8 +11,8 @@ export default function DashboardLayout({
 }>) {
   return (
     <MiddlewareWrapper role="user">
-      <ModalProviders />
       <div className="min-h-full flex flex-col">
+        <ModalProviders />
         <Banner />
         <Navbar />
         <main className="flex flex-1 flex-col py-6 px-4 md:px-6">

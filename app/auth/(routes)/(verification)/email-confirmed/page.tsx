@@ -1,4 +1,4 @@
-import { EmailConfirmedForm } from "@/components/auth";
+import { EmailConfirmedForm } from "@/components";
 
 export const metadata = {
   title: "Email Successfully Confirmed | Verification Complete",

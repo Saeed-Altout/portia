@@ -4,7 +4,7 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { useData } from "./locations-context";
 
-import { Heading } from "@/components/dashboard";
+import { Heading } from "@/components/heading";
 import { LoadingApi3 } from "@/components/pages/loading-api";
 import { ErrorApi } from "@/components/pages/error-api";
 

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useResponse } from "@/hooks";
 import { useModalStore } from "@/stores";
-import { ModalType } from "@/config/enums";
+import { ModalType } from "@/config/constants";
 import { manageProxy } from "@/api/dashboard/manage-proxy";
 
 export const useManageProxy = () => {

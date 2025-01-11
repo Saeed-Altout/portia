@@ -9,19 +9,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Heading } from "@/components/dashboard";
-import { OfferCard } from "@/components/cards/offer-card";
 import { LoadingApi2 } from "@/components/pages/loading-api";
 import { ErrorApi } from "@/components/pages/error-api";
 
 import { cn } from "@/lib/utils";
-import { ModalType } from "@/config/enums";
+import { ModalType } from "@/config/constants";
 
 import { useData } from "./plans-context";
 
 import { useAuthStore } from "@/stores/use-auth-store";
 import { useModalStore } from "@/stores/use-modal-store";
 import { useProxyStore } from "@/stores/reducers/use-proxy-store";
+import { Heading } from "@/components/heading";
+import { Button } from "@/components/ui/button";
+import { CircleIcon } from "@/components/circle-icon";
+import { Zap } from "lucide-react";
 
 export const PlansClient = () => {
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
@@ -149,12 +151,35 @@ export const PlansClient = () => {
               offer.package_id === selectedPackage &&
               (!selectedPlan || offer.plan_id === selectedPlan)
           )
-          .map((offer) => (
-            <OfferCard
-              key={offer.id}
-              offer={offer}
-              handleClick={() => handleActiveProxy(offer.id, offer.cost)}
-            />
+          .map((offer, key) => (
+            <div
+              key={key}
+              className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border rounded-lg gap-4 shadow-sm overflow-hidden"
+            >
+              <div className="w-full flex items-center gap-x-4">
+                <CircleIcon icon={Zap} theme={"primary"} />
+                <div className="flex-1">
+                  <h3 className="text-lg font-medium capitalize">
+                    {offer.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {offer.description}
+                  </p>
+                </div>
+              </div>
+              <div className="w-full md:w-auto flex flex-row md:flex-col items-center gap-4">
+                <p className="text-lg font-semibold text-primary">
+                  ${offer.cost}
+                </p>
+                <Button
+                  disabled={!offer.is_available}
+                  onClick={() => handleActiveProxy(offer.id, offer.cost)}
+                  className="w-full md:w-auto"
+                >
+                  Activate
+                </Button>
+              </div>
+            </div>
           ))}
         {offers.filter(
           (offer) =>

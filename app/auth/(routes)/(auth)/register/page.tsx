@@ -1,4 +1,4 @@
-import { RegisterForm } from "@/components/auth";
+import { RegisterForm } from "@/components";
 
 export const metadata = {
   title: "Register a New Account | Sign Up Securely",

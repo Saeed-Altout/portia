@@ -1,4 +1,4 @@
-import { ModalType } from "@/config/enums";
+import { ModalType } from "@/config/constants";
 import { create } from "zustand";
 
 export interface ModalStoreProps {

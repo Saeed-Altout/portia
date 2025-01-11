@@ -3,8 +3,8 @@
 import { ArrowUp } from "lucide-react";
 import { Area, AreaChart } from "recharts";
 
-import { Heading } from "@/components/dashboard/ui/heading";
-import { DataTable } from "@/components/dashboard/table/data-table";
+import { Heading } from "@/components/heading";
+import { DataTable } from "@/components/table-proxies/data-table";
 import { ErrorApi } from "@/components/pages/error-api";
 import { LoadingApi } from "@/components/pages/loading-api";
 import {
@@ -18,7 +18,8 @@ import { columns } from "./columns";
 import { useData } from "./affiliate-context";
 
 import { useAuthStore } from "@/stores/use-auth-store";
-import { AffiliateCode } from "@/components/dashboard";
+import { AffiliateCode } from "@/components/affiliate-code";
+
 export const AffiliateClient = () => {
   const { user } = useAuthStore();
 

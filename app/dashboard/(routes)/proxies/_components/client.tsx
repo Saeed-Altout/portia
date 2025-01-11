@@ -1,11 +1,11 @@
 "use client";
 
-import { DataTable } from "@/components/dashboard/table/data-table";
-import { CircleIcon } from "@/components/dashboard/table/circle-icon";
-import { columns, iColumns } from "@/components/dashboard/table/columns";
-import { Heading } from "@/components/dashboard/ui/heading";
-import { ManageSheet } from "@/components/dashboard/sheets/manage-sheet";
-import { RenewSheet } from "@/components/dashboard/sheets/renew-sheet";
+import { DataTable } from "@/components/table-proxies/data-table";
+import { CircleIcon } from "@/components/circle-icon";
+import { columns, iColumns } from "@/components/table-proxies/columns";
+import { Heading } from "@/components/heading";
+import { ManageSheet } from "@/components/sheets/manage-sheet";
+import { RenewSheet } from "@/components/sheets/renew-sheet";
 import { LoadingApi } from "@/components/pages/loading-api";
 import { ErrorApi } from "@/components/pages/error-api";
 

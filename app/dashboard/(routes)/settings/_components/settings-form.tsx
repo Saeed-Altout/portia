@@ -20,11 +20,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Heading } from "@/components/dashboard/ui/heading";
-import { AffiliateCode } from "@/components/dashboard/affiliate-code";
+import { Heading } from "@/components/heading";
+import { AffiliateCode } from "@/components/affiliate-code";
 import { Loader } from "@/components/ui/loader";
 
-import { ModalType } from "@/config/enums";
+import { ModalType } from "@/config/constants";
 import { useAuthStore } from "@/stores/use-auth-store";
 import { useModalStore } from "@/stores/use-modal-store";
 import { getModifiedData } from "@/utils/get-modified-data";

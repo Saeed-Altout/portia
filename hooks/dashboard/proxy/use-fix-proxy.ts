@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fixProxy } from "@/api";
 import { useResponse } from "@/hooks";
 import { useModalStore, useProxyStore } from "@/stores";
-import { ModalType } from "@/config/enums";
+import { ModalType } from "@/config/constants";
 export const useFixProxy = () => {
   const { Success, Error } = useResponse();
   const { onClose } = useModalStore();
