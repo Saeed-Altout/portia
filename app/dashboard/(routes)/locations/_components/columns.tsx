@@ -1,8 +1,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { formatTime } from "@/utils/formatters";
-
 import { CellActions } from "./cell-actions";
 
 export const columns: ColumnDef<ILocation>[] = [
@@ -25,7 +23,6 @@ export const columns: ColumnDef<ILocation>[] = [
   {
     accessorKey: "rotation_time",
     header: "Ip Rotation",
-    cell: ({ row }) => <span>{formatTime(row.original.rotation_time)}</span>,
   },
   {
     accessorKey: "id",
