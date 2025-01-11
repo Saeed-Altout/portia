@@ -15,11 +15,11 @@ export const RootClient = () => {
   const { user } = useAuthStore();
   const { isLoading, isError, isSuccess, formattedProxies } = useData();
 
-  if (isLoading) {
+  if (isLoading || !isSuccess) {
     return <LoadingApi />;
   }
 
-  if (isError || !isSuccess) {
+  if (isError) {
     return <ErrorApi />;
   }
 

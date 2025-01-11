@@ -5,7 +5,7 @@ import { useProxyStore } from "@/stores/reducers/use-proxy-store";
 import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/enums";
 
-export const CellButtonRenew = ({ data }: { data: any }) => {
+export const CellProxiesRenew = ({ data }: { data: any }) => {
   const { setProxy } = useProxyStore();
   const { onOpen } = useModalStore();
 

@@ -1,114 +1,61 @@
 "use client";
 
-import { Zap } from "lucide-react";
-
-import { useData } from "./use-data";
 import { DataTable } from "@/components/dashboard/table/data-table";
+import { CircleIcon } from "@/components/dashboard/table/circle-icon";
+import { columns, iColumns } from "@/components/dashboard/table/columns";
+import { Heading } from "@/components/dashboard/ui/heading";
+import { ManageSheet } from "@/components/dashboard/sheets/manage-sheet";
+import { RenewSheet } from "@/components/dashboard/sheets/renew-sheet";
+import { LoadingApi } from "@/components/pages/loading-api";
+import { ErrorApi } from "@/components/pages/error-api";
 
-import { ProxiesCard } from "./proxies-card";
-import { activeColumns, inactiveColumns } from "./columns";
-
-import { Heading } from "@/components/dashboard";
-
-import { useAuthStore } from "@/stores";
-import { PageSkelton } from "@/components/skeletons/page-skeleton";
-import { RenewSheet } from "./renew-sheet";
-import { ManageSheet } from "./manage-sheet";
+import { useData } from "./proxies-context";
+import { useAuthStore } from "@/stores/use-auth-store";
 
 export const ProxiesClient = () => {
   const { user } = useAuthStore();
-  const { proxiesCount, proxiesInactive, proxiesActive, isLoading, isError } =
-    useData();
-  const formattedStatistic = [
-    {
-      icon: Zap,
-      title: "My Active Proxies",
-      theme: "success",
-      value: `${proxiesCount?.active ?? 0} Proxies`,
-    },
-    {
-      icon: Zap,
-      title: "My Expired Proxies",
-      theme: "danger",
-      value: `${proxiesCount?.inactive ?? 0} Proxies`,
-    },
-    {
-      icon: Zap,
-      title: "All Proxies",
-      theme: "primary",
-      value: `${proxiesCount?.total ?? 0} Proxies`,
-    },
-  ];
+  const {
+    isLoading,
+    isError,
+    isSuccess,
+    formattedActiveProxies,
+    formattedInactiveProxies,
+    formattedStatistics,
+  } = useData();
 
-  const formattedProxiesActive = proxiesActive.map((proxy, index) => ({
-    sequence: `${index + 1}`,
-    id: proxy.id,
-    re_new: proxy.re_new,
-    is_active: proxy.is_active,
-    package_name: proxy.package_name,
-    protocol: proxy.protocol,
-    service_provider: proxy.service_provider,
-    protocol_port: proxy.protocol_port,
-    expire_at: proxy.expire_at,
-    username: proxy.username,
-    password: proxy.password,
-    plan_name: proxy.plan_name,
-    proxy_id: proxy.proxy_id,
-    parent_proxy_id: proxy.parent_proxy_id,
-    package_id: proxy.package_id,
-    duration: proxy.duration,
-    amount: proxy.amount,
-    rotation_time: proxy.rotation_time,
-    country_name: proxy.country_name,
-    ip_addr: proxy.ip_addr,
-  }));
-  const formattedProxiesInactive = proxiesInactive.map((proxy, index) => ({
-    sequence: `${index + 1}`,
-    id: proxy.id,
-    re_new: proxy.re_new,
-    is_active: proxy.is_active,
-    package_name: proxy.package_name,
-    protocol: proxy.protocol,
-    service_provider: proxy.service_provider,
-    protocol_port: proxy.protocol_port,
-    expire_at: proxy.expire_at,
-    username: proxy.username,
-    password: proxy.password,
-    plan_name: proxy.plan_name,
-    proxy_id: proxy.proxy_id,
-    parent_proxy_id: proxy.parent_proxy_id,
-    package_id: proxy.package_id,
-    duration: proxy.duration,
-    amount: proxy.amount,
-    rotation_time: proxy.rotation_time,
-    country_name: proxy.country_name,
-    ip_addr: proxy.ip_addr,
-  }));
+  if (isLoading || !isSuccess) {
+    return <LoadingApi />;
+  }
 
-  if (isLoading || isError) {
-    return <PageSkelton />;
+  if (isError) {
+    return <ErrorApi />;
   }
 
   return (
     <>
       <RenewSheet />
       <ManageSheet />
-
       <Heading title={`Welcome back ${user.first_name}`} newProxy addFunds />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {formattedStatistic.map((item, index) => (
-          <ProxiesCard item={item} key={index} />
+        {formattedStatistics.map((item, key) => (
+          <div key={key} className="border rounded-[8px] p-6 space-y-6">
+            <div className="flex items-center gap-x-2">
+              <CircleIcon icon={item.icon} theme={item.theme} />
+              <p className="font-medium">{item.title}</p>
+            </div>
+            <h4 className="text-4xl font-semibold">{item.value}</h4>
+          </div>
         ))}
       </div>
       <DataTable
-        columns={activeColumns}
-        data={formattedProxiesActive ?? []}
+        columns={columns}
+        data={formattedActiveProxies ?? []}
         title="My Active Proxies"
         isLoading={isLoading}
       />
       <DataTable
-        columns={inactiveColumns}
-        data={formattedProxiesInactive ?? []}
+        columns={iColumns}
+        data={formattedInactiveProxies ?? []}
         title="My Inactive Proxies"
         isLoading={isLoading}
       />
