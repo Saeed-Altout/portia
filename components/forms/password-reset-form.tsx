@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
+
 import { CheckCircle } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/ui/circle-icon";
 import {
   Card,
   CardContent,
@@ -13,7 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 import { BackButton } from "@/components";
+
+import { ROUTES } from "@/config/constants";
 
 export const PasswordResetForm = () => {
   return (
@@ -32,11 +35,11 @@ export const PasswordResetForm = () => {
       </CardHeader>
       <CardContent>
         <Button className="w-full" asChild>
-          <Link href="/dashboard">Continue to dashboard</Link>
+          <Link href={ROUTES.DASHBOARD_HOME}>Continue to dashboard</Link>
         </Button>
       </CardContent>
       <CardFooter>
-        <BackButton label="Back to home" href="/" />
+        <BackButton label="Back to home" href={ROUTES.HOME} />
       </CardFooter>
     </Card>
   );

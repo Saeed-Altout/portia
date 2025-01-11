@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { Eye, EyeOff, Key } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+
+import { Eye, EyeOff, Key } from "lucide-react";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from "@/components/ui/input";
-import { Circle, Icon } from "@/components/ui/circle-icon";
 import {
   Card,
   CardContent,
@@ -27,27 +25,36 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 import { BackButton, SubmitButton } from "@/components";
 
-import { useSetNewPassword } from "@/hooks/auth";
-import { newPasswordSchema } from "@/schemas";
+import { useSetNewPasswordMutation } from "@/services/auth/hooks";
+import { usePasswordControl } from "@/hooks/use-password-control";
+
+export const formSchema = z.object({
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  password_confirmation: z
+    .string()
+    .min(8, "Confirm Password must be at least 8 characters"),
+});
 
 export const NewPasswordForm = () => {
   const token = useSearchParams().get("token");
-  const [passwordType, setPasswordType] = useState<string>("text");
-  const { mutate, isPending } = useSetNewPassword();
 
-  const form = useForm<z.infer<typeof newPasswordSchema>>({
-    resolver: zodResolver(newPasswordSchema),
+  const { passwordType, togglePasswordVisibility } = usePasswordControl();
+  const { mutate, isPending } = useSetNewPasswordMutation();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
       password_confirmation: "",
     },
   });
 
-  const onSubmit = (data: z.infer<typeof newPasswordSchema>) => {
+  const onSubmit = (data: z.infer<typeof formSchema>) =>
     mutate({ ...data, token: token || "" });
-  };
 
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
@@ -84,11 +91,7 @@ export const NewPasswordForm = () => {
                         />
                         <div
                           role="button"
-                          onClick={() =>
-                            setPasswordType((prev: string) =>
-                              prev === "password" ? "text" : "password"
-                            )
-                          }
+                          onClick={togglePasswordVisibility}
                           className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                           aria-label="Toggle password visibility"
                           title="Toggle password visibility"
@@ -126,11 +129,7 @@ export const NewPasswordForm = () => {
                         />
                         <div
                           role="button"
-                          onClick={() =>
-                            setPasswordType((prev: string) =>
-                              prev === "password" ? "text" : "password"
-                            )
-                          }
+                          onClick={togglePasswordVisibility}
                           className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                           aria-label="Toggle password visibility"
                           title="Toggle password visibility"

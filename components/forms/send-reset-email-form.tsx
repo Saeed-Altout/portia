@@ -6,8 +6,6 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from "@/components/ui/input";
-import { Circle, Icon } from "@/components/ui/circle-icon";
 import {
   Form,
   FormControl,
@@ -24,23 +22,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 import { BackButton, SubmitButton } from "@/components";
 
-import { useSendResetEmail } from "@/hooks";
-import { sendResetEmailSchema } from "@/schemas";
+import { useSendResetEmailMutation } from "@/services/auth/hooks";
+
+export const formSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
 
 export const SendResetEmailForm = () => {
-  const { mutate, isPending } = useSendResetEmail();
+  const { mutate, isPending } = useSendResetEmailMutation();
 
-  const form = useForm<z.infer<typeof sendResetEmailSchema>>({
-    resolver: zodResolver(sendResetEmailSchema),
-    defaultValues: {
-      email: "",
-    },
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { email: "" },
   });
 
-  const onSubmit = (values: z.infer<typeof sendResetEmailSchema>) =>
-    mutate(values);
+  const onSubmit = (values: z.infer<typeof formSchema>) => mutate(values);
 
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
@@ -66,10 +66,10 @@ export const SendResetEmailForm = () => {
                   <FormLabel className="text-sm font-medium">Email</FormLabel>
                   <FormControl>
                     <Input
-                      {...field}
                       type="email"
-                      disabled={isPending}
                       placeholder="Enter your email"
+                      disabled={isPending}
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />

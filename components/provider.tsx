@@ -2,15 +2,15 @@
 
 import { FcGoogle } from "react-icons/fc";
 
-import { useLoginWithGoogle } from "@/hooks";
 import { Button } from "@/components/ui/button";
+import { useLoginWithGoogleMutation } from "@/services/auth/hooks";
 
 interface ProviderProps {
   isLoading: boolean;
 }
 
 export const Provider = ({ isLoading }: ProviderProps) => {
-  const { mutate, isPending } = useLoginWithGoogle();
+  const { mutate, isPending } = useLoginWithGoogleMutation();
 
   return (
     <Button

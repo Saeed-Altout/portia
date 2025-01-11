@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -17,17 +15,56 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { CardWrapper, Provider, SubmitButton } from "@/components";
 
-import { useRegister } from "@/hooks";
-import { registerSchema } from "@/schemas";
+import { getFcmToken } from "@/lib/local-storage";
+import { useRegisterMutation } from "@/services/auth/hooks";
+import { usePasswordControl } from "@/hooks/use-password-control";
+import { ROUTES } from "@/config/constants";
+
+export const formSchema = z.object({
+  first_name: z
+    .string()
+    .trim()
+    .min(2, { message: "First name must be at least 2 characters long" })
+    .max(255, { message: "First name must be less than 255 characters" }),
+
+  last_name: z
+    .string()
+    .trim()
+    .min(2, { message: "Last name must be at least 2 characters long" })
+    .max(255, { message: "Last name must be less than 255 characters" }),
+
+  email: z
+    .string()
+    .trim()
+    .email({ message: "Please enter a valid email address" })
+    .max(255, { message: "Email address must be less than 255 characters" })
+    .transform((email) => email.toLowerCase()),
+
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long" })
+    .max(128, { message: "Password must be less than 128 characters long" })
+    .regex(/[a-z]/, {
+      message: "Password must contain at least one lowercase letter",
+    })
+    .regex(/[A-Z]/, {
+      message: "Password must contain at least one uppercase letter",
+    })
+    .regex(/\d/, { message: "Password must contain at least one number" })
+    .regex(/[\W_]/, {
+      message: "Password must contain at least one special character",
+    }),
+});
 
 export const RegisterForm = () => {
-  const [passwordType, setPasswordType] = useState<"text" | "password">("text");
-  const { mutate, isPending } = useRegister();
+  const { passwordType, togglePasswordVisibility } = usePasswordControl();
+  const { mutate, isPending } = useRegisterMutation();
 
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       first_name: "",
       last_name: "",
@@ -36,11 +73,9 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    const fcmToken = localStorage.getItem("fcm_token");
-    if (fcmToken) {
-      mutate({ ...values, fcm_token: fcmToken });
-    }
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const fcmToken = getFcmToken();
+    if (fcmToken) mutate({ ...values, fcm_token: fcmToken });
   };
 
   return (
@@ -48,7 +83,7 @@ export const RegisterForm = () => {
       title="Sign up"
       description="Start your journey today."
       label="Sign in"
-      href="/auth/login"
+      href={ROUTES.LOGIN}
       message="Already have an account?"
     >
       <Form {...form}>
@@ -132,11 +167,7 @@ export const RegisterForm = () => {
                       />
                       <div
                         role="button"
-                        onClick={() =>
-                          setPasswordType((prev) =>
-                            prev === "password" ? "text" : "password"
-                          )
-                        }
+                        onClick={togglePasswordVisibility}
                         className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"

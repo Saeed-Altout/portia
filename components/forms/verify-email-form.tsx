@@ -4,8 +4,6 @@ import Link from "next/link";
 import { Mail } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/ui/circle-icon";
 import {
   Card,
   CardContent,
@@ -14,7 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 import { BackButton } from "@/components";
+
+import { ROUTES } from "@/config/constants";
 
 export const VerifyEmailForm = () => {
   const email = useSearchParams().get("email");
@@ -37,7 +39,7 @@ export const VerifyEmailForm = () => {
       </CardHeader>
       <CardContent>
         <Button className="w-full">
-          <Link href={`/auth/verify-code?email=${email! && email}`}>
+          <Link href={`${ROUTES.VERIFY_EMAIL}?email=${!!email && email}`}>
             Enter code manually
           </Link>
         </Button>

@@ -4,8 +4,6 @@ import Link from "next/link";
 import { Mail } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import { Circle, Icon } from "@/components/ui/circle-icon";
 import {
   Card,
   CardContent,
@@ -14,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Circle, Icon } from "@/components/ui/circle-icon";
 import { BackButton, ResendButton } from "@/components";
 
 export const VerifyRestEmailForm = () => {

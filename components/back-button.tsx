@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/config/constants";
 
 interface BackButtonProps {
   label?: string;
@@ -10,7 +11,7 @@ interface BackButtonProps {
 
 export const BackButton = ({
   label = "Back to log in",
-  href = "/auth/login",
+  href = ROUTES.LOGIN,
 }: BackButtonProps) => {
   return (
     <Button variant="link" className="mx-auto" asChild>

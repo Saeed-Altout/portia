@@ -33,21 +33,23 @@ import {
 } from "@/components/ui/card";
 import { BackButton, ResendButton, SubmitButton } from "@/components";
 
-import { useVerifyCode } from "@/hooks";
-import { verifyCodeSchema } from "@/schemas";
+import { useVerifyCodeMutation } from "@/services/auth/hooks";
+
+export const formSchema = z.object({
+  code: z.string().min(6, "Code is required!"),
+});
 
 export const VerifyRestCodeForm = () => {
   const email = useSearchParams().get("email");
-  const { mutate, isPending } = useVerifyCode();
 
-  const onSubmit = async (values: z.infer<typeof verifyCodeSchema>) =>
+  const { mutate, isPending } = useVerifyCodeMutation();
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) =>
     mutate({ code: values.code, email: email || "" });
 
-  const form = useForm<z.infer<typeof verifyCodeSchema>>({
-    resolver: zodResolver(verifyCodeSchema),
-    defaultValues: {
-      code: "",
-    },
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { code: "" },
   });
 
   return (
@@ -77,9 +79,9 @@ export const VerifyRestCodeForm = () => {
                   <FormItem>
                     <FormControl>
                       <InputOTP
-                        disabled={isPending}
                         maxLength={6}
                         pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+                        disabled={isPending}
                         {...field}
                       >
                         <InputOTPGroup>

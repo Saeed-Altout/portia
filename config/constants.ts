@@ -479,6 +479,7 @@ const NAME_SECRET = "NEXT_CWS";
 export const TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_TOKEN`;
 export const EMAIL_KEY = `${NAME_SECRET}_${NAME_PROJECT}_EMAIL`;
 export const USER_KEY = `${NAME_SECRET}_${NAME_PROJECT}_USER`;
+export const FCM_TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_FCM_TOKEN`;
 
 export const ROUTES = {
   DASHBOARD_PROXIES: "/dashboard/proxies",
@@ -486,6 +487,12 @@ export const ROUTES = {
   DASHBOARD_PLANS: "/dashboard/pricing-plans",
   DASHBOARD_AFFILIATE: "/dashboard/affiliate",
   DASHBOARD_HOME: "/dashboard",
+  HOME: "/",
+
+  FORGET_PASSWORD: "/auth/send-reset-email",
+  LOGIN: "/auth/login",
+  REGISTER: "/auth/register",
+  VERIFY_EMAIL: "/auth/verify-code",
 };
 
 export enum ModalType {

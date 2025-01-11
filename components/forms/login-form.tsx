@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import { Eye, EyeOff } from "lucide-react";
 
 import * as z from "zod";
@@ -22,13 +23,20 @@ import {
 } from "@/components/ui/form";
 import { CardWrapper, Provider, SubmitButton } from "@/components";
 
-import { useLogin } from "@/hooks";
-import { loginSchema } from "@/schemas";
+import { ROUTES } from "@/config/constants";
+import { useLoginMutation } from "@/services/auth/hooks";
+import { usePasswordControl } from "@/hooks/use-password-control";
+
+export const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
 
 export const LoginForm = () => {
   const [isRememberMe, setIsRememberMe] = useState<boolean>(false);
-  const [passwordType, setPasswordType] = useState<"text" | "password">("text");
-  const { mutate, isPending } = useLogin();
+
+  const { passwordType, togglePasswordVisibility } = usePasswordControl();
+  const { mutate, isPending } = useLoginMutation();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -38,16 +46,14 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    mutate(values);
-  };
+  const onSubmit = (values: z.infer<typeof loginSchema>) => mutate(values);
 
   return (
     <CardWrapper
       title="Welcome back"
       description="Welcome back! Please enter your details."
       label="Sign up"
-      href="/auth/register"
+      href={ROUTES.REGISTER}
       message="Don't have an account?"
     >
       <Form {...form}>
@@ -89,11 +95,7 @@ export const LoginForm = () => {
                       />
                       <div
                         role="button"
-                        onClick={() =>
-                          setPasswordType((prev) =>
-                            prev === "password" ? "text" : "password"
-                          )
-                        }
+                        onClick={togglePasswordVisibility}
                         className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"
@@ -130,7 +132,7 @@ export const LoginForm = () => {
                 className="px-0"
                 asChild
               >
-                <Link href="/auth/send-reset-email">Forget Password</Link>
+                <Link href={ROUTES.FORGET_PASSWORD}>Forget Password</Link>
               </Button>
             </div>
           </div>
