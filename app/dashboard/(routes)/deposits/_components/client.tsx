@@ -45,6 +45,7 @@ export const DepositsClient = () => {
   if (isError) {
     return <ErrorApi />;
   }
+
   return (
     <>
       <Heading title={`Welcome back, ${user.first_name}`} />

@@ -15,7 +15,7 @@ declare type IDeposit = {
   created_at: Date | string;
 };
 
-declare type IDeposits = IDeposit[];
+declare type IDepositHistories = IDeposit[];
 
 declare type IDepositStatistics = {
   monthly_deposits: number;

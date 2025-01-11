@@ -2,12 +2,12 @@
 
 import React, { createContext, useContext, ReactNode } from "react";
 import {
-  useGetDepositsQuery,
+  useGetDepositsHistoriesQuery,
   useGetDepositsStatisticsQuery,
 } from "@/services/deposits/hooks";
 import { formatDepositsStatistics } from "@/helpers/formatter";
 
-interface FormattedDeposit {
+interface FormattedType {
   color: string;
   amount: string;
   label: string;
@@ -17,8 +17,8 @@ interface DepositsContextType {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  deposits: IDeposits;
-  formattedDeposits: FormattedDeposit[];
+  deposits: any[];
+  formattedDeposits: FormattedType[];
 }
 
 const initialStatistics = {
@@ -34,12 +34,12 @@ const DepositsContext = createContext<DepositsContextType | undefined>(
 export const DepositsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const deposits = useGetDepositsQuery();
+  const depositsHistories = useGetDepositsHistoriesQuery();
   const depositsStatistics = useGetDepositsStatisticsQuery();
 
-  const isLoading = deposits.isLoading || depositsStatistics.isLoading;
-  const isError = deposits.isError || depositsStatistics.isError;
-  const isSuccess = deposits.isSuccess && depositsStatistics.isSuccess;
+  const isLoading = depositsHistories.isLoading || depositsStatistics.isLoading;
+  const isError = depositsHistories.isError || depositsStatistics.isError;
+  const isSuccess = depositsHistories.isSuccess && depositsStatistics.isSuccess;
 
   const formattedDeposits = formatDepositsStatistics(
     depositsStatistics.data?.data ?? initialStatistics
@@ -51,7 +51,7 @@ export const DepositsProvider: React.FC<{ children: ReactNode }> = ({
         isLoading,
         isError,
         isSuccess,
-        deposits: deposits.data?.data?.data ?? [],
+        deposits: depositsHistories.data?.data?.data ?? [],
         formattedDeposits,
       }}
     >
@@ -63,7 +63,7 @@ export const DepositsProvider: React.FC<{ children: ReactNode }> = ({
 export const useData = () => {
   const context = useContext(DepositsContext);
   if (!context) {
-    throw new Error("useDeposits must be used within a DepositsProvider");
+    throw new Error("useData must be used within a DepositsProvider");
   }
   return context;
 };

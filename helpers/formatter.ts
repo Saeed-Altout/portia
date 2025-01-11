@@ -68,3 +68,22 @@ export const formatDepositsStatistics = (statistics: any) => {
     },
   ];
 };
+export const formatAffiliateStatistics = (statistics: any) => {
+  return [
+    {
+      color: "#26a6a4",
+      amount: `${statistics.monthly_deposits ?? 0}$`,
+      label: "This Month",
+    },
+    {
+      color: "#f63d68",
+      amount: `${statistics.yearly_deposits ?? 0}$`,
+      label: "This Year",
+    },
+    {
+      color: "#7a5af8",
+      amount: `${statistics.all_time_deposits ?? 0}$`,
+      label: "All Time",
+    },
+  ];
+};

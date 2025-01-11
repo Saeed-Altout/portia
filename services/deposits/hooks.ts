@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDeposits, getDepositStatistics } from "./apis";
+import { getDepositsHistories, getDepositStatistics } from "./apis";
 
-export const useGetDepositsQuery = () => {
+export const useGetDepositsHistoriesQuery = () => {
   return useQuery({
     queryKey: ["deposits"],
-    queryFn: () => getDeposits(),
+    queryFn: () => getDepositsHistories(),
   });
 };
 

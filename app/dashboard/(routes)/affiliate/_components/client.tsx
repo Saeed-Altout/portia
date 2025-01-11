@@ -1,106 +1,101 @@
 "use client";
 
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
+import { Area, AreaChart } from "recharts";
+
+import { Heading } from "@/components/dashboard/ui/heading";
+import { DataTable } from "@/components/dashboard/table/data-table";
+import { ErrorApi } from "@/components/pages/error-api";
+import { LoadingApi } from "@/components/pages/loading-api";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 import { columns } from "./columns";
+import { useData } from "./affiliate-context";
 
-import { DataTable } from "@/components/ui/data-table";
-import { Heading, AffiliateCode, StatisticCard } from "@/components/dashboard";
-
-import { useAuthStore } from "@/stores";
-import { getEmail } from "@/utils/cookie";
-import { useGetAffiliateHistories, useGetAffiliateStatistics } from "@/hooks";
-import { PageSkelton } from "@/components/skeletons/page-skeleton";
-
+import { useAuthStore } from "@/stores/use-auth-store";
+import { AffiliateCode } from "@/components/dashboard";
 export const AffiliateClient = () => {
-  const [email, setEmail] = useState<string>("un known");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [data, setDate] = useState<IAffiliateHistory[]>([]);
-
   const { user } = useAuthStore();
 
   const {
-    data: statistics,
-    isLoading: statisticsIsLoading,
-    isError: statisticsIsError,
-  } = useGetAffiliateStatistics();
-  const {
-    data: history,
-    isSuccess: historyIsSuccess,
-    isLoading: historyIsLoading,
-    isError: historyIsError,
-  } = useGetAffiliateHistories({
-    page: currentPage,
-  });
+    isLoading,
+    isError,
+    isSuccess,
+    affiliateHistories,
+    affiliateStatistics,
+  } = useData();
 
-  const isLoading = statisticsIsLoading || historyIsLoading;
-  const isError = statisticsIsError || historyIsError;
+  const chartConfig: ChartConfig = {
+    affiliate: {
+      label: "Affiliate",
+    },
+  };
 
-  useEffect(() => {
-    if (historyIsSuccess) {
-      const histories = history.data;
-      if (histories) {
-        const total = histories.total;
-        const per_page = histories.per_page;
-        const totalPages = Math.ceil(total / per_page);
+  const data = [
+    { id: 1, amount: 20 },
+    { id: 2, amount: 30 },
+    { id: 3, amount: 70 },
+    { id: 4, amount: 45 },
+    { id: 5, amount: 50 },
+  ];
 
-        const historiesFormatted: IAffiliateHistory[] = histories.data.map(
-          (item) => ({
-            id: item.id,
-            amount: item.amount.toString(),
-            email: email,
-            date: format(new Date(item.created_at), "MMM dd, yyyy"),
-          })
-        );
+  if (isLoading || !isSuccess) {
+    return <LoadingApi />;
+  }
 
-        setDate(historiesFormatted);
-        setTotalPages(totalPages);
-      }
-    }
-  }, [email, history, historyIsSuccess]);
-
-  useEffect(() => {
-    const email = getEmail();
-    if (email) {
-      setEmail(email);
-    }
-  }, []);
-
-  if (isLoading || isError) {
-    return <PageSkelton />;
+  if (isError) {
+    return <ErrorApi />;
   }
 
   return (
     <>
-      <Heading title={`Welcome back ${user.first_name}`} />
+      <Heading title={`Welcome back ${user.first_name ?? ""}`} />
       <AffiliateCode code={user.referred_code ?? ""} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <StatisticCard
-          color="#26a6a4"
-          amount={statistics?.data.this_month_earnings ?? 0}
-          label="This Month"
-        />
-        <StatisticCard
-          color="#f63d68"
-          amount={statistics?.data.this_year_earnings ?? 0}
-          label="This Year"
-        />
-        <StatisticCard
-          color="#7a5af8"
-          amount={statistics?.data.total_earnings ?? 0}
-          label="All Time"
-        />
+        {affiliateStatistics.map((item, key) => (
+          <div key={key} className="border rounded-lg">
+            <div className="p-6 flex items-end justify-between h-full">
+              <div className="flex justify-start items-start flex-col gap-y-5 flex-1">
+                <h2 className="font-medium">{item.label}</h2>
+                <p className="font-semibold text-3xl text-black-200">
+                  {item.amount}
+                </p>
+                <div className="flex items-center justify-start gap-x-2">
+                  <ArrowUp className="h-5 w-5" style={{ color: item.color }} />
+                  <p className="text-sm">Currently Spending</p>
+                </div>
+              </div>
+              <ChartContainer config={chartConfig} className="w-1/2 h-full">
+                <AreaChart accessibilityLayer data={data}>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent />}
+                  />
+                  <Area
+                    dataKey="amount"
+                    type="natural"
+                    fill={item.color}
+                    fillOpacity={0.2}
+                    stroke={item.color}
+                    stackId="a"
+                  />
+                </AreaChart>
+              </ChartContainer>
+            </div>
+          </div>
+        ))}
       </div>
       <DataTable
         columns={columns}
-        data={data}
+        data={affiliateHistories ?? []}
         title="Your earning calendar"
         description="Track your earnings by days"
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={(page) => setCurrentPage(page)}
+        isLoading={isLoading}
       />
     </>
   );

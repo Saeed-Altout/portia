@@ -1,5 +1,10 @@
+import { AffiliateProvider } from "./_components/affiliate-context";
 import { AffiliateClient } from "./_components/client";
 
 export default function AffiliatePage() {
-  return <AffiliateClient />;
+  return (
+    <AffiliateProvider>
+      <AffiliateClient />
+    </AffiliateProvider>
+  );
 }

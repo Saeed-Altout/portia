@@ -1,6 +1,8 @@
 import { apiClient } from "@/api/config";
 
-export const getDeposits = async (): Promise<RootResponse<IDeposits>> => {
+export const getDepositsHistories = async (): Promise<
+  RootResponse<IDepositHistories>
+> => {
   try {
     const response = await apiClient.get("/deposits/history");
     return response.data;
