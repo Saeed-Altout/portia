@@ -1,11 +1,15 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
-export const columns: ColumnDef<IHistory>[] = [
+export const columns: ColumnDef<IDeposit>[] = [
   {
     accessorKey: "date",
     header: "Date",
+    cell: ({ row }) => (
+      <p>{format(new Date(row.original.created_at), "MMM dd, yyyy")}</p>
+    ),
   },
   {
     accessorKey: "amount",

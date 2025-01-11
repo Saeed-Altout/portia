@@ -1,89 +1,92 @@
 "use client";
 
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
+import { Area, AreaChart } from "recharts";
+
+import { Heading } from "@/components/dashboard/ui/heading";
+import { DataTable } from "@/components/dashboard/table/data-table";
+import { ErrorApi } from "@/components/pages/error-api";
+import { LoadingApi } from "@/components/pages/loading-api";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 import { columns } from "./columns";
+import { useData } from "./deposits-context";
 
-import { DataTable } from "@/components/ui/data-table";
-import { Heading } from "@/components/dashboard/ui/heading";
-import { DepositsCard } from "@/components/dashboard/cards/deposits-card";
+import { useAuthStore } from "@/stores/use-auth-store";
 
-import { useAuthStore } from "@/stores";
-import { useGetDepositsHistories, useGetDepositsStatistics } from "@/hooks";
-import { PageSkelton } from "@/components/skeletons/page-skeleton";
 export const DepositsClient = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [data, setDate] = useState<IHistory[]>([]);
-
   const { user } = useAuthStore();
+  const { isError, isLoading, isSuccess, deposits, formattedDeposits } =
+    useData();
 
-  const {
-    data: statistics,
-    isLoading: statisticsIsLoading,
-    isError: statisticsIsError,
-  } = useGetDepositsStatistics();
-  const { data: history, isSuccess: historyIsSuccess } =
-    useGetDepositsHistories({
-      page: currentPage,
-    });
+  const chartConfig: ChartConfig = {
+    deposits: {
+      label: "Deposits",
+    },
+  };
 
-  const isLoading = statisticsIsLoading;
-  const isError = statisticsIsError;
+  const data = [
+    { id: 1, amount: 20 },
+    { id: 2, amount: 30 },
+    { id: 3, amount: 70 },
+    { id: 4, amount: 45 },
+    { id: 5, amount: 50 },
+  ];
 
-  useEffect(() => {
-    if (historyIsSuccess) {
-      const histories = history.data;
-      if (histories) {
-        const total = histories.total;
-        const per_page = histories.per_page;
-        const totalPages = Math.ceil(total / per_page);
-
-        const historiesFormatted: IHistory[] = histories.data.map((item) => ({
-          id: item.id,
-          amount: item.amount,
-          payment_method: item.payment_method,
-          date: format(new Date(item.created_at), "MMM dd, yyyy"),
-        }));
-
-        setDate(historiesFormatted);
-        setTotalPages(totalPages);
-      }
-    }
-  }, [history, historyIsSuccess]);
-
-  if (isLoading || isError) {
-    return <PageSkelton />;
+  if (isLoading || !isSuccess) {
+    return <LoadingApi />;
   }
 
+  if (isError) {
+    return <ErrorApi />;
+  }
   return (
     <>
       <Heading title={`Welcome back, ${user.first_name}`} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <DepositsCard
-          color="#26a6a4"
-          amount={statistics?.data.monthly_deposits ?? 0}
-          label="This Month"
-        />
-        <DepositsCard
-          color="#f63d68"
-          amount={statistics?.data.yearly_deposits ?? 0}
-          label="This Year"
-        />
-        <DepositsCard
-          color="#7a5af8"
-          amount={statistics?.data.all_time_deposits ?? 0}
-          label="All Time"
-        />
+        {formattedDeposits.map((item, key) => (
+          <div key={key} className="border rounded-lg">
+            <div className="p-6 flex items-end justify-between h-full">
+              <div className="flex justify-start items-start flex-col gap-y-5 flex-1">
+                <h2 className="font-medium">{item.label}</h2>
+                <p className="font-semibold text-3xl text-black-200">
+                  {item.amount}
+                </p>
+                <div className="flex items-center justify-start gap-x-2">
+                  <ArrowUp className="h-5 w-5" style={{ color: item.color }} />
+                  <p className="text-sm">Currently Spending</p>
+                </div>
+              </div>
+              <ChartContainer config={chartConfig} className="w-1/2 h-full">
+                <AreaChart accessibilityLayer data={data}>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent />}
+                  />
+                  <Area
+                    dataKey="amount"
+                    type="natural"
+                    fill={item.color}
+                    fillOpacity={0.2}
+                    stroke={item.color}
+                    stackId="a"
+                  />
+                </AreaChart>
+              </ChartContainer>
+            </div>
+          </div>
+        ))}
       </div>
       <DataTable
         columns={columns}
-        data={data ?? []}
+        data={deposits ?? []}
         title="My Deposits"
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={(page) => setCurrentPage(page)}
+        isLoading={isLoading}
       />
     </>
   );
