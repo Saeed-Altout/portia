@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BeatLoader } from "react-spinners";
 import { Eye, EyeOff, LogOut } from "lucide-react";
 
 import { z } from "zod";
@@ -21,13 +20,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Heading, AffiliateCode } from "@/components/dashboard";
+import { Heading } from "@/components/dashboard/ui/heading";
+import { AffiliateCode } from "@/components/dashboard/affiliate-code";
+import { Loader } from "@/components/ui/loader";
 
-import { userProfileSchema } from "@/schemas";
-import { useUpdateUserProfile } from "@/hooks";
-import { useAuthStore, useModalStore } from "@/stores";
-import { getModifiedData } from "@/utils/get-modified-data";
 import { ModalType } from "@/config/enums";
+import { useAuthStore } from "@/stores/use-auth-store";
+import { useModalStore } from "@/stores/use-modal-store";
+import { getModifiedData } from "@/utils/get-modified-data";
+import { useUpdateUserProfileMutation } from "@/services/settings/hooks";
+
+export const userProfileSchema = z.object({
+  first_name: z.string(),
+  last_name: z.string(),
+  email: z.string(),
+  current_password: z.string(),
+  new_password: z.string(),
+  new_password_confirmation: z.string(),
+});
 
 export const SettingsForm = () => {
   const [isNewPassword, setIsNewPassword] = useState<boolean>(true);
@@ -37,7 +47,7 @@ export const SettingsForm = () => {
 
   const { user } = useAuthStore();
   const { onOpen } = useModalStore();
-  const { mutate, isPending } = useUpdateUserProfile();
+  const { mutate, isPending } = useUpdateUserProfileMutation();
 
   const onSubmit = async (data: z.infer<typeof userProfileSchema>) => {
     const modifiedData = getModifiedData(data) as IUpdateUserProfileRequest;
@@ -91,7 +101,7 @@ export const SettingsForm = () => {
                 variant="default"
                 disabled={isPending}
               >
-                {isPending ? <BeatLoader size={10} color="#fff" /> : "Update"}
+                {isPending ? <Loader /> : "Update"}
               </Button>
             </div>
           </Heading>

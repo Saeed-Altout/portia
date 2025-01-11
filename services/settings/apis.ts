@@ -18,3 +18,14 @@ export const getPorts = async (
     throw error;
   }
 };
+
+export const updateUserProfile = async (
+  values: IUpdateUserProfileCredentials
+): Promise<RootResponse<null>> => {
+  try {
+    const response = await apiClient.post("/update-user-profile", values);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
