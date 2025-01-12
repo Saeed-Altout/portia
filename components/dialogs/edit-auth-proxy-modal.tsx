@@ -17,15 +17,14 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Modal } from "@/components/modal";
 import { Loader } from "@/components/ui/loader";
+import { Modal } from "@/components/modal";
 
-import { useModalStore } from "@/stores/use-modal-store";
+import { useModalStore, useProxyStore } from "@/stores";
 import { editAuthProxySchema } from "@/schemas";
 import { ModalType } from "@/config/constants";
 import { useEditAuthProxyMutation } from "@/services/proxies/hooks";
 import { usePasswordControl } from "@/hooks/use-password-control";
-import { useProxyStore } from "@/stores/use-proxy-store";
 
 export const EditAuthProxyModal = () => {
   const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
@@ -35,7 +34,7 @@ export const EditAuthProxyModal = () => {
       },
     });
 
-  const { proxy, resetProxy } = useProxyStore();
+  const { proxy, reset } = useProxyStore();
   const { mutateAsync, isPending } = useEditAuthProxyMutation();
 
   const { isOpen, type, onClose } = useModalStore();
@@ -50,7 +49,7 @@ export const EditAuthProxyModal = () => {
 
   const handleClose = () => {
     form.reset();
-    resetProxy();
+    reset();
     onClose();
   };
 
@@ -61,9 +60,7 @@ export const EditAuthProxyModal = () => {
         password: values.password,
       });
       handleClose();
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -74,7 +71,7 @@ export const EditAuthProxyModal = () => {
 
   return (
     <Modal
-      title={`Change my proxy (id:${proxy.id ?? ""}) Authentications`}
+      title={`Change my proxy (id:${proxy.id}) Authentications`}
       isOpen={isOpenModal}
       onClose={handleClose}
     >

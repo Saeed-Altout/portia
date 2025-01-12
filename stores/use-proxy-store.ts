@@ -22,6 +22,22 @@ interface Proxy {
   country_name: string;
 }
 
+interface Location {
+  city_id: number;
+  city_name: string;
+  country_id: number;
+  country_name: string;
+  id: number;
+  is_available: boolean;
+  package_id: number;
+  package_name: string;
+  rotation_time: string;
+  service_provider_id: number;
+  service_provider_name: string;
+  status: string;
+  http_port: number;
+  socks_port: number;
+}
 const initialProxy: Proxy = {
   sequence: "",
   id: 0,
@@ -43,23 +59,6 @@ const initialProxy: Proxy = {
   amount: 0,
   country_name: "",
 };
-interface Location {
-  city_id: number;
-  city_name: string;
-  country_id: number;
-  country_name: string;
-  id: number;
-  is_available: boolean;
-  package_id: number;
-  package_name: string;
-  rotation_time: string;
-  service_provider_id: number;
-  service_provider_name: string;
-  status: string;
-  http_port: number;
-  socks_port: number;
-}
-
 const initialLocation: Location = {
   city_id: 0,
   city_name: "",
@@ -91,6 +90,8 @@ interface ProxyStore {
 
   duration: string;
   setDuration: (duration: string) => void;
+
+  reset: () => void;
 }
 
 export const useProxyStore = create<ProxyStore>((set) => ({
@@ -107,4 +108,6 @@ export const useProxyStore = create<ProxyStore>((set) => ({
 
   duration: "",
   setDuration: (duration) => set({ duration }),
+
+  reset: () => set({ proxy: initialProxy, location: initialLocation }),
 }));

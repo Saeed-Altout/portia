@@ -27,22 +27,23 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Modal } from "@/components/modal";
 import { Loader } from "@/components/ui/loader";
+import { Modal } from "@/components/modal";
 
-import { ModalType } from "@/config/constants";
-import { useModalStore } from "@/stores/use-modal-store";
-import { editProxySchema } from "@/schemas";
+import { ModalType, ROUTES } from "@/config/constants";
 import { useEditInfoProxyMutation } from "@/services/proxies/hooks";
 import { useGetPortsQuery } from "@/services/settings/hooks";
-import { useLocationStore } from "@/stores/use-location-store";
-import { useProxyStore } from "@/stores/use-proxy-store";
+import { useProxyStore, useModalStore } from "@/stores";
+
+export const formSchema = z.object({
+  provider: z.string().min(2),
+  protocol: z.string().min(2),
+});
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
 
-  const { proxy, resetProxy } = useProxyStore();
-  const { location, resetLocation } = useLocationStore();
+  const { proxy, location, reset } = useProxyStore();
 
   const { mutateAsync, isPending } = useEditInfoProxyMutation();
   const { data: ports, isSuccess } = useGetPortsQuery({ id: proxy.package_id });
@@ -50,22 +51,21 @@ export const EditInfoProxyModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.EDIT_INFO_PROXY;
 
-  const form = useForm<z.infer<typeof editProxySchema>>({
-    resolver: zodResolver(editProxySchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       provider: "First available uk network & location",
       protocol: "",
     },
   });
 
-  const handleClose = () => {
+  const onCancel = () => {
     form.reset();
-    resetProxy();
-    resetLocation();
+    reset();
     onClose();
   };
 
-  const onSubmit = async (values: z.infer<typeof editProxySchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({
         parent_proxy_id:
@@ -75,10 +75,8 @@ export const EditInfoProxyModal = () => {
         proxy_id: proxy.proxy_id ?? "",
         protocol: values.protocol,
       });
-      handleClose();
-    } catch (error) {
-      console.error(error);
-    }
+      onCancel();
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -92,9 +90,9 @@ export const EditInfoProxyModal = () => {
 
   return (
     <Modal
-      title={`Change my proxy (id:${proxy.id ?? ""}) type`}
+      title={`Change my proxy (id:${proxy.id}) type`}
       isOpen={isOpenModal}
-      onClose={handleClose}
+      onClose={onCancel}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -124,7 +122,7 @@ export const EditInfoProxyModal = () => {
                         asChild
                       >
                         <Link
-                          href={`/dashboard/locations?callback=${pathname}`}
+                          href={`${ROUTES.DASHBOARD_LOCATIONS}?callback=${pathname}`}
                         >
                           <ArrowUpRight className="h-4 w-4" />
                           <span className="sr-only">Select Location</span>
@@ -173,7 +171,7 @@ export const EditInfoProxyModal = () => {
               variant="outline"
               className="w-full"
               disabled={isPending}
-              onClick={handleClose}
+              onClick={onCancel}
             >
               Cancel
             </Button>

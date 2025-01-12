@@ -77,8 +77,3 @@ export const editAuthProxySchema = z.object({
     .string()
     .min(6, { message: "Password must be at least 6 characters." }),
 });
-
-export const editProxySchema = z.object({
-  provider: z.string().min(2),
-  protocol: z.string().min(2),
-});
