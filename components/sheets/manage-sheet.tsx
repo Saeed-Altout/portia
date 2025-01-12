@@ -35,8 +35,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader, Loader2 } from "@/components/ui/loader";
+import { CircleIcon } from "@/components/circle-icon";
+import { ErrorApi } from "@/components/pages/error-api";
 
-import { ErrorApi, CircleIcon } from "@/components";
 import { useProxyStore, useModalStore } from "@/stores";
 
 import { ModalType, ROUTES } from "@/config/constants";
