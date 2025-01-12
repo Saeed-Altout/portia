@@ -12,14 +12,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { useStore } from "@/stores/use-store";
+import { useProxyStore } from "@/stores";
 
 interface StepThreeProps {
   form: any;
 }
 
 export const StepThree = ({ form }: StepThreeProps) => {
-  const { offer } = useStore();
+  const { offer } = useProxyStore();
 
   return (
     <>

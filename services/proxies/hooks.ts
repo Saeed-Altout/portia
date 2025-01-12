@@ -33,6 +33,7 @@ export const useGetProxyByIdQuery = (id: string) => {
   return useQuery({
     queryKey: ["proxy", id],
     queryFn: () => getProxyById(id),
+    enabled: +id != 0,
   });
 };
 

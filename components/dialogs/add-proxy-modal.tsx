@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
 import { Modal } from "@/components/modal";
 
 import { StepOne } from "./add/step-one";
@@ -70,9 +71,7 @@ export const AddProxyModal = () => {
         password: values.password,
       });
       onCancel();
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   const onCancel = () => {
@@ -178,11 +177,7 @@ export const AddProxyModal = () => {
           <div className="flex flex-col items-center gap-4">
             {step == 3 && (
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? (
-                  <BeatLoader color="#fff" size={12} />
-                ) : (
-                  "Activate Proxy"
-                )}
+                {isPending ? <Loader /> : "Activate Proxy"}
               </Button>
             )}
             {step !== 3 && (

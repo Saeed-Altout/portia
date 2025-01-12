@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, Key } from "react";
+import { Zap } from "lucide-react";
 
 import {
   Select,
@@ -9,21 +10,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { CircleIcon } from "@/components/circle-icon";
+import { Heading } from "@/components/heading";
 import { LoadingApi2 } from "@/components/pages/loading-api";
 import { ErrorApi } from "@/components/pages/error-api";
 
 import { cn } from "@/lib/utils";
 import { ModalType } from "@/config/constants";
+import { useData } from "@/contexts/plans-context";
 
-import { useData } from "./plans-context";
-
-import { useAuthStore } from "@/stores/use-auth-store";
-import { useModalStore } from "@/stores/use-modal-store";
-import { useProxyStore } from "@/stores/use-proxy-store";
-import { Heading } from "@/components/heading";
-import { Button } from "@/components/ui/button";
-import { CircleIcon } from "@/components/circle-icon";
-import { Zap } from "lucide-react";
+import { useAuthStore, useModalStore, useProxyStore } from "@/stores";
 
 export const PlansClient = () => {
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
@@ -31,7 +28,7 @@ export const PlansClient = () => {
 
   const { user } = useAuthStore();
   const { onOpen, setStep } = useModalStore();
-  const { proxy, setProxy, setPrice } = useProxyStore();
+  const { offer, setOffer, setPrice } = useProxyStore();
   const { isLoading, isError, isSuccess, packages, offers } = useData();
 
   const handlePackageSelect = (id: number) => {
@@ -44,10 +41,10 @@ export const PlansClient = () => {
   };
 
   const handleActiveProxy = (id: number, cost: string) => {
-    setProxy({ ...proxy, proxy_id: id.toString() });
+    setStep(3);
+    setOffer({ ...offer, id });
     setPrice(cost);
     onOpen(ModalType.ACTIVE_PROXY);
-    setStep(3);
   };
 
   useEffect(() => {
@@ -172,7 +169,7 @@ export const PlansClient = () => {
                   ${offer.cost}
                 </p>
                 <Button
-                  disabled={!offer.is_available}
+                  disabled={offer.is_available}
                   onClick={() => handleActiveProxy(offer.id, offer.cost)}
                   className="w-full md:w-auto"
                 >

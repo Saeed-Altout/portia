@@ -93,7 +93,7 @@ export const addProxy = async (
 
 export const getProxyById = async (id: string): Promise<Root<IProxies>> => {
   try {
-    const res = await apiClient.get(`/proxies/${id}`);
+    const res = await apiClient.get(`/get-proxy/${id}`);
     return res.data;
   } catch (error) {
     throw error;

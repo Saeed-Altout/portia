@@ -26,36 +26,6 @@ export const renewProxySchema = z.object({
   password: z.string().min(6),
 });
 
-export const activateNewProxySchema = z.object({
-  pkg_id: z.string().optional(),
-  plan_id: z.string().optional(),
-  amount: z.string().optional(),
-  provider: z.string().optional(),
-  ipRotation: z.string().optional(),
-  protocol: z.string().optional(),
-  re_new: z.boolean().default(false),
-  username: z
-    .string()
-    .min(1, { message: "Username is required." })
-    .regex(/^[a-zA-Z0-9]+$/, {
-      message: "Username must only contain letters and digits.",
-    }),
-  password: z.string().min(6),
-});
-
-export type ActivateNewProxySchema = z.infer<typeof activateNewProxySchema>;
-export const initialValuesActivateNewProxy = {
-  package: "",
-  plan: "",
-  amount: "",
-  provider: "First available uk network & location",
-  ipRotation: "",
-  proxyType: "",
-  autoRenew: false,
-  username: "",
-  password: "",
-};
-
 export const initialFormContactValues = {
   firstName: "",
   lastName: "",

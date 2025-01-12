@@ -1,5 +1,5 @@
 import { PlansClient } from "./_components/client";
-import { PlansProvider } from "./_components/plans-context";
+import { PlansProvider } from "../../../../contexts/plans-context";
 
 export default function PlansPage() {
   return (

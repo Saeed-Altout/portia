@@ -8,15 +8,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import { useStore } from "@/stores/use-store";
+import { useProxyStore } from "@/stores";
 
 interface StepTwoProps {
   form: any;
 }
 
 export const StepTwo = ({ form }: StepTwoProps) => {
-  const { offer } = useStore();
+  const { offer } = useProxyStore();
 
   return (
     <>

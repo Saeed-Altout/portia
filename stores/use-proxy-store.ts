@@ -38,6 +38,29 @@ interface Location {
   http_port: number;
   socks_port: number;
 }
+
+interface Offer {
+  id: number;
+  cost: string;
+  description: string;
+  title: string;
+  plan_id: number;
+  package_id: number;
+  is_available: boolean;
+  color: string;
+}
+
+const initialOffer: Offer = {
+  id: 0,
+  cost: "",
+  description: "",
+  title: "",
+  plan_id: 0,
+  package_id: 0,
+  is_available: false,
+  color: "",
+};
+
 const initialProxy: Proxy = {
   sequence: "",
   id: 0,
@@ -85,6 +108,10 @@ interface ProxyStore {
   setLocation: (location: Location) => void;
   resetLocation: () => void;
 
+  offer: Offer;
+  setOffer: (offer: Offer) => void;
+  resetOffer: () => void;
+
   price: string;
   setPrice: (price: string) => void;
 
@@ -99,6 +126,10 @@ export const useProxyStore = create<ProxyStore>((set) => ({
   setProxy: (proxy) => set({ proxy }),
   resetProxy: () => set({ proxy: initialProxy }),
 
+  offer: initialOffer,
+  setOffer: (offer) => set({ offer }),
+  resetOffer: () => set({ offer: initialOffer }),
+
   location: initialLocation,
   setLocation: (location) => set({ location }),
   resetLocation: () => set({ location: initialLocation }),
@@ -109,5 +140,10 @@ export const useProxyStore = create<ProxyStore>((set) => ({
   duration: "",
   setDuration: (duration) => set({ duration }),
 
-  reset: () => set({ proxy: initialProxy, location: initialLocation }),
+  reset: () =>
+    set({
+      proxy: initialProxy,
+      location: initialLocation,
+      offer: initialOffer,
+    }),
 }));

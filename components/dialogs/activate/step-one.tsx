@@ -8,15 +8,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import { useStore } from "@/stores/use-store";
+import { useProxyStore } from "@/stores";
 
 interface StepOneProps {
   form: any;
 }
 
 export const StepOne = ({ form }: StepOneProps) => {
-  const { offer } = useStore();
+  const { offer } = useProxyStore();
 
   return (
     <>
@@ -31,7 +30,7 @@ export const StepOne = ({ form }: StepOneProps) => {
                 placeholder="package"
                 readOnly
                 {...field}
-                value={offer.package_name}
+                value={offer.title}
               />
             </FormControl>
             <FormMessage />
@@ -49,7 +48,7 @@ export const StepOne = ({ form }: StepOneProps) => {
                 placeholder="plan"
                 readOnly
                 {...field}
-                value={offer.plan}
+                value={offer.title}
               />
             </FormControl>
             <FormMessage />
@@ -67,7 +66,7 @@ export const StepOne = ({ form }: StepOneProps) => {
                 placeholder="amount"
                 readOnly
                 {...field}
-                value={offer.duration}
+                value={offer.title}
               />
             </FormControl>
             <FormMessage />
