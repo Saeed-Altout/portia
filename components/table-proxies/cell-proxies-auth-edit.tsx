@@ -1,7 +1,7 @@
 "use client";
 
-import { useModalStore } from "@/stores";
 import { ModalType } from "@/config/constants";
+import { useModalStore } from "@/stores/use-modal-store";
 import { useProxyStore } from "@/stores/use-proxy-store";
 
 interface CellProxiesAuthEditProps {

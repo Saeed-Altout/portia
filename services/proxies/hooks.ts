@@ -8,6 +8,7 @@ import {
   getProxiesCount,
   getProxyById,
   manageProxy,
+  renewProxy,
 } from "./apis";
 import { useResponse } from "@/hooks/use-response";
 
@@ -107,6 +108,25 @@ export const useManageProxyMutation = () => {
       Error({
         error,
         message: "Manage proxy failed.",
+      });
+    },
+  });
+};
+export const useRenewProxyMutation = () => {
+  const queryClient = useQueryClient();
+  const { Success, Error } = useResponse();
+
+  return useMutation({
+    mutationKey: ["renew-proxy"],
+    mutationFn: (values: IRenewProxyCredentials) => renewProxy(values),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["proxies"] });
+      Success({ message: data.message || "Renew proxy Success." });
+    },
+    onError: (error) => {
+      Error({
+        error,
+        message: "Renew proxy failed.",
       });
     },
   });

@@ -6,16 +6,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-import { ModalType } from "@/config/constants";
-import { useModalStore } from "@/stores/use-modal-store";
-import { useLocationStore } from "@/stores/use-location-store";
+import { ModalType, ROUTES } from "@/config/constants";
+import { useProxyStore, useModalStore } from "@/stores";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
   const router = useRouter();
   const callback = useSearchParams().get("callback");
 
   const { onOpen, type } = useModalStore();
-  const { setLocation } = useLocationStore();
+  const { setLocation } = useProxyStore();
 
   const handleSelectLocation = () => {
     setLocation(data);
@@ -32,7 +31,7 @@ export const CellActions = ({ data }: { data: ILocation }) => {
     } else if (type === ModalType.MANAGE_PROXY) {
       onOpen(ModalType.MANAGE_PROXY);
     }
-    router.push(callback ?? "/dashboard");
+    router.push(callback ?? ROUTES.DASHBOARD_HOME);
   };
 
   return (

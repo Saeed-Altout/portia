@@ -17,8 +17,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useGetAllPackages, useGetCostPlans } from "@/hooks";
-import { useProxyStore } from "@/stores/use-proxy-store";
+import { useProxyStore } from "@/stores";
+import {
+  useGetAllPackagesQuery,
+  useGetCostPlansQuery,
+} from "@/services/settings/hooks";
 
 interface StepOneProps {
   form: any;
@@ -38,16 +41,17 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
 
   const { proxy, setProxy, setPrice, setDuration } = useProxyStore();
 
-  const { data: packages, isLoading: packagesIsLoading } = useGetAllPackages();
+  const { data: packages, isLoading: packagesIsLoading } =
+    useGetAllPackagesQuery();
   const {
     data: costsData,
     isFetching: costsDataIsFetching,
     isSuccess: costsIsSuccess,
-  } = useGetCostPlans({
+  } = useGetCostPlansQuery({
     pkg_id: proxy.package_id,
   });
 
-  const plans = Object.keys(costs); // Derive plans from costs
+  const plans = Object.keys(costs);
 
   const handlePackageSelect = (newPkgId: string, pkgName: string) => {
     setProxy({ ...proxy, package_id: newPkgId, package_name: pkgName });
@@ -61,6 +65,7 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
 
     setValuePlan(selectedValuePlan);
     setAmounts(newAmounts);
+    setPrice("0");
   };
 
   const handleAmountSelect = (uniqueValue: string) => {

@@ -23,17 +23,26 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Modal } from "@/components/modal";
 import { Loader } from "@/components/ui/loader";
+import { Modal } from "@/components/modal";
 
 import { ModalType } from "@/config/constants";
-import { useModalStore } from "@/stores/use-modal-store";
-import { paymentMethodSchema } from "@/schemas";
+import { useModalStore } from "@/stores";
+
 import {
   useAddDepositMutation,
   useGetWayPaymentQuery,
 } from "@/services/deposits/hooks";
 
+export const formSchema = z.object({
+  payment_method: z.string().min(2),
+  amount: z
+    .string()
+    .min(1)
+    .regex(/^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$/, {
+      message: "Amount must be a valid number greater than 0",
+    }),
+});
 export const AddFundsModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.ADD_FUNDS;
@@ -41,15 +50,15 @@ export const AddFundsModal = () => {
   const { mutateAsync, isPending } = useAddDepositMutation();
   const { data: methods, isSuccess } = useGetWayPaymentQuery();
 
-  const form = useForm<z.infer<typeof paymentMethodSchema>>({
-    resolver: zodResolver(paymentMethodSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       payment_method: "",
       amount: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof paymentMethodSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync(values);
       onCancel();

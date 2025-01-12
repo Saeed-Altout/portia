@@ -35,16 +35,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader, Loader2 } from "@/components/ui/loader";
-import { Circle, Icon } from "@/components/ui/circle-icon";
-import { ErrorApi } from "@/components/pages/error-api";
 
-import { ModalType } from "@/config/constants";
+import { ErrorApi, CircleIcon } from "@/components";
+import { useProxyStore, useModalStore } from "@/stores";
 
+import { ModalType, ROUTES } from "@/config/constants";
 import { useGetPortsQuery } from "@/services/settings/hooks";
-
-import { useModalStore } from "@/stores/use-modal-store";
-import { useProxyStore } from "@/stores/use-proxy-store";
-import { useLocationStore } from "@/stores/use-location-store";
 import { useManageProxyMutation } from "@/services/proxies/hooks";
 
 const formSchema = z.object({
@@ -61,8 +57,7 @@ export const ManageSheet = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.MANAGE_PROXY;
 
-  const { proxy, resetProxy } = useProxyStore();
-  const { location, resetLocation } = useLocationStore();
+  const { proxy, resetProxy, location, resetLocation } = useProxyStore();
 
   const ports = useGetPortsQuery({ id: proxy.package_id });
   const { mutateAsync, isPending } = useManageProxyMutation();
@@ -102,12 +97,17 @@ export const ManageSheet = () => {
   };
 
   useEffect(() => {
-    if (proxy.rotation_time && proxy.service_provider) {
-      if (location.service_provider_name && location.rotation_time) {
+    if (proxy.rotation_time) {
+      if (location.rotation_time) {
         form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
+      } else {
+        form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
+      }
+    }
+    if (proxy.service_provider) {
+      if (location.service_provider_name) {
         form.setValue("provider", `${location.service_provider_name ?? ""}`);
       } else {
-        form.setValue("ipRotation", `${proxy.rotation_time ?? ""}`);
         form.setValue("provider", `${proxy.service_provider ?? ""}`);
       }
     }
@@ -123,15 +123,12 @@ export const ManageSheet = () => {
     <Sheet open={isOpenModal} onOpenChange={onCancel}>
       <SheetContent className="flex flex-col h-screen px-0 w-full sm:w-3/4">
         <SheetHeader className="px-4">
-          <Circle fill="primary">
-            <Icon icon={Zap} theme="primary" />
-          </Circle>
+          <CircleIcon icon={Zap} theme="primary" />
           <div>
             <SheetTitle>Manage Proxy</SheetTitle>
             <SheetDescription>You can manage your proxy here.</SheetDescription>
           </div>
         </SheetHeader>
-
         {ports.isLoading && (
           <div className="h-full flex justify-center items-center">
             <Loader2 />
@@ -194,7 +191,7 @@ export const ManageSheet = () => {
                           onClick={() => onClose()}
                         >
                           <Link
-                            href={`/dashboard/locations?callback=${pathname}`}
+                            href={`${ROUTES.DASHBOARD_LOCATIONS}?callback=${pathname}`}
                           >
                             <ArrowUpRight className="h-4 w-4" />
                             <span className="sr-only">ArrowUpRight Icon</span>

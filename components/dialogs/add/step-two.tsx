@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+
 import {
   FormControl,
   FormField,
@@ -13,11 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-import { useModalStore } from "@/stores";
-import { useEffect } from "react";
-import { ModalType } from "@/config/constants";
-import { useLocationStore } from "@/stores/use-location-store";
+import { useProxyStore, useModalStore } from "@/stores";
 
 interface StepTwoProps {
   form: any;
@@ -26,7 +25,7 @@ interface StepTwoProps {
 export const StepTwo = ({ form }: StepTwoProps) => {
   const pathname = usePathname();
   const { step, onClose } = useModalStore();
-  const { location } = useLocationStore();
+  const { location } = useProxyStore();
 
   useEffect(() => {
     if (step === 2 && location) {
@@ -56,7 +55,7 @@ export const StepTwo = ({ form }: StepTwoProps) => {
                   size="icon"
                   className="rounded-l-none"
                   type="button"
-                  onClick={() => onClose(ModalType.ADD_PROXY)}
+                  onClick={() => onClose()}
                   asChild
                 >
                   <Link href={`/dashboard/locations?callback=${pathname}`}>

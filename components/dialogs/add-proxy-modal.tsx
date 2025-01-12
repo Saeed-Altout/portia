@@ -15,11 +15,9 @@ import { StepOne } from "./add/step-one";
 import { StepTwo } from "./add/step-two";
 import { StepThree } from "./add/step-three";
 
-import { useModalStore } from "@/stores/use-modal-store";
 import { ModalType } from "@/config/constants";
-import { useLocationStore } from "@/stores/use-location-store";
-import { useProxyStore } from "@/stores/use-proxy-store";
 import { useAddProxyMutation } from "@/services/proxies/hooks";
+import { useModalStore, useProxyStore } from "@/stores";
 
 export const formSchema = z.object({
   pkg_id: z.string().min(1),
@@ -38,8 +36,8 @@ export const formSchema = z.object({
   password: z.string().min(6),
 });
 export const AddProxyModal = () => {
-  const { location } = useLocationStore();
-  const { price, duration } = useProxyStore();
+  const { location, price, duration } = useProxyStore();
+
   const { step, isOpen, type, setStep, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.ADD_PROXY;
 
@@ -114,7 +112,6 @@ export const AddProxyModal = () => {
           type: "required",
           message: "IP Rotation is required.",
         });
-
         return;
       }
     }

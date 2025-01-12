@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { ModalType } from "@/config/constants";
 
-import { useModalStore } from "@/stores";
+import { useModalStore } from "@/stores/use-modal-store";
 import { Button } from "@/components/ui/button";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLElement> {

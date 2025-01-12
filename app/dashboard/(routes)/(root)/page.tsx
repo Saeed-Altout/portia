@@ -1,5 +1,5 @@
+import { RootProvider } from "@/contexts/root-context";
 import { RootClient } from "./_components/client";
-import { RootProvider } from "./_components/root-context";
 
 export default function RootPage() {
   return (

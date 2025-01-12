@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/config/constants";
 
 export const Banner = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -43,7 +46,7 @@ export const Banner = () => {
           <span className="hidden md:inline ml-1">Check out the</span>
         </p>
         <Link
-          href="/"
+          href={ROUTES.DASHBOARD_HOME}
           className="text-xs md:text-base underline underline-offset-4 hover:opacity-90 transition-opacity whitespace-nowrap"
         >
           new dashboard

@@ -486,7 +486,9 @@ export const ROUTES = {
   DASHBOARD_DEPOSITS: "/dashboard/deposits",
   DASHBOARD_PLANS: "/dashboard/pricing-plans",
   DASHBOARD_AFFILIATE: "/dashboard/affiliate",
+  DASHBOARD_LOCATIONS: "/dashboard/locations",
   DASHBOARD_HOME: "/dashboard",
+  DASHBOARD_SETTINGS: "/dashboard/settings",
 
   HOME: "/",
   CONTACT_US: "/contact-us",

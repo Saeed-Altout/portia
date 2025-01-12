@@ -68,14 +68,23 @@ export const manageProxy = async (
     throw error;
   }
 };
+
+export const renewProxy = async (
+  values: IRenewProxyCredentials
+): Promise<RootResponse<IProxies>> => {
+  try {
+    const response = await apiClient.post("/renew", values);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const addProxy = async (
   values: IAddProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
-    const response = await apiClient.post(
-      process.env.NEXT_PUBLIC_MANAGE_PROXY!,
-      values
-    );
+    const response = await apiClient.post("/create-proxy", values);
     return response.data;
   } catch (error) {
     throw error;

@@ -74,3 +74,11 @@ declare type IAddProxyCredentials = {
   username: string;
   password: string;
 };
+
+declare type IRenewProxyCredentials = {
+  proxy_id: string;
+  duration: string;
+  parent_proxy_id: string;
+  protocol: string;
+  password: string;
+};
