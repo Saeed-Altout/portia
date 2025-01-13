@@ -3,9 +3,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 
-export const columns: ColumnDef<IDeposit>[] = [
+export const columns: ColumnDef<IDepositsHistory>[] = [
   {
-    accessorKey: "date",
+    accessorKey: "created_at",
     header: "Date",
     cell: ({ row }) => (
       <p>{format(new Date(row.original.created_at), "MMM dd, yyyy")}</p>
