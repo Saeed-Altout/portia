@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAffiliateHistories, getAffiliateStatistics } from "./apis";
+import {
+  getAffiliateHistories,
+  getAffiliateStatistics,
+} from "@/services/affiliate";
 
 export const useGetAffiliateHistoriesQuery = () => {
   return useQuery({

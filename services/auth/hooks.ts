@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { clear, setEmail, setToken, setUser } from "@/lib/cookie";
-import { useResponse } from "@/hooks/use-response";
 import {
   login,
   loginWithGoogle,
@@ -10,18 +9,19 @@ import {
   sendResetEmail,
   setNewPassword,
   verificationCode,
-} from "./apis";
+} from "@/services/auth";
+import { useResponse } from "@/hooks/use-response";
+import { ROUTES } from "@/config/constants";
+
 export const useLoginMutation = () => {
   const { Success, Error } = useResponse();
-
   return useMutation({
     mutationKey: ["login"],
-    mutationFn: (data: ILoginRequest) => login(data),
+    mutationFn: (data: LoginCredentials) => login(data),
     onSuccess: (data) => {
       setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
       setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
       Success({ message: data.message || "Login is Success." });
-
       location.reload();
     },
     onError(error) {
@@ -60,15 +60,14 @@ export const useLogoutMutation = () => {
 
 export const useRegisterMutation = () => {
   const { Success, Error } = useResponse();
-
   return useMutation({
     mutationKey: ["register"],
-    mutationFn: (values: IRegisterRequest) => register(values),
+    mutationFn: (values: RegisterCredentials) => register(values),
     onSuccess(data, req) {
       setEmail(req.email);
       Success({
         message: data.message || "Register is Success.",
-        redirectTo: `/auth/verify-email?email=${req.email}`,
+        redirectTo: `${ROUTES.VERIFY_EMAIL_CONFIRM}?email=${req.email}`,
       });
     },
     onError(error) {
@@ -81,7 +80,7 @@ export const useResendVerificationCodeMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["resend-verification-code"],
-    mutationFn: (values: IResendVerificationCodeRequest) =>
+    mutationFn: (values: ResendVerificationCodeCredentials) =>
       resendVerificationCode(values),
     onSuccess: (data) => {
       Success({
@@ -98,11 +97,11 @@ export const useSendResetEmailMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["send-reset-email"],
-    mutationFn: (values: ISendResetEmailRequest) => sendResetEmail(values),
+    mutationFn: (values: SendResetEmailCredentials) => sendResetEmail(values),
     onSuccess(data, req) {
       Success({
         message: data.message || "Send your email is Success.",
-        redirectTo: `/auth/verify-reset-email?email=${req.email}`,
+        redirectTo: `${ROUTES.VERIFY_RESET_EMAIL}?email=${req.email}`,
       });
     },
     onError(error) {
@@ -115,12 +114,12 @@ export const useSetNewPasswordMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["set-new-password"],
-    mutationFn: (values: ISetNewPasswordRequest) => setNewPassword(values),
+    mutationFn: (values: SetNewPasswordCredentials) => setNewPassword(values),
     onSuccess(data) {
       setToken(data.access_token);
       Success({
         message: data.message || "Set new password is Success.",
-        redirectTo: "/auth/password-reset",
+        redirectTo: ROUTES.PASSWORD_RESET,
       });
     },
     onError(error) {
@@ -133,12 +132,13 @@ export const useVerifyCodeMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["verification-code"],
-    mutationFn: (values: IVerificationCodeRequest) => verificationCode(values),
+    mutationFn: (values: VerificationCodeCredentials) =>
+      verificationCode(values),
     onSuccess(data) {
       setToken(data.access_token);
       Success({
         message: data.message || "Verify code is success.",
-        redirectTo: "/auth/email-confirmed",
+        redirectTo: ROUTES.EMAIL_CONFIRMED,
       });
     },
     onError(error) {

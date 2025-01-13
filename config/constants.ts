@@ -498,6 +498,10 @@ export const ROUTES = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
   VERIFY_EMAIL: "/auth/verify-code",
+  VERIFY_EMAIL_CONFIRM: "/auth/verify-email",
+  VERIFY_RESET_EMAIL: "/auth/verify-reset-email",
+  PASSWORD_RESET: "/auth/password-reset",
+  EMAIL_CONFIRMED: "/auth/email-confirmed",
 };
 
 export enum ModalType {
@@ -536,3 +540,22 @@ export const dashboardRoutes = [
     href: ROUTES.DASHBOARD_AFFILIATE,
   },
 ];
+
+export const ENDPOINTS = {
+  AFFILIATE_HISTORIES: "/affiliate/earnings/history",
+  AFFILIATE_STATISTICS: "/affiliate/earnings/statistics",
+  DEPOSIT: "/deposit",
+  DEPOSIT_HISTORIES: "/deposits/history",
+  DEPOSIT_STATISTICS: "/deposits/Statistics",
+  LOGIN: "/auth/login",
+  LOGOUT: "/auth/logout",
+  REGISTER: "/auth/register",
+  RESEND_VERIFICATION_CODE: "/auth/resend-verification-code",
+  SEND_RESET_EMAIL: "/auth/send-email-to-reset-password",
+  SET_NEW_PASSWORD: "/auth/set-new-password",
+  VERIFY_CODE: "/auth/confirm-verification-code",
+  GET_WAY_PAYMENT: "/available_gateway",
+  GET_FAQS: "/get-all-faqs",
+  GET_TOP_FAQS: "/get-faq",
+  GET_PROXY_FAQS: "/get-proxy-locations",
+};

@@ -4,12 +4,12 @@ import {
   getDepositsHistories,
   getDepositStatistics,
   getWayPayment,
-} from "./apis";
+} from "@/services/deposits";
 import { useResponse } from "@/hooks/use-response";
 
 export const useGetDepositsHistoriesQuery = () => {
   return useQuery({
-    queryKey: ["deposits"],
+    queryKey: ["deposits-histories"],
     queryFn: () => getDepositsHistories(),
   });
 };
@@ -23,18 +23,14 @@ export const useGetDepositsStatisticsQuery = () => {
 
 export const useAddDepositMutation = () => {
   const { Error } = useResponse();
-
   return useMutation({
     mutationKey: ["add-deposit"],
-    mutationFn: (values: IDepositRequest) => addDeposit(values),
+    mutationFn: (values: DepositCredentials) => addDeposit(values),
     onSuccess: (data) => {
       window.open(data.data.url, "_blank");
     },
     onError: (error) => {
-      Error({
-        error,
-        message: "Deposit failed.",
-      });
+      Error({ error, message: "Deposit failed." });
     },
   });
 };

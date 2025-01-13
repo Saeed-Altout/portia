@@ -1,4 +1,6 @@
 import { apiClient } from "@/lib/api";
+import { ENDPOINTS } from "@/config/constants";
+
 export const loginWithGoogle = async (): Promise<void> => {
   try {
     location.href =
@@ -8,45 +10,44 @@ export const loginWithGoogle = async (): Promise<void> => {
     throw error;
   }
 };
-export const login = async (values: ILoginRequest): Promise<ILoginResponse> => {
+
+export const logout = async (): Promise<LogoutResponse> => {
   try {
-    const response = await apiClient.post(
-      process.env.NEXT_PUBLIC_LOGIN!,
-      values
-    );
+    const response = await apiClient.get(ENDPOINTS.LOGOUT);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const logout = async (): Promise<ILogoutRequestResponse> => {
+export const login = async (
+  values: LoginCredentials
+): Promise<LoginResponse> => {
   try {
-    const response = await apiClient.get(process.env.NEXT_PUBLIC_LOGOUT!);
+    const response = await apiClient.post(ENDPOINTS.LOGIN, values);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
 export const register = async (
-  values: IRegisterRequest
-): Promise<IRegisterResponse> => {
+  values: RegisterCredentials
+): Promise<RegisterResponse> => {
   try {
-    const response = await apiClient.post(
-      process.env.NEXT_PUBLIC_REGISTER!,
-      values
-    );
+    const response = await apiClient.post(ENDPOINTS.REGISTER, values);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
 export const resendVerificationCode = async (
-  values: IResendVerificationCodeRequest
-): Promise<IResendVerificationCodeResponse> => {
+  values: ResendVerificationCodeCredentials
+): Promise<ResendVerificationCodeResponse> => {
   try {
     const response = await apiClient.post(
-      process.env.NEXT_PUBLIC_RESEND_VERIFICATION_CODE!,
+      ENDPOINTS.RESEND_VERIFICATION_CODE,
       values
     );
     return response.data;
@@ -56,24 +57,22 @@ export const resendVerificationCode = async (
 };
 
 export const sendResetEmail = async (
-  values: ISendResetEmailRequest
-): Promise<ISendResetEmailResponse> => {
+  values: SendResetEmailCredentials
+): Promise<SendResetEmailResponse> => {
   try {
-    const response = await apiClient.post(
-      process.env.NEXT_PUBLIC_SEND_RESET_EMAIL!,
-      values
-    );
+    const response = await apiClient.post(ENDPOINTS.SEND_RESET_EMAIL, values);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
 export const setNewPassword = async (
-  values: ISetNewPasswordRequest
-): Promise<ISetNewPasswordResponse> => {
+  values: SetNewPasswordCredentials
+): Promise<SetNewPasswordResponse> => {
   try {
     const response = await apiClient.post(
-      process.env.NEXT_PUBLIC_SET_NEW_PASSWORD_ENDPOINT!,
+      ENDPOINTS.SET_NEW_PASSWORD,
       {
         password: values.password,
         password_confirmation: values.password_confirmation,
@@ -85,14 +84,12 @@ export const setNewPassword = async (
     throw error;
   }
 };
+
 export const verificationCode = async (
-  values: IVerificationCodeRequest
-): Promise<IVerificationCodeResponse> => {
+  values: VerificationCodeCredentials
+): Promise<VerificationCodeResponse> => {
   try {
-    const response = await apiClient.post(
-      process.env.NEXT_PUBLIC_VERIFY_CODE!,
-      values
-    );
+    const response = await apiClient.post(ENDPOINTS.VERIFY_CODE, values);
     return response.data;
   } catch (error) {
     throw error;

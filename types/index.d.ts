@@ -1,3 +1,143 @@
+// COMMON TYPES
+declare type Root<T> = {
+  status: boolean;
+  data: T;
+};
+
+declare type RootResponse<T> = {
+  status: boolean;
+  message: string | string[];
+  data: T;
+};
+
+declare type User = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  referred_code: string;
+};
+
+// GET TYPES
+declare type Affiliate = {
+  id: number;
+  user_id: number;
+  amount: number;
+  created_at: Date | string;
+  updated_at: Date | string;
+};
+declare type Affiliates = Affiliate[];
+declare type AffiliateStatistics = {
+  this_month_earnings: number;
+  this_year_earnings: number;
+  total_earnings: number;
+};
+
+// POST TYPES
+declare type LoginCredentials = {
+  email: string;
+  password: string;
+};
+declare type LoginResponse = {
+  status: boolean;
+  data: User;
+  message: string;
+  access_token: string;
+  token_type: string;
+  expires_in: string;
+};
+declare type LogoutResponse = {
+  success: boolean;
+  message: string;
+};
+declare type RegisterCredentials = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  referred_by?: string;
+  fcm_token: string;
+};
+declare type RegisterResponse = RootResponse<null>;
+declare type ResendVerificationCodeCredentials = {
+  email: string;
+};
+declare type ResendVerificationCodeResponse = RootResponse<null>;
+declare type SendResetEmailCredentials = {
+  email: string;
+};
+declare type SendResetEmailResponse = RootResponse<null>;
+
+declare type SetNewPasswordCredentials = {
+  password: string;
+  password_confirmation: string;
+  token: string;
+};
+declare type SetNewPasswordResponse = {
+  success: boolean;
+  message: string | string[];
+  access_token: string;
+  token_type: string;
+  expires_in: Date | string;
+};
+declare type VerificationCodeCredentials = {
+  email: string;
+  code: string;
+};
+declare type VerificationCodeResponse = {
+  success: boolean;
+  message: string | string[];
+  access_token: string;
+  token_type: string;
+  expires_in: string;
+};
+
+declare type DepositCredentials = {
+  payment_method: string;
+  amount: string;
+};
+declare type DepositResponse = RootResponse<{ url: string }>;
+declare type GetWayPaymentResponse = RootResponse<string[]>;
+declare type DepositHistory = {
+  id: number;
+  payment_method: string;
+  amount: string;
+  created_at: Date | string;
+};
+declare type DepositHistories = DepositHistory[];
+declare type DepositStatistics = {
+  monthly_deposits: number;
+  yearly_deposits: number;
+  all_time_deposits: number;
+};
+
+declare type Faq = {
+  id: number;
+  question: string;
+  answer: string;
+  created_at: Date | string;
+  updated_at: Date | string;
+};
+declare type Faqs = Faq[];
+declare type GetFaqsResponse = ApiResponse<Faqs>;
+declare type Location = {
+  id: number;
+  http_port: number;
+  socks_port: number;
+  service_provider_name: string;
+  country_name: string;
+  city_name: string;
+  rotation_time: any;
+  is_available: boolean;
+  service_provider_id: number;
+  country_id: number;
+  city_id: number;
+  status: string;
+  package_id: number;
+  package_name: string;
+};
+declare type Locations = Location[];
+
 /**
  * Generic API response type.
  * Represents the structure of a response returned by the API.
@@ -285,6 +425,7 @@ declare type ILoginRequest = {
   email: string;
   password: string;
 };
+
 declare type ILoginResponse = {
   status: boolean;
   data: {

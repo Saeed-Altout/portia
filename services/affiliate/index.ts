@@ -1,10 +1,11 @@
 import { apiClient } from "@/lib/api";
+import { ENDPOINTS } from "@/config/constants";
 
 export const getAffiliateHistories = async (): Promise<
-  RootResponse<IAffiliateHistories>
+  RootResponse<Affiliates>
 > => {
   try {
-    const response = await apiClient.get("/affiliate/earnings/history");
+    const response = await apiClient.get(ENDPOINTS.AFFILIATE_HISTORIES);
     return response.data;
   } catch (error) {
     throw error;
@@ -12,10 +13,10 @@ export const getAffiliateHistories = async (): Promise<
 };
 
 export const getAffiliateStatistics = async (): Promise<
-  RootResponse<IAffiliateStatistics>
+  RootResponse<AffiliateStatistics>
 > => {
   try {
-    const response = await apiClient.get("/affiliate/earnings/statistics");
+    const response = await apiClient.get(ENDPOINTS.AFFILIATE_STATISTICS);
     return response.data;
   } catch (error) {
     throw error;
