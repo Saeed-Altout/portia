@@ -29,6 +29,8 @@ import { useAuthStore } from "@/stores/use-auth-store";
 import { useModalStore } from "@/stores/use-modal-store";
 import { getModifiedData } from "@/utils/get-modified-data";
 import { useUpdateUserProfileMutation } from "@/services/settings/hooks";
+import { LogoutModal } from "@/components/dialogs/logout-modal";
+import { ExportDataModal } from "@/components/dialogs/export-data-modal";
 
 export const userProfileSchema = z.object({
   first_name: z.string(),
@@ -78,6 +80,8 @@ export const SettingsForm = () => {
 
   return (
     <>
+      <ExportDataModal />
+      <LogoutModal />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Heading
