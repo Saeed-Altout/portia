@@ -33,8 +33,8 @@ export const DepositsClient = () => {
   const {
     isError,
     isLoading,
-    deposits,
-    formattedDeposits,
+    depositHistories,
+    depositStatistics,
     totalPages,
     perPage,
     currentPage,
@@ -55,7 +55,7 @@ export const DepositsClient = () => {
     <>
       <Heading title={`Welcome back, ${user.first_name}`} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {formattedDeposits.map((item, key) => (
+        {depositStatistics.map((item, key) => (
           <div key={key} className="border rounded-lg">
             <div className="p-6 flex items-end justify-between h-full">
               <div className="flex justify-start items-start flex-col gap-y-5 flex-1">
@@ -91,7 +91,7 @@ export const DepositsClient = () => {
       <DataTable
         title="My Deposits"
         columns={columns}
-        data={deposits ?? []}
+        data={depositHistories ?? []}
         isLoading={isLoading}
         totalPages={totalPages}
         currentPage={currentPage}

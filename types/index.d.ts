@@ -374,7 +374,7 @@ declare type RootApi<T> = {
   data: T;
 };
 
-declare type IDepositsHistory = {
+declare type IDepositHistory = {
   id: number;
   payment_method: string;
   amount: string;
@@ -383,7 +383,7 @@ declare type IDepositsHistory = {
 
 declare type IGetDepositsHistoriesResponse = RootApi<{
   current_page: number;
-  data: IDepositsHistory[];
+  data: IDepositHistory[];
   first_page_url: string;
   from: number;
   last_page: number;
@@ -401,15 +401,25 @@ declare type IGetDepositsHistoriesResponse = RootApi<{
   total: number;
 }>;
 
-declare type IGetDepositsStatisticsResponse = RootApi<{
+declare type IDepositStatistics = {
   monthly_deposits: number;
   yearly_deposits: number;
   all_time_deposits: number;
-}>;
+};
 
-declare type IGetAffiliateHistoriesResponse = RootApi<{
+declare type IGetDepositStatisticsResponse = RootApi<IDepositStatistics>;
+
+declare type IAffiliateHistory = {
+  id: number;
+  user_id: number;
+  amount: number;
+  created_at: Date | string;
+  updated_at: Date | string;
+};
+
+declare type IGetAffiliatesHistoriesResponse = RootApi<{
   current_page: number;
-  data: IDepositsHistory[];
+  data: IAffiliateHistory[];
   first_page_url: string;
   from: number;
   last_page: number;
@@ -428,9 +438,9 @@ declare type IGetAffiliateHistoriesResponse = RootApi<{
 }>;
 
 declare type IAffiliateStatistics = {
-  monthly_deposits: number;
-  yearly_deposits: number;
-  all_time_deposits: number;
+  this_month_earnings: number;
+  this_year_earnings: number;
+  total_earnings: number;
 };
 
 declare type IGetAffiliateStatisticsResponse = RootApi<IAffiliateStatistics>;

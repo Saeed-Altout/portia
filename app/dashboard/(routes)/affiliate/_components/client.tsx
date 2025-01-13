@@ -3,8 +3,11 @@
 import { ArrowUp } from "lucide-react";
 import { Area, AreaChart } from "recharts";
 
+import { columns } from "./columns";
+import { useData } from "./affiliate-context";
+import { DataTable } from "./data-table";
+
 import { Heading } from "@/components/heading";
-import { DataTable } from "@/components/table-proxies/data-table";
 import { ErrorApi } from "@/components/pages/error-api";
 import { LoadingApi } from "@/components/pages/loading-api";
 import {
@@ -14,38 +17,34 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { columns } from "./columns";
-import { useData } from "./affiliate-context";
-
 import { useAuthStore } from "@/stores/use-auth-store";
 import { AffiliateCode } from "@/components/affiliate-code";
 
+const chartConfig: ChartConfig = { deposits: { label: "Deposit" } };
+const data = [
+  { id: 1, amount: 20 },
+  { id: 2, amount: 30 },
+  { id: 3, amount: 70 },
+  { id: 4, amount: 45 },
+  { id: 5, amount: 50 },
+];
+
 export const AffiliateClient = () => {
   const { user } = useAuthStore();
-
   const {
-    isLoading,
     isError,
-    isSuccess,
+    isLoading,
     affiliateHistories,
     affiliateStatistics,
+    totalPages,
+    perPage,
+    currentPage,
+    moveNext,
+    movePrev,
+    setPage,
   } = useData();
 
-  const chartConfig: ChartConfig = {
-    affiliate: {
-      label: "Affiliate",
-    },
-  };
-
-  const data = [
-    { id: 1, amount: 20 },
-    { id: 2, amount: 30 },
-    { id: 3, amount: 70 },
-    { id: 4, amount: 45 },
-    { id: 5, amount: 50 },
-  ];
-
-  if (isLoading || !isSuccess) {
+  if (isLoading) {
     return <LoadingApi />;
   }
 
@@ -55,8 +54,8 @@ export const AffiliateClient = () => {
 
   return (
     <>
-      <Heading title={`Welcome back ${user.first_name ?? ""}`} />
-      <AffiliateCode code={user.referred_code ?? ""} />
+      <AffiliateCode />
+      <Heading title={`Welcome back, ${user.first_name}`} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {affiliateStatistics.map((item, key) => (
           <div key={key} className="border rounded-lg">
@@ -92,11 +91,17 @@ export const AffiliateClient = () => {
         ))}
       </div>
       <DataTable
-        columns={columns}
-        data={affiliateHistories ?? []}
         title="Your earning calendar"
         description="Track your earnings by days"
+        columns={columns}
+        data={affiliateHistories ?? []}
         isLoading={isLoading}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        perPage={perPage}
+        moveNext={moveNext}
+        movePrev={movePrev}
+        setPage={setPage}
       />
     </>
   );

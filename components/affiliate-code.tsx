@@ -37,7 +37,7 @@ export const AffiliateCode = ({ code }: { code?: string }) => {
             type="text"
             name="url"
             readOnly
-            value={`${host}/auth/register?code=${code}`}
+            value={`${host}/auth/register?code=${code ?? "A/N"}`}
           />
         </div>
         <Button

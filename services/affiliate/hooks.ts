@@ -4,10 +4,10 @@ import {
   getAffiliateStatistics,
 } from "@/services/affiliate";
 
-export const useGetAffiliateHistoriesQuery = () => {
+export const useGetAffiliateHistoriesQuery = (params: Record<string, any>) => {
   return useQuery({
-    queryKey: ["affiliate-histories"],
-    queryFn: () => getAffiliateHistories(),
+    queryKey: ["affiliate-histories", params],
+    queryFn: () => getAffiliateHistories(params),
   });
 };
 

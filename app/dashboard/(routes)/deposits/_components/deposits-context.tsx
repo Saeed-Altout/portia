@@ -20,8 +20,8 @@ interface DepositsContextType {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  deposits: IDepositsHistory[];
-  formattedDeposits: FormattedType[];
+  depositHistories: IDepositHistory[];
+  depositStatistics: FormattedType[];
   currentPage: number;
   perPage: number;
   totalPages: number;
@@ -30,7 +30,7 @@ interface DepositsContextType {
   setPage: (page: number) => void;
 }
 
-const initialStatistics: IAffiliateStatistics = {
+const initialStatistics: IDepositStatistics = {
   monthly_deposits: 0,
   yearly_deposits: 0,
   all_time_deposits: 0,
@@ -93,12 +93,12 @@ export const DepositsProvider: React.FC<{ children: React.ReactNode }> = ({
         isLoading: depositsStatistics.isLoading,
         isError: depositsHistories.isError || depositsStatistics.isError,
         isSuccess: depositsHistories.isSuccess && depositsStatistics.isSuccess,
-        deposits: depositsHistories.data?.data?.data ?? [],
+        depositHistories: depositsHistories.data?.data?.data ?? [],
         setPage: (page) => setCurrentPage(page),
         moveNext: () =>
           setCurrentPage((prev) => Math.min(prev + 1, totalPages)),
         movePrev: () => setCurrentPage((prev) => Math.max(prev - 1, 1)),
-        formattedDeposits: formatDepositsStatistics(
+        depositStatistics: formatDepositsStatistics(
           depositsStatistics.data?.data ?? initialStatistics
         ),
       }}

@@ -41,7 +41,7 @@ export const getDepositsHistories = async (
 };
 
 export const getDepositStatistics =
-  async (): Promise<IGetDepositsStatisticsResponse> => {
+  async (): Promise<IGetDepositStatisticsResponse> => {
     try {
       const response = await apiClient.get(ENDPOINTS.DEPOSIT_STATISTICS);
       console.log(response.data);

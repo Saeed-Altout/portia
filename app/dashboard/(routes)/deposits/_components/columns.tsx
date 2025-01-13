@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 
-export const columns: ColumnDef<IDepositsHistory>[] = [
+export const columns: ColumnDef<IDepositHistory>[] = [
   {
     accessorKey: "created_at",
     header: "Date",
