@@ -24,7 +24,7 @@ export const LocationsProvider: React.FC<{ children: ReactNode }> = ({
   const isError = locations.isError;
   const isSuccess = locations.isSuccess;
 
-  const formattedLocations: ILocation[] = isSuccess
+  const formattedLocations = isSuccess
     ? locations.data.data.map((location) => ({
         ...location,
         rotation_time: formatTime(location.rotation_time),

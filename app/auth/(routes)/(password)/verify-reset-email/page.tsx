@@ -1,4 +1,4 @@
-import { VerifyRestEmailForm } from "@/components";
+import { VerifyRestEmailForm } from "@/components/forms/verify-reset-email-form";
 
 export const metadata = {
   title: "Verify Password Reset Email | Complete Your Recovery",

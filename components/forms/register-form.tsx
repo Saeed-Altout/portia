@@ -16,7 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { CardWrapper, Provider, SubmitButton } from "@/components";
+import { CardWrapper } from "@/components/card-wrapper";
+import { SubmitButton } from "@/components/submit-button";
+import { Provider } from "@/components/provider";
 
 import { getFcmToken } from "@/lib/local-storage";
 import { useRegisterMutation } from "@/services/auth/hooks";

@@ -5,7 +5,7 @@ import {
   useGetProxiesCountQuery,
   useGetProxiesQuery,
 } from "@/services/proxies/hooks";
-import { useGetUserBalanceQuery } from "@/services/user/hooks";
+import { useGetUserBalanceQuery } from "@/services/settings/hooks";
 import { formatProxiesData, formatStatistics } from "@/utils/formatters";
 
 interface ProxiesContextType {

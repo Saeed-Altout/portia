@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Circle, Icon } from "@/components/ui/circle-icon";
-import { BackButton } from "@/components";
+import { BackButton } from "@/components/back-button";
 
 import { setToken } from "@/lib/cookie";
 import { ROUTES } from "@/config/constants";

@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { useResendVerificationCode } from "@/hooks/auth";
+import { useResendVerificationCodeMutation } from "@/services/auth/hooks";
 
 interface ResendButtonProps {
   label?: string;
@@ -15,7 +15,7 @@ export const ResendButton = ({
   message = "Didn’t receive the email?",
 }: ResendButtonProps) => {
   const email = useSearchParams().get("email");
-  const { mutate, isPending } = useResendVerificationCode();
+  const { mutate, isPending } = useResendVerificationCodeMutation();
 
   return (
     <div className="flex items-center justify-center">

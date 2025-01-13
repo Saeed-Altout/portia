@@ -24,7 +24,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Circle, Icon } from "@/components/ui/circle-icon";
-import { BackButton, SubmitButton } from "@/components";
+import { SubmitButton } from "@/components/submit-button";
+import { BackButton } from "@/components/back-button";
 
 import { useSendResetEmailMutation } from "@/services/auth/hooks";
 

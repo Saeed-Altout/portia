@@ -27,7 +27,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Circle, Icon } from "@/components/ui/circle-icon";
-import { BackButton, SubmitButton } from "@/components";
+import { SubmitButton } from "@/components/submit-button";
+import { BackButton } from "@/components/back-button";
 
 import { useSetNewPasswordMutation } from "@/services/auth/hooks";
 import { usePasswordControl } from "@/hooks/use-password-control";
@@ -43,6 +44,10 @@ export const NewPasswordForm = () => {
   const token = useSearchParams().get("token");
 
   const { passwordType, togglePasswordVisibility } = usePasswordControl();
+  const {
+    passwordType: passwordType2,
+    togglePasswordVisibility: togglePasswordVisibility2,
+  } = usePasswordControl();
   const { mutate, isPending } = useSetNewPasswordMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -123,18 +128,18 @@ export const NewPasswordForm = () => {
                       <div className="flex items-center relative">
                         <Input
                           {...field}
-                          type={passwordType}
+                          type={passwordType2}
                           disabled={isPending}
                           placeholder="********"
                         />
                         <div
                           role="button"
-                          onClick={togglePasswordVisibility}
+                          onClick={togglePasswordVisibility2}
                           className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
                           aria-label="Toggle password visibility"
                           title="Toggle password visibility"
                         >
-                          {passwordType === "password" ? (
+                          {passwordType2 === "password" ? (
                             <EyeOff className="h-4 w-4 text-gray-400" />
                           ) : (
                             <Eye className="h-4 w-4 text-gray-400" />

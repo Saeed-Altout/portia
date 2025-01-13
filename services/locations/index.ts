@@ -3,7 +3,7 @@ import { ENDPOINTS } from "@/config/constants";
 
 export const getProxyLocations = async (): Promise<RootResponse<Locations>> => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_PROXY_FAQS);
+    const response = await apiClient.get(ENDPOINTS.GET_PROXY_LOCATIONS);
     return response.data;
   } catch (error) {
     throw error;

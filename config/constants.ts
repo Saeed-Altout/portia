@@ -550,14 +550,19 @@ export const ENDPOINTS = {
   LOGIN: "/auth/login",
   LOGOUT: "/auth/logout",
   REGISTER: "/auth/register",
-  RESEND_VERIFICATION_CODE: "/auth/resend-verification-code",
+
+  // RESET PASSWORD
   SEND_RESET_EMAIL: "/auth/send-email-to-reset-password",
   SET_NEW_PASSWORD: "/auth/set-new-password",
+
+  // RESEND VERIFICATION EMAIL
+  RESEND_VERIFICATION_CODE: "/auth/resend-verification-code",
+
   VERIFY_CODE: "/auth/confirm-verification-code",
   GET_WAY_PAYMENT: "/available_gateway",
   GET_FAQS: "/get-all-faqs",
   GET_TOP_FAQS: "/get-faq",
-  GET_PROXY_FAQS: "/get-proxy-locations",
+  GET_PROXY_LOCATIONS: "/get-all-proxy-location",
   GET_DATA_MAP: "/map",
   GET_OFFERS: "/offers",
   GET_FEATURES_OFFER: "/features-with-packages",

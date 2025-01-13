@@ -14,6 +14,7 @@ import { LoadingApi } from "@/components/pages/loading-api";
 
 import { useAuthStore } from "@/stores";
 import { useData } from "@/contexts/root-context";
+import { getUser } from "@/lib/cookie";
 
 export const RootClient = () => {
   const { user } = useAuthStore();

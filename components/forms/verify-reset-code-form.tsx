@@ -31,7 +31,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BackButton, ResendButton, SubmitButton } from "@/components";
+import { BackButton } from "@/components/back-button";
+import { SubmitButton } from "@/components/submit-button";
+import { ResendButton } from "@/components/resend-button";
 
 import { useVerifyCodeMutation } from "@/services/auth/hooks";
 

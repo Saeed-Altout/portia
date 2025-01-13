@@ -1,7 +1,13 @@
 import { Header } from "./header";
 import { Footer } from "./footer";
 
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { ROUTES } from "@/config/constants";
 
 interface CardWrapperProps {
   title: string;
@@ -16,7 +22,7 @@ export const CardWrapper = ({
   title,
   description,
   label,
-  href = "/auth/login",
+  href = ROUTES.LOGIN,
   message,
   children,
 }: CardWrapperProps) => {

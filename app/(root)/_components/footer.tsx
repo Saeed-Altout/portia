@@ -6,7 +6,7 @@ import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
 
 import { footerLinks, navLinks } from "@/config/constants";
-import { useGetSocialMediaAccountsQuery } from "@/services/social-media-accounts/hooks";
+import { useGetSocialMediaAccountsQuery } from "@/services/settings/hooks";
 
 interface FooterLinkProps {
   href: string;

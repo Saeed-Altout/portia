@@ -8,7 +8,8 @@ import { Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { setToken, setUser } from "@/lib/cookie";
-import { useGetUserQuery } from "@/services/user/hooks";
+import { useGetUserQuery } from "@/services/settings/hooks";
+import { ROUTES } from "@/config/constants";
 
 export const GoogleForm = () => {
   const token = useSearchParams().get("callback");
@@ -19,12 +20,12 @@ export const GoogleForm = () => {
       setToken(token);
       if (isSuccess) {
         setUser(data.data);
-        location.assign("/dashboard");
+        location.assign(ROUTES.DASHBOARD_HOME);
       } else {
         refetch();
       }
     } else {
-      location.assign("/auth/login");
+      location.assign(ROUTES.LOGIN);
     }
   }, [data, isSuccess, refetch, token]);
 

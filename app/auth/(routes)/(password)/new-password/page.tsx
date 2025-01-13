@@ -1,4 +1,4 @@
-import { NewPasswordForm } from "@/components";
+import { NewPasswordForm } from "@/components/forms/new-password-form";
 
 export const metadata = {
   title: "Set a New Password | Secure Your Account",

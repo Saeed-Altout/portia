@@ -1,4 +1,4 @@
-import { VerifyEmailForm } from "@/components";
+import { VerifyEmailForm } from "@/components/forms/verify-email-form";
 
 export const metadata = {
   title: "Verify Your Email Address | Complete Account Setup",

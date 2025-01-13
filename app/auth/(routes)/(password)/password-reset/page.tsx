@@ -1,4 +1,4 @@
-import { PasswordResetForm } from "@/components";
+import { PasswordResetForm } from "@/components/forms/password-reset-form";
 
 export const metadata = {
   title: "Password Reset Request | Recover Account Access",

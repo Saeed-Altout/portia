@@ -21,13 +21,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { CardWrapper, Provider, SubmitButton } from "@/components";
+import { CardWrapper } from "@/components/card-wrapper";
+import { SubmitButton } from "@/components/submit-button";
+import { Provider } from "@/components/provider";
 
 import { ROUTES } from "@/config/constants";
 import { useLoginMutation } from "@/services/auth/hooks";
 import { usePasswordControl } from "@/hooks/use-password-control";
 
-export const loginSchema = z.object({
+const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });

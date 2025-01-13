@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { setFcmToken } from "./local-storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD6ViOS3uD-XwyOGT1z_ssPdOqV0MN-6Rg",
@@ -35,12 +36,7 @@ export const requestPermissions = async () => {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       });
 
-      if (token) {
-        localStorage.setItem("fcm_token", token);
-        console.log("FCM Token:", token);
-      } else {
-        console.error("Failed to retrieve FCM token.");
-      }
+      if (token) setFcmToken(token);
     } else {
       console.error(
         "Permission for notifications was denied. Please enable it from browser settings."

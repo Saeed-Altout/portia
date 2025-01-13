@@ -1,4 +1,4 @@
-import { SendResetEmailForm } from "@/components";
+import { SendResetEmailForm } from "@/components/forms/send-reset-email-form";
 
 export const metadata = {
   title: "Send Password Reset Email | Account Recovery",
