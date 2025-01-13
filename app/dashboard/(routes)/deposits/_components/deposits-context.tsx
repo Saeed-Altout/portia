@@ -1,11 +1,14 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode } from "react";
+import * as React from "react";
+import { useQueryClient } from "@tanstack/react-query";
+
 import {
   useGetDepositsHistoriesQuery,
   useGetDepositsStatisticsQuery,
 } from "@/services/deposits/hooks";
 import { formatDepositsStatistics } from "@/utils/formatters";
+import { getDepositsHistories } from "@/services/deposits";
 
 interface FormattedType {
   color: string;
@@ -17,42 +20,87 @@ interface DepositsContextType {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  deposits: any[];
+  deposits: IDepositsHistory[];
   formattedDeposits: FormattedType[];
+  currentPage: number;
+  perPage: number;
+  totalPages: number;
+  moveNext: () => void;
+  movePrev: () => void;
+  setPage: (page: number) => void;
 }
 
-const initialStatistics = {
+const initialStatistics: IAffiliateStatistics = {
   monthly_deposits: 0,
   yearly_deposits: 0,
   all_time_deposits: 0,
 };
 
-const DepositsContext = createContext<DepositsContextType | undefined>(
+const DepositsContext = React.createContext<DepositsContextType | undefined>(
   undefined
 );
 
-export const DepositsProvider: React.FC<{ children: ReactNode }> = ({
+export const DepositsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const depositsHistories = useGetDepositsHistoriesQuery();
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [totalPages, setTotalPages] = React.useState<number>(1);
+  const [perPage, setPerPage] = React.useState<number>(10);
+  const queryClient = useQueryClient();
+
+  const depositsHistories = useGetDepositsHistoriesQuery({
+    page: currentPage,
+  });
   const depositsStatistics = useGetDepositsStatisticsQuery();
 
-  const isLoading = depositsHistories.isLoading || depositsStatistics.isLoading;
-  const isError = depositsHistories.isError || depositsStatistics.isError;
-  const isSuccess = depositsHistories.isSuccess && depositsStatistics.isSuccess;
+  React.useEffect(() => {
+    if (depositsHistories.isSuccess) {
+      setPerPage(depositsHistories.data.data.per_page);
+      setTotalPages(
+        Math.ceil(
+          depositsHistories.data.data.total /
+            depositsHistories.data.data.per_page
+        )
+      );
 
-  const formattedDeposits = formatDepositsStatistics(
-    depositsStatistics.data?.data ?? initialStatistics
-  );
+      if (currentPage < totalPages) {
+        queryClient.prefetchQuery({
+          queryKey: ["deposits-histories", { page: currentPage + 1 }],
+          queryFn: () => getDepositsHistories({ page: currentPage + 1 }),
+        });
+      }
+      if (currentPage > 1) {
+        queryClient.prefetchQuery({
+          queryKey: ["deposits-histories", { page: currentPage - 1 }],
+          queryFn: () => getDepositsHistories({ page: currentPage - 1 }),
+        });
+      }
+    }
+  }, [
+    currentPage,
+    depositsHistories.data?.data,
+    depositsHistories.isSuccess,
+    queryClient,
+    totalPages,
+  ]);
 
   return (
     <DepositsContext.Provider
       value={{
-        isLoading,
-        isError,
-        isSuccess,
+        perPage,
+        totalPages,
+        currentPage,
+        isLoading: depositsStatistics.isLoading,
+        isError: depositsHistories.isError || depositsStatistics.isError,
+        isSuccess: depositsHistories.isSuccess && depositsStatistics.isSuccess,
         deposits: depositsHistories.data?.data?.data ?? [],
-        formattedDeposits,
+        setPage: (page) => setCurrentPage(page),
+        moveNext: () =>
+          setCurrentPage((prev) => Math.min(prev + 1, totalPages)),
+        movePrev: () => setCurrentPage((prev) => Math.max(prev - 1, 1)),
+        formattedDeposits: formatDepositsStatistics(
+          depositsStatistics.data?.data ?? initialStatistics
+        ),
       }}
     >
       {children}
@@ -61,7 +109,7 @@ export const DepositsProvider: React.FC<{ children: ReactNode }> = ({
 };
 
 export const useData = () => {
-  const context = useContext(DepositsContext);
+  const context = React.useContext(DepositsContext);
   if (!context) {
     throw new Error("useData must be used within a DepositsProvider");
   }

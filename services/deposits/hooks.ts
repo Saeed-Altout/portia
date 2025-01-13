@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
 import {
   addDeposit,
   getDepositsHistories,
@@ -7,10 +7,11 @@ import {
 } from "@/services/deposits";
 import { useResponse } from "@/hooks/use-response";
 
-export const useGetDepositsHistoriesQuery = () => {
+export const useGetDepositsHistoriesQuery = (params: Record<string, any>) => {
   return useQuery({
-    queryKey: ["deposits-histories"],
-    queryFn: () => getDepositsHistories(),
+    queryKey: ["deposits-histories", params],
+    queryFn: () => getDepositsHistories(params),
+    placeholderData: keepPreviousData,
   });
 };
 

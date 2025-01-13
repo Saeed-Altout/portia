@@ -21,24 +21,32 @@ export const getWayPayment = async (): Promise<GetWayPaymentResponse> => {
   }
 };
 
-export const getDepositsHistories = async (): Promise<
-  RootResponse<DepositHistories>
-> => {
+export const getDepositsHistories = async (
+  params: Record<string, any>
+): Promise<IGetDepositsHistoriesResponse> => {
+  const filteredParams = Object.fromEntries(
+    Object.entries(params).filter(
+      ([, value]) => value !== undefined && value !== null && value !== 0
+    )
+  );
   try {
-    const response = await apiClient.get(ENDPOINTS.DEPOSIT_HISTORIES);
+    const response = await apiClient.get(ENDPOINTS.DEPOSIT_HISTORIES, {
+      params: { ...filteredParams },
+    });
+
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const getDepositStatistics = async (): Promise<
-  RootResponse<DepositStatistics>
-> => {
-  try {
-    const response = await apiClient.get(ENDPOINTS.DEPOSIT_STATISTICS);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
+export const getDepositStatistics =
+  async (): Promise<IGetDepositsStatisticsResponse> => {
+    try {
+      const response = await apiClient.get(ENDPOINTS.DEPOSIT_STATISTICS);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
