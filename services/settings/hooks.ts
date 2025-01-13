@@ -7,8 +7,11 @@ import {
   getTables,
   sendContactMessage,
   updateUserProfile,
-} from "./apis";
+  getSocialMediaAccounts,
+  getUserBalance,
+} from "@/services/settings";
 import { useResponse } from "@/hooks/use-response";
+import { getUser } from "@/lib/cookie";
 
 export const useGetPortsQuery = (params: Record<string, any>) => {
   return useQuery({
@@ -22,35 +25,28 @@ export const useUpdateUserProfileMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["update-user-profile"],
-    mutationFn: (values: IUpdateUserProfileCredentials) =>
+    mutationFn: (values: UpdateUserProfileCredentials) =>
       updateUserProfile(values),
     onSuccess: (data) => {
       Success({ message: data.message || "Update profile Success." });
     },
     onError: (error) => {
-      Error({
-        error,
-        message: "Update profile failed.",
-      });
+      Error({ error, message: "Update profile failed." });
     },
   });
 };
 
 export const useSendContactMessageMutation = () => {
   const { Success, Error } = useResponse();
-
   return useMutation({
     mutationKey: ["send-contact-message"],
-    mutationFn: (values: ISendContactMessageRequest) =>
+    mutationFn: (values: SendContactMessageCredentials) =>
       sendContactMessage(values),
     onSuccess: (data) => {
       Success({ message: data.message || "Send your message Success." });
     },
     onError: (error) => {
-      Error({
-        error,
-        message: "Send your message failed.",
-      });
+      Error({ error, message: "Send your message failed." });
     },
   });
 };
@@ -72,10 +68,9 @@ export const useGetCostPlansQuery = (params: Record<string, any>) => {
 
 export const useExportTablesMutation = () => {
   const { Success, Error } = useResponse();
-
   return useMutation({
     mutationKey: ["export-tables"],
-    mutationFn: (values: IExportDataRequest) => exportTables(values),
+    mutationFn: (values: { tables: string[] }) => exportTables(values),
     onSuccess: (data) => {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement("a");
@@ -100,5 +95,25 @@ export const useGetTablesQuery = () => {
   return useQuery({
     queryKey: ["get-tables"],
     queryFn: () => getTables(),
+  });
+};
+
+export const useGetSocialMediaAccountsQuery = () => {
+  return useQuery({
+    queryKey: ["social-media-accounts"],
+    queryFn: () => getSocialMediaAccounts(),
+  });
+};
+
+export const useGetUserBalanceQuery = () => {
+  return useQuery({
+    queryKey: ["user-balance"],
+    queryFn: () => getUserBalance(),
+  });
+};
+export const useGetUserQuery = () => {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUser(),
   });
 };

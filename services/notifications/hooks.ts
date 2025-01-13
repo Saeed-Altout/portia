@@ -3,7 +3,7 @@ import {
   getNotifications,
   markAllNotifications,
   markNotificationById,
-} from "./apis";
+} from "@/services/notifications";
 
 export const useGetNotificationsQuery = () => {
   return useQuery({

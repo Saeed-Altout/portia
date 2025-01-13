@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getOffers, getOffersFeatures, getOffersPlans } from "./apis";
+import {
+  getOffers,
+  getOffersFeatures,
+  getOffersPlans,
+} from "@/services/offers";
 
 export const useGetOffersQuery = () => {
   return useQuery({

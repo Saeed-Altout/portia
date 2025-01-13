@@ -137,7 +137,235 @@ declare type Location = {
   package_name: string;
 };
 declare type Locations = Location[];
+declare type Country = {
+  id: number;
+  name: string;
+  cities_count: number;
+  parents_count: number;
+  latitude: number;
+  longitude: number;
+  country_key: string;
+  flag_url: string;
+};
+declare type Countries = Country[];
+declare type GetDataMapResponse = {
+  status: boolean;
+  message: string | string[];
+  countries: Countries;
+};
+declare type OfferFeature = {
+  id: number;
+  feature_group_id: number;
+  name: string;
+  description: string;
+  value: string | null;
+};
+declare type OfferFeatureGroup = {
+  id: number;
+  name: string;
+  package_id: number;
+  features: OfferFeature[];
+};
+declare type OfferPackage = {
+  id: number;
+  name: string;
+  description: string;
+  feature_groups: OfferFeatureGroup[];
+};
+declare type Offer = {
+  id: number;
+  amount: number;
+  cost: string;
+  is_popular: boolean;
+  plan: string;
+  package: OfferPackage;
+};
+declare type Offers = Offer[];
+declare type OfferFeatures = OfferFeature[];
+declare type OfferFeatureGroups = OfferFeatureGroup[];
+declare type OfferPackages = OfferPackage[];
 
+declare type FeaturesOffer = {
+  id: number;
+  name: string;
+  name: string;
+  packages: {
+    id: number;
+    package_id: number;
+    value: string;
+  }[];
+};
+declare type FeaturesOffers = FeaturesOffer[];
+
+declare type PlanOffer = {
+  id: number;
+  amount: number;
+  cost: string;
+  is_top: number;
+  plan: string;
+  package: {
+    id: number;
+    name: string;
+    description: string;
+    feature_groups: {
+      id: number;
+      name: string;
+      package_id: number;
+      features: {
+        id: number;
+        feature_group_id: number;
+        name: string;
+        description: string;
+        value: string;
+      }[];
+    }[];
+  };
+};
+declare type PlansOffer = PlanOffer[];
+declare type Offer = {
+  id: number;
+  amount: number;
+  cost: string;
+  is_top: number;
+  plan: string;
+  package: OfferPackage;
+};
+declare type Offers = Offer[];
+
+declare type OfferPlan = {
+  id: number;
+  cost: string;
+  description: string;
+  plan_id: number;
+  package_id: number;
+  title: string;
+  is_available: boolean;
+  color: string;
+};
+declare type OffersPlan = OfferPlan[];
+declare type OfferPackage = {
+  package_id: number;
+  package_name: string;
+  plans: {
+    id: number;
+    name: string;
+  }[];
+};
+
+declare type OfferPackages = OfferPackage[];
+declare type Proxy = {
+  id: number;
+  proxy_id: string;
+  plan_id: number;
+  plan_name: string;
+  package_id: string;
+  package_name: string;
+  parent_proxy_id: string;
+  rotation_time: string;
+  is_active: number;
+  re_new: number;
+  protocol: string;
+  protocol_port: number;
+  country_name: string;
+  city_name: string;
+  service_provider: string;
+  username: string;
+  password: string;
+  ip_addr: string | null;
+  amount: number;
+  duration: number;
+  price: string;
+  expire_at: string;
+  created_at: string | null;
+  updated_at: string | null;
+};
+
+declare type Proxies = Proxy[];
+declare type ProxiesCount = {
+  total: number;
+  active: number;
+  inactive: number;
+};
+
+declare type EditAuthProxyCredentials = {
+  proxy_id: string;
+  password: string;
+};
+
+declare type EditInfoProxyCredentials = {
+  parent_proxy_id: string;
+  proxy_id: string;
+  protocol: string;
+};
+
+declare type FixProxyCredentials = {
+  pkg_id: string;
+  proxy_id: string;
+};
+
+declare type ManageProxyCredentials = {
+  proxy_id: string;
+  parent_proxy_id: string;
+  protocol: string;
+  password: string;
+};
+declare type AddProxyCredentials = {
+  parent_proxy_id: any;
+  pkg_id: any;
+  re_new: any;
+  protocol: string;
+  duration: string;
+  username: string;
+  password: string;
+};
+
+declare type RenewProxyCredentials = {
+  proxy_id: string;
+  duration: string;
+  parent_proxy_id: string;
+  protocol: string;
+  password: string;
+};
+
+declare type Review = {
+  id: number;
+  user_name: string;
+  specialization: string;
+  message: string;
+  rating: number;
+  user_image: string;
+};
+declare type UpdateUserProfileCredentials = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  current_password: string;
+  new_password: string;
+  new_password_confirmation: string;
+};
+declare type SendContactMessageCredentials = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  message: string;
+};
+declare type SocialMediaAccount = {
+  name: string;
+  tag: string;
+  url: string;
+  img_url: string;
+};
+declare type Notification = {
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  date: Date | string;
+  read_at: string | null;
+};
+
+declare type Notifications = Notification[];
 /**
  * Generic API response type.
  * Represents the structure of a response returned by the API.

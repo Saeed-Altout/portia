@@ -10,7 +10,7 @@ export const NotificationModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.NOTIFICATION;
 
-  const { notification } = useNotificationsStore();
+  const { notification, notifications } = useNotificationsStore();
 
   const renderLabel = (label: string) => {
     switch (label) {

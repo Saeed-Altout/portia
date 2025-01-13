@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDataMap } from "./apis";
+import { getDataMap } from "@/services/map";
 
 export const useGetDataMapQuery = () => {
   return useQuery({

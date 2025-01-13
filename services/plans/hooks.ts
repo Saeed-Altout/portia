@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getOffers, getPackages } from "./apis";
+import { getOffers, getPackages } from "@/services/plans";
 
 export const useGetOffersQuery = () => {
   return useQuery({
