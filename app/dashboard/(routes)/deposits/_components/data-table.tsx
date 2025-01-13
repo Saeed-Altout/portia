@@ -207,7 +207,9 @@ export function DataTable<TData, TValue>({
             variant="outline"
             size="sm"
             onClick={moveNext}
-            disabled={currentPage == totalPages}
+            disabled={
+              currentPage == totalPages || table.getRowModel().rows?.length == 0
+            }
             className="gap-2"
           >
             <span className="hidden sm:inline">Next</span>
