@@ -470,3 +470,27 @@ declare type IActivateProxy = {
 };
 
 declare type IGetProxyByIdResponse = RootApi<IActivateProxy>;
+
+declare type IOfferPlan = {
+  id: number;
+  cost: string;
+  description: string;
+  title: string;
+  plan_id: number;
+  package_id: number;
+  is_available: boolean;
+  color: string;
+};
+
+declare type IGetOffersPlansResponse = RootApi<IOfferPlan[]>;
+
+declare type IPackagePlan = {
+  package_id: number;
+  package_name: string;
+  plans: {
+    id: number;
+    name: string;
+  }[];
+};
+
+declare type IGetPackagesPlansResponse = RootApi<IPackagePlan[]>;

@@ -188,7 +188,7 @@ export const PlansClient = () => {
               className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border rounded-lg gap-4 shadow-sm overflow-hidden"
             >
               <div className="w-full flex items-center gap-x-4">
-                <CircleIcon icon={Zap} theme={"primary"} />
+                <CircleIcon icon={Zap} theme={offer.color} />
                 <div className="flex-1">
                   <h3 className="text-lg font-medium capitalize">
                     {offer.title}
@@ -199,13 +199,28 @@ export const PlansClient = () => {
                 </div>
               </div>
               <div className="w-full md:w-auto flex flex-row md:flex-col items-center gap-4">
-                <p className="text-lg font-semibold text-primary">
+                <p
+                  className={cn(
+                    "text-lg font-semibold",
+                    offer.color === "primary" && "text-primary",
+                    offer.color === "danger" && "text-[#E31B54]",
+                    offer.color === "mute" && "text-[#4B4B57]",
+                    offer.color === "success" && "text-[#11807E]"
+                  )}
+                >
                   ${offer.cost}
                 </p>
                 <Button
                   disabled={offer.is_available || currentProxy.isFetching}
                   onClick={() => handleActiveProxy(offer.id, offer.cost)}
-                  className="w-full md:w-auto"
+                  className={cn(
+                    "w-full md:w-auto",
+                    offer.color === "primary" && "bg-[#111280] ",
+                    offer.color === "danger" &&
+                      "bg-[#E31B54] hover:bg-[#E31B54]/80",
+                    offer.color === "mute" && "bg-[#4B4B57] bg-[#4B4B57]/80",
+                    offer.color === "mute" && "bg-[#26A6A4] bg-[#26A6A4]/80"
+                  )}
                 >
                   Activate
                   {loadingOfferId === offer.id && (

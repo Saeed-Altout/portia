@@ -1,17 +1,19 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getOffers, getPackages } from "@/services/plans";
+import { getOffersPlans, getPackagesPlans } from "@/services/plans";
 
-export const useGetOffersQuery = () => {
+export const useGetOffersPlansQuery = () => {
   return useQuery({
     queryKey: ["offers"],
-    queryFn: () => getOffers(),
+    queryFn: () => getOffersPlans(),
     placeholderData: keepPreviousData,
+    refetchInterval: 1000 * 10,
   });
 };
 
-export const useGetPackagesQuery = () => {
+export const useGetPackagesPlansQuery = () => {
   return useQuery({
     queryKey: ["packages"],
-    queryFn: () => getPackages(),
+    queryFn: () => getPackagesPlans(),
+    placeholderData: keepPreviousData,
   });
 };

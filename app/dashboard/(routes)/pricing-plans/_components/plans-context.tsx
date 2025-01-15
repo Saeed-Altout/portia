@@ -1,14 +1,17 @@
 "use client";
 
 import React, { createContext, useContext, ReactNode } from "react";
-import { useGetOffersQuery, useGetPackagesQuery } from "@/services/plans/hooks";
+import {
+  useGetOffersPlansQuery,
+  useGetPackagesPlansQuery,
+} from "@/services/plans/hooks";
 
 interface PlansContextType {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  packages: any[];
-  offers: any[];
+  packages: IPackagePlan[];
+  offers: IOfferPlan[];
 }
 
 const PlansContext = createContext<PlansContextType | undefined>(undefined);
@@ -16,8 +19,8 @@ const PlansContext = createContext<PlansContextType | undefined>(undefined);
 export const PlansProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const packages = useGetPackagesQuery();
-  const offers = useGetOffersQuery();
+  const packages = useGetPackagesPlansQuery();
+  const offers = useGetOffersPlansQuery();
 
   const isLoading = packages.isLoading || offers.isLoading;
   const isError = packages.isError || offers.isError;

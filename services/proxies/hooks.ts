@@ -135,6 +135,7 @@ export const useActivateProxyMutation = () => {
     mutationFn: (values: ActivateProxyCredentials) => activateProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["offers"] });
+      queryClient.invalidateQueries({ queryKey: ["proxies"] });
       Success({ message: data.message || "Activate proxy Success." });
     },
     onError: (error) => {

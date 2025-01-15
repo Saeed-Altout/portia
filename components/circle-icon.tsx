@@ -8,10 +8,26 @@ export const CircleIcon = ({
   icon: LucideIcon;
   theme: string;
 }) => {
-  const bgColor = theme === "primary" ? "bg-[#B5B6F7]" : "bg-[#B5F7F6]";
-  const borderColor =
-    theme === "primary" ? "border-[#D4D4FF]" : "border-[#D4FFFE]";
-  const iconColor = theme === "primary" ? "text-primary" : "text-[#11807E]";
+  const bgColor = {
+    primary: "bg-[#B5B6F7]",
+    mute: "bg-[#E9E9F2]",
+    danger: "bg-[#FFE4E8]",
+    success: "bg-[#B5F7F6]",
+  }[theme];
+
+  const borderColor = {
+    primary: "border-[#D4D4FF]",
+    mute: "border-[#F5F5FA]",
+    danger: "border-[#FFF1F3]",
+    success: "border-[#D4FFFE]",
+  }[theme];
+
+  const iconColor = {
+    primary: "text-primary",
+    mute: "text-[#4B4B57]",
+    danger: "text-[#E31B54]",
+    success: "text-[#11807E]",
+  }[theme];
 
   return (
     <div
