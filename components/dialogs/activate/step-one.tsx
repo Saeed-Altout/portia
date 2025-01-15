@@ -7,7 +7,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useProxyStore } from "@/stores";
 
 interface StepOneProps {
@@ -15,7 +21,7 @@ interface StepOneProps {
 }
 
 export const StepOne = ({ form }: StepOneProps) => {
-  const { offer } = useProxyStore();
+  const { proxy } = useProxyStore();
 
   return (
     <>
@@ -25,14 +31,22 @@ export const StepOne = ({ form }: StepOneProps) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Packages</FormLabel>
-            <FormControl>
-              <Input
-                placeholder="package"
-                readOnly
-                {...field}
-                value={offer.title}
-              />
-            </FormControl>
+            <Select
+              disabled
+              onValueChange={field.onChange}
+              defaultValue={field.value || proxy.package_name}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a package" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem key={proxy.package_name} value={proxy.package_name}>
+                  {proxy.package_name}
+                </SelectItem>
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}
@@ -43,14 +57,26 @@ export const StepOne = ({ form }: StepOneProps) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Plans</FormLabel>
-            <FormControl>
-              <Input
-                placeholder="plan"
-                readOnly
-                {...field}
-                value={offer.title}
-              />
-            </FormControl>
+            <Select
+              disabled
+              onValueChange={field.onChange}
+              defaultValue={field.value || proxy.plan_name}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a plan" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem
+                  key={proxy.plan_name}
+                  value={proxy.plan_name}
+                  className="capitalize"
+                >
+                  {proxy.plan_name}
+                </SelectItem>
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}
@@ -61,14 +87,22 @@ export const StepOne = ({ form }: StepOneProps) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Amount</FormLabel>
-            <FormControl>
-              <Input
-                placeholder="amount"
-                readOnly
-                {...field}
-                value={offer.title}
-              />
-            </FormControl>
+            <Select
+              disabled
+              onValueChange={field.onChange}
+              defaultValue={field.value || proxy.amount}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select an amount" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem key={proxy.amount} value={proxy.amount.toString()}>
+                  {proxy.amount}
+                </SelectItem>
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}

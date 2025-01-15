@@ -10,16 +10,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-
 import { useProxyStore } from "@/stores";
 
-interface StepThreeProps {
-  form: any;
-}
-
-export const StepThree = ({ form }: StepThreeProps) => {
-  const { offer } = useProxyStore();
+export const StepThree = ({ form }: { form: any }) => {
+  const { proxy } = useProxyStore();
 
   return (
     <>
@@ -32,10 +26,10 @@ export const StepThree = ({ form }: StepThreeProps) => {
             <FormControl>
               <Input
                 placeholder="protocol"
-                disabled={true}
+                disabled
                 readOnly
                 {...field}
-                value={offer.port}
+                value={proxy.protocol}
               />
             </FormControl>
             <FormMessage />
@@ -73,21 +67,6 @@ export const StepThree = ({ form }: StepThreeProps) => {
               />
             </FormControl>
             <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="re_new"
-        render={({ field }) => (
-          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border px-4 py-4">
-            <FormControl>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-            </FormControl>
-            <FormLabel className="leading-0">Auto Renew</FormLabel>
           </FormItem>
         )}
       />

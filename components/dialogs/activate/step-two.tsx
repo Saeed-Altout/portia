@@ -10,12 +10,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useProxyStore } from "@/stores";
 
-interface StepTwoProps {
-  form: any;
-}
-
-export const StepTwo = ({ form }: StepTwoProps) => {
-  const { offer } = useProxyStore();
+export const StepTwo = ({ form }: { form: any }) => {
+  const { proxy } = useProxyStore();
 
   return (
     <>
@@ -28,10 +24,10 @@ export const StepTwo = ({ form }: StepTwoProps) => {
             <FormControl>
               <Input
                 placeholder="Provider & Location"
-                disabled={true}
+                disabled
                 readOnly
                 {...field}
-                value={`${offer.service_provider_name} / ${offer.country_name}`}
+                value={`${proxy.service_provider} / ${proxy.country_name}`}
               />
             </FormControl>
             <FormMessage />
@@ -48,9 +44,8 @@ export const StepTwo = ({ form }: StepTwoProps) => {
               <Input
                 placeholder="IP rotation"
                 readOnly
-                disabled={true}
                 {...field}
-                value={offer.rotation_time}
+                value={proxy.rotation_time}
               />
             </FormControl>
             <FormMessage />

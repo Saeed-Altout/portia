@@ -318,6 +318,14 @@ declare type AddProxyCredentials = {
   username: string;
   password: string;
 };
+declare type ActivateProxyCredentials = {
+  parent_proxy_id: any;
+  pkg_id: any;
+  protocol: string;
+  duration: string;
+  username: string;
+  password: string;
+};
 
 declare type RenewProxyCredentials = {
   proxy_id: string;
@@ -444,3 +452,21 @@ declare type IAffiliateStatistics = {
 };
 
 declare type IGetAffiliateStatisticsResponse = RootApi<IAffiliateStatistics>;
+
+declare type IProxy = {};
+declare type IActivateProxy = {
+  parent_proxy_id: string;
+  package_id: number;
+  package_name: string;
+  plan_id: number;
+  plan: string;
+  duration: number;
+  port: string;
+  service_provider_name: string;
+  country_name: string;
+  city_name: string;
+  amount: number;
+  rotation_time: number;
+};
+
+declare type IGetProxyByIdResponse = RootApi<IActivateProxy>;

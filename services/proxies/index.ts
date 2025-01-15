@@ -90,10 +90,20 @@ export const addProxy = async (
     throw error;
   }
 };
+export const activateProxy = async (
+  values: ActivateProxyCredentials
+): Promise<RootResponse<Proxies>> => {
+  try {
+    const response = await apiClient.post(ENDPOINTS.CREATE_PROXY, values);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getProxyById = async (
   id: string
-): Promise<RootResponse<Proxy>> => {
+): Promise<IGetProxyByIdResponse> => {
   try {
     const res = await apiClient.get(`${ENDPOINTS.GET_PROXY_BY_ID}/${id}`);
     return res.data;

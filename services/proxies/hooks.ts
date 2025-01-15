@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  activateProxy,
   addProxy,
   editAuthProxy,
   editInfoProxy,
@@ -122,6 +123,22 @@ export const useAddProxyMutation = () => {
     },
     onError: (error) => {
       Error({ error, message: "Add proxy failed." });
+    },
+  });
+};
+
+export const useActivateProxyMutation = () => {
+  const queryClient = useQueryClient();
+  const { Success, Error } = useResponse();
+  return useMutation({
+    mutationKey: ["activate-proxy"],
+    mutationFn: (values: ActivateProxyCredentials) => activateProxy(values),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["offers"] });
+      Success({ message: data.message || "Activate proxy Success." });
+    },
+    onError: (error) => {
+      Error({ error, message: "Activate proxy failed." });
     },
   });
 };

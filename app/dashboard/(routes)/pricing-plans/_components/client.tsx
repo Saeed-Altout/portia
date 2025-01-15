@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, Key } from "react";
-import { Zap } from "lucide-react";
+import { Loader, Zap } from "lucide-react";
 
 import {
   Select,
@@ -16,20 +16,27 @@ import { Heading } from "@/components/heading";
 import { LoadingApi2 } from "@/components/pages/loading-api";
 import { ErrorApi } from "@/components/pages/error-api";
 
+import { useData } from "./plans-context";
 import { cn } from "@/lib/utils";
 import { ModalType } from "@/config/constants";
-import { useData } from "@/contexts/plans-context";
 
 import { useAuthStore, useModalStore, useProxyStore } from "@/stores";
+import { ActivateProxyModal } from "@/components/dialogs/activate-proxy-modal";
+import { useGetProxyByIdQuery } from "@/services/proxies/hooks";
 
 export const PlansClient = () => {
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+  const [loadingOfferId, setLoadingOfferId] = useState<number | null>(null);
 
   const { user } = useAuthStore();
-  const { onOpen, setStep } = useModalStore();
-  const { offer, setOffer, setPrice } = useProxyStore();
+  const { type, isOpen, onOpen, setStep } = useModalStore();
+  const { proxy, offer, setOffer, setPrice, setProxy } = useProxyStore();
   const { isLoading, isError, isSuccess, packages, offers } = useData();
+
+  const currentProxy = useGetProxyByIdQuery(offer.id.toString());
+  const isOpenModal =
+    isOpen && type === ModalType.ACTIVE_PROXY && currentProxy.isSuccess;
 
   const handlePackageSelect = (id: number) => {
     setSelectedPackage(id);
@@ -40,11 +47,11 @@ export const PlansClient = () => {
     setSelectedPlan(id);
   };
 
-  const handleActiveProxy = (id: number, cost: string) => {
+  const handleActiveProxy = async (id: number, cost: string) => {
+    setLoadingOfferId(id);
     setStep(3);
     setOffer({ ...offer, id });
     setPrice(cost);
-    onOpen(ModalType.ACTIVE_PROXY);
   };
 
   useEffect(() => {
@@ -54,6 +61,27 @@ export const PlansClient = () => {
       setSelectedPlan(null);
     }
   }, [isSuccess, packages]);
+
+  useEffect(() => {
+    if (currentProxy.isSuccess) {
+      setProxy({
+        ...proxy,
+        plan_name: currentProxy.data.data.plan,
+        package_name: currentProxy.data.data.package_name,
+        rotation_time: currentProxy.data.data.rotation_time.toString(),
+        protocol: currentProxy.data.data.port,
+        service_provider: currentProxy.data.data.service_provider_name,
+        country_name: currentProxy.data.data.country_name,
+        duration: currentProxy.data.data.duration,
+        package_id: currentProxy.data.data.package_id.toString(),
+        parent_proxy_id: currentProxy.data.data.parent_proxy_id,
+        amount: currentProxy.data.data.amount,
+      });
+      onOpen(ModalType.ACTIVE_PROXY);
+      setLoadingOfferId(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentProxy.isSuccess, onOpen, setProxy]);
 
   if (isLoading || !isSuccess) {
     return <LoadingApi2 />;
@@ -65,6 +93,12 @@ export const PlansClient = () => {
 
   return (
     <>
+      {currentProxy.isSuccess && (
+        <ActivateProxyModal
+          isOpen={isOpenModal}
+          proxy={currentProxy.data?.data}
+        />
+      )}
       <Heading
         title={`Welcome back, ${user?.first_name || ""}`}
         label="Explore Our Pricing Plans"
@@ -169,11 +203,14 @@ export const PlansClient = () => {
                   ${offer.cost}
                 </p>
                 <Button
-                  disabled={offer.is_available}
+                  disabled={offer.is_available || currentProxy.isFetching}
                   onClick={() => handleActiveProxy(offer.id, offer.cost)}
                   className="w-full md:w-auto"
                 >
                   Activate
+                  {loadingOfferId === offer.id && (
+                    <Loader className="animate-spin h-5 w-5 ml-2" />
+                  )}
                 </Button>
               </div>
             </div>
