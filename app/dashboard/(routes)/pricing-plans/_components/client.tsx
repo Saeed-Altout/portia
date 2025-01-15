@@ -49,9 +49,9 @@ export const PlansClient = () => {
 
   const handleActiveProxy = async (id: number, cost: string) => {
     setLoadingOfferId(id);
-    setStep(3);
     setOffer({ ...offer, id });
     setPrice(cost);
+    setStep(3);
   };
 
   useEffect(() => {
@@ -219,11 +219,7 @@ export const PlansClient = () => {
           (offer) =>
             offer.package_id === selectedPackage &&
             (!selectedPlan || offer.plan_id === selectedPlan)
-        ).length === 0 && (
-          <div className="py-20 text-center text-muted-foreground">
-            No offers available for the selected package and plan.
-          </div>
-        )}
+        ).length === 0 && <ErrorApi />}
       </div>
     </>
   );
