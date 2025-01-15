@@ -7,7 +7,7 @@ import {
   useGetAffiliateHistoriesQuery,
   useGetAffiliateStatisticsQuery,
 } from "@/services/affiliate/hooks";
-import { formatDepositsStatistics } from "@/utils/formatters";
+import { formatAffiliateStatistics } from "@/utils/formatters";
 import { getDepositsHistories } from "@/services/deposits";
 
 interface FormattedType {
@@ -99,7 +99,7 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({
         moveNext: () =>
           setCurrentPage((prev) => Math.min(prev + 1, totalPages)),
         movePrev: () => setCurrentPage((prev) => Math.max(prev - 1, 1)),
-        affiliateStatistics: formatDepositsStatistics(
+        affiliateStatistics: formatAffiliateStatistics(
           affiliateStatistics.data?.data ?? initialStatistics
         ),
       }}

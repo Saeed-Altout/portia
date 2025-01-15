@@ -26,10 +26,7 @@ export const formatProxiesData = (data: any[]): ProxyColumn[] => {
   }));
 };
 
-export const formatStatistics = (
-  proxiesCount: IProxiesCount | undefined,
-  balance: IUserBalance | undefined
-) => {
+export const formatStatistics = (proxiesCount: any, balance: any) => {
   return [
     {
       icon: Zap,
@@ -49,7 +46,7 @@ export const formatStatistics = (
     },
   ];
 };
-export const formatDepositsStatistics = (statistics: any) => {
+export const formatDepositsStatistics = (statistics: IDepositStatistics) => {
   return [
     {
       color: "#26a6a4",
@@ -68,21 +65,21 @@ export const formatDepositsStatistics = (statistics: any) => {
     },
   ];
 };
-export const formatAffiliateStatistics = (statistics: any) => {
+export const formatAffiliateStatistics = (statistics: IAffiliateStatistics) => {
   return [
     {
       color: "#26a6a4",
-      amount: `${statistics.monthly_deposits ?? 0}$`,
+      amount: `${statistics.this_month_earnings ?? 0}$`,
       label: "This Month",
     },
     {
       color: "#f63d68",
-      amount: `${statistics.yearly_deposits ?? 0}$`,
+      amount: `${statistics.this_year_earnings ?? 0}$`,
       label: "This Year",
     },
     {
       color: "#7a5af8",
-      amount: `${statistics.all_time_deposits ?? 0}$`,
+      amount: `${statistics.total_earnings ?? 0}$`,
       label: "All Time",
     },
   ];

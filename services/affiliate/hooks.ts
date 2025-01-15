@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import {
   getAffiliateHistories,
   getAffiliateStatistics,
@@ -8,6 +8,7 @@ export const useGetAffiliateHistoriesQuery = (params: Record<string, any>) => {
   return useQuery({
     queryKey: ["affiliate-histories", params],
     queryFn: () => getAffiliateHistories(params),
+    placeholderData: keepPreviousData,
   });
 };
 
