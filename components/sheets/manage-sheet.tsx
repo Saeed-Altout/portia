@@ -98,18 +98,26 @@ export const ManageSheet = () => {
   };
 
   useEffect(() => {
+    if (proxy.service_provider) {
+      if (location.service_provider_name) {
+        form.setValue(
+          "provider",
+          `${location.service_provider_name || ""} / ${
+            location.country_name || ""
+          }`
+        );
+      } else {
+        form.setValue(
+          "provider",
+          `${proxy.service_provider || ""} / ${proxy.country_name || ""}`
+        );
+      }
+    }
     if (proxy.rotation_time) {
       if (location.rotation_time) {
         form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
       } else {
-        form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
-      }
-    }
-    if (proxy.service_provider) {
-      if (location.service_provider_name) {
-        form.setValue("provider", `${location.service_provider_name ?? ""}`);
-      } else {
-        form.setValue("provider", `${proxy.service_provider ?? ""}`);
+        form.setValue("ipRotation", `${proxy.rotation_time ?? ""}`);
       }
     }
   }, [form, proxy, location]);

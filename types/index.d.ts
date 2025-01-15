@@ -509,3 +509,27 @@ declare type ILocation = {
   package_id: number;
   package_name: string;
 };
+
+declare type ICostPlans = {
+  day: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+  week: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+  month: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+  hour: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+};
+declare type IGetCostPlansResponse = RootApi<ICostPlans>;

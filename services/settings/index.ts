@@ -83,9 +83,7 @@ export const exportTables = async (values: {
 
 export const getCostPlans = async (
   params: Record<string, any>
-): Promise<
-  RootResponse<{ plan: { value: number; price: number; duration: number }[] }>
-> => {
+): Promise<IGetCostPlansResponse> => {
   const filteredParams = Object.fromEntries(
     Object.entries(params).filter(
       ([, value]) => value !== undefined && value !== null && value !== 0

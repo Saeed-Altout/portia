@@ -77,8 +77,8 @@ export const RenewSheet = () => {
 
   const ports = useGetPortsQuery({ id: proxy.package_id });
   const costsData = useGetCostPlansQuery({ pkg_id: proxy.package_id });
-  const { mutateAsync, isPending } = useRenewProxyMutation();
 
+  const { mutateAsync, isPending } = useRenewProxyMutation();
   const plans = costsData.isSuccess ? Object.keys(costsData.data.data) : [];
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -146,18 +146,26 @@ export const RenewSheet = () => {
   }, [proxy.amount, recordsPlan]);
 
   useEffect(() => {
+    if (proxy.service_provider) {
+      if (location.service_provider_name) {
+        form.setValue(
+          "provider",
+          `${location.service_provider_name || ""} / ${
+            location.country_name || ""
+          }`
+        );
+      } else {
+        form.setValue(
+          "provider",
+          `${proxy.service_provider || ""} / ${proxy.country_name || ""}`
+        );
+      }
+    }
     if (proxy.rotation_time) {
       if (location.rotation_time) {
         form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
       } else {
-        form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
-      }
-    }
-    if (proxy.service_provider) {
-      if (location.service_provider_name) {
-        form.setValue("provider", `${location.service_provider_name ?? ""}`);
-      } else {
-        form.setValue("provider", `${proxy.service_provider ?? ""}`);
+        form.setValue("ipRotation", `${proxy.rotation_time ?? ""}`);
       }
     }
   }, [form, proxy, location]);
@@ -209,9 +217,10 @@ export const RenewSheet = () => {
                         setDuration("");
                         setAmount("");
 
-                        if (costsData && costsData.data) {
+                        if (!!costsData) {
                           //@ts-ignore
-                          const currentRecords = costsData.data[value];
+                          const currentRecords = costsData.data.data[value];
+
                           if (currentRecords) {
                             setRecordsPlan(currentRecords);
                             setAmounts(
