@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { BeatLoader } from "react-spinners";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";

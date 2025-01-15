@@ -22,23 +22,6 @@ interface Proxy {
   country_name: string;
 }
 
-interface Location {
-  city_id: number;
-  city_name: string;
-  country_id: number;
-  country_name: string;
-  id: number;
-  is_available: boolean;
-  package_id: number;
-  package_name: string;
-  rotation_time: string;
-  service_provider_id: number;
-  service_provider_name: string;
-  status: string;
-  http_port: number;
-  socks_port: number;
-}
-
 interface Offer {
   id: number;
   cost: string;
@@ -82,21 +65,19 @@ const initialProxy: Proxy = {
   amount: 0,
   country_name: "",
 };
-const initialLocation: Location = {
-  city_id: 0,
-  city_name: "",
-  country_id: 0,
-  country_name: "",
+const initialLocation: ILocation = {
   id: 0,
-  is_available: false,
-  package_id: 0,
-  package_name: "",
-  rotation_time: "",
   service_provider_id: 0,
   service_provider_name: "",
+  country_id: 0,
+  country_name: "",
+  city_id: 0,
+  city_name: "",
+  rotation_time: 0,
+  is_available: false,
   status: "",
-  http_port: 0,
-  socks_port: 0,
+  package_id: 0,
+  package_name: "",
 };
 
 interface ProxyStore {
@@ -104,8 +85,8 @@ interface ProxyStore {
   setProxy: (proxy: Proxy) => void;
   resetProxy: () => void;
 
-  location: Location;
-  setLocation: (location: Location) => void;
+  location: ILocation;
+  setLocation: (location: ILocation) => void;
   resetLocation: () => void;
 
   offer: Offer;
@@ -134,7 +115,7 @@ export const useProxyStore = create<ProxyStore>((set) => ({
   setLocation: (location) => set({ location }),
   resetLocation: () => set({ location: initialLocation }),
 
-  price: "",
+  price: "0",
   setPrice: (price) => set({ price }),
 
   duration: "",

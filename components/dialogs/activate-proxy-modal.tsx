@@ -59,10 +59,10 @@ export const ActivateProxyModal = ({
   });
 
   const onCancel = () => {
-    setStep(1);
-    form.reset();
     reset();
+    form.reset();
     onClose();
+    setStep(1);
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

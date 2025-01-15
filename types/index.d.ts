@@ -494,3 +494,18 @@ declare type IPackagePlan = {
 };
 
 declare type IGetPackagesPlansResponse = RootApi<IPackagePlan[]>;
+
+declare type ILocation = {
+  id: number;
+  service_provider_id: number;
+  service_provider_name: string;
+  country_id: number;
+  country_name: string;
+  city_id: number;
+  city_name: string;
+  rotation_time: number;
+  is_available: boolean;
+  status: string;
+  package_id: number;
+  package_name: string;
+};

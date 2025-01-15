@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { useProxyStore, useModalStore } from "@/stores";
+import { ROUTES } from "@/config/constants";
 
 interface StepTwoProps {
   form: any;
@@ -58,7 +59,9 @@ export const StepTwo = ({ form }: StepTwoProps) => {
                   onClick={() => onClose()}
                   asChild
                 >
-                  <Link href={`/dashboard/locations?callback=${pathname}`}>
+                  <Link
+                    href={`${ROUTES.DASHBOARD_LOCATIONS}?redirect=${pathname}`}
+                  >
                     <ArrowUpRight className="h-4 w-4" />
                     <span className="sr-only">ArrowUpRight Icon</span>
                   </Link>

@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellActions } from "./cell-actions";
 
-export const columns: ColumnDef<ILocation>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "package_name",
     header: "Package",

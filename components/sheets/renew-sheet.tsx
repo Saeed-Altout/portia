@@ -336,7 +336,7 @@ export const RenewSheet = () => {
                           onClick={() => onClose()}
                         >
                           <Link
-                            href={`${ROUTES.DASHBOARD_LOCATIONS}?callback=${pathname}`}
+                            href={`${ROUTES.DASHBOARD_LOCATIONS}?redirect=${pathname}`}
                           >
                             <ArrowUpRight className="h-4 w-4" />
                             <span className="sr-only">ArrowUpRight Icon</span>

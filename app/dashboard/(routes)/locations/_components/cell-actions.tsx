@@ -11,7 +11,7 @@ import { useProxyStore, useModalStore } from "@/stores";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
   const router = useRouter();
-  const callback = useSearchParams().get("callback");
+  const callback = useSearchParams().get("redirect");
 
   const { onOpen, type } = useModalStore();
   const { setLocation } = useProxyStore();
@@ -20,10 +20,6 @@ export const CellActions = ({ data }: { data: ILocation }) => {
     setLocation(data);
     if (type === ModalType.ADD_PROXY) {
       onOpen(ModalType.ADD_PROXY);
-    } else if (type === ModalType.ACTIVE_PROXY) {
-      onOpen(ModalType.ACTIVE_PROXY);
-    } else if (type === ModalType.EDIT_AUTH_PROXY) {
-      onOpen(ModalType.EDIT_AUTH_PROXY);
     } else if (type === ModalType.RENEW_PROXY) {
       onOpen(ModalType.RENEW_PROXY);
     } else if (type === ModalType.EDIT_INFO_PROXY) {
