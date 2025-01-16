@@ -32,12 +32,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { useAuthStore } from "@/stores/use-auth-store";
-import {
-  navbarLinks,
-  navLinks,
-  ROUTES,
-  sidebarLinks,
-} from "@/config/constants";
+import { navLinks, ROUTES, sidebarLinks } from "@/config/constants";
 import { SocialLinks } from "./social-links";
 
 export const Navbar = () => {

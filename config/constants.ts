@@ -26,6 +26,52 @@ export const TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_TOKEN`;
 export const EMAIL_KEY = `${NAME_SECRET}_${NAME_PROJECT}_EMAIL`;
 export const USER_KEY = `${NAME_SECRET}_${NAME_PROJECT}_USER`;
 export const FCM_TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_FCM_TOKEN`;
+export const ENDPOINTS = {
+  AFFILIATE_HISTORIES: "/affiliate/earnings/history",
+  AFFILIATE_STATISTICS: "/affiliate/earnings/statistics",
+  DEPOSIT: "/deposit",
+  DEPOSIT_HISTORIES: "/deposits/history",
+  DEPOSIT_STATISTICS: "/deposits/Statistics",
+  LOGIN: "/auth/login",
+  LOGOUT: "/auth/logout",
+  REGISTER: "/auth/register",
+  SEND_RESET_EMAIL: "/auth/send-email-to-reset-password",
+  SET_NEW_PASSWORD: "/auth/set-new-password",
+  RESEND_VERIFICATION_CODE: "/auth/resend-verification-code",
+  VERIFY_CODE: "/auth/confirm-verification-code",
+  GET_WAY_PAYMENT: "/available_gateway",
+  GET_FAQS: "/get-all-faqs",
+  GET_TOP_FAQS: "/get-faq",
+  GET_PROXY_LOCATIONS: "/get-all-proxy-location",
+  GET_DATA_MAP: "/map",
+  GET_OFFERS: "/offers",
+  GET_FEATURES_OFFER: "/features-with-packages",
+  GET_PLANS_OFFERS: "/offers-with-packages-features",
+  GET_PACKAGES: "/get-package-with-plan",
+  GET_ALL_OFFERS: "/all-offers",
+  GET_PROXIES: "/proxies",
+  EDIT_PASSWORD_PROXY: "/edit-password-proxy",
+  EDIT_PARENT_PROXY: "/edite-parent-proxy",
+  FIX_PROXY: "/fix-proxy",
+  RENEW_PROXY: "/renew-proxy",
+  MANAGE_PROXY: "/mange_proxy",
+  CREATE_PROXY: "/create-proxy",
+  GET_PROXY_BY_ID: "/get-proxy",
+  GET_REVIEWS: "/reviews",
+  GET_ALL_PACKAGES: "/get-all-packages",
+  GET_TABLES: "/get-tables",
+  GET_PORTS: "/get-ports",
+  UPDATE_USER_PROFILE: "/update-user-profile",
+  SEND_CONTACT_MESSAGE: "/contact-us",
+  EXPORT_TABLES: "/export",
+  GET_COST_PLANS: "/get-plans-with-cost",
+  GET_SOCIAL_MEDIA_ACCOUNTS: "/social-media-accounts",
+  GET_USER_BALANCE: "/get-user-balance",
+  GET_USER_DETAILS: "/get-user-details",
+  GET_NOTIFICATIONS: "/notifications/all",
+  MARK_ALL_NOTIFICATIONS: "/notifications/mark-all-read",
+  MARK_NOTIFICATION: "/notifications/mark-as-read",
+};
 
 export const ROUTES = {
   DASHBOARD_PROXIES: "/dashboard/proxies",
@@ -95,58 +141,6 @@ export const dashboardRoutes = [
   },
 ];
 
-export const ENDPOINTS = {
-  AFFILIATE_HISTORIES: "/affiliate/earnings/history",
-  AFFILIATE_STATISTICS: "/affiliate/earnings/statistics",
-  DEPOSIT: "/deposit",
-  DEPOSIT_HISTORIES: "/deposits/history",
-  DEPOSIT_STATISTICS: "/deposits/Statistics",
-  LOGIN: "/auth/login",
-  LOGOUT: "/auth/logout",
-  REGISTER: "/auth/register",
-
-  // RESET PASSWORD
-  SEND_RESET_EMAIL: "/auth/send-email-to-reset-password",
-  SET_NEW_PASSWORD: "/auth/set-new-password",
-
-  // RESEND VERIFICATION EMAIL
-  RESEND_VERIFICATION_CODE: "/auth/resend-verification-code",
-
-  VERIFY_CODE: "/auth/confirm-verification-code",
-  GET_WAY_PAYMENT: "/available_gateway",
-  GET_FAQS: "/get-all-faqs",
-  GET_TOP_FAQS: "/get-faq",
-  GET_PROXY_LOCATIONS: "/get-all-proxy-location",
-  GET_DATA_MAP: "/map",
-  GET_OFFERS: "/offers",
-  GET_FEATURES_OFFER: "/features-with-packages",
-  GET_PLANS_OFFERS: "/offers-with-packages-features",
-  GET_PACKAGES: "/get-package-with-plan",
-  GET_ALL_OFFERS: "/all-offers",
-  GET_PROXIES: "/proxies",
-  EDIT_PASSWORD_PROXY: "/edit-password-proxy",
-  EDIT_PARENT_PROXY: "/edite-parent-proxy",
-  FIX_PROXY: "/fix-proxy",
-  RENEW_PROXY: "/renew-proxy",
-  MANAGE_PROXY: "/mange_proxy",
-  CREATE_PROXY: "/create-proxy",
-  GET_PROXY_BY_ID: "/get-proxy",
-  GET_REVIEWS: "/reviews",
-  GET_ALL_PACKAGES: "/get-all-packages",
-  GET_TABLES: "/get-tables",
-  GET_PORTS: "/get-ports",
-  UPDATE_USER_PROFILE: "/update-user-profile",
-  SEND_CONTACT_MESSAGE: "/contact-us",
-  EXPORT_TABLES: "/export",
-  GET_COST_PLANS: "/get-plans-with-cost",
-  GET_SOCIAL_MEDIA_ACCOUNTS: "/social-media-accounts",
-  GET_USER_BALANCE: "/get-user-balance",
-  GET_USER_DETAILS: "/get-user-details",
-  GET_NOTIFICATIONS: "/notifications/all",
-  MARK_ALL_NOTIFICATIONS: "/notifications/mark-all-read",
-  MARK_NOTIFICATION: "/notifications/mark-as-read",
-};
-
 export const navLinks = [
   {
     label: "Why portia.io?",
@@ -180,29 +174,6 @@ export const navLinks = [
   {
     label: "Contact Us",
     href: ROUTES.CONTACT_US,
-  },
-];
-
-export const navbarLinks = [
-  {
-    icon: Facebook,
-    name: "Facebook",
-    href: "/",
-  },
-  {
-    icon: Linkedin,
-    name: "Linkedin",
-    href: "/",
-  },
-  {
-    icon: Twitter,
-    name: "Twitter",
-    href: "/",
-  },
-  {
-    icon: Github,
-    name: "Github",
-    href: "/",
   },
 ];
 
