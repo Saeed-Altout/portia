@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import * as React from "react";
+import Autoplay from "embla-carousel-autoplay";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,10 +17,17 @@ import { useGetReviewsQuery } from "@/services/review/hooks";
 
 export const Testimonials = () => {
   const { data, isLoading, isSuccess } = useGetReviewsQuery({ per_page: 5 });
-
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
   return (
     <section id="testimonials" className="screen py-24">
-      <Carousel>
+      <Carousel
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+        opts={{ loop: true }}
+      >
         <CarouselContent>
           {(isLoading || !isSuccess) && (
             <CarouselItem className="space-y-6 md:space-y-8 lg:space-y-10 xl:space-y-12">
@@ -72,7 +81,7 @@ export const Testimonials = () => {
                   </h3>
                   <div className="flex items-center gap-4">
                     <Avatar className="h-[56px] w-[56px]">
-                      <AvatarImage src={user_image} />
+                      <AvatarImage src={user_image} alt={user_name} />
                       <AvatarFallback>{user_name.slice(0, 2)}</AvatarFallback>
                     </Avatar>
                     <div className="space-y-1">

@@ -38,7 +38,7 @@ export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
 
       return () => intervals.forEach((interval) => clearInterval(interval));
     } else {
-      setCounts(statisticData.map(() => 0));
+      // setCounts(statisticData.map(() => 0));
     }
   }, [isIntersecting]);
 
