@@ -38,7 +38,6 @@ apiClient.interceptors.response.use(
       case 401:
         clear();
         localStorage.clear();
-        location.reload();
         break;
 
       case 403:

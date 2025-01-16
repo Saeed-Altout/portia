@@ -32,11 +32,10 @@ import { usePasswordControl } from "@/hooks/use-password-control";
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
+  rememberMe: z.boolean().default(false).optional(),
 });
 
 export const LoginForm = () => {
-  const [isRememberMe, setIsRememberMe] = useState<boolean>(false);
-
   const { passwordType, togglePasswordVisibility } = usePasswordControl();
   const { mutate, isPending } = useLoginMutation();
 
@@ -45,6 +44,7 @@ export const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
   });
 
@@ -117,16 +117,25 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
+
             <div className="flex items-center justify-between">
-              <div className="flex flex-row items-center gap-2">
-                <Checkbox
-                  checked={isRememberMe}
-                  onCheckedChange={() => setIsRememberMe((prev) => !prev)}
-                />
-                <p className="text-black-200 font-medium leading-none text-sm mt-1">
-                  Remember for 10 days.
-                </p>
-              </div>
+              <FormField
+                control={form.control}
+                name="rememberMe"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>Remember for 10 days.</FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
               <Button
                 type="button"
                 size="sm"

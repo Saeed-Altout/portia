@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { clear, setEmail, setToken, setUser } from "@/lib/cookie";
 import {
   login,
@@ -12,29 +12,62 @@ import {
 } from "@/services/auth";
 import { useResponse } from "@/hooks/use-response";
 import { ROUTES } from "@/config/constants";
+import { AxiosError } from "axios";
+import { getUser } from "@/services/settings";
+
+const NOT_VERIFY_EMAIL =
+  "Unauthorized access: your email is not verified, please verify your email ";
 
 export const useLoginMutation = () => {
   const { Success, Error } = useResponse();
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ["login"],
     mutationFn: (data: LoginCredentials) => login(data),
-    onSuccess: (data) => {
+    onSuccess: (data, req) => {
       setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
       setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
-      Success({ message: data.message || "Login is Success." });
+      Success({ message: data.message || "Login successful." });
       location.reload();
     },
-    onError(error) {
-      Error({ error, message: "Login is failed." });
+    onError: async (error) => {
+      if (error instanceof AxiosError) {
+        const data = JSON.parse(error.config?.data);
+
+        if (error.response?.data.message == NOT_VERIFY_EMAIL) {
+          try {
+            await queryClient.fetchQuery({
+              queryKey: ["resend-verification-code"],
+              queryFn: () => resendVerificationCode({ email: data.email }),
+            });
+
+            Success({
+              message: "Verification code resent. Please verify your email.",
+            });
+
+            location.assign(
+              `${ROUTES.VERIFY_EMAIL_CONFIRM}?email=${data.email}`
+            );
+          } catch (resendError) {
+            Error({
+              error: resendError,
+              message: "Failed to resend verification code. Please try again.",
+            });
+          }
+          return;
+        }
+      }
+
+      Error({ error, message: "Login failed. Please try again." });
     },
   });
 };
-
 export const useLoginWithGoogleMutation = () => {
   const { Error } = useResponse();
   return useMutation({
     mutationKey: ["login-with-google"],
-    mutationFn: () => loginWithGoogle(),
+    mutationFn: (referred_by?: string) => loginWithGoogle(referred_by),
     onError: (error) => {
       Error({ error, message: "Login with google is failed." });
     },
@@ -84,11 +117,15 @@ export const useResendVerificationCodeMutation = () => {
       resendVerificationCode(values),
     onSuccess: (data) => {
       Success({
-        message: data.message || "Resend verification code is Success.",
+        message:
+          data.message || "Verification code resent. Please verify your email.",
       });
     },
     onError: (error) => {
-      Error({ error, message: "Resend verification code is failed." });
+      Error({
+        error,
+        message: "Failed to resend verification code. Please try again.",
+      });
     },
   });
 };
@@ -134,8 +171,16 @@ export const useVerifyCodeMutation = () => {
     mutationKey: ["verification-code"],
     mutationFn: (values: VerificationCodeCredentials) =>
       verificationCode(values),
-    onSuccess(data) {
-      setToken(data.access_token);
+    onSuccess: async (data) => {
+      const token = data.access_token;
+      if (token) {
+        setToken(token, {
+          expires: +data.expires_in.split(" ")[0],
+        });
+        const response = await getUser();
+        setUser(response.data);
+      }
+
       Success({
         message: data.message || "Verify code is success.",
         redirectTo: ROUTES.EMAIL_CONFIRMED,

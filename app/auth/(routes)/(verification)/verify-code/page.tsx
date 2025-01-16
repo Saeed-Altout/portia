@@ -1,4 +1,4 @@
-import { VerifyRestCodeForm } from "@/components";
+import { VerifyRestCodeForm } from "@/components/forms/verify-reset-code-form";
 
 export const metadata = {
   title: "Enter Verification Code | Secure Email Validation",

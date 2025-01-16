@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -43,8 +42,13 @@ export const EmailConfirmedForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Button className="w-full" asChild>
-          <Link href={ROUTES.DASHBOARD_HOME}>Continue to dashboard</Link>
+        <Button
+          className="w-full"
+          onClick={() => {
+            location.assign(ROUTES.DASHBOARD_HOME);
+          }}
+        >
+          Continue to dashboard
         </Button>
       </CardContent>
       <CardFooter>

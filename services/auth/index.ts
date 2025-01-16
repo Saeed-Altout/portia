@@ -1,11 +1,15 @@
 import { apiClient } from "@/lib/api";
 import { ENDPOINTS } from "@/config/constants";
 
-export const loginWithGoogle = async (): Promise<void> => {
+export const loginWithGoogle = async (referred_by?: string): Promise<void> => {
   try {
-    location.href =
-      process.env.NEXT_PUBLIC_API_URL! +
-      process.env.NEXT_PUBLIC_LOGIN_WITH_GOOGLE!;
+    if (referred_by) {
+      location.href = `${process.env.NEXT_PUBLIC_API_URL!}${process.env
+        .NEXT_PUBLIC_LOGIN_WITH_GOOGLE!}?referred_by=${referred_by}`;
+    } else {
+      location.href = `${process.env.NEXT_PUBLIC_API_URL!}${process.env
+        .NEXT_PUBLIC_LOGIN_WITH_GOOGLE!}`;
+    }
   } catch (error) {
     throw error;
   }
