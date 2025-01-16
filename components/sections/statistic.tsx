@@ -16,22 +16,29 @@ export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
   useEffect(() => {
     if (isIntersecting) {
       const intervals: NodeJS.Timeout[] = [];
+
       statisticData.forEach((item, index) => {
         const targetValue = parseInt(item.value.replace(/\D/g, ""));
-        const increment = Math.ceil(targetValue / 100);
+        const increment = Math.ceil(targetValue / 50);
         intervals[index] = setInterval(() => {
           setCounts((prevCounts) => {
             const newCounts = [...prevCounts];
-            newCounts[index] = Math.min(
-              newCounts[index] + increment,
-              targetValue
-            );
+            if (newCounts[index] < targetValue) {
+              newCounts[index] = Math.min(
+                newCounts[index] + increment,
+                targetValue
+              );
+            } else {
+              clearInterval(intervals[index]);
+            }
             return newCounts;
           });
         }, 15);
       });
 
       return () => intervals.forEach((interval) => clearInterval(interval));
+    } else {
+      setCounts(statisticData.map(() => 0));
     }
   }, [isIntersecting]);
 
