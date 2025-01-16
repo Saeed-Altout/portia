@@ -56,9 +56,12 @@ export const Map = () => {
                   {parents_count} available proxies
                 </div>
               </foreignObject>
-              <circle r={10} fill="#2628A6" opacity={0.1} />
-              <circle r={6} fill="#2628A6" opacity={0.2} />
-              <circle r={3} fill="#2628A6" />
+
+              <g style={{ zIndex: 1 }}>
+                <circle r={10} fill="#2628A6" opacity={0.1} />
+                <circle r={6} fill="#2628A6" opacity={0.2} />
+                <circle r={3} fill="#2628A6" />
+              </g>
             </Marker>
           )
         )}

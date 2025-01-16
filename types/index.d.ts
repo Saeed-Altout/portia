@@ -387,6 +387,7 @@ declare type IDepositHistory = {
   payment_method: string;
   amount: string;
   created_at: string | Date;
+  status: string;
 };
 
 declare type IGetDepositsHistoriesResponse = RootApi<{

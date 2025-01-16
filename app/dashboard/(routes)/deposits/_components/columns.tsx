@@ -9,6 +9,10 @@ export const columns: ColumnDef<IDepositHistory>[] = [
     header: "Payment Method",
   },
   {
+    accessorKey: "status",
+    header: "Status",
+  },
+  {
     accessorKey: "amount",
     header: "Amount",
     cell: ({ row }) => <p>{row.original.amount} usd</p>,

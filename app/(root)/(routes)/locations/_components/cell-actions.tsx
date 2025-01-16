@@ -8,23 +8,19 @@ import { Button } from "@/components/ui/button";
 
 import { ModalType, ROUTES } from "@/config/constants";
 import { useModalStore } from "@/stores/use-modal-store";
-import { useLocationStore } from "@/stores/use-location-store";
+import { useProxyStore } from "@/stores/use-proxy-store";
 
 export const CellActions = ({ data }: { data: ILocation }) => {
   const router = useRouter();
   const callback = useSearchParams().get("callback");
 
   const { onOpen, type } = useModalStore();
-  const { setLocation } = useLocationStore();
+  const { setLocation } = useProxyStore();
 
   const handleSelectLocation = () => {
     setLocation(data);
     if (type === ModalType.ADD_PROXY) {
       onOpen(ModalType.ADD_PROXY);
-    } else if (type === ModalType.ACTIVE_PROXY) {
-      onOpen(ModalType.ACTIVE_PROXY);
-    } else if (type === ModalType.EDIT_AUTH_PROXY) {
-      onOpen(ModalType.EDIT_AUTH_PROXY);
     } else if (type === ModalType.RENEW_PROXY) {
       onOpen(ModalType.RENEW_PROXY);
     } else if (type === ModalType.EDIT_INFO_PROXY) {
