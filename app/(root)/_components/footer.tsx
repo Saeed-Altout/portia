@@ -5,8 +5,8 @@ import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
 
-import { footerLinks, navLinks } from "@/config/constants";
-import { useGetSocialMediaAccountsQuery } from "@/services/settings/hooks";
+import { footerLinks, ROUTES } from "@/config/constants";
+import { SocialLinks } from "./social-links";
 
 interface FooterLinkProps {
   href: string;
@@ -23,33 +23,6 @@ const FooterLink = ({ href, children, className = "" }: FooterLinkProps) => (
   </Link>
 );
 
-const SocialLinks = () => {
-  const { data: socialAccounts } = useGetSocialMediaAccountsQuery();
-
-  if (!socialAccounts?.data?.length) return null;
-
-  return (
-    <div className="flex items-center gap-3">
-      {socialAccounts.data.map((account) => (
-        <Link
-          href={account.url}
-          key={account.name}
-          className="text-gray-200 transition-colors duration-200 hover:text-gray-400"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Visit our ${account.name} profile`}
-        >
-          <svg
-            dangerouslySetInnerHTML={{ __html: account.tag }}
-            className="h-5 w-5"
-            aria-hidden="true"
-          />
-        </Link>
-      ))}
-    </div>
-  );
-};
-
 export const Footer = () => {
   const year = new Date().getFullYear();
 
@@ -59,7 +32,7 @@ export const Footer = () => {
         <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
           <div className="space-y-3 sm:col-span-2">
             <div className="h-[30px] w-[100px]">
-              <Logo redirectTo="/" dark />
+              <Logo redirectTo={ROUTES.HOME} dark />
             </div>
             <p className="text-gray-200">Your Gateway to Unlimited Browsing.</p>
           </div>
@@ -74,7 +47,7 @@ export const Footer = () => {
               </h2>
               <nav aria-label={`${title} navigation`}>
                 <ul className="flex flex-col gap-3">
-                  {navLinks.map((link, linkIndex) => (
+                  {links.map((link, linkIndex) => (
                     <li key={`${title}-link-${linkIndex}`}>
                       <FooterLink href={link.href}>{link.label}</FooterLink>
                     </li>

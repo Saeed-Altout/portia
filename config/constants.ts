@@ -19,46 +19,170 @@ import {
   FaTelegram,
 } from "react-icons/fa";
 
+const NAME_PROJECT = "PORTIA";
+const NAME_SECRET = "NEXT_CWS";
+
+export const TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_TOKEN`;
+export const EMAIL_KEY = `${NAME_SECRET}_${NAME_PROJECT}_EMAIL`;
+export const USER_KEY = `${NAME_SECRET}_${NAME_PROJECT}_USER`;
+export const FCM_TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_FCM_TOKEN`;
+
+export const ROUTES = {
+  DASHBOARD_PROXIES: "/dashboard/proxies",
+  DASHBOARD_DEPOSITS: "/dashboard/deposits",
+  DASHBOARD_PLANS: "/dashboard/pricing-plans",
+  DASHBOARD_AFFILIATE: "/dashboard/affiliate",
+  DASHBOARD_LOCATIONS: "/dashboard/locations",
+  DASHBOARD_HOME: "/dashboard",
+  DASHBOARD_SETTINGS: "/dashboard/settings",
+
+  HOME: "/",
+  CONTACT_US: "/contact-us",
+  OUR_PLANS: "/our-plans",
+  PORTIA_INFO: "/why-portia-io",
+  PRICING_PLAN: "/pricing-plans",
+  RESOURCES: "/pricing-plans",
+  FAQS: "/faqs",
+  TESTIMONIALS: "/testimonials",
+  LOCATIONS: "/locations",
+  TERMS: "/terms",
+  PRIVACY_POLICY: "/privacy-policy",
+
+  FORGET_PASSWORD: "/auth/send-reset-email",
+  LOGIN: "/auth/login",
+  REGISTER: "/auth/register",
+  VERIFY_EMAIL: "/auth/verify-code",
+  VERIFY_EMAIL_CONFIRM: "/auth/verify-email",
+  VERIFY_RESET_EMAIL: "/auth/verify-reset-email",
+  PASSWORD_RESET: "/auth/password-reset",
+  EMAIL_CONFIRMED: "/auth/email-confirmed",
+};
+
+export enum ModalType {
+  LOGOUT = "logout",
+  EDIT_INFO_PROXY = "edit-info-proxy",
+  EDIT_AUTH_PROXY = "edit-auth-proxy",
+  RENEW_PROXY = "renew-proxy",
+  FIX_PROXY = "fix-proxy",
+  ACTIVE_PROXY = "active-proxy",
+  ADD_PROXY = "add-proxy",
+  EXPORT_DATA = "export-data",
+  NOTIFICATION = "notification",
+  MANAGE_PROXY = "manage-proxy",
+  ADD_FUNDS = "add-funds",
+}
+
+export const dashboardRoutes = [
+  {
+    label: "Dashboard",
+    href: ROUTES.DASHBOARD_HOME,
+  },
+  {
+    label: "My Proxies",
+    href: ROUTES.DASHBOARD_PROXIES,
+  },
+  {
+    label: "Pricing Plans",
+    href: ROUTES.DASHBOARD_PLANS,
+  },
+  {
+    label: "Deposits",
+    href: ROUTES.DASHBOARD_DEPOSITS,
+  },
+  {
+    label: "My Affiliate",
+    href: ROUTES.DASHBOARD_AFFILIATE,
+  },
+];
+
+export const ENDPOINTS = {
+  AFFILIATE_HISTORIES: "/affiliate/earnings/history",
+  AFFILIATE_STATISTICS: "/affiliate/earnings/statistics",
+  DEPOSIT: "/deposit",
+  DEPOSIT_HISTORIES: "/deposits/history",
+  DEPOSIT_STATISTICS: "/deposits/Statistics",
+  LOGIN: "/auth/login",
+  LOGOUT: "/auth/logout",
+  REGISTER: "/auth/register",
+
+  // RESET PASSWORD
+  SEND_RESET_EMAIL: "/auth/send-email-to-reset-password",
+  SET_NEW_PASSWORD: "/auth/set-new-password",
+
+  // RESEND VERIFICATION EMAIL
+  RESEND_VERIFICATION_CODE: "/auth/resend-verification-code",
+
+  VERIFY_CODE: "/auth/confirm-verification-code",
+  GET_WAY_PAYMENT: "/available_gateway",
+  GET_FAQS: "/get-all-faqs",
+  GET_TOP_FAQS: "/get-faq",
+  GET_PROXY_LOCATIONS: "/get-all-proxy-location",
+  GET_DATA_MAP: "/map",
+  GET_OFFERS: "/offers",
+  GET_FEATURES_OFFER: "/features-with-packages",
+  GET_PLANS_OFFERS: "/offers-with-packages-features",
+  GET_PACKAGES: "/get-package-with-plan",
+  GET_ALL_OFFERS: "/all-offers",
+  GET_PROXIES: "/proxies",
+  EDIT_PASSWORD_PROXY: "/edit-password-proxy",
+  EDIT_PARENT_PROXY: "/edite-parent-proxy",
+  FIX_PROXY: "/fix-proxy",
+  RENEW_PROXY: "/renew-proxy",
+  MANAGE_PROXY: "/mange_proxy",
+  CREATE_PROXY: "/create-proxy",
+  GET_PROXY_BY_ID: "/get-proxy",
+  GET_REVIEWS: "/reviews",
+  GET_ALL_PACKAGES: "/get-all-packages",
+  GET_TABLES: "/get-tables",
+  GET_PORTS: "/get-ports",
+  UPDATE_USER_PROFILE: "/update-user-profile",
+  SEND_CONTACT_MESSAGE: "/contact-us",
+  EXPORT_TABLES: "/export",
+  GET_COST_PLANS: "/get-plans-with-cost",
+  GET_SOCIAL_MEDIA_ACCOUNTS: "/social-media-accounts",
+  GET_USER_BALANCE: "/get-user-balance",
+  GET_USER_DETAILS: "/get-user-details",
+  GET_NOTIFICATIONS: "/notifications/all",
+  MARK_ALL_NOTIFICATIONS: "/notifications/mark-all-read",
+  MARK_NOTIFICATION: "/notifications/mark-as-read",
+};
+
 export const navLinks = [
   {
     label: "Why portia.io?",
-    href: "/why-portia-io",
+    href: ROUTES.PORTIA_INFO,
   },
   {
     label: "Pricing plans",
-    href: "/pricing-plans",
+    href: ROUTES.PRICING_PLAN,
   },
   {
     label: "Resources",
-    href: "/resources",
+    href: ROUTES.RESOURCES,
     links: [
-      // {
-      //   label: "Blogs",
-      //   href: "/blogs",
-      //   description: "The latest industry news, updates and info.",
-      // },
       {
         label: "Faqs",
-        href: "/faqs",
+        href: ROUTES.FAQS,
         description:
           "Learn & whatch our client questions and how we answer it .",
       },
       {
         label: "Testimonials",
-        href: "/testimonials",
+        href: ROUTES.TESTIMONIALS,
         description: "Learn how our customers are making big changes.",
       },
     ],
   },
   {
     label: "Locations",
-    href: "/locations",
+    href: ROUTES.LOCATIONS,
   },
   {
     label: "Contact Us",
-    href: "/contact-us",
+    href: ROUTES.CONTACT_US,
   },
 ];
+
 export const navbarLinks = [
   {
     icon: Facebook,
@@ -81,125 +205,65 @@ export const navbarLinks = [
     href: "/",
   },
 ];
+
 export const sidebarLinks = [
   {
     name: "Terms",
-    href: "/terms",
+    href: ROUTES.TERMS,
   },
   {
-    name: "Privacy",
-    href: "/privacy-policy",
-  },
-  {
-    name: "Licenses",
-    href: "/licenses",
+    name: "Privacy Policy",
+    href: ROUTES.PRIVACY_POLICY,
   },
 ];
+
 export const footerLinks = [
   {
     title: "Company",
     links: [
       {
         label: "Why portia.io?",
-        href: "/why-portia-io",
+        href: ROUTES.PORTIA_INFO,
       },
       {
         label: "Our Plans",
-        href: "/our-plans",
+        href: ROUTES.OUR_PLANS,
       },
       {
         label: "Testimonials",
-        href: "/testimonials",
+        href: ROUTES.TESTIMONIALS,
       },
-      // {
-      // 	label: 'Affiliate program',
-      // 	href: '/affiliate-program',
-      // },
+
       {
         label: "Contact us",
-        href: "/contact-us",
+        href: ROUTES.CONTACT_US,
       },
     ],
   },
   {
     title: "Resources",
     links: [
-      // {
-      // 	label: 'Blog',
-      // 	href: '/blogs',
-      // },
       {
         label: "Our Faqs",
-        href: "/faqs",
+        href: ROUTES.FAQS,
       },
     ],
   },
-  // {
-  // 	title: 'Social',
-  // 	links: [
-  // 		{
-  // 			label: 'Twitter',
-  // 			href: '/',
-  // 		},
-  // 		{
-  // 			label: 'LinkedIn',
-  // 			href: '/',
-  // 		},
-  // 		{
-  // 			label: 'Facebook',
-  // 			href: '/',
-  // 		},
-  // 		{
-  // 			label: 'Github',
-  // 			href: '/',
-  // 		},
-  // 	],
-  // },
   {
     title: "Legal",
     links: [
       {
         label: "Terms",
-        href: "/terms",
+        href: ROUTES.TERMS,
       },
       {
-        label: "Privacy",
-        href: "/privacy-policy",
+        label: "Privacy Policy",
+        href: ROUTES.PRIVACY_POLICY,
       },
-      // {
-      // 	label: 'Licenses',
-      // 	href: '/licenses',
-      // },
     ],
   },
 ];
-export const footerIcons = [
-  {
-    name: "Twitter",
-    icon: FaTwitter,
-    href: "/",
-  },
-  {
-    name: "Linkedin",
-    icon: FaLinkedinIn,
-    href: "/",
-  },
-  {
-    name: "Facebook",
-    icon: FaFacebook,
-    href: "/",
-  },
-  {
-    name: "Github",
-    icon: FaGithub,
-    href: "/",
-  },
-  {
-    name: "Telegram",
-    icon: FaTelegram,
-    href: "/",
-  },
-];
+
 export const customersData = [
   {
     rate: 5,
@@ -472,123 +536,3 @@ export const countriesData = [
     flagUrl: "/icons/flags/FR.svg",
   },
 ];
-
-const NAME_PROJECT = "PORTIA";
-const NAME_SECRET = "NEXT_CWS";
-
-export const TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_TOKEN`;
-export const EMAIL_KEY = `${NAME_SECRET}_${NAME_PROJECT}_EMAIL`;
-export const USER_KEY = `${NAME_SECRET}_${NAME_PROJECT}_USER`;
-export const FCM_TOKEN_KEY = `${NAME_SECRET}_${NAME_PROJECT}_FCM_TOKEN`;
-
-export const ROUTES = {
-  DASHBOARD_PROXIES: "/dashboard/proxies",
-  DASHBOARD_DEPOSITS: "/dashboard/deposits",
-  DASHBOARD_PLANS: "/dashboard/pricing-plans",
-  DASHBOARD_AFFILIATE: "/dashboard/affiliate",
-  DASHBOARD_LOCATIONS: "/dashboard/locations",
-  DASHBOARD_HOME: "/dashboard",
-  DASHBOARD_SETTINGS: "/dashboard/settings",
-
-  HOME: "/",
-  CONTACT_US: "/contact-us",
-  OUR_PLANS: "/our-plans",
-
-  FORGET_PASSWORD: "/auth/send-reset-email",
-  LOGIN: "/auth/login",
-  REGISTER: "/auth/register",
-  VERIFY_EMAIL: "/auth/verify-code",
-  VERIFY_EMAIL_CONFIRM: "/auth/verify-email",
-  VERIFY_RESET_EMAIL: "/auth/verify-reset-email",
-  PASSWORD_RESET: "/auth/password-reset",
-  EMAIL_CONFIRMED: "/auth/email-confirmed",
-};
-
-export enum ModalType {
-  LOGOUT = "logout",
-  EDIT_INFO_PROXY = "edit-info-proxy",
-  EDIT_AUTH_PROXY = "edit-auth-proxy",
-  RENEW_PROXY = "renew-proxy",
-  FIX_PROXY = "fix-proxy",
-  ACTIVE_PROXY = "active-proxy",
-  ADD_PROXY = "add-proxy",
-  EXPORT_DATA = "export-data",
-  NOTIFICATION = "notification",
-  MANAGE_PROXY = "manage-proxy",
-  ADD_FUNDS = "add-funds",
-}
-
-export const dashboardRoutes = [
-  {
-    label: "Dashboard",
-    href: ROUTES.DASHBOARD_HOME,
-  },
-  {
-    label: "My Proxies",
-    href: ROUTES.DASHBOARD_PROXIES,
-  },
-  {
-    label: "Pricing Plans",
-    href: ROUTES.DASHBOARD_PLANS,
-  },
-  {
-    label: "Deposits",
-    href: ROUTES.DASHBOARD_DEPOSITS,
-  },
-  {
-    label: "My Affiliate",
-    href: ROUTES.DASHBOARD_AFFILIATE,
-  },
-];
-
-export const ENDPOINTS = {
-  AFFILIATE_HISTORIES: "/affiliate/earnings/history",
-  AFFILIATE_STATISTICS: "/affiliate/earnings/statistics",
-  DEPOSIT: "/deposit",
-  DEPOSIT_HISTORIES: "/deposits/history",
-  DEPOSIT_STATISTICS: "/deposits/Statistics",
-  LOGIN: "/auth/login",
-  LOGOUT: "/auth/logout",
-  REGISTER: "/auth/register",
-
-  // RESET PASSWORD
-  SEND_RESET_EMAIL: "/auth/send-email-to-reset-password",
-  SET_NEW_PASSWORD: "/auth/set-new-password",
-
-  // RESEND VERIFICATION EMAIL
-  RESEND_VERIFICATION_CODE: "/auth/resend-verification-code",
-
-  VERIFY_CODE: "/auth/confirm-verification-code",
-  GET_WAY_PAYMENT: "/available_gateway",
-  GET_FAQS: "/get-all-faqs",
-  GET_TOP_FAQS: "/get-faq",
-  GET_PROXY_LOCATIONS: "/get-all-proxy-location",
-  GET_DATA_MAP: "/map",
-  GET_OFFERS: "/offers",
-  GET_FEATURES_OFFER: "/features-with-packages",
-  GET_PLANS_OFFERS: "/offers-with-packages-features",
-  GET_PACKAGES: "/get-package-with-plan",
-  GET_ALL_OFFERS: "/all-offers",
-  GET_PROXIES: "/proxies",
-  EDIT_PASSWORD_PROXY: "/edit-password-proxy",
-  EDIT_PARENT_PROXY: "/edite-parent-proxy",
-  FIX_PROXY: "/fix-proxy",
-  RENEW_PROXY: "/renew-proxy",
-  MANAGE_PROXY: "/mange_proxy",
-  CREATE_PROXY: "/create-proxy",
-  GET_PROXY_BY_ID: "/get-proxy",
-  GET_REVIEWS: "/reviews",
-  GET_ALL_PACKAGES: "/get-all-packages",
-  GET_TABLES: "/get-tables",
-  GET_PORTS: "/get-ports",
-  UPDATE_USER_PROFILE: "/update-user-profile",
-  SEND_CONTACT_MESSAGE: "/contact-us",
-  EXPORT_TABLES: "/export",
-  GET_COST_PLANS: "/get-plans-with-cost",
-  GET_SOCIAL_MEDIA_ACCOUNTS: "/social-media-accounts",
-  GET_USER_BALANCE: "/get-user-balance",
-  GET_USER_DETAILS: "/get-user-details",
-  GET_NOTIFICATIONS: "/notifications/all",
-  MARK_ALL_NOTIFICATIONS: "/notifications/mark-all-read",
-  MARK_NOTIFICATION: "/notifications/mark-as-read",
-};

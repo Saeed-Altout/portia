@@ -38,6 +38,7 @@ import {
   ROUTES,
   sidebarLinks,
 } from "@/config/constants";
+import { SocialLinks } from "./social-links";
 
 export const Navbar = () => {
   const { isAuthenticated } = useAuthStore();
@@ -51,7 +52,9 @@ export const Navbar = () => {
         <div className="hidden lg:flex items-center justify-end gap-x-4">
           {!isAuthenticated && <LoginButton />}
           <Button asChild>
-            <Link href={ROUTES.DASHBOARD_HOME}>Get Started</Link>
+            <Link href={ROUTES.DASHBOARD_HOME}>
+              {isAuthenticated ? "Dashboard" : "Get started"}
+            </Link>
           </Button>
         </div>
       </div>
@@ -148,6 +151,7 @@ ListItem.displayName = "ListItem";
 
 export const NavMobile = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -161,83 +165,75 @@ export const NavMobile = () => {
         <SheetHeader>
           <Logo redirectTo={ROUTES.HOME} />
         </SheetHeader>
-        <div className="flex flex-col gap-y-2">
-          {navLinks.map(({ label, href, links }, index) => (
-            <React.Fragment key={index}>
-              {links ? (
-                <Accordion key={index} type="single" collapsible>
-                  <AccordionItem value={`item-${index + 1}`}>
-                    <AccordionTrigger>{label}</AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="space-y-2">
-                        {links.map(({ href, label, description }, key) => (
-                          <li key={key} className="w-full">
-                            <Link
-                              href={href}
-                              className={cn(
-                                "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              )}
-                              onClick={() => setIsOpen(false)}
-                            >
-                              <h3 className="text-sm font-medium leading-none">
-                                {label}
-                              </h3>
-                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                {description}
-                              </p>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              ) : (
-                <ul key={index} className="w-full py-3">
-                  <Link
-                    onClick={() => setIsOpen(false)}
-                    href={href}
-                    className="font-medium"
-                  >
-                    {label}
-                  </Link>
-                </ul>
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-        <Separator />
-        <div className="w-full grid grid-cols-2 gap-x-6 gap-y-5 py-5">
-          <div className="flex flex-col gap-y-5">
-            {navbarLinks.map(({ name, icon: Icon, href }, key) => (
-              <Link
-                key={key}
-                href={href}
-                onClick={() => setIsOpen(false)}
-                className="flex justify-start items-center gap-4"
-              >
-                <Icon className="h-6 w-6" />
-                {name}
-              </Link>
+        <div className="flex flex-col gap-10 h-full">
+          <div className="flex flex-col flex-1">
+            {navLinks.map(({ label, href, links }, index) => (
+              <React.Fragment key={index}>
+                {links ? (
+                  <Accordion key={index} type="single" collapsible>
+                    <AccordionItem value={`item-${index + 1}`}>
+                      <AccordionTrigger>{label}</AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="space-y-2">
+                          {links.map(({ href, label, description }, key) => (
+                            <li key={key} className="w-full">
+                              <Link
+                                href={href}
+                                className={cn(
+                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                )}
+                                onClick={() => setIsOpen(false)}
+                              >
+                                <h3 className="text-sm font-medium leading-none">
+                                  {label}
+                                </h3>
+                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                  {description}
+                                </p>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                ) : (
+                  <ul key={index} className="w-full py-3">
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      href={href}
+                      className="font-medium"
+                    >
+                      {label}
+                    </Link>
+                  </ul>
+                )}
+              </React.Fragment>
             ))}
           </div>
-          <div className="flex flex-col gap-y-5">
-            {sidebarLinks.map(({ name, href }, key) => (
-              <Link
-                key={key}
-                href={href}
-                className="flex justify-start items-center gap-4"
-              >
-                {name}
-              </Link>
-            ))}
+          <Separator />
+          <div className="flex justify-between items-end">
+            <div className="flex flex-col gap-y-5 flex-1">
+              {sidebarLinks.map(({ name, href }, key) => (
+                <Link
+                  key={key}
+                  href={href}
+                  className="flex justify-start items-center gap-4"
+                >
+                  {name}
+                </Link>
+              ))}
+            </div>
+            <SocialLinks />
           </div>
-        </div>
-        <div className="space-y-3">
-          <Button className="w-full">Get started</Button>
-          <Button variant="secondary" className="w-full">
-            <Link href={ROUTES.LOGIN}>Login</Link>
-          </Button>
+          <div className="space-y-3 h-fit">
+            <Button asChild className="w-full">
+              <Link href={ROUTES.DASHBOARD_HOME}>
+                {isAuthenticated ? "Dashboard" : "Get started"}
+              </Link>
+            </Button>
+            {!isAuthenticated && <LoginButton />}
+          </div>
         </div>
       </SheetContent>
     </Sheet>
@@ -259,7 +255,7 @@ export const NavItem = ({
       <Link href={href} legacyBehavior passHref>
         <NavigationMenuLink
           className={cn(
-            "text-base font-medium",
+            "text-base font-medium hover:text-primary transition-all",
             active && "text-black",
             "text-muted-foreground/80",
             className
