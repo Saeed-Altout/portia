@@ -1,16 +1,35 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  textVariants,
+  animationTransition,
+  animationViewport,
+} from "@/config/animations";
+
 export const Hero = () => {
   return (
     <section id="hero" className="screen py-24 text-center">
-      <div className="space-y-6">
-        <div className="space-y-3">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
+      <motion.div
+        className="space-y-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={animationViewport}
+        transition={{ staggerChildren: animationTransition.staggerChildren }}
+      >
+        <motion.div className="space-y-3" variants={textVariants}>
+          <motion.h1
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold"
+            variants={textVariants}
+          >
             Pricing plans
-          </h1>
-        </div>
-        <p className="text lg:text-xl">
+          </motion.h1>
+        </motion.div>
+
+        <motion.p className="text lg:text-xl" variants={textVariants}>
           Transparent pricing that grows with your needs.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </section>
   );
 };

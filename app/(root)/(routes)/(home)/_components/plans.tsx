@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Fragment } from "react";
 import { Check } from "lucide-react";
-import { motion, Variants } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
@@ -12,34 +12,36 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { useGetOffersPlansQuery } from "@/services/offers/hooks";
 import { ROUTES } from "@/config/constants";
-
-// Animation variants for the cards
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50 }, // Start hidden and 50px below
-  visible: { opacity: 1, y: 0 }, // Fade in and slide up to original position
-};
+import {
+  textVariants,
+  animationTransition,
+  animationViewport,
+} from "@/config/animations";
 
 export const Plans = () => {
   const { data: plans, isLoading, isSuccess } = useGetOffersPlansQuery();
 
   return (
     <section id="plans" className="screen py-24 space-y-24">
-      <Heading
-        label="Pricing"
-        title="Simple, transparent pricing"
-        description="We believe Portia should be accessible to all people, no matter their usage."
-      />
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={animationViewport}
+        transition={{ duration: animationTransition.duration }}
+      >
+        <Heading
+          label="Pricing"
+          title="Simple, transparent pricing"
+          description="We believe Portia should be accessible to all people, no matter their usage."
+        />
+      </motion.div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
         {isLoading &&
           !isSuccess &&
           [...Array(3)].map((_, index) => (
-            <motion.div
+            <div
               key={index}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }} // Trigger animation when 50% of the card is visible
-              transition={{ duration: 0.5, delay: index * 0.1 }} // Staggered delay
               className="shadow-xl rounded-[16px] border py-10 px-6 space-y-4"
             >
               <div className="flex items-end justify-center gap-2">
@@ -62,18 +64,21 @@ export const Plans = () => {
                 ))}
               </div>
               <Skeleton className="h-12 w-full" />
-            </motion.div>
+            </div>
           ))}
 
         {isSuccess &&
           plans.data.map((plan, index) => (
             <motion.div
               key={index}
-              variants={cardVariants}
+              variants={textVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }} // Trigger animation when 50% of the card is visible
-              transition={{ duration: 0.5, delay: index * 0.1 }} // Staggered delay
+              viewport={animationViewport}
+              transition={{
+                duration: animationTransition.duration,
+                delay: index * 0.1,
+              }}
               className="relative shadow-xl rounded-[16px] border py-10 flex flex-col items-center justify-between"
             >
               {!!plan.is_top && (
@@ -109,11 +114,11 @@ export const Plans = () => {
                   {plan.package.feature_groups.map((group, index) => (
                     <Fragment key={index}>
                       {group.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-3">
+                        <div key={index} className="flex items-start gap-3">
                           <span className="bg-[#B5F7F6] h-5 w-5 rounded-full p-[3px] flex justify-center items-center">
                             <Check className="text-[#26A6A4] h-4 w-4" />
                           </span>
-                          <p className="text-[#727282] -mb-2 line-clamp-1">
+                          <p className="text-[#727282] -mb-2 line-clamp-2">
                             {feature.value}
                           </p>
                         </div>

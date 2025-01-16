@@ -533,3 +533,13 @@ declare type ICostPlans = {
   }[];
 };
 declare type IGetCostPlansResponse = RootApi<ICostPlans>;
+
+declare type IFaq = {
+  id: number;
+  question: string;
+  answer: string;
+  created_at: string | Date;
+  updated_at: string | Date;
+};
+
+declare type IGetFaqsResponse = RootApi<IFaq[]>;
