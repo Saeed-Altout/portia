@@ -1,6 +1,15 @@
 import { ENDPOINTS } from "@/config/constants";
 import { apiClient } from "@/lib/api";
 
+export const getUser = async (): Promise<IGetUserResponse> => {
+  try {
+    const response = await apiClient.get(ENDPOINTS.GET_USER);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getPackages = async (): Promise<
   RootResponse<{ id: number; name: string }[]>
 > => {
@@ -99,31 +108,21 @@ export const getCostPlans = async (
   }
 };
 
-export const getSocialMediaAccounts = async (): Promise<
-  RootResponse<SocialMediaAccount[]>
-> => {
-  try {
-    const res = await apiClient.get(ENDPOINTS.GET_SOCIAL_MEDIA_ACCOUNTS);
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
-};
+export const getSocialMediaAccounts =
+  async (): Promise<IGetSocialMediaLinksResponse> => {
+    try {
+      const res = await apiClient.get(ENDPOINTS.GET_SOCIAL_MEDIA_ACCOUNTS);
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
 export const getUserBalance = async (): Promise<
   RootResponse<{ id: number; user_balance: string }>
 > => {
   try {
     const res = await apiClient.get(ENDPOINTS.GET_USER_BALANCE);
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const getUser = async (): Promise<RootResponse<User>> => {
-  try {
-    const res = await apiClient.get(ENDPOINTS.GET_USER_DETAILS);
     return res.data;
   } catch (error) {
     throw error;

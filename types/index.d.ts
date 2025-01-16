@@ -359,10 +359,10 @@ declare type SendContactMessageCredentials = {
   message: string;
 };
 declare type SocialMediaAccount = {
+  id: number;
   name: string;
-  tag: string;
+  icon_url: string;
   url: string;
-  img_url: string;
 };
 declare type Notification = {
   id: string;
@@ -544,3 +544,22 @@ declare type IFaq = {
 };
 
 declare type IGetFaqsResponse = RootApi<IFaq[]>;
+
+declare type ISocialMediaLink = {
+  id: number;
+  name: string;
+  icon_url: string;
+  url: string;
+};
+declare type IGetSocialMediaLinksResponse = RootApi<ISocialMediaLink[]>;
+
+declare type IUser = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  referred_code: string;
+  user_balance: string;
+};
+
+declare type IGetUserResponse = RootApi<IUser>;

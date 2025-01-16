@@ -6,7 +6,7 @@ import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
 
 import { footerLinks, ROUTES } from "@/config/constants";
-import { SocialLinks } from "./social-links";
+import { SocialLinksFooter } from "./social-links";
 
 interface FooterLinkProps {
   href: string;
@@ -68,7 +68,7 @@ export const Footer = () => {
           <p className="text-gray-400">
             © {year} Portia.io. All rights reserved.
           </p>
-          <SocialLinks />
+          <SocialLinksFooter />
         </div>
       </div>
     </footer>

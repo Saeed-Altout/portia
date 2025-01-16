@@ -7,6 +7,7 @@ const initialUser: IUser = {
   last_name: "",
   email: "",
   referred_code: "",
+  user_balance: "",
 };
 
 interface AuthStore {
@@ -14,7 +15,7 @@ interface AuthStore {
   setAuthenticated: (isAuthenticated: boolean) => void;
 
   user: IUser;
-  setUser: (user: Partial<IUser>) => void;
+  setUser: (user: IUser) => void;
 
   resetAuth: () => void;
 }

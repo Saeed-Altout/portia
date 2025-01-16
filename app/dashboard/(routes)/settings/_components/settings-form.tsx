@@ -24,13 +24,14 @@ import { Heading } from "@/components/heading";
 import { AffiliateCode } from "@/components/affiliate-code";
 import { Loader } from "@/components/ui/loader";
 
-import { ModalType } from "@/config/constants";
+import { ModalType, ROUTES } from "@/config/constants";
 import { useAuthStore } from "@/stores/use-auth-store";
 import { useModalStore } from "@/stores/use-modal-store";
 import { getModifiedData } from "@/utils/get-modified-data";
 import { useUpdateUserProfileMutation } from "@/services/settings/hooks";
 import { LogoutModal } from "@/components/dialogs/logout-modal";
 import { ExportDataModal } from "@/components/dialogs/export-data-modal";
+import { useResponse } from "@/hooks/use-response";
 
 export const userProfileSchema = z.object({
   first_name: z.string(),
@@ -46,13 +47,22 @@ export const SettingsForm = () => {
   const [isCurrentPassword, setIsCurrentPassword] = useState<boolean>(true);
   const [isNewPasswordConfirmation, setIsNewPasswordConfirmation] =
     useState<boolean>(true);
+  const { Success, Error } = useResponse();
 
   const { user } = useAuthStore();
   const { onOpen } = useModalStore();
   const { mutate, isPending } = useUpdateUserProfileMutation();
 
   const onSubmit = async (data: z.infer<typeof userProfileSchema>) => {
-    const modifiedData = getModifiedData(data) as IUpdateUserProfileRequest;
+    const modifiedData = getModifiedData(data, user) as any;
+    if (Object.keys(modifiedData).length === 0) {
+      Error({
+        error: null,
+        message: "No changes detected. Please modify at least one field.",
+      });
+
+      return;
+    }
     mutate(modifiedData);
   };
 
@@ -97,7 +107,7 @@ export const SettingsForm = () => {
                 className="w-full md:w-fit"
                 disabled={isPending}
               >
-                <Link href="/dashboard">Cancel</Link>
+                <Link href={ROUTES.DASHBOARD_HOME}>Cancel</Link>
               </Button>
               <Button
                 className="w-full md:w-fit"
@@ -282,7 +292,7 @@ export const SettingsForm = () => {
                 <h3 className="font-medium text-lg">Affiliate System</h3>
                 <p className="text-sm">You can copy this code.</p>
               </div>
-              <AffiliateCode code={user.referred_code || ""} />
+              <AffiliateCode code={user.referred_code} />
               <div className="space-y-2">
                 <h3 className="font-medium text-lg">Export Data</h3>
                 <p className="text-sm">

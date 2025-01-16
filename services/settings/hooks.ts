@@ -9,9 +9,10 @@ import {
   updateUserProfile,
   getSocialMediaAccounts,
   getUserBalance,
+  getUser,
 } from "@/services/settings";
 import { useResponse } from "@/hooks/use-response";
-import { getUser } from "@/lib/cookie";
+import { setUser } from "@/lib/cookie";
 
 export const useGetPortsQuery = (params: Record<string, any>) => {
   return useQuery({
@@ -23,11 +24,17 @@ export const useGetPortsQuery = (params: Record<string, any>) => {
 
 export const useUpdateUserProfileMutation = () => {
   const { Success, Error } = useResponse();
+
   return useMutation({
     mutationKey: ["update-user-profile"],
     mutationFn: (values: UpdateUserProfileCredentials) =>
       updateUserProfile(values),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      const user = await getUser();
+      if (user.data) {
+        setUser(user.data);
+      }
+
       Success({ message: data.message || "Update profile Success." });
     },
     onError: (error) => {
@@ -113,7 +120,7 @@ export const useGetUserBalanceQuery = () => {
 };
 export const useGetUserQuery = () => {
   return useQuery({
-    queryKey: ["user"],
+    queryKey: ["user-details"],
     queryFn: () => getUser(),
   });
 };

@@ -54,7 +54,7 @@ export const AffiliateClient = () => {
 
   return (
     <>
-      <AffiliateCode />
+      <AffiliateCode code={user.referred_code} />
       <Heading title={`Welcome back, ${user.first_name}`} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {affiliateStatistics.map((item, key) => (
@@ -72,10 +72,6 @@ export const AffiliateClient = () => {
               </div>
               <ChartContainer config={chartConfig} className="w-1/2 h-full">
                 <AreaChart accessibilityLayer data={data}>
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent />}
-                  />
                   <Area
                     dataKey="amount"
                     type="natural"

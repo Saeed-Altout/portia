@@ -219,7 +219,7 @@ export const PlansClient = () => {
                     offer.color === "danger" &&
                       "bg-[#E31B54] hover:bg-[#E31B54]/80",
                     offer.color === "mute" && "bg-[#4B4B57] bg-[#4B4B57]/80",
-                    offer.color === "mute" && "bg-[#26A6A4] bg-[#26A6A4]/80"
+                    offer.color === "success" && "bg-[#26A6A4] bg-[#26A6A4]/80"
                   )}
                 >
                   Activate

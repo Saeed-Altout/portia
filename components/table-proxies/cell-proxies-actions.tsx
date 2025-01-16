@@ -74,7 +74,7 @@ export const CellProxiesActions = ({ data }: { data: any }) => {
         )}
         {renderActionButton(
           <Activity className="h-4 w-4" />,
-          "Activity proxy",
+          "Fix proxy",
           isPending,
           handleFixProxy
         )}

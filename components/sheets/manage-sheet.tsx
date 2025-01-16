@@ -59,6 +59,7 @@ export const ManageSheet = () => {
   const isOpenModal = isOpen && type === ModalType.MANAGE_PROXY;
 
   const { proxy, resetProxy, location, resetLocation } = useProxyStore();
+  console.log("proxy", proxy);
 
   const ports = useGetPortsQuery({ id: proxy.package_id });
   const { mutateAsync, isPending } = useManageProxyMutation();
@@ -157,7 +158,6 @@ export const ManageSheet = () => {
                   <FormItem>
                     <FormLabel>Proxy Type</FormLabel>
                     <Select
-                      disabled={isPending || ports?.data?.data.length == 0}
                       defaultValue={field.value}
                       onValueChange={field.onChange}
                     >
