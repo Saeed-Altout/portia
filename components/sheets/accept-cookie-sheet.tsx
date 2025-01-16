@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { setCookie } from "cookies-next";
+import { useState, useEffect } from "react";
+import { setCookie, getCookie } from "cookies-next";
 import {
   Sheet,
   SheetContent,
@@ -22,8 +22,15 @@ import {
 const DEFAULT_LANGUAGE = "en";
 
 export const AcceptCookiesSheet = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    const cookieConsent = getCookie("cookieConsent");
+    if (!cookieConsent) {
+      setIsOpen(true);
+    }
+  }, []);
 
   const handleAcceptCookies = () => {
     setCookie("cookieConsent", "accepted", { maxAge: 30 * 24 * 60 * 60 });
