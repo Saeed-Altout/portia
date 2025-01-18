@@ -55,6 +55,10 @@ export const columns: ColumnDef<ProxyColumn>[] = [
     ),
   },
   {
+    accessorKey: "country_name",
+    header: "Country Name",
+  },
+  {
     accessorKey: "protocol_port",
     header: "Port",
     cell: ({ row }) => (
@@ -128,6 +132,10 @@ export const iColumns: ColumnDef<ProxyColumn>[] = [
         {row.original.service_provider}
       </CellProxiesInfoEdit>
     ),
+  },
+  {
+    accessorKey: "country_name",
+    header: "Country Name",
   },
   {
     accessorKey: "protocol_port",
