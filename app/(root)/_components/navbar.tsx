@@ -69,7 +69,7 @@ const LoginButton = () => {
     return null;
   }
   return (
-    <Button variant="ghost" className="text-gray-500" asChild>
+    <Button variant="ghost" className="text-gray-500 w-full" asChild>
       <Link href={ROUTES.LOGIN}>Log in</Link>
     </Button>
   );
@@ -222,12 +222,12 @@ export const NavMobile = () => {
             <SocialLinks />
           </div>
           <div className="space-y-3 h-fit">
+            {!isAuthenticated && <LoginButton />}
             <Button asChild className="w-full">
               <Link href={ROUTES.DASHBOARD_HOME}>
                 {isAuthenticated ? "Dashboard" : "Get started"}
               </Link>
             </Button>
-            {!isAuthenticated && <LoginButton />}
           </div>
         </div>
       </SheetContent>

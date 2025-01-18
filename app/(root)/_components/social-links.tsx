@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -51,12 +52,10 @@ export const SocialLinksFooter = () => {
             rel="noopener noreferrer"
             aria-label={`Visit our ${account.name} profile`}
           >
-            <Image
+            <img
               src={account.icon_url}
               alt={`image-${account.name}`}
               className="h-6 w-6"
-              width={1000}
-              height={1000}
             />
           </Link>
         </div>

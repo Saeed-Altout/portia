@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Image from "next/image";
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { useState } from "react";
@@ -45,7 +45,6 @@ export const Customers = () => {
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
-        opts={{ loop: true }}
       >
         <CarouselContent className="space-x-8 px-4">
           {(isLoading || !isSuccess) &&
@@ -73,14 +72,10 @@ export const Customers = () => {
                 onMouseLeave={() => setHoveredIndex(null)}
                 className="relative min-w-[360px] h-[480px] group cursor-pointer basis-1 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
               >
-                <Image
+                <img
                   src={customer.user_image ?? "/images/default-user.png"}
                   alt={customer.user_name}
-                  width={1000}
-                  height={1000}
                   className="object-cover w-full h-full absolute top-0 left-0"
-                  placeholder="blur"
-                  blurDataURL={blurDataURL}
                   onError={handleImageError}
                 />
                 <motion.div

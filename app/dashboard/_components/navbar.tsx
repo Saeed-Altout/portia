@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { NotificationsPopover } from "@/components/notifications/notifications-popover";
 import { dashboardRoutes, ROUTES } from "@/config/constants";
+import { useState } from "react";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -54,37 +55,41 @@ export const Navbar = () => {
   );
 };
 
-const MobileNav = ({ pathname }: { pathname: string }) => (
-  <Sheet>
-    <SheetTrigger asChild>
-      <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-        <Menu className="h-5 w-5" />
-        <span className="sr-only">Toggle menu</span>
-      </Button>
-    </SheetTrigger>
-    <SheetContent side="right" className="overflow-y-auto">
-      <Link
-        href={ROUTES.DASHBOARD_HOME}
-        className="relative h-[27px] w-[91px] block"
-      >
-        <Image src="/icons/logo.svg" alt="Logo" fill priority />
-      </Link>
-      <div className="w-full mt-10 flex flex-col justify-start items-center gap-y-5">
-        {dashboardRoutes.map(({ label, href }) => (
-          <Button
-            key={href}
-            variant="ghost"
-            size="sm"
-            className={cn(
-              "w-full justify-start",
-              href === pathname && "bg-secondary"
-            )}
-            asChild
-          >
-            <Link href={href}>{label}</Link>
-          </Button>
-        ))}
-      </div>
-    </SheetContent>
-  </Sheet>
-);
+const MobileNav = ({ pathname }: { pathname: string }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  return (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+          <Menu className="h-5 w-5" />
+          <span className="sr-only">Toggle menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="overflow-y-auto">
+        <Link
+          href={ROUTES.DASHBOARD_HOME}
+          className="relative h-[27px] w-[91px] block"
+        >
+          <Image src="/icons/logo.svg" alt="Logo" fill priority />
+        </Link>
+        <div className="w-full mt-10 flex flex-col justify-start items-center gap-y-3">
+          {dashboardRoutes.map(({ label, href }) => (
+            <Button
+              key={href}
+              variant="ghost"
+              className={cn(
+                "w-full justify-start",
+                href === pathname && "bg-secondary"
+              )}
+              onClick={() => setIsOpen(false)}
+              asChild
+            >
+              <Link href={href}>{label}</Link>
+            </Button>
+          ))}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
