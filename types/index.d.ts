@@ -563,3 +563,12 @@ declare type IUser = {
 };
 
 declare type IGetUserResponse = RootApi<IUser>;
+
+declare type INotification = {
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  date: string | Data;
+  read_at: string | Data;
+};

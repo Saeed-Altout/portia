@@ -6,11 +6,12 @@ import { ModalType } from "@/config/constants";
 import { useModalStore } from "@/stores/use-modal-store";
 import { useNotificationsStore } from "@/stores/use-notifications-store";
 import { formatDistanceToNow, format } from "date-fns";
+
 export const NotificationModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.NOTIFICATION;
 
-  const { notification, notifications } = useNotificationsStore();
+  const { selectedNotification } = useNotificationsStore();
 
   const renderLabel = (label: string) => {
     switch (label) {
@@ -42,15 +43,18 @@ export const NotificationModal = () => {
         return null;
     }
   };
+
+  if (!selectedNotification) return null;
+
   return (
     <Modal
-      title={notification.title}
+      title={selectedNotification.title}
       isOpen={isOpenModal}
       onClose={() => onClose()}
     >
-      <p>{notification.message}</p>
+      <p>{selectedNotification.message}</p>
       <div className="flex items-center justify-between gap-4 pt-2">
-        {renderLabel(notification.type)}
+        {renderLabel(selectedNotification.type)}
         <div className="flex items-center flex-wrap gap-2">
           <span className="text-xs md:text-sm text-[#24242B]">
             {format("2024-12-15T10:30:00Z", "dd/MM/yyy")}

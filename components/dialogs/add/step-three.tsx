@@ -28,19 +28,10 @@ interface StepThreeProps {
 }
 
 export const StepThree = ({ form, isLoading }: StepThreeProps) => {
-  const { location, proxy, setProxy } = useProxyStore();
+  const { proxy } = useProxyStore();
   const { data: ports, isFetching } = useGetPortsQuery({
     id: proxy.package_id,
   });
-
-  const onProtocolSelect = (protocolName: string) => {
-    if (location) {
-      const protocolValue = protocolName.includes("http")
-        ? location.http_port
-        : location.socks_port;
-      setProxy({ ...proxy, protocol_port: +protocolValue });
-    }
-  };
 
   return (
     <>
@@ -53,10 +44,7 @@ export const StepThree = ({ form, isLoading }: StepThreeProps) => {
             <Select
               disabled={isLoading || isFetching || ports?.data.length == 0}
               defaultValue={field.value}
-              onValueChange={(value) => {
-                field.onChange(value);
-                onProtocolSelect(value);
-              }}
+              onValueChange={field.onChange}
             >
               <FormControl>
                 <SelectTrigger>

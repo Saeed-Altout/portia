@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface NotificationsStore {
-  notifications: Notifications;
-  setNotifications: (notifications: Notifications) => void;
-  addNotification: (notification: Notification) => void;
+  notifications: INotification[];
+  setNotifications: (notifications: INotification[]) => void;
+  addNotification: (notification: INotification) => void;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   clearNotifications: () => void;

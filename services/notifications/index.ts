@@ -2,7 +2,7 @@ import { ENDPOINTS } from "@/config/constants";
 import { apiClient } from "@/lib/api";
 
 export const getNotifications = async (): Promise<
-  RootResponse<Notifications>
+  RootResponse<INotification[]>
 > => {
   try {
     const res = await apiClient.get(ENDPOINTS.GET_NOTIFICATIONS);
