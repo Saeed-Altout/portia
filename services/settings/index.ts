@@ -108,6 +108,18 @@ export const getCostPlans = async (
   }
 };
 
+export const getSupportLinks = async (): Promise<ApiResponse<ILink[]>> => {
+  try {
+    const response = await apiClient.get<ApiResponse<ILink[]>>(
+      ENDPOINTS.SUPPORT_LINKS
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error in getSupportLinks:", error);
+    throw error;
+  }
+};
+
 export const getSocialMediaAccounts =
   async (): Promise<IGetSocialMediaLinksResponse> => {
     try {

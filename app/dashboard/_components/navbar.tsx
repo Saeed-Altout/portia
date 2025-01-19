@@ -27,15 +27,19 @@ export const Navbar = () => {
         </Link>
         <div className="flex justify-start items-center gap-x-2">
           {dashboardRoutes.map(({ label, href }) => (
-            <Button
-              key={href}
-              variant="ghost"
-              size="sm"
-              className={cn(href === pathname && "bg-secondary")}
-              asChild
-            >
-              <Link href={href}>{label}</Link>
-            </Button>
+            <>
+              {href != ROUTES.CONTACT_US && (
+                <Button
+                  key={href}
+                  variant="ghost"
+                  size="sm"
+                  className={cn(href === pathname && "bg-secondary")}
+                  asChild
+                >
+                  <Link href={href}>{label}</Link>
+                </Button>
+              )}
+            </>
           ))}
         </div>
       </nav>

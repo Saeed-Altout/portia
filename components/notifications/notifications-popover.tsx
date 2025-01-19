@@ -59,6 +59,11 @@ export const NotificationsPopover = () => {
       ? notifications?.data
       : notifications?.data?.slice(0, 5);
 
+  // Check if there are unread notifications
+  const hasUnreadNotifications = notifications?.data?.some(
+    (notification) => !notification.read_at
+  );
+
   const handleMarkAsRead = (id: string) => {
     markAsRead(id);
   };
@@ -99,8 +104,14 @@ export const NotificationsPopover = () => {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button size="icon" variant="ghost">
+        <Button size="icon" variant="ghost" className="relative">
           <Bell className="h-4 w-4 text-gray-500" />
+          {/* Unread Notification Indicator */}
+          {hasUnreadNotifications && (
+            <div className="absolute top-2 right-2">
+              <div className="h-2 w-2 bg-red-500 rounded-full" />
+            </div>
+          )}
           <span className="sr-only">Notifications</span>
         </Button>
       </PopoverTrigger>

@@ -63,6 +63,7 @@ export const ENDPOINTS = {
   GET_TABLES: "/get-tables",
   GET_PORTS: "/get-ports",
   UPDATE_USER_PROFILE: "/update-user-profile",
+  SUPPORT_LINKS: "/support-links",
   SEND_CONTACT_MESSAGE: "/contact-us",
   EXPORT_TABLES: "/export",
   GET_COST_PLANS: "/get-plans-with-cost",
@@ -139,6 +140,10 @@ export const dashboardRoutes = [
   {
     label: "My Affiliate",
     href: ROUTES.DASHBOARD_AFFILIATE,
+  },
+  {
+    label: "Contact Us",
+    href: ROUTES.CONTACT_US,
   },
 ];
 

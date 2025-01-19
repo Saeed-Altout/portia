@@ -377,6 +377,10 @@ declare type Notifications = Notification[];
 
 // //////////////////////////////////////////////
 
+declare type ApiResponse<T> = {
+  status: boolean;
+  data: T;
+};
 declare type RootApi<T> = {
   status: boolean;
   data: T;
@@ -571,4 +575,11 @@ declare type INotification = {
   type: string;
   date: string | Data;
   read_at: string | Data;
+};
+
+declare type ILink = {
+  id: number;
+  name: string;
+  icon_url: string;
+  url: string;
 };

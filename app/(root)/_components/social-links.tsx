@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 import { useGetSocialMediaAccountsQuery } from "@/services/settings/hooks";
-import Image from "next/image";
 
 export const SocialLinks = () => {
   const { data: socialAccounts } = useGetSocialMediaAccountsQuery();
@@ -21,12 +20,10 @@ export const SocialLinks = () => {
           rel="noopener noreferrer"
           aria-label={`Visit our ${account.name} profile`}
         >
-          <Image
+          <img
             src={account.icon_url}
             alt={`image-${account.name}`}
             className="h-5 w-5"
-            width={1000}
-            height={1000}
           />
         </Link>
       ))}

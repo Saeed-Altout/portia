@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as z from "zod";
@@ -18,8 +19,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Heading } from "@/components/ui/heading";
-import { useSendContactMessageMutation } from "@/services/settings/hooks";
+import {
+  useSendContactMessageMutation,
+  useSupportLinksQuery,
+} from "@/services/settings/hooks";
 import { Loader } from "@/components/ui/loader";
+import Link from "next/link";
 
 export const formSchema = z.object({
   first_name: z.string().min(2, {
@@ -35,6 +40,7 @@ export const formSchema = z.object({
 
 export const ContactForm = () => {
   const { mutate, isPending } = useSendContactMessageMutation();
+  const { data: supportLinks, isLoading } = useSupportLinksQuery();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -152,9 +158,31 @@ export const ContactForm = () => {
               )}
             />
           </div>
-          <Button type="submit" disabled={isPending}>
-            {isPending ? <Loader /> : "Send message"}
-          </Button>
+          <div className="flex items-center justify-between">
+            <Button type="submit" disabled={isPending}>
+              {isPending ? <Loader /> : "Send message"}
+            </Button>
+            {!isLoading && (
+              <div className="flex items-center gap-3">
+                {supportLinks?.data.map((account) => (
+                  <Link
+                    href={account.url}
+                    key={account.name}
+                    className="h-10 w-10 overflow-hidden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit our ${account.name} profile`}
+                  >
+                    <img
+                      src={account.icon_url}
+                      alt={`image-${account.name}`}
+                      className="h-10 w-10 object-cover"
+                    />
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </form>
       </Form>
     </section>

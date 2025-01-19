@@ -10,6 +10,7 @@ import {
   getSocialMediaAccounts,
   getUserBalance,
   getUser,
+  getSupportLinks,
 } from "@/services/settings";
 import { useResponse } from "@/hooks/use-response";
 import { setUser } from "@/lib/cookie";
@@ -122,5 +123,13 @@ export const useGetUserQuery = () => {
   return useQuery({
     queryKey: ["user-details"],
     queryFn: () => getUser(),
+  });
+};
+
+export const useSupportLinksQuery = () => {
+  return useQuery<ApiResponse<ILink[]>, Error>({
+    queryKey: ["support-links"],
+    queryFn: getSupportLinks,
+    staleTime: 1000 * 60 * 5,
   });
 };
