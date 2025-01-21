@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import {
@@ -16,103 +17,81 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import { useProxyStore } from "@/stores";
 import {
   useGetAllPackagesQuery,
   useGetCostPlansQuery,
 } from "@/services/settings/hooks";
+import { useProxyStore } from "@/stores";
 
-interface StepOneProps {
-  form: any;
-  isLoading?: boolean;
-}
+export const StepOne = ({ form }: { form: any }) => {
+  const [data, setData] = useState<any[]>([]);
+  const [plans, setPlans] = useState<string[]>([]);
 
-interface ValuePlanProps {
-  price: number;
-  duration: number;
-  value: number;
-}
+  const { proxy, setProxy, setPrice } = useProxyStore();
 
-export const StepOne = ({ form, isLoading }: StepOneProps) => {
-  const [valuePlan, setValuePlan] = useState<ValuePlanProps[]>([]);
-  const [costs, setCosts] = useState<Record<string, ValuePlanProps[]>>({});
-  const [amounts, setAmounts] = useState<string[]>([]);
-
-  const { proxy, setProxy, setPrice, setDuration } = useProxyStore();
-
-  const { data: packages, isLoading: packagesIsLoading } =
-    useGetAllPackagesQuery();
-  const {
-    data: costsData,
-    isFetching: costsDataIsFetching,
-    isSuccess: costsIsSuccess,
-  } = useGetCostPlansQuery({
-    pkg_id: proxy.package_id,
-  });
-
-  const plans = Object.keys(costs);
-
-  const handlePackageSelect = (newPkgId: string, pkgName: string) => {
-    setProxy({ ...proxy, package_id: newPkgId, package_name: pkgName });
-  };
-
-  const handlePlanSelect = (plan: string) => {
-    const selectedValuePlan = costs[plan] || [];
-    const newAmounts = selectedValuePlan.map(
-      (item) => `${item.value}::${plan}`
-    );
-
-    setValuePlan(selectedValuePlan);
-    setAmounts(newAmounts);
-    setPrice("0");
-  };
-
-  const handleAmountSelect = (uniqueValue: string) => {
-    const [amount, plan] = uniqueValue.split("::");
-    const selectedValue = valuePlan.find(
-      (item) => item.value === Number(amount) && plan
-    );
-
-    if (selectedValue) {
-      setDuration(selectedValue.duration.toString());
-      setPrice(selectedValue.price.toString());
-    }
-  };
+  const packages = useGetAllPackagesQuery();
+  const costs = useGetCostPlansQuery({ pkg_id: proxy.package_id });
 
   useEffect(() => {
-    if (costsIsSuccess && costsData?.data) {
-      setCosts(costsData.data);
+    if (proxy.package_id && costs.isSuccess) {
+      const currentPlans = Object.keys(costs.data.data);
+      setPlans(currentPlans);
     }
-  }, [costsData, costsIsSuccess]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [proxy.package_id, costs.isSuccess]);
+
+  useEffect(() => {
+    if (proxy.plan_name && costs.isSuccess) {
+      // @ts-ignore
+      const currentData = costs.data.data[proxy.plan_name].map(
+        (item: any) => item
+      );
+      setData(currentData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [proxy.plan_name, costs.isSuccess]);
 
   return (
     <>
-      {/* Package Selector */}
       <FormField
         control={form.control}
-        name="pkg_id"
+        name="pkgName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Packages</FormLabel>
+            <FormLabel>Package</FormLabel>
             <Select
-              disabled={packagesIsLoading || packages?.data.length === 0}
+              disabled={!packages.isSuccess}
               onValueChange={(value) => {
-                const [pkgId, pkgName] = value.split("::");
-                field.onChange(pkgId);
-                handlePackageSelect(pkgId, pkgName);
+                const [id, name] = value.split("::");
+                field.onChange(name);
+                setProxy({
+                  ...proxy,
+                  package_id: id,
+                  package_name: name,
+                  plan_name: "",
+                  amount: "",
+                  duration: "",
+                });
+                setPrice("0");
               }}
-              defaultValue={field.value || ""}
+              defaultValue={field.value}
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a package" />
+                  {packages.isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <SelectValue placeholder="select a package" />
+                  )}
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {packages?.data.map((item) => (
-                  <SelectItem key={item.id} value={`${item.id}::${item.name}`}>
-                    {item.name}
+                {packages.data?.data.map((option) => (
+                  <SelectItem
+                    key={option.id}
+                    value={`${option.id}::${option.name}`}
+                  >
+                    {option.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -121,31 +100,39 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
           </FormItem>
         )}
       />
-
-      {/* Plan Selector */}
       <FormField
         control={form.control}
-        name="plan_id"
+        name="planName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Plans</FormLabel>
+            <FormLabel>Plan</FormLabel>
             <Select
-              disabled={isLoading || costsDataIsFetching || plans.length === 0}
+              disabled={!costs.isSuccess}
               onValueChange={(value) => {
                 field.onChange(value);
-                handlePlanSelect(value);
+                setProxy({
+                  ...proxy,
+                  plan_name: value,
+                  amount: "",
+                  duration: "",
+                });
+                setPrice("0");
               }}
-              defaultValue={field.value || ""}
+              defaultValue={field.value}
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a plan" />
+                  {costs.isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <SelectValue placeholder="select a plan" />
+                  )}
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {plans.map((plan) => (
-                  <SelectItem key={plan} value={plan} className="capitalize">
-                    {plan}
+                {plans.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -154,8 +141,6 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
           </FormItem>
         )}
       />
-
-      {/* Amount Selector */}
       <FormField
         control={form.control}
         name="amount"
@@ -163,27 +148,41 @@ export const StepOne = ({ form, isLoading }: StepOneProps) => {
           <FormItem>
             <FormLabel>Amount</FormLabel>
             <Select
-              disabled={isLoading || amounts.length === 0}
+              disabled={!costs.isSuccess || !data.length}
               onValueChange={(value) => {
-                field.onChange(value);
-                handleAmountSelect(value);
+                const [amount, _plan] = value.split("::");
+                field.onChange(amount);
+                data.find((item) => {
+                  if (item.value == amount) {
+                    setProxy({
+                      ...proxy,
+                      amount: item.value.toString(),
+                      duration: item.duration.toString(),
+                    });
+                    setPrice(item.price.toString());
+                  }
+                });
               }}
-              defaultValue={field.value || ""}
+              defaultValue={field.value}
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select an amount" />
+                  {costs.isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <SelectValue placeholder="select an amount" />
+                  )}
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {amounts.map((uniqueValue) => {
-                  const [amount] = uniqueValue.split("::");
-                  return (
-                    <SelectItem key={uniqueValue} value={uniqueValue}>
-                      {amount}
-                    </SelectItem>
-                  );
-                })}
+                {data.map((option) => (
+                  <SelectItem
+                    key={`${option.value}`}
+                    value={`${option.value}::${proxy.plan_name}`}
+                  >
+                    {option.value}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <FormMessage />

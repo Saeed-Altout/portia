@@ -19,21 +19,25 @@ import { Button } from "@/components/ui/button";
 import { useProxyStore, useModalStore } from "@/stores";
 import { ROUTES } from "@/config/constants";
 
-interface StepTwoProps {
-  form: any;
-}
-
-export const StepTwo = ({ form }: StepTwoProps) => {
+export const StepTwo = ({ form }: { form: any }) => {
   const pathname = usePathname();
   const { step, onClose } = useModalStore();
-  const { location } = useProxyStore();
+  const { proxy } = useProxyStore();
 
   useEffect(() => {
-    if (step === 2 && location) {
-      form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
-      form.setValue("provider", `${location.service_provider_name ?? ""}`);
+    if (
+      step === 2 &&
+      proxy.service_provider &&
+      proxy.country_name &&
+      proxy.rotation_time
+    ) {
+      form.setValue("ipRotation", `${proxy.rotation_time ?? ""}`);
+      form.setValue(
+        "provider",
+        `${proxy.service_provider} / ${proxy.country_name}`
+      );
     }
-  }, [form, location, step]);
+  }, [form, proxy, step]);
 
   return (
     <>

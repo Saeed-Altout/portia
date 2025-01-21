@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,25 +16,29 @@ import { StepThree } from "./add/step-three";
 import { ModalType } from "@/config/constants";
 import { useAddProxyMutation } from "@/services/proxies/hooks";
 import { useModalStore, useProxyStore } from "@/stores";
-
 export const formSchema = z.object({
-  pkg_id: z.string().min(1),
-  plan_id: z.string().min(1),
+  pkgName: z.string().min(1),
+  planName: z.string().min(1),
   amount: z.string().min(1),
   provider: z.string().min(1),
   ipRotation: z.string().min(1),
   protocol: z.string().min(1),
-  re_new: z.boolean().default(false),
   username: z
     .string()
     .min(1, { message: "Username is required." })
     .regex(/^[a-zA-Z0-9]+$/, {
       message: "Username must only contain letters and digits.",
     }),
-  password: z.string().min(6),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters long." })
+    .regex(/^[a-zA-Z0-9]+$/, {
+      message: "Password must only contain English letters and numbers.",
+    }),
 });
+
 export const AddProxyModal = () => {
-  const { location, price, duration } = useProxyStore();
+  const { proxy, price, reset } = useProxyStore();
 
   const { step, isOpen, type, setStep, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.ADD_PROXY;
@@ -46,13 +48,12 @@ export const AddProxyModal = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      pkg_id: "",
-      plan_id: "",
+      pkgName: "",
+      planName: "",
       amount: "",
       provider: "First available uk network & location",
       ipRotation: "",
       protocol: "",
-      re_new: false,
       username: "",
       password: "",
     },
@@ -61,21 +62,23 @@ export const AddProxyModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({
-        parent_proxy_id: location ? location?.id.toString() : "",
-        pkg_id: values.pkg_id,
-        re_new: values.re_new,
+        parent_proxy_id: proxy.parent_proxy_id,
+        pkg_id: proxy.package_id,
+        duration: proxy.duration,
         protocol: values.protocol,
-        duration: duration ? duration.toString() : "",
         username: values.username,
         password: values.password,
       });
       onCancel();
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   };
 
   const onCancel = () => {
     setStep(1);
     form.reset();
+    reset();
     onClose();
   };
 
@@ -83,12 +86,12 @@ export const AddProxyModal = () => {
     const values = form.getValues();
 
     if (step === 1) {
-      if (!values.pkg_id || !values.plan_id || !values.amount) {
-        form.setError("pkg_id", {
+      if (!values.pkgName || !values.planName || !values.amount) {
+        form.setError("pkgName", {
           type: "required",
           message: "Package is required.",
         });
-        form.setError("plan_id", {
+        form.setError("planName", {
           type: "required",
           message: "Plan is required.",
         });
@@ -139,17 +142,10 @@ export const AddProxyModal = () => {
     setStep(step - 1);
   };
 
-  useEffect(() => {
-    if (step === 2 && location) {
-      form.setValue("ipRotation", `${location.rotation_time ?? ""}`);
-      form.setValue("provider", `${location.service_provider_name ?? ""}`);
-    }
-  }, [form, location, step]);
-
   const renderStep = (form: any) => {
     switch (step) {
       case 1:
-        return <StepOne form={form} isLoading={isPending} />;
+        return <StepOne form={form} />;
       case 2:
         return <StepTwo form={form} />;
       case 3:
@@ -162,7 +158,7 @@ export const AddProxyModal = () => {
   return (
     <Modal
       title="Activate a new proxy"
-      description={`New order - ${location.service_provider_name ?? ""} proxy`}
+      description={`New order - ${proxy.parent_proxy_id ?? ""} proxy`}
       isOpen={isOpenModal}
       onClose={onCancel}
       progress={step * 35}

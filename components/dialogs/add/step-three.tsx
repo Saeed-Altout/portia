@@ -1,6 +1,6 @@
 "use client";
 
-import { Key, User } from "lucide-react";
+import { Key, Loader2, User } from "lucide-react";
 
 import {
   FormControl,
@@ -17,21 +17,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import { useProxyStore } from "@/stores";
 import { useGetPortsQuery } from "@/services/settings/hooks";
 
-interface StepThreeProps {
-  isLoading?: boolean;
+export const StepThree = ({
+  form,
+  isLoading,
+}: {
   form: any;
-}
-
-export const StepThree = ({ form, isLoading }: StepThreeProps) => {
-  const { proxy } = useProxyStore();
-  const { data: ports, isFetching } = useGetPortsQuery({
-    id: proxy.package_id,
-  });
+  isLoading?: boolean;
+}) => {
+  const { proxy, setProxy } = useProxyStore();
+  const ports = useGetPortsQuery({ id: proxy.package_id });
 
   return (
     <>
@@ -40,41 +38,33 @@ export const StepThree = ({ form, isLoading }: StepThreeProps) => {
         name="protocol"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Proxy Type</FormLabel>
+            <FormLabel>Plan</FormLabel>
             <Select
-              disabled={isLoading || isFetching || ports?.data.length == 0}
+              disabled={isLoading || !ports.isSuccess}
+              onValueChange={(value) => {
+                field.onChange(value);
+                setProxy({ ...proxy, protocol: value });
+              }}
               defaultValue={field.value}
-              onValueChange={field.onChange}
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a proxy type" />
+                  {ports.isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <SelectValue placeholder="select a proxy type" />
+                  )}
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {ports?.data.map((item, index) => (
-                  <SelectItem key={index} value={item}>
-                    {item}
+                {ports.data?.data.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="re_new"
-        render={({ field }) => (
-          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-            <FormControl>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-            </FormControl>
-            <FormLabel className="leading-0">Auto Renew</FormLabel>
           </FormItem>
         )}
       />

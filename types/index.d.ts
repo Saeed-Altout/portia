@@ -312,7 +312,6 @@ declare type ManageProxyCredentials = {
 declare type AddProxyCredentials = {
   parent_proxy_id: any;
   pkg_id: any;
-  re_new: any;
   protocol: string;
   duration: string;
   username: string;

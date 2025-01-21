@@ -16,8 +16,8 @@ interface Proxy {
   proxy_id: string;
   parent_proxy_id: string;
   package_id: string;
-  duration: number;
-  amount: number;
+  duration: any;
+  amount: any;
   rotation_time: string;
   country_name: string;
 }
