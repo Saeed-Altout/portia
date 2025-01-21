@@ -1,4 +1,4 @@
-export const ErrorApi = () => {
+export const ErrorApi = ({ message }: { message?: string }) => {
   return (
     <div className="pt-32 flex justify-center items-center">
       <div className="flex flex-col items-center justify-center">
@@ -31,7 +31,9 @@ export const ErrorApi = () => {
             strokeLinecap="round"
           />
         </svg>
-        <p className="text-lg text-muted-foreground">Something went wrong!!</p>
+        <p className="text-lg text-muted-foreground">
+          {message ? message : "Something went wrong!!"}
+        </p>
       </div>
     </div>
   );

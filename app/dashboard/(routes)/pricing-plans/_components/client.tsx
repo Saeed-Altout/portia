@@ -110,7 +110,7 @@ export const PlansClient = () => {
               key={key}
               role="button"
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
+                "px-4 py-2 rounded-md text-sm font-medium cursor-pointer capitalize",
                 selectedPackage === pkg.package_id
                   ? "bg-white text-black-default shadow-md"
                   : "bg-transparent text-muted-foreground"
@@ -121,7 +121,15 @@ export const PlansClient = () => {
             </div>
           ))}
         </div>
-        <div className="flex items-center gap-4 bg-muted w-fit p-2 rounded-md">
+        <div
+          className={cn(
+            "flex items-center gap-4 w-fit p-2 rounded-md",
+            packages.find((pkg) => pkg.package_id === selectedPackage)?.plans
+              .length
+              ? "bg-muted"
+              : "bg-transparent"
+          )}
+        >
           {packages
             .find((pkg) => pkg.package_id === selectedPackage)
             ?.plans.map((plan: any, key: Key) => (
@@ -129,7 +137,7 @@ export const PlansClient = () => {
                 key={key}
                 role="button"
                 className={cn(
-                  "px-4 py-2 rounded-md text-sm font-medium cursor-pointer",
+                  "px-4 py-2 rounded-md text-sm font-medium cursor-pointer capitalize",
                   selectedPlan === plan.id
                     ? "bg-white text-black-default shadow-md"
                     : "bg-transparent text-muted-foreground"
@@ -218,8 +226,10 @@ export const PlansClient = () => {
                     offer.color === "primary" && "bg-[#111280] ",
                     offer.color === "danger" &&
                       "bg-[#E31B54] hover:bg-[#E31B54]/80",
-                    offer.color === "mute" && "bg-[#4B4B57] bg-[#4B4B57]/80",
-                    offer.color === "success" && "bg-[#26A6A4] bg-[#26A6A4]/80"
+                    offer.color === "mute" &&
+                      "bg-[#4B4B57] hover:bg-[#4B4B57]/80",
+                    offer.color === "success" &&
+                      "bg-[#26A6A4] hover:bg-[#26A6A4]/80"
                   )}
                 >
                   Activate
@@ -234,7 +244,7 @@ export const PlansClient = () => {
           (offer) =>
             offer.package_id === selectedPackage &&
             (!selectedPlan || offer.plan_id === selectedPlan)
-        ).length === 0 && <ErrorApi />}
+        ).length === 0 && <ErrorApi message="No offers available" />}
       </div>
     </>
   );
