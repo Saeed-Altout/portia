@@ -6,6 +6,8 @@ import { siteConfig } from "@/config";
 import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/providers/query-provider";
 import { NotificationProviders } from "@/providers/notification-provider";
+import Script from "next/script";
+import { TawkToWidget } from "@/components/tawk-to-widget";
 
 export const metadata: Metadata = {
   title: {
@@ -26,6 +28,7 @@ export default function RootLayout({
         <QueryProvider>
           {children}
           <Toaster />
+          <TawkToWidget />
           <NotificationProviders />
         </QueryProvider>
       </body>

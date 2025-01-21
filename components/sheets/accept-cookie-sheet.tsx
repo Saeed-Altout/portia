@@ -57,7 +57,7 @@ export const AcceptCookiesSheet = () => {
             <SheetTrigger asChild>
               <Button
                 variant="outline"
-                className="fixed bottom-4 right-4 rounded-full"
+                className="fixed bottom-32 right-[38px] rounded-full"
                 size="icon"
               >
                 <Cookie />
@@ -85,7 +85,7 @@ export const AcceptCookiesSheet = () => {
             <strong>Cookie Settings</strong> button below.
           </SheetDescription>
         </div>
-        <div className="flex gap-4 w-full justify-end">
+        <div className="flex gap-4 w-full items-center">
           <Button onClick={handleAcceptCookies}>Accept All</Button>
           <Button onClick={handleRejectCookies} variant="outline">
             Reject All
