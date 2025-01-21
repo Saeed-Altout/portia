@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { CreditCard } from "lucide-react";
+import { CreditCard, Loader2 } from "lucide-react";
 
 import {
   Form,
@@ -34,7 +34,7 @@ import {
   useGetWayPaymentQuery,
 } from "@/services/deposits/hooks";
 
-export const formSchema = z.object({
+const formSchema = z.object({
   payment_method: z.string().min(2),
   amount: z
     .string()
@@ -43,12 +43,13 @@ export const formSchema = z.object({
       message: "Amount must be a valid number greater than 0",
     }),
 });
+
 export const AddFundsModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.ADD_FUNDS;
 
   const { mutateAsync, isPending } = useAddDepositMutation();
-  const { data: methods, isSuccess } = useGetWayPaymentQuery();
+  const paymentMethods = useGetWayPaymentQuery();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,7 +64,7 @@ export const AddFundsModal = () => {
       await mutateAsync(values);
       onCancel();
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 
@@ -106,19 +107,23 @@ export const AddFundsModal = () => {
                 <FormItem>
                   <FormLabel>Payment method:</FormLabel>
                   <Select
-                    disabled={isPending || !isSuccess}
+                    disabled={!paymentMethods.isSuccess}
                     defaultValue={field.value}
                     onValueChange={field.onChange}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a method" />
+                        {paymentMethods.isLoading ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <SelectValue placeholder="Select a method" />
+                        )}
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {methods?.data.map((item, index) => (
-                        <SelectItem key={index} value={item}>
-                          {item}
+                      {paymentMethods.data?.data.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
                         </SelectItem>
                       ))}
                     </SelectContent>
