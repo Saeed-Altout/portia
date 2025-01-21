@@ -15,7 +15,6 @@ import { StepThree } from "./activate/step-three";
 
 import { useActivateProxyMutation } from "@/services/proxies/hooks";
 import { useModalStore, useProxyStore } from "@/stores";
-
 export const formSchema = z.object({
   pkgName: z.string().min(1),
   planName: z.string().min(1),
@@ -32,8 +31,8 @@ export const formSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters long." })
-    .regex(/^[a-zA-Z0-9]+$/, {
-      message: "Password must only contain English letters and numbers.",
+    .regex(/^(?!.*[\u0600-\u06FF])/, {
+      message: "Password must not contain Arabic letters.",
     }),
 });
 
@@ -63,6 +62,12 @@ export const ActivateProxyModal = ({
     },
   });
 
+  const handleClose = () => {
+    setStep(1);
+    form.reset();
+    reset();
+    onClose();
+  };
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({
@@ -73,17 +78,10 @@ export const ActivateProxyModal = ({
         username: values.username,
         password: values.password,
       });
-      onCancel();
+      handleClose();
     } catch (error) {
-      throw error;
+      console.log(error);
     }
-  };
-
-  const onCancel = () => {
-    setStep(1);
-    form.reset();
-    reset();
-    onClose();
   };
 
   const moveNextStep = () => {
@@ -112,7 +110,7 @@ export const ActivateProxyModal = ({
       title="Activate a new proxy"
       description={`New order - ${proxy.parent_proxy_id ?? ""} proxy`}
       isOpen={isOpen}
-      onClose={onCancel}
+      onClose={handleClose}
       progress={step * 35}
     >
       <Form {...form}>
@@ -152,7 +150,7 @@ export const ActivateProxyModal = ({
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={onCancel}
+                onClick={handleClose}
                 disabled={isPending}
               >
                 Cancel

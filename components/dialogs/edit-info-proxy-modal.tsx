@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Loader2 } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -36,17 +36,16 @@ import { useGetPortsQuery } from "@/services/settings/hooks";
 import { useProxyStore, useModalStore } from "@/stores";
 
 export const formSchema = z.object({
-  provider: z.string().min(2),
-  protocol: z.string().min(2),
+  provider: z.string().min(1),
+  protocol: z.string().min(1),
 });
 
 export const EditInfoProxyModal = () => {
   const pathname = usePathname();
-
-  const { proxy, location, reset } = useProxyStore();
+  const { proxy, reset } = useProxyStore();
 
   const { mutateAsync, isPending } = useEditInfoProxyMutation();
-  const { data: ports, isSuccess } = useGetPortsQuery({ id: proxy.package_id });
+  const ports = useGetPortsQuery({ id: proxy.package_id });
 
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.EDIT_INFO_PROXY;
@@ -59,7 +58,7 @@ export const EditInfoProxyModal = () => {
     },
   });
 
-  const onCancel = () => {
+  const handleClose = () => {
     form.reset();
     reset();
     onClose();
@@ -69,30 +68,31 @@ export const EditInfoProxyModal = () => {
     try {
       await mutateAsync({
         parent_proxy_id:
-          (!!location.id && location.id.toString()) ||
-          proxy.parent_proxy_id ||
-          "",
-        proxy_id: proxy.proxy_id ?? "",
+          (!!proxy.parent_proxy_id && proxy.parent_proxy_id) ||
+          proxy.parent_proxy_id,
+        proxy_id: proxy.proxy_id,
         protocol: values.protocol,
       });
-      onCancel();
-    } catch (error) {}
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    if (proxy.service_provider) {
+    if (proxy.service_provider && proxy.country_name) {
       form.setValue(
         "provider",
-        location.service_provider_name || proxy.service_provider
+        `${proxy.service_provider} / ${proxy.country_name}`
       );
     }
-  }, [form, location, proxy]);
+  }, [form, proxy]);
 
   return (
     <Modal
-      title={`Change my proxy (id:${proxy.id}) type`}
+      title={`Change my proxy (id:${proxy.proxy_id}) type`}
       isOpen={isOpenModal}
-      onClose={onCancel}
+      onClose={handleClose}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -139,23 +139,25 @@ export const EditInfoProxyModal = () => {
               name="protocol"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium">
-                    Proxy Type
-                  </FormLabel>
+                  <FormLabel>Protocol type</FormLabel>
                   <Select
-                    disabled={isPending || !isSuccess}
+                    disabled={isPending || !ports.isSuccess}
                     defaultValue={field.value}
                     onValueChange={field.onChange}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a proxy type" />
+                        {ports.isLoading ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <SelectValue placeholder="select a proxy type" />
+                        )}
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {ports?.data.map((item, index) => (
-                        <SelectItem key={`port-${index}`} value={item}>
-                          {item}
+                      {ports.data?.data.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -171,7 +173,7 @@ export const EditInfoProxyModal = () => {
               variant="outline"
               className="w-full"
               disabled={isPending}
-              onClick={onCancel}
+              onClick={handleClose}
             >
               Cancel
             </Button>

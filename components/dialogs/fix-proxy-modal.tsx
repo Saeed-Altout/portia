@@ -9,15 +9,15 @@ import { useModalStore, useProxyStore } from "@/stores";
 import { useFixProxyMutation } from "@/services/proxies/hooks";
 
 export const FixProxyModal = () => {
-  const { proxy, resetProxy } = useProxyStore();
+  const { proxy, reset } = useProxyStore();
   const { mutateAsync, isPending } = useFixProxyMutation();
 
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.FIX_PROXY;
 
-  const onCancel = () => {
+  const handleClose = () => {
     onClose();
-    resetProxy();
+    reset();
   };
 
   const handleSubmit = async () => {
@@ -26,7 +26,7 @@ export const FixProxyModal = () => {
         pkg_id: proxy.package_id,
         proxy_id: proxy.proxy_id,
       });
-      onCancel();
+      handleClose();
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +37,7 @@ export const FixProxyModal = () => {
       title={`Fixing proxy (id:${proxy.proxy_id ?? ""}) troubleshoot`}
       description="If the proxy doesn't work for any reason, click the button below to run diagnostics"
       isOpen={isOpenModal}
-      onClose={onCancel}
+      onClose={handleClose}
     >
       <div className="flex justify-between items-center gap-5">
         <Button
@@ -45,7 +45,7 @@ export const FixProxyModal = () => {
           variant="outline"
           className="w-full"
           disabled={isPending}
-          onClick={onCancel}
+          onClick={handleClose}
         >
           Cancel
         </Button>

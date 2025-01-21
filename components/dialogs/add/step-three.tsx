@@ -1,6 +1,6 @@
 "use client";
 
-import { Key, Loader2, User } from "lucide-react";
+import { Eye, EyeOff, Key, Loader2, User } from "lucide-react";
 
 import {
   FormControl,
@@ -20,6 +20,8 @@ import { Input } from "@/components/ui/input";
 
 import { useProxyStore } from "@/stores";
 import { useGetPortsQuery } from "@/services/settings/hooks";
+import { Button } from "@/components/ui/button";
+import { usePasswordControl } from "@/hooks/use-password-control";
 
 export const StepThree = ({
   form,
@@ -30,6 +32,12 @@ export const StepThree = ({
 }) => {
   const { proxy, setProxy } = useProxyStore();
   const ports = useGetPortsQuery({ id: proxy.package_id });
+  const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
+    usePasswordControl({
+      onPasswordGenerated: (password) => {
+        form.setValue("password", password);
+      },
+    });
 
   return (
     <>
@@ -72,13 +80,14 @@ export const StepThree = ({
         control={form.control}
         name="username"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full">
+            <FormLabel className="text-sm font-medium">Username</FormLabel>
             <FormControl>
               <Input
                 icon={User}
                 type="text"
-                disabled={isLoading}
                 placeholder="username"
+                disabled={isLoading}
                 {...field}
               />
             </FormControl>
@@ -91,14 +100,47 @@ export const StepThree = ({
         name="password"
         render={({ field }) => (
           <FormItem>
-            <FormControl>
-              <Input
-                icon={Key}
-                type="password"
+            <div className="flex items-center justify-between">
+              <FormLabel className="text-sm font-medium">Password</FormLabel>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={async () => {
+                  const password = await handleSubjectPassword();
+                  if (password) {
+                    field.onChange(password);
+                  }
+                }}
                 disabled={isLoading}
-                placeholder="username"
-                {...field}
-              />
+                className="h-7 text-xs"
+              >
+                Generate Password
+              </Button>
+            </div>
+            <FormControl>
+              <div className="flex items-center relative">
+                <Input
+                  {...field}
+                  icon={Key}
+                  type={passwordType}
+                  disabled={isLoading}
+                  placeholder="new password"
+                />
+                <div
+                  role="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-1 h-[80%] w-[40px] flex justify-center items-center"
+                  aria-label="Toggle password visibility"
+                  title="Toggle password visibility"
+                >
+                  {passwordType === "password" ? (
+                    <EyeOff className="h-4 w-4 text-gray-400" />
+                  ) : (
+                    <Eye className="h-4 w-4 text-gray-400" />
+                  )}
+                </div>
+              </div>
             </FormControl>
             <FormMessage />
           </FormItem>

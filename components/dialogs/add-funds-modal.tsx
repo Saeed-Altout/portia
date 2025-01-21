@@ -62,13 +62,13 @@ export const AddFundsModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync(values);
-      onCancel();
+      handleClose();
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   };
 
-  const onCancel = () => {
+  const handleClose = () => {
     onClose();
     form.reset();
   };
@@ -77,7 +77,7 @@ export const AddFundsModal = () => {
     <Modal
       title="Add funds to your account"
       isOpen={isOpenModal}
-      onClose={onCancel}
+      onClose={handleClose}
       icon={CreditCard}
     >
       <Form {...form}>
@@ -139,7 +139,7 @@ export const AddFundsModal = () => {
               variant="outline"
               className="w-full"
               disabled={isPending}
-              onClick={onCancel}
+              onClick={handleClose}
             >
               Cancel
             </Button>

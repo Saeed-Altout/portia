@@ -56,11 +56,13 @@ export const EditAuthProxyModal = () => {
   const onSubmit = async (values: z.infer<typeof editAuthProxySchema>) => {
     try {
       await mutateAsync({
-        proxy_id: proxy.proxy_id ?? "",
+        proxy_id: proxy.proxy_id,
         password: values.password,
       });
       handleClose();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export const EditAuthProxyModal = () => {
 
   return (
     <Modal
-      title={`Change my proxy (id:${proxy.id}) Authentications`}
+      title={`Change my proxy (id:${proxy.proxy_id}) Authentications`}
       isOpen={isOpenModal}
       onClose={handleClose}
     >

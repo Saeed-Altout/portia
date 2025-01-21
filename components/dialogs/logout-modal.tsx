@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { BeatLoader } from "react-spinners";
 import { Power } from "lucide-react";
 
 import {
@@ -17,6 +16,7 @@ import { Circle, Icon } from "@/components/ui/circle-icon";
 import { useModalStore } from "@/stores/use-modal-store";
 import { ModalType } from "@/config/constants";
 import { useLogoutMutation } from "@/services/auth/hooks";
+import { Loader } from "@/components/ui/loader";
 
 export const LogoutModal = () => {
   const { isOpen, type, onClose } = useModalStore();
@@ -28,7 +28,7 @@ export const LogoutModal = () => {
     try {
       await mutateAsync();
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -70,7 +70,7 @@ export const LogoutModal = () => {
             disabled={isPending}
             onClick={onConfirm}
           >
-            {isPending ? <BeatLoader color="#fff" size={12} /> : "Logout"}
+            {isPending ? <Loader /> : "Logout"}
           </Button>
         </div>
       </DialogContent>
