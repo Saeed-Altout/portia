@@ -15,10 +15,16 @@ export const CellActions = ({ data }: { data: ILocation }) => {
   const callback = useSearchParams().get("callback");
 
   const { onOpen, type } = useModalStore();
-  const { setLocation } = useProxyStore();
+  const { setProxy, proxy } = useProxyStore();
 
   const handleSelectLocation = () => {
-    setLocation(data);
+    setProxy({
+      ...proxy,
+      service_provider: data.service_provider_name,
+      country_name: data.country_name,
+      parent_proxy_id: data.id.toString(),
+      rotation_time: data.rotation_time.toString(),
+    });
     if (type === ModalType.ADD_PROXY) {
       onOpen(ModalType.ADD_PROXY);
     } else if (type === ModalType.RENEW_PROXY) {
