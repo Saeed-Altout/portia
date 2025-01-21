@@ -38,7 +38,7 @@ export const StepThree = ({
         name="protocol"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Plan</FormLabel>
+            <FormLabel>Protocol type</FormLabel>
             <Select
               disabled={isLoading || !ports.isSuccess}
               onValueChange={(value) => {

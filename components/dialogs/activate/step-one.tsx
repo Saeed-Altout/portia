@@ -16,21 +16,17 @@ import {
 } from "@/components/ui/select";
 import { useProxyStore } from "@/stores";
 
-interface StepOneProps {
-  form: any;
-}
-
-export const StepOne = ({ form }: StepOneProps) => {
+export const StepOne = ({ form }: { form: any }) => {
   const { proxy } = useProxyStore();
 
   return (
     <>
       <FormField
         control={form.control}
-        name="pkg_id"
+        name="pkgName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Packages</FormLabel>
+            <FormLabel>Package</FormLabel>
             <Select
               disabled
               onValueChange={field.onChange}
@@ -38,7 +34,7 @@ export const StepOne = ({ form }: StepOneProps) => {
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a package" />
+                  <SelectValue placeholder="select a package" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -53,10 +49,10 @@ export const StepOne = ({ form }: StepOneProps) => {
       />
       <FormField
         control={form.control}
-        name="plan_id"
+        name="planName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Plans</FormLabel>
+            <FormLabel>Plan</FormLabel>
             <Select
               disabled
               onValueChange={field.onChange}
@@ -64,15 +60,11 @@ export const StepOne = ({ form }: StepOneProps) => {
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a plan" />
+                  <SelectValue placeholder="select a plan" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem
-                  key={proxy.plan_name}
-                  value={proxy.plan_name}
-                  className="capitalize"
-                >
+                <SelectItem key={proxy.plan_name} value={proxy.plan_name}>
                   {proxy.plan_name}
                 </SelectItem>
               </SelectContent>
@@ -90,11 +82,11 @@ export const StepOne = ({ form }: StepOneProps) => {
             <Select
               disabled
               onValueChange={field.onChange}
-              defaultValue={field.value || proxy.amount}
+              defaultValue={field.value || proxy.amount.toString()}
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select an amount" />
+                  <SelectValue placeholder="select an amount" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>

@@ -9,9 +9,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useProxyStore } from "@/stores";
-
 export const StepThree = ({ form }: { form: any }) => {
   const { proxy } = useProxyStore();
 
@@ -22,16 +28,23 @@ export const StepThree = ({ form }: { form: any }) => {
         name="protocol"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Proxy Type</FormLabel>
-            <FormControl>
-              <Input
-                placeholder="protocol"
-                disabled
-                readOnly
-                {...field}
-                value={proxy.protocol}
-              />
-            </FormControl>
+            <FormLabel>Protocol type</FormLabel>
+            <Select
+              disabled
+              onValueChange={field.onChange}
+              defaultValue={field.value || proxy.protocol}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="select a proxy type" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem key={proxy.protocol} value={proxy.protocol}>
+                  {proxy.protocol}
+                </SelectItem>
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}

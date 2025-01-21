@@ -17,19 +17,24 @@ import { useActivateProxyMutation } from "@/services/proxies/hooks";
 import { useModalStore, useProxyStore } from "@/stores";
 
 export const formSchema = z.object({
-  pkg_id: z.string(),
-  plan_id: z.string(),
-  amount: z.string(),
-  provider: z.string(),
-  ipRotation: z.string(),
-  protocol: z.string(),
+  pkgName: z.string().min(1),
+  planName: z.string().min(1),
+  amount: z.string().min(1),
+  provider: z.string().min(1),
+  ipRotation: z.string().min(1),
+  protocol: z.string().min(1),
   username: z
     .string()
     .min(1, { message: "Username is required." })
     .regex(/^[a-zA-Z0-9]+$/, {
       message: "Username must only contain letters and digits.",
     }),
-  password: z.string().min(6),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters long." })
+    .regex(/^[a-zA-Z0-9]+$/, {
+      message: "Password must only contain English letters and numbers.",
+    }),
 });
 
 export const ActivateProxyModal = ({
@@ -47,8 +52,8 @@ export const ActivateProxyModal = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      pkg_id: "",
-      plan_id: "",
+      pkgName: "",
+      planName: "",
       amount: "",
       provider: "First available uk network & location",
       ipRotation: "",
@@ -58,25 +63,27 @@ export const ActivateProxyModal = ({
     },
   });
 
-  const onCancel = () => {
-    reset();
-    form.reset();
-    onClose();
-    setStep(1);
-  };
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({
         parent_proxy_id: proxyStore.parent_proxy_id,
         pkg_id: proxyStore.package_id,
+        duration: proxyStore.duration,
         protocol: proxyStore.protocol,
-        duration: proxyStore.duration.toString(),
         username: values.username,
         password: values.password,
       });
       onCancel();
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const onCancel = () => {
+    setStep(1);
+    form.reset();
+    reset();
+    onClose();
   };
 
   const moveNextStep = () => {
