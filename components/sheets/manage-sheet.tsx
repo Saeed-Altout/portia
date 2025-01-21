@@ -90,11 +90,11 @@ export const ManageSheet = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      provider: "",
+      provider: "First available uk network & location",
+      ipRotation: "",
       protocol: "",
       username: "",
       password: "",
-      ipRotation: "",
     },
   });
 
