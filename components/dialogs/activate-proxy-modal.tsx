@@ -15,13 +15,14 @@ import { StepThree } from "./activate/step-three";
 
 import { useActivateProxyMutation } from "@/services/proxies/hooks";
 import { useModalStore, useProxyStore } from "@/stores";
+import { REGEX_PASSWORD_PROXY } from "@/hooks/use-password-control";
 export const formSchema = z.object({
-  pkgName: z.string().min(1),
-  planName: z.string().min(1),
-  amount: z.string().min(1),
-  provider: z.string().min(1),
-  ipRotation: z.string().min(1),
-  protocol: z.string().min(1),
+  pkgName: z.string(),
+  planName: z.string(),
+  amount: z.string(),
+  provider: z.string(),
+  ipRotation: z.string(),
+  protocol: z.string(),
   username: z
     .string()
     .min(1, { message: "Username is required." })
@@ -31,8 +32,9 @@ export const formSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters long." })
-    .regex(/^(?!.*[\u0600-\u06FF])/, {
-      message: "Password must not contain Arabic letters.",
+    .regex(REGEX_PASSWORD_PROXY, {
+      message:
+        "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.",
     }),
 });
 

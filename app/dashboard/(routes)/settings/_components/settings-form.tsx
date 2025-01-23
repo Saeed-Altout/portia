@@ -174,7 +174,7 @@ export const SettingsForm = () => {
                       <Input
                         type="email"
                         placeholder="email"
-                        disabled={isPending}
+                        disabled={isPending || !user.edit_profile}
                         {...field}
                       />
                     </FormControl>
@@ -182,110 +182,118 @@ export const SettingsForm = () => {
                   </FormItem>
                 )}
               />
-              <div className="space-y-2">
-                <h3 className="font-medium text-lg">Password</h3>
-                <p className="text-sm">
-                  Please enter your current password to change your password
-                </p>
-              </div>
-              <FormField
-                control={form.control}
-                name="current_password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Current Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={isCurrentPassword ? "password" : "text"}
-                          placeholder="********"
-                          disabled={isPending}
-                          {...field}
-                        />
-                        <div
-                          role="button"
-                          onClick={() => setIsCurrentPassword((prev) => !prev)}
-                          className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
-                        >
-                          {isCurrentPassword ? (
-                            <Eye className="h-5 w-5 text-[#999999]" />
-                          ) : (
-                            <EyeOff className="h-5 w-5 text-[#999999]" />
-                          )}
-                        </div>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="new_password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={isNewPassword ? "password" : "text"}
-                          placeholder="********"
-                          disabled={isPending}
-                          {...field}
-                        />
-                        <div
-                          role="button"
-                          onClick={() => setIsNewPassword((prev) => !prev)}
-                          className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
-                        >
-                          {isNewPassword ? (
-                            <Eye className="h-5 w-5 text-[#999999]" />
-                          ) : (
-                            <EyeOff className="h-5 w-5 text-[#999999]" />
-                          )}
-                        </div>
-                      </div>
-                    </FormControl>
-                    <FormDescription>
-                      Your new password must be more than 8 characters
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="new_password_confirmation"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password Confirmation</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={isNewPasswordConfirmation ? "password" : "text"}
-                          placeholder="********"
-                          disabled={isPending}
-                          {...field}
-                        />
-                        <div
-                          role="button"
-                          onClick={() =>
-                            setIsNewPasswordConfirmation((prev) => !prev)
-                          }
-                          className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
-                        >
-                          {isNewPasswordConfirmation ? (
-                            <Eye className="h-5 w-5 text-[#999999]" />
-                          ) : (
-                            <EyeOff className="h-5 w-5 text-[#999999]" />
-                          )}
-                        </div>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {user.edit_profile && (
+                <>
+                  <div className="space-y-2">
+                    <h3 className="font-medium text-lg">Password</h3>
+                    <p className="text-sm">
+                      Please enter your current password to change your password
+                    </p>
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="current_password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Current Password</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Input
+                              type={isCurrentPassword ? "password" : "text"}
+                              placeholder="********"
+                              disabled={isPending}
+                              {...field}
+                            />
+                            <div
+                              role="button"
+                              onClick={() =>
+                                setIsCurrentPassword((prev) => !prev)
+                              }
+                              className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
+                            >
+                              {isCurrentPassword ? (
+                                <Eye className="h-5 w-5 text-[#999999]" />
+                              ) : (
+                                <EyeOff className="h-5 w-5 text-[#999999]" />
+                              )}
+                            </div>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="new_password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>New Password</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Input
+                              type={isNewPassword ? "password" : "text"}
+                              placeholder="********"
+                              disabled={isPending}
+                              {...field}
+                            />
+                            <div
+                              role="button"
+                              onClick={() => setIsNewPassword((prev) => !prev)}
+                              className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
+                            >
+                              {isNewPassword ? (
+                                <Eye className="h-5 w-5 text-[#999999]" />
+                              ) : (
+                                <EyeOff className="h-5 w-5 text-[#999999]" />
+                              )}
+                            </div>
+                          </div>
+                        </FormControl>
+                        <FormDescription>
+                          Your new password must be more than 8 characters
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="new_password_confirmation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>New Password Confirmation</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Input
+                              type={
+                                isNewPasswordConfirmation ? "password" : "text"
+                              }
+                              placeholder="********"
+                              disabled={isPending}
+                              {...field}
+                            />
+                            <div
+                              role="button"
+                              onClick={() =>
+                                setIsNewPasswordConfirmation((prev) => !prev)
+                              }
+                              className="absolute top-[50%] right-1 translate-y-[-50%] bg-background h-8 w-8 flex justify-center items-center"
+                            >
+                              {isNewPasswordConfirmation ? (
+                                <Eye className="h-5 w-5 text-[#999999]" />
+                              ) : (
+                                <EyeOff className="h-5 w-5 text-[#999999]" />
+                              )}
+                            </div>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
             </div>
             <div className="space-y-6">
               <div className="space-y-2">

@@ -40,7 +40,7 @@ declare type LoginCredentials = {
 };
 declare type LoginResponse = {
   status: boolean;
-  data: User;
+  data: IUser;
   message: string;
   access_token: string;
   token_type: string;
@@ -563,6 +563,7 @@ declare type IUser = {
   email: string;
   referred_code: string;
   user_balance: string;
+  edit_profile: boolean;
 };
 
 declare type IGetUserResponse = RootApi<IUser>;

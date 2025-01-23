@@ -40,10 +40,3 @@ export const searchByEmailSchema = z.object({
 
 export type SearchByEmailSchema = z.infer<typeof searchByEmailSchema>;
 export const initialSearchByEmailValues = { email: "" };
-
-export const editAuthProxySchema = z.object({
-  username: z.string().min(2),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters." }),
-});

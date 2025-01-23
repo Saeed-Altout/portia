@@ -22,7 +22,10 @@ import { Provider } from "@/components/provider";
 
 import { getFcmToken } from "@/lib/local-storage";
 import { useRegisterMutation } from "@/services/auth/hooks";
-import { usePasswordControl } from "@/hooks/use-password-control";
+import {
+  REGEX_PASSWORD_AUTH,
+  usePasswordControl,
+} from "@/hooks/use-password-control";
 import { ROUTES } from "@/config/constants";
 import { useResponse } from "@/hooks/use-response";
 import { useSearchParams } from "next/navigation";
@@ -51,20 +54,16 @@ export const formSchema = z.object({
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
     .max(128, { message: "Password must be less than 128 characters long" })
-    .regex(/[a-z]/, {
-      message: "Password must contain at least one lowercase letter",
-    })
-    .regex(/[A-Z]/, {
-      message: "Password must contain at least one uppercase letter",
-    })
-    .regex(/\d/, { message: "Password must contain at least one number" })
-    .regex(/[\W_]/, {
-      message: "Password must contain at least one special character",
+    .regex(REGEX_PASSWORD_AUTH, {
+      message:
+        "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.",
     }),
 });
 
 export const RegisterForm = () => {
-  const { passwordType, togglePasswordVisibility } = usePasswordControl();
+  const { passwordVisibility, togglePasswordVisibility } = usePasswordControl({
+    passwordType: "auth",
+  });
   const { mutate, isPending } = useRegisterMutation();
   const { Error } = useResponse();
   const code = useSearchParams().get("code");
@@ -176,7 +175,7 @@ export const RegisterForm = () => {
                     <div className="flex items-center relative">
                       <Input
                         {...field}
-                        type={passwordType}
+                        type={passwordVisibility}
                         disabled={isPending}
                         placeholder="********"
                       />
@@ -187,7 +186,7 @@ export const RegisterForm = () => {
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"
                       >
-                        {passwordType === "password" ? (
+                        {passwordVisibility === "password" ? (
                           <EyeOff className="h-4 w-4 text-gray-400" />
                         ) : (
                           <Eye className="h-4 w-4 text-gray-400" />

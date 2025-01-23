@@ -1,34 +1,74 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 
+export const REGEX_PASSWORD_AUTH =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+export const REGEX_PASSWORD_PROXY =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
 interface UsePasswordControlProps {
   initialType?: "text" | "password";
   onPasswordGenerated?: (password: string) => void;
+  passwordType?: "auth" | "proxy";
 }
 
 export const usePasswordControl = ({
   initialType = "text",
   onPasswordGenerated,
+  passwordType = "auth",
 }: UsePasswordControlProps = {}) => {
-  const [passwordType, setPasswordType] = useState<"text" | "password">(
-    initialType
-  );
+  const [passwordVisibility, setPasswordVisibility] = useState<
+    "text" | "password"
+  >(initialType);
 
   const togglePasswordVisibility = useCallback(() => {
-    setPasswordType((prev) => (prev === "password" ? "text" : "password"));
+    setPasswordVisibility((prev) =>
+      prev === "password" ? "text" : "password"
+    );
   }, []);
 
   const generateRandomPassword = useCallback(() => {
-    const chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+    const regex =
+      passwordType === "auth" ? REGEX_PASSWORD_AUTH : REGEX_PASSWORD_PROXY;
+
     let password = "";
-    for (let i = 0; i < 12; i++) {
-      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    const chars = {
+      lowercase: "abcdefghijklmnopqrstuvwxyz",
+      uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      digits: "0123456789",
+      special: "@$!%*?&",
+    };
+    password +=
+      chars.lowercase[Math.floor(Math.random() * chars.lowercase.length)];
+    password +=
+      chars.uppercase[Math.floor(Math.random() * chars.uppercase.length)];
+    password += chars.digits[Math.floor(Math.random() * chars.digits.length)];
+    if (passwordType === "auth") {
+      password +=
+        chars.special[Math.floor(Math.random() * chars.special.length)];
+    }
+
+    const allChars =
+      passwordType === "auth"
+        ? chars.lowercase + chars.uppercase + chars.digits + chars.special
+        : chars.lowercase + chars.uppercase + chars.digits;
+
+    while (password.length < 12) {
+      password += allChars[Math.floor(Math.random() * allChars.length)];
+    }
+
+    password = password
+      .split("")
+      .sort(() => Math.random() - 0.5)
+      .join("");
+
+    if (!regex.test(password)) {
+      return generateRandomPassword();
     }
 
     onPasswordGenerated?.(password);
     return password;
-  }, [onPasswordGenerated]);
+  }, [onPasswordGenerated, passwordType]);
 
   const handleSubjectPassword = useCallback(async () => {
     try {
@@ -44,7 +84,7 @@ export const usePasswordControl = ({
   }, [generateRandomPassword]);
 
   return {
-    passwordType,
+    passwordVisibility,
     togglePasswordVisibility,
     generateRandomPassword,
     handleSubjectPassword,

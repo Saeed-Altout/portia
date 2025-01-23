@@ -21,18 +21,33 @@ import { Loader } from "@/components/ui/loader";
 import { Modal } from "@/components/modal";
 
 import { useModalStore, useProxyStore } from "@/stores";
-import { editAuthProxySchema } from "@/schemas";
 import { ModalType } from "@/config/constants";
 import { useEditAuthProxyMutation } from "@/services/proxies/hooks";
-import { usePasswordControl } from "@/hooks/use-password-control";
-
+import {
+  usePasswordControl,
+  REGEX_PASSWORD_PROXY,
+} from "@/hooks/use-password-control";
+export const formSchema = z.object({
+  username: z.string().min(2),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters." })
+    .regex(REGEX_PASSWORD_PROXY, {
+      message:
+        "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.",
+    }),
+});
 export const EditAuthProxyModal = () => {
-  const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
-    usePasswordControl({
-      onPasswordGenerated: (password) => {
-        form.setValue("password", password);
-      },
-    });
+  const {
+    passwordVisibility,
+    togglePasswordVisibility,
+    handleSubjectPassword,
+  } = usePasswordControl({
+    passwordType: "proxy",
+    onPasswordGenerated: (password) => {
+      form.setValue("password", password);
+    },
+  });
 
   const { proxy, reset } = useProxyStore();
   const { mutateAsync, isPending } = useEditAuthProxyMutation();
@@ -40,8 +55,8 @@ export const EditAuthProxyModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.EDIT_AUTH_PROXY;
 
-  const form = useForm<z.infer<typeof editAuthProxySchema>>({
-    resolver: zodResolver(editAuthProxySchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
     },
@@ -53,7 +68,7 @@ export const EditAuthProxyModal = () => {
     onClose();
   };
 
-  const onSubmit = async (values: z.infer<typeof editAuthProxySchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await mutateAsync({
         proxy_id: proxy.proxy_id,
@@ -132,7 +147,7 @@ export const EditAuthProxyModal = () => {
                       <Input
                         {...field}
                         icon={Key}
-                        type={passwordType}
+                        type={passwordVisibility}
                         disabled={isPending}
                         placeholder="new password"
                       />
@@ -143,7 +158,7 @@ export const EditAuthProxyModal = () => {
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"
                       >
-                        {passwordType === "password" ? (
+                        {passwordVisibility === "password" ? (
                           <EyeOff className="h-4 w-4 text-gray-400" />
                         ) : (
                           <Eye className="h-4 w-4 text-gray-400" />

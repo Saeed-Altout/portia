@@ -19,7 +19,7 @@ export const GoogleForm = () => {
     if (token) {
       setToken(token);
       if (isSuccess) {
-        setUser(data.data);
+        setUser(data.data, { expires: 10 });
         location.assign(ROUTES.DASHBOARD_HOME);
       } else {
         refetch();

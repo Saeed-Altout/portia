@@ -49,7 +49,10 @@ import { useProxyStore, useModalStore } from "@/stores";
 import { ModalType, ROUTES } from "@/config/constants";
 import { useGetPortsQuery } from "@/services/settings/hooks";
 import { useManageProxyMutation } from "@/services/proxies/hooks";
-import { usePasswordControl } from "@/hooks/use-password-control";
+import {
+  REGEX_PASSWORD_PROXY,
+  usePasswordControl,
+} from "@/hooks/use-password-control";
 import { Loader } from "@/components/ui/loader";
 
 export const formSchema = z.object({
@@ -65,19 +68,24 @@ export const formSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters long." })
-    .regex(/^(?!.*[\u0600-\u06FF])/, {
-      message: "Password must not contain Arabic letters.",
+    .regex(REGEX_PASSWORD_PROXY, {
+      message:
+        "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.",
     }),
 });
 
 export const ManageSheet = () => {
   const pathname = usePathname();
-  const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
-    usePasswordControl({
-      onPasswordGenerated: (password) => {
-        form.setValue("password", password);
-      },
-    });
+  const {
+    passwordVisibility,
+    togglePasswordVisibility,
+    handleSubjectPassword,
+  } = usePasswordControl({
+    passwordType: "proxy",
+    onPasswordGenerated: (password) => {
+      form.setValue("password", password);
+    },
+  });
 
   const { isOpen, type, onClose } = useModalStore();
   const isOpenModal = isOpen && type === ModalType.MANAGE_PROXY;
@@ -283,7 +291,7 @@ export const ManageSheet = () => {
                       <Input
                         {...field}
                         icon={Key}
-                        type={passwordType}
+                        type={passwordVisibility}
                         disabled={isPending}
                         placeholder="new password"
                       />
@@ -294,7 +302,7 @@ export const ManageSheet = () => {
                         aria-label="Toggle password visibility"
                         title="Toggle password visibility"
                       >
-                        {passwordType === "password" ? (
+                        {passwordVisibility === "password" ? (
                           <EyeOff className="h-4 w-4 text-gray-400" />
                         ) : (
                           <Eye className="h-4 w-4 text-gray-400" />

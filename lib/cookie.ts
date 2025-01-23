@@ -1,20 +1,14 @@
 import Cookies from "js-cookie";
 import { EMAIL_KEY, TOKEN_KEY, USER_KEY } from "@/config/constants";
 
-interface User {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  referred_code: string;
-}
-
-const initialUser: User = {
+const initialUser: IUser = {
   id: 0,
   first_name: "",
   last_name: "",
   email: "",
   referred_code: "",
+  user_balance: "",
+  edit_profile: false,
 };
 
 export const setUser = (user: User, options?: any) => {

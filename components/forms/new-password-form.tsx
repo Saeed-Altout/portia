@@ -90,7 +90,7 @@ export const NewPasswordForm = () => {
                       <div className="flex items-center relative">
                         <Input
                           {...field}
-                          type={passwordType}
+                          type={passwordVisibility}
                           disabled={isPending}
                           placeholder="********"
                         />
@@ -101,7 +101,7 @@ export const NewPasswordForm = () => {
                           aria-label="Toggle password visibility"
                           title="Toggle password visibility"
                         >
-                          {passwordType === "password" ? (
+                          {passwordVisibility === "password" ? (
                             <EyeOff className="h-4 w-4 text-gray-400" />
                           ) : (
                             <Eye className="h-4 w-4 text-gray-400" />

@@ -15,6 +15,12 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  icons: [
+    {
+      url: "/icon.png",
+      href: "/icon.png",
+    },
+  ],
 };
 
 export default function RootLayout({

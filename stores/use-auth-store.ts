@@ -8,6 +8,7 @@ const initialUser: IUser = {
   email: "",
   referred_code: "",
   user_balance: "",
+  edit_profile: false,
 };
 
 interface AuthStore {
@@ -22,10 +23,11 @@ interface AuthStore {
 
 export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: Boolean(getToken()),
+  user: getUser() ?? initialUser,
+
   setAuthenticated: (isAuthenticated) =>
     set((state) => ({ ...state, isAuthenticated })),
 
-  user: getUser() ?? initialUser,
   setUser: (user) =>
     set((state) => ({ ...state, user: { ...state.user, ...user } })),
 

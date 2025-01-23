@@ -1,8 +1,12 @@
 "use client";
+import { useAuthStore } from "@/stores";
 import { useEffect } from "react";
 
 export const TawkToWidget = () => {
+  const { isAuthenticated } = useAuthStore();
+
   useEffect(() => {
+    if (!isAuthenticated) return;
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.async = true;
@@ -26,7 +30,7 @@ export const TawkToWidget = () => {
         document.body.removeChild(script);
       }
     };
-  }, []);
+  }, [isAuthenticated]);
 
   return null;
 };

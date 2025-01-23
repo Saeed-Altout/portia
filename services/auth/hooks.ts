@@ -25,11 +25,11 @@ export const useLoginMutation = () => {
   return useMutation({
     mutationKey: ["login"],
     mutationFn: (data: LoginCredentials) => login(data),
-    onSuccess: (data, req) => {
+    onSuccess: (data) => {
       setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
       setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
       Success({ message: data.message || "Login successful." });
-      location.reload();
+      location.assign(ROUTES.DASHBOARD_HOME);
     },
     onError: async (error) => {
       if (error instanceof AxiosError) {

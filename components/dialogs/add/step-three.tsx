@@ -32,12 +32,16 @@ export const StepThree = ({
 }) => {
   const { proxy, setProxy } = useProxyStore();
   const ports = useGetPortsQuery({ id: proxy.package_id });
-  const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
-    usePasswordControl({
-      onPasswordGenerated: (password) => {
-        form.setValue("password", password);
-      },
-    });
+  const {
+    passwordVisibility,
+    togglePasswordVisibility,
+    handleSubjectPassword,
+  } = usePasswordControl({
+    passwordType: "proxy",
+    onPasswordGenerated: (password) => {
+      form.setValue("password", password);
+    },
+  });
 
   return (
     <>
@@ -123,7 +127,7 @@ export const StepThree = ({
                 <Input
                   {...field}
                   icon={Key}
-                  type={passwordType}
+                  type={passwordVisibility}
                   disabled={isLoading}
                   placeholder="new password"
                 />
@@ -134,7 +138,7 @@ export const StepThree = ({
                   aria-label="Toggle password visibility"
                   title="Toggle password visibility"
                 >
-                  {passwordType === "password" ? (
+                  {passwordVisibility === "password" ? (
                     <EyeOff className="h-4 w-4 text-gray-400" />
                   ) : (
                     <Eye className="h-4 w-4 text-gray-400" />

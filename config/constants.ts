@@ -5,19 +5,7 @@ import {
   Grid2X2,
   Star,
   Zap,
-  Facebook,
-  Linkedin,
-  Twitter,
-  Github,
 } from "lucide-react";
-
-import {
-  FaFacebook,
-  FaGithub,
-  FaTwitter,
-  FaLinkedinIn,
-  FaTelegram,
-} from "react-icons/fa";
 
 const NAME_PROJECT = "PORTIA";
 const NAME_SECRET = "NEXT_CWS";

@@ -23,12 +23,16 @@ import { Button } from "@/components/ui/button";
 
 export const StepThree = ({ form }: { form: any }) => {
   const { proxy } = useProxyStore();
-  const { passwordType, togglePasswordVisibility, handleSubjectPassword } =
-    usePasswordControl({
-      onPasswordGenerated: (password) => {
-        form.setValue("password", password);
-      },
-    });
+  const {
+    passwordVisibility,
+    togglePasswordVisibility,
+    handleSubjectPassword,
+  } = usePasswordControl({
+    passwordType: "proxy",
+    onPasswordGenerated: (password) => {
+      form.setValue("password", password);
+    },
+  });
   return (
     <>
       <FormField
@@ -102,7 +106,7 @@ export const StepThree = ({ form }: { form: any }) => {
                 <Input
                   {...field}
                   icon={Key}
-                  type={passwordType}
+                  type={passwordVisibility}
                   placeholder="new password"
                 />
                 <div
@@ -112,7 +116,7 @@ export const StepThree = ({ form }: { form: any }) => {
                   aria-label="Toggle password visibility"
                   title="Toggle password visibility"
                 >
-                  {passwordType === "password" ? (
+                  {passwordVisibility === "password" ? (
                     <EyeOff className="h-4 w-4 text-gray-400" />
                   ) : (
                     <Eye className="h-4 w-4 text-gray-400" />
