@@ -7,17 +7,9 @@ import {
   SheetContent,
   SheetDescription,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores";
-import { Cookie } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 const DEFAULT_LANGUAGE = "en";
 
@@ -27,10 +19,10 @@ export const AcceptCookiesSheet = () => {
 
   useEffect(() => {
     const cookieConsent = getCookie("cookieConsent");
-    if (!cookieConsent) {
+    if (!cookieConsent && isAuthenticated) {
       setIsOpen(true);
     }
-  }, []);
+  }, [isAuthenticated]);
 
   const handleAcceptCookies = () => {
     setCookie("cookieConsent", "accepted", { maxAge: 30 * 24 * 60 * 60 });
@@ -45,31 +37,11 @@ export const AcceptCookiesSheet = () => {
   };
 
   if (!isAuthenticated) {
-    console.log("User is not authenticated.");
     return null;
   }
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                className="fixed bottom-32 right-[38px] rounded-full"
-                size="icon"
-              >
-                <Cookie />
-              </Button>
-            </SheetTrigger>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Cookie Settings</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-
       <SheetContent side="bottom" className="rounded-t-lg flex flex-col gap-5">
         <div className="w-full md:max-w-[80%] space-y-3">
           <SheetTitle className="text-2xl font-semibold text-primary">
