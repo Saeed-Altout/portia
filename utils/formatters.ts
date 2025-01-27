@@ -8,6 +8,7 @@ export const formatProxiesData = (data: any[]): ProxyColumn[] => {
     re_new: proxy.re_new,
     is_active: proxy.is_active,
     package_name: proxy.package_name,
+    city_name: proxy.city_name,
     protocol: proxy.protocol,
     service_provider: proxy.service_provider,
     protocol_port: proxy.protocol_port,

@@ -59,8 +59,12 @@ export const columns: ColumnDef<ProxyColumn>[] = [
     header: "Country Name",
   },
   {
+    accessorKey: "city_name",
+    header: "City Name",
+  },
+  {
     accessorKey: "protocol_port",
-    header: "Port",
+    header: "IP:Port",
     cell: ({ row }) => (
       <p>{`${row.original.ip_addr}:${row.original.protocol_port}`}</p>
     ),
@@ -138,8 +142,12 @@ export const iColumns: ColumnDef<ProxyColumn>[] = [
     header: "Country Name",
   },
   {
+    accessorKey: "city_name",
+    header: "City",
+  },
+  {
     accessorKey: "protocol_port",
-    header: "Port",
+    header: "IP:Port",
     cell: ({ row }) => (
       <p>{`${row.original.ip_addr}:${row.original.protocol_port}`}</p>
     ),

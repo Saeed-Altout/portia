@@ -4,6 +4,7 @@ declare type ProxyColumn = {
   re_new: number;
   is_active: number;
   package_name: string;
+  city_name: string;
   protocol: string;
   service_provider: string;
   protocol_port: number;
