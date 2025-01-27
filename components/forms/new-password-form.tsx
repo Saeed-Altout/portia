@@ -43,9 +43,9 @@ export const formSchema = z.object({
 export const NewPasswordForm = () => {
   const token = useSearchParams().get("token");
 
-  const { passwordType, togglePasswordVisibility } = usePasswordControl();
+  const { passwordVisibility, togglePasswordVisibility } = usePasswordControl();
   const {
-    passwordType: passwordType2,
+    passwordVisibility: passwordType2,
     togglePasswordVisibility: togglePasswordVisibility2,
   } = usePasswordControl();
   const { mutate, isPending } = useSetNewPasswordMutation();

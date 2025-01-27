@@ -36,7 +36,7 @@ const loginSchema = z.object({
 });
 
 export const LoginForm = () => {
-  const { passwordType, togglePasswordVisibility } = usePasswordControl();
+  const { passwordVisibility, togglePasswordVisibility } = usePasswordControl();
   const { mutate, isPending } = useLoginMutation();
 
   const form = useForm<z.infer<typeof loginSchema>>({
