@@ -67,9 +67,7 @@ apiClient.interceptors.response.use(
         break;
 
       case 500:
-        console.error(
-          "Internal Server Error: Something went wrong on the server."
-        );
+        location.assign("/error");
         break;
 
       case 502:
