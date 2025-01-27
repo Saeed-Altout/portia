@@ -67,7 +67,7 @@ apiClient.interceptors.response.use(
         break;
 
       case 500:
-        location.assign("/error");
+        location.assign("/server-error");
         break;
 
       case 502:
