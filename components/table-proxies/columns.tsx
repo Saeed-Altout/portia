@@ -56,11 +56,11 @@ export const columns: ColumnDef<ProxyColumn>[] = [
   },
   {
     accessorKey: "country_name",
-    header: "Country Name",
+    header: "Country",
   },
   {
     accessorKey: "city_name",
-    header: "City Name",
+    header: "City",
   },
   {
     accessorKey: "protocol_port",
@@ -139,7 +139,7 @@ export const iColumns: ColumnDef<ProxyColumn>[] = [
   },
   {
     accessorKey: "country_name",
-    header: "Country Name",
+    header: "Country",
   },
   {
     accessorKey: "city_name",

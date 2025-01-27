@@ -2,9 +2,32 @@
 
 import { useState, useEffect } from "react";
 import { useIntersectionObserver } from "usehooks-ts";
-
 import { cn } from "@/lib/utils";
-import { statisticData } from "@/config/constants";
+
+const statisticData = [
+  {
+    value: "40k+",
+    name: "Happy Customers",
+    description: "We've helped over 40k amazing customers.",
+  },
+  {
+    value: "125+",
+    name: "Proxy Locations",
+    description:
+      "Switch between proxies quickly to access global content seamlessly.",
+  },
+  {
+    value: "99.9%",
+    name: "Uptime",
+    description:
+      "Get proxies from different sources, like Portia's mobile network.",
+  },
+  {
+    value: "200+",
+    name: "5-star reviews",
+    description: "We're proud of our 5-star rating with over 200 reviews.",
+  },
+];
 
 export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
   const [counts, setCounts] = useState<number[]>(statisticData.map(() => 0));
@@ -18,7 +41,7 @@ export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
       const intervals: NodeJS.Timeout[] = [];
 
       statisticData.forEach((item, index) => {
-        const targetValue = parseInt(item.value.replace(/\D/g, ""));
+        const targetValue = parseFloat(item.value.replace(/[^0-9.]/g, ""));
         const increment = Math.ceil(targetValue / 50);
         intervals[index] = setInterval(() => {
           setCounts((prevCounts) => {
@@ -37,8 +60,6 @@ export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
       });
 
       return () => intervals.forEach((interval) => clearInterval(interval));
-    } else {
-      // setCounts(statisticData.map(() => 0));
     }
   }, [isIntersecting]);
 
@@ -52,7 +73,9 @@ export const Statistic = ({ className }: React.HTMLAttributes<HTMLElement>) => {
           >
             <span className="text-[#111280] font-semibold text-5xl lg:leading-[65px] xl:text-6xl xl:leading-[72px]">
               {counts[index]}
-              {value.replace(/[0-9]/g, "")}
+              {value.includes(".")
+                ? value.replace(/[0-9.]/g, "")
+                : value.replace(/[0-9]/g, "")}
             </span>
             <div className="space-y-2">
               <h2 className="text-[#727282] sm:text-[#0A0A0A] text-lg md:text-xl font-medium">
