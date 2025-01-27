@@ -106,6 +106,7 @@ export enum ModalType {
   NOTIFICATION = "notification",
   MANAGE_PROXY = "manage-proxy",
   ADD_FUNDS = "add-funds",
+  FAST_RENEW_PROXY = "fast-renew-proxy",
 }
 
 export const dashboardRoutes = [
