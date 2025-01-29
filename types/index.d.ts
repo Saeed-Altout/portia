@@ -421,14 +421,6 @@ declare type IDepositStatistics = {
 
 declare type IGetDepositStatisticsResponse = RootApi<IDepositStatistics>;
 
-declare type IAffiliateHistory = {
-  id: number;
-  user_id: number;
-  amount: number;
-  created_at: Date | string;
-  updated_at: Date | string;
-};
-
 declare type IGetAffiliatesHistoriesResponse = RootApi<{
   current_page: number;
   data: IAffiliateHistory[];
@@ -499,21 +491,6 @@ declare type IPackagePlan = {
 
 declare type IGetPackagesPlansResponse = RootApi<IPackagePlan[]>;
 
-declare type ILocation = {
-  id: number;
-  service_provider_id: number;
-  service_provider_name: string;
-  country_id: number;
-  country_name: string;
-  city_id: number;
-  city_name: string;
-  rotation_time: number;
-  is_available: boolean;
-  status: string;
-  package_id: number;
-  package_name: string;
-};
-
 declare type ICostPlans = {
   day: {
     value: number;
@@ -542,8 +519,8 @@ declare type IFaq = {
   id: number;
   question: string;
   answer: string;
-  created_at: string | Date;
-  updated_at: string | Date;
+  created_at: Date;
+  updated_at: Date;
 };
 
 declare type IGetFaqsResponse = RootApi<IFaq[]>;
@@ -582,4 +559,212 @@ declare type ILink = {
   name: string;
   icon_url: string;
   url: string;
+};
+
+declare type IAffiliateHistory = {
+  id: number;
+  user_id: number;
+  amount: number;
+  created_at: Date;
+};
+
+declare type PaginationLinks = {
+  url: string | null;
+  label: string;
+  active: boolean;
+};
+
+declare type IAffiliateHistoriesData = {
+  current_page: number;
+  data: IAffiliateHistory[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLinks[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+};
+
+declare type IAffiliateStatisticsData = {
+  this_month_earnings: number;
+  this_year_earnings: number;
+  total_earnings: number;
+};
+
+declare type IDepositHistory = {
+  id: number;
+  payment_method: string;
+  amount: string;
+  created_at: Date;
+  status: string;
+};
+
+declare type IDepositHistoriesData = {
+  current_page: number;
+  data: IDepositHistory[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLinks[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+};
+
+declare type IDepositStatisticsData = {
+  monthly_deposits: number;
+  yearly_deposits: number;
+  all_time_deposits: number;
+};
+
+declare type IFaq = {
+  id: number;
+  question: string;
+  answer: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+declare type IMapData = {
+  id: number;
+  name: string;
+  cities_count: number;
+  parents_count: number;
+  latitude: number;
+  longitude: number;
+  country_key: string;
+  flag_url: string;
+};
+
+declare type ApiMapResponse<T> = {
+  status: string;
+  countries: T;
+};
+
+declare type IOfferData = {
+  id: number;
+  amount: any;
+  cost: string;
+  is_popular: any;
+  plan: string;
+  package: {
+    id: number;
+    name: string;
+    description: string;
+    feature_groups: {
+      id: number;
+      name: string;
+      features: {
+        id: number;
+        name: string;
+        description: string;
+        value: string;
+      }[];
+    }[];
+  };
+};
+
+declare type IFeatureData = {
+  id: number;
+  name: string;
+  description: string;
+  packages: {
+    id: number;
+    package_id: number;
+    value: string;
+  }[];
+};
+
+declare type IReview = {
+  id: number;
+  user_name: string;
+  specialization: string;
+  message: string;
+  rating: number;
+  user_image: string;
+};
+
+declare type IProxy = {
+  id: number;
+  proxy_id: string;
+  plan_id: number;
+  plan_name: string;
+  package_id: string;
+  package_name: string;
+  parent_proxy_id: string;
+  rotation_time: string;
+  is_active: number;
+  re_new: number;
+  protocol: string;
+  protocol_port: number;
+  country_name: string;
+  city_name: string;
+  service_provider: string;
+  username: string;
+  password: string;
+  ip_addr: string;
+  amount: number;
+  duration: number;
+  price: string;
+  expire_at: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+declare type IShortProxy = {
+  parent_proxy_id: string;
+  package_id: number;
+  package_name: string;
+  plan_id: number;
+  plan: string;
+  duration: number;
+  port: string;
+  service_provider_name: string;
+  country_name: string;
+  city_name: string;
+  amount: number;
+  rotation_time: number;
+};
+
+declare type IPackagePlan = {
+  package_id: number;
+  package_name: string;
+  plans: {
+    id: number;
+    name: string;
+  }[];
+};
+
+declare type IOfferPlan = {
+  id: number;
+  cost: string;
+  description: string;
+  title: string;
+  plan_id: number;
+  package_id: number;
+  is_available: boolean;
+  color: string;
+};
+declare type ILocation = {
+  id: number;
+  service_provider_id: number;
+  service_provider_name: string;
+  country_id: number;
+  country_name: string;
+  city_id: number;
+  city_name: string;
+  rotation_time: number;
+  is_available: boolean;
+  status: string;
+  package_id: number;
+  package_name: string;
 };

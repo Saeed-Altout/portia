@@ -1,18 +1,17 @@
 import { apiClient } from "@/lib/api";
-import { ENDPOINTS } from "@/config/constants";
 
-export const getFaqs = async (): Promise<IGetFaqsResponse> => {
+export const getFaqs = async (): Promise<ApiResponse<IFaq[]>> => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_FAQS);
+    const response = await apiClient.get(process.env.NEXT_PUBLIC_GET_FAQS!);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const getTopFaqs = async (): Promise<IGetFaqsResponse> => {
+export const getTopFaqs = async (): Promise<ApiResponse<IFaq[]>> => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_TOP_FAQS);
+    const response = await apiClient.get(process.env.NEXT_PUBLIC_GET_TOP_FAQS!);
     return response.data;
   } catch (error) {
     throw error;

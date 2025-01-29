@@ -1,9 +1,20 @@
 import { apiClient } from "@/lib/api";
-import { ENDPOINTS } from "@/config/constants";
 
-export const getOffers = async (): Promise<RootResponse<Offers>> => {
+export const getOffers = async (): Promise<ApiResponse<IOfferData[]>> => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_OFFERS);
+    const response = await apiClient.get(process.env.NEXT_PUBLIC_GET_OFFERS!);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// This endpoint not need
+export const getOffersPlans = async (): Promise<ApiResponse<IOfferData[]>> => {
+  try {
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_GET_PLANS_OFFERS!
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -11,19 +22,12 @@ export const getOffers = async (): Promise<RootResponse<Offers>> => {
 };
 
 export const getOffersFeatures = async (): Promise<
-  RootResponse<FeaturesOffers>
+  ApiResponse<IFeatureData[]>
 > => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_FEATURES_OFFER);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const getOffersPlans = async (): Promise<RootResponse<PlansOffer>> => {
-  try {
-    const response = await apiClient.get(ENDPOINTS.GET_PLANS_OFFERS);
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_GET_FEATURES_OFFER!
+    );
     return response.data;
   } catch (error) {
     throw error;

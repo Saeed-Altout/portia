@@ -11,12 +11,14 @@ export const useGetOffersQuery = () => {
     queryFn: () => getOffers(),
   });
 };
+
 export const useGetOffersFeaturesQuery = () => {
   return useQuery({
     queryKey: ["offers-features"],
     queryFn: () => getOffersFeatures(),
   });
 };
+
 export const useGetOffersPlansQuery = () => {
   return useQuery({
     queryKey: ["offers-plans"],

@@ -1,20 +1,25 @@
 import { apiClient } from "@/lib/api";
-import { ENDPOINTS } from "@/config/constants";
+import { filterParams } from "@/utils/filter-params";
 
 export const addDeposit = async (
   values: DepositCredentials
-): Promise<DepositResponse> => {
+): Promise<ApiResponse<{ url: string }>> => {
   try {
-    const response = await apiClient.post(ENDPOINTS.DEPOSIT, values);
+    const response = await apiClient.post(
+      process.env.NEXT_PUBLIC_ADD_DEPOSIT!,
+      values
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const getWayPayment = async (): Promise<GetWayPaymentResponse> => {
+export const getWayPayment = async (): Promise<ApiResponse<string[]>> => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_WAY_PAYMENT);
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_GET_WAY_PAYMENT!
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -23,30 +28,28 @@ export const getWayPayment = async (): Promise<GetWayPaymentResponse> => {
 
 export const getDepositsHistories = async (
   params: Record<string, any>
-): Promise<IGetDepositsHistoriesResponse> => {
-  const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(
-      ([, value]) => value !== undefined && value !== null && value !== 0
-    )
-  );
+): Promise<ApiResponse<IDepositHistoriesData>> => {
+  const filteredParams = filterParams(params);
   try {
-    const response = await apiClient.get(ENDPOINTS.DEPOSIT_HISTORIES, {
-      params: { ...filteredParams },
-    });
-
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_DEPOSIT_HISTORIES!,
+      { params: { ...filteredParams } }
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const getDepositStatistics =
-  async (): Promise<IGetDepositStatisticsResponse> => {
-    try {
-      const response = await apiClient.get(ENDPOINTS.DEPOSIT_STATISTICS);
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+export const getDepositStatistics = async (): Promise<
+  ApiResponse<IDepositStatisticsData>
+> => {
+  try {
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_DEPOSIT_STATISTICS!
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

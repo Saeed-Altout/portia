@@ -1,30 +1,30 @@
 import { apiClient } from "@/lib/api";
-import { ENDPOINTS } from "@/config/constants";
+import { filterParams } from "@/utils/filter-params";
 
 export const getAffiliateHistories = async (
   params: Record<string, any>
-): Promise<IGetAffiliatesHistoriesResponse> => {
-  const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(
-      ([, value]) => value !== undefined && value !== null && value !== 0
-    )
-  );
+): Promise<ApiResponse<IAffiliateHistoriesData>> => {
+  const filteredParams = filterParams(params);
   try {
-    const response = await apiClient.get(ENDPOINTS.AFFILIATE_HISTORIES, {
-      params: { ...filteredParams },
-    });
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_AFFILIATE_HISTORIES!,
+      { params: { ...filteredParams } }
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const getAffiliateStatistics =
-  async (): Promise<IGetAffiliateStatisticsResponse> => {
-    try {
-      const response = await apiClient.get(ENDPOINTS.AFFILIATE_STATISTICS);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+export const getAffiliateStatistics = async (): Promise<
+  ApiResponse<IAffiliateStatisticsData>
+> => {
+  try {
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_AFFILIATE_STATISTICS!
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

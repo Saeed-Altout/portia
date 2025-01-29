@@ -1,19 +1,21 @@
 import { apiClient } from "@/lib/api";
-import { ENDPOINTS } from "@/config/constants";
 
-export const getPackagesPlans =
-  async (): Promise<IGetPackagesPlansResponse> => {
-    try {
-      const response = await apiClient.get(ENDPOINTS.GET_PACKAGES);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
-
-export const getOffersPlans = async (): Promise<IGetOffersPlansResponse> => {
+export const getPackagesPlans = async (): Promise<
+  ApiResponse<IPackagePlan[]>
+> => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_ALL_OFFERS);
+    const response = await apiClient.get(process.env.NEXT_PUBLIC_GET_PACKAGES!);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getOffersPlans = async (): Promise<ApiResponse<IOfferPlan[]>> => {
+  try {
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_GET_ALL_OFFERS!
+    );
     return response.data;
   } catch (error) {
     throw error;

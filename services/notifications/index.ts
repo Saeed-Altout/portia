@@ -1,20 +1,21 @@
-import { ENDPOINTS } from "@/config/constants";
 import { apiClient } from "@/lib/api";
 
 export const getNotifications = async (): Promise<
-  RootResponse<INotification[]>
+  ApiResponse<INotification[]>
 > => {
   try {
-    const res = await apiClient.get(ENDPOINTS.GET_NOTIFICATIONS);
+    const res = await apiClient.get(process.env.NEXT_PUBLIC_GET_NOTIFICATIONS!);
     return res.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const markAllNotifications = async (): Promise<RootResponse<null>> => {
+export const markAllNotifications = async (): Promise<ApiResponse<null>> => {
   try {
-    const res = await apiClient.post(ENDPOINTS.MARK_ALL_NOTIFICATIONS);
+    const res = await apiClient.post(
+      process.env.NEXT_PUBLIC_MARK_ALL_NOTIFICATIONS!
+    );
     return res.data;
   } catch (error) {
     throw error;
@@ -23,9 +24,11 @@ export const markAllNotifications = async (): Promise<RootResponse<null>> => {
 
 export const markNotificationById = async (
   id: string
-): Promise<RootResponse<null>> => {
+): Promise<ApiResponse<null>> => {
   try {
-    const res = await apiClient.post(`${ENDPOINTS.MARK_NOTIFICATION}/${id}`);
+    const res = await apiClient.post(
+      `${process.env.NEXT_PUBLIC_MARK_NOTIFICATION}/${id}`
+    );
     return res.data;
   } catch (error) {
     throw error;

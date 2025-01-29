@@ -1,17 +1,12 @@
-import { ENDPOINTS } from "@/config/constants";
 import { apiClient } from "@/lib/api";
+import { filterParams } from "@/utils/filter-params";
 
 export const getReviews = async (
   params: Record<string, any>
-): Promise<RootResponse<Review[]>> => {
-  const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(
-      ([, value]) => value !== undefined && value !== null && value !== 0
-    )
-  );
-
+): Promise<ApiResponse<IReview[]>> => {
+  const filteredParams = filterParams(params);
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_REVIEWS, {
+    const response = await apiClient.get(process.env.NEXT_PUBLIC_GET_REVIEWS!, {
       params: { ...filteredParams },
     });
     return response.data;

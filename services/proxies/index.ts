@@ -1,13 +1,14 @@
 import { apiClient } from "@/lib/api";
-import { ENDPOINTS } from "@/config/constants";
 
 export const getProxies = async ({
   state = "active",
 }: {
   state: "active" | "inactive";
-}): Promise<RootResponse<Proxies>> => {
+}): Promise<ApiResponse<IProxy[]>> => {
   try {
-    const res = await apiClient.get(`${ENDPOINTS.GET_PROXIES}/${state}`);
+    const res = await apiClient.get(
+      `${process.env.NEXT_PUBLIC_GET_PROXIES!}/${state}`
+    );
     return res.data;
   } catch (error) {
     throw error;
@@ -18,7 +19,9 @@ export const getProxiesCount = async (): Promise<
   RootResponse<ProxiesCount>
 > => {
   try {
-    const res = await apiClient.get(`${ENDPOINTS.GET_PROXIES}/counts`);
+    const res = await apiClient.get(
+      `${process.env.NEXT_PUBLIC_GET_PROXIES!}/counts`
+    );
     return res.data;
   } catch (error) {
     throw error;
@@ -27,9 +30,12 @@ export const getProxiesCount = async (): Promise<
 
 export const editAuthProxy = async (
   values: EditAuthProxyCredentials
-): Promise<RootResponse<Proxies>> => {
+): Promise<RootResponse<IProxy[]>> => {
   try {
-    const res = await apiClient.post(ENDPOINTS.EDIT_PASSWORD_PROXY, values);
+    const res = await apiClient.post(
+      process.env.NEXT_PUBLIC_EDIT_PASSWORD_PROXY!,
+      values
+    );
     return res.data;
   } catch (error) {
     throw error;
@@ -38,9 +44,12 @@ export const editAuthProxy = async (
 
 export const editInfoProxy = async (
   values: EditInfoProxyCredentials
-): Promise<RootResponse<Proxies>> => {
+): Promise<RootResponse<IProxy[]>> => {
   try {
-    const res = await apiClient.post(ENDPOINTS.EDIT_PARENT_PROXY, values);
+    const res = await apiClient.post(
+      process.env.NEXT_PUBLIC_EDIT_PARENT_PROXY!,
+      values
+    );
     return res.data;
   } catch (error) {
     throw error;
@@ -49,9 +58,12 @@ export const editInfoProxy = async (
 
 export const fixProxy = async (
   values: FixProxyCredentials
-): Promise<RootResponse<Proxies>> => {
+): Promise<RootResponse<IProxy[]>> => {
   try {
-    const res = await apiClient.post(ENDPOINTS.FIX_PROXY, values);
+    const res = await apiClient.post(
+      process.env.NEXT_PUBLIC_FIX_PROXY!,
+      values
+    );
     return res.data;
   } catch (error) {
     throw error;
@@ -60,9 +72,12 @@ export const fixProxy = async (
 
 export const manageProxy = async (
   values: ManageProxyCredentials
-): Promise<RootResponse<Proxies>> => {
+): Promise<RootResponse<IProxy[]>> => {
   try {
-    const response = await apiClient.post(ENDPOINTS.MANAGE_PROXY, values);
+    const response = await apiClient.post(
+      process.env.NEXT_PUBLIC_MANAGE_PROXY!,
+      values
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -71,9 +86,12 @@ export const manageProxy = async (
 
 export const renewProxy = async (
   values: RenewProxyCredentials
-): Promise<RootResponse<Proxies>> => {
+): Promise<RootResponse<IProxy[]>> => {
   try {
-    const response = await apiClient.post(ENDPOINTS.RENEW_PROXY, values);
+    const response = await apiClient.post(
+      process.env.NEXT_PUBLIC_RENEW_PROXY!,
+      values
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -82,19 +100,26 @@ export const renewProxy = async (
 
 export const addProxy = async (
   values: AddProxyCredentials
-): Promise<RootResponse<Proxies>> => {
+): Promise<RootResponse<IProxy[]>> => {
   try {
-    const response = await apiClient.post(ENDPOINTS.CREATE_PROXY, values);
+    const response = await apiClient.post(
+      process.env.NEXT_PUBLIC_CREATE_PROXY!,
+      values
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
 export const activateProxy = async (
   values: ActivateProxyCredentials
-): Promise<RootResponse<Proxies>> => {
+): Promise<RootResponse<IProxy[]>> => {
   try {
-    const response = await apiClient.post(ENDPOINTS.CREATE_PROXY, values);
+    const response = await apiClient.post(
+      process.env.NEXT_PUBLIC_CREATE_PROXY!,
+      values
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -103,9 +128,11 @@ export const activateProxy = async (
 
 export const getProxyById = async (
   id: string
-): Promise<IGetProxyByIdResponse> => {
+): Promise<ApiResponse<IShortProxy>> => {
   try {
-    const res = await apiClient.get(`${ENDPOINTS.GET_PROXY_BY_ID}/${id}`);
+    const res = await apiClient.get(
+      `${process.env.NEXT_PUBLIC_GET_PROXY_BY_ID!}/${id}`
+    );
     return res.data;
   } catch (error) {
     throw error;

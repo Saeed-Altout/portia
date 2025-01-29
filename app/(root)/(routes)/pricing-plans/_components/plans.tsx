@@ -78,7 +78,7 @@ export const Plans = () => {
                   <p className="text-[#727282] text-lg font-medium">
                     {plan.package.name} plan
                   </p>
-                  {!!plan.is_top && (
+                  {!!plan.is_popular && (
                     <span className="bg-[#D4D4FF] text-[#03055E] text-sm leading-[20px] py-1 px-3 rounded-[16px] font-medium">
                       Popular
                     </span>

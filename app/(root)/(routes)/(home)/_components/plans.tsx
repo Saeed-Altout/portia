@@ -81,7 +81,7 @@ export const Plans = () => {
               }}
               className="relative shadow-xl rounded-[16px] border py-10 flex flex-col items-center justify-between"
             >
-              {!!plan.is_top && (
+              {!!plan.is_popular && (
                 <div className="absolute right-[20px] md:right-[-70px] top-[-30px] flex items-start justify-center">
                   <Image
                     src="/icons/arrow.svg"

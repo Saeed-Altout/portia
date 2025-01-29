@@ -1,11 +1,12 @@
 import { apiClient } from "@/lib/api";
-import { ENDPOINTS } from "@/config/constants";
 
 export const getProxyLocations = async (): Promise<
-  RootResponse<ILocation[]>
+  ApiResponse<ILocation[]>
 > => {
   try {
-    const response = await apiClient.get(ENDPOINTS.GET_PROXY_LOCATIONS);
+    const response = await apiClient.get(
+      process.env.NEXT_PUBLIC_GET_PROXY_LOCATIONS!
+    );
     return response.data;
   } catch (error) {
     throw error;
