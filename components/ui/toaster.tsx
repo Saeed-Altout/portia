@@ -37,28 +37,28 @@ export function Toaster() {
 
         return (
           <Toast key={id} className={toastStyles} {...props}>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col md:flex-row md:items-center md:gap-3">
               {status === "success" && (
-                <span className="flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#035E5C] rounded-full font-medium text-sm">
+                <span className="w-fit mb-2 md:mb-0 flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#035E5C] rounded-full font-medium text-sm">
                   Success
                 </span>
               )}
               {status === "warning" && (
-                <span className="flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#5E3B03] rounded-full font-medium text-sm">
+                <span className="w-fit mb-2 md:mb-0 flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#5E3B03] rounded-full font-medium text-sm">
                   Warning
                 </span>
               )}
               {status === "error" && (
-                <span className="flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#5E0311] rounded-full font-medium text-sm">
+                <span className="w-fit mb-2 md:mb-0 flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#5E0311] rounded-full font-medium text-sm">
                   Error
                 </span>
               )}
               {status === "new" && (
-                <span className="flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#03055E] rounded-full font-medium text-sm">
+                <span className="w-fit mb-2 md:mb-0 flex items-center justify-center py-1 px-3 bg-[#FFFFFF] text-[#03055E] rounded-full font-medium text-sm">
                   New Feature
                 </span>
               )}
-              <div className="flex-1 grid gap-1">
+              <div className="grid gap-1 flex-1">
                 {title && (
                   <ToastTitle className="font-semibold text-sm">
                     {title}
@@ -79,7 +79,7 @@ export function Toaster() {
       })}
 
       {/* Toast Viewport */}
-      <ToastViewport className="fixed bottom-4 right-4 w-full max-w-xs" />
+      <ToastViewport className="fixed bottom-4 right-4 w-full sm:max-w-xs px-4 sm:px-0" />
     </ToastProvider>
   );
 }
