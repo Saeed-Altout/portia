@@ -11,6 +11,7 @@ import {
   getUserBalance,
   getUser,
   getSupportLinks,
+  addFcmToken,
 } from "@/services/settings";
 import { useResponse } from "@/hooks/use-response";
 import { setUser } from "@/lib/cookie";
@@ -131,5 +132,12 @@ export const useSupportLinksQuery = () => {
     queryKey: ["support-links"],
     queryFn: getSupportLinks,
     staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useAddFcmTokenMutation = () => {
+  return useMutation({
+    mutationKey: ["add-fcm-token"],
+    mutationFn: (values: { fcm_token: string }) => addFcmToken(values),
   });
 };

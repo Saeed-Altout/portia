@@ -140,3 +140,17 @@ export const getUserBalance = async (): Promise<
     throw error;
   }
 };
+
+export const addFcmToken = async (values: {
+  fcm_token: string;
+}): Promise<RootResponse<null>> => {
+  try {
+    const res = await apiClient.post(
+      process.env.NEXT_PUBLIC_ADD_FCM_TOKEN!,
+      values
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

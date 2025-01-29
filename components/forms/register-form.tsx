@@ -27,7 +27,6 @@ import {
   usePasswordControl,
 } from "@/hooks/use-password-control";
 import { ROUTES } from "@/config/constants";
-import { useResponse } from "@/hooks/use-response";
 import { useSearchParams } from "next/navigation";
 
 export const formSchema = z.object({
@@ -65,7 +64,6 @@ export const RegisterForm = () => {
     passwordType: "auth",
   });
   const { mutate, isPending } = useRegisterMutation();
-  const { Error } = useResponse();
   const code = useSearchParams().get("code");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -81,15 +79,11 @@ export const RegisterForm = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const fcmToken = getFcmToken();
 
-    if (!fcmToken) {
-      Error({
-        error: null,
-        message: "Unable to proceed. Please try again.",
-      });
-      return;
-    }
-
-    mutate({ ...values, fcm_token: fcmToken, referred_by: code ?? undefined });
+    mutate({
+      ...values,
+      fcm_token: fcmToken ?? "",
+      referred_by: code ?? "",
+    });
   };
 
   return (

@@ -9,6 +9,7 @@ export const getFcmToken = () => {
 
   return fcmToken;
 };
+
 export const setFcmToken = (token: string) => {
   localStorage.setItem(FCM_TOKEN_KEY, token);
 };
