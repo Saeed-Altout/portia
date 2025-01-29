@@ -13,8 +13,7 @@ import { ErrorApi } from "@/components/pages/error-api";
 import { LoadingApi } from "@/components/pages/loading-api";
 
 import { useAuthStore } from "@/stores";
-import { useData } from "@/app/dashboard/(routes)/(root)/_components/root-context";
-import { getUser } from "@/lib/cookie";
+import { useData } from "./root-context";
 
 export const RootClient = () => {
   const { user } = useAuthStore();
