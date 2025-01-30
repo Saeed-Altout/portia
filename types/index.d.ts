@@ -63,7 +63,7 @@ declare type IRegisterCredentials = {
   last_name: string;
   email: string;
   password: string;
-  referred_by?: string;
+  referred_code?: string;
   fcm_token: string;
 };
 

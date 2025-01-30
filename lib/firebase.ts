@@ -1,64 +1,106 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { setFcmToken } from "./local-storage";
+import { getFcmToken, setFcmToken } from "./local-storage";
+import { notificationHandler } from "./notification-handler";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD6ViOS3uD-XwyOGT1z_ssPdOqV0MN-6Rg",
-  authDomain: "portia-57398.firebaseapp.com",
-  projectId: "portia-57398",
-  storageBucket: "portia-57398.firebasestorage.app",
-  messagingSenderId: "513569291218",
-  appId: "1:513569291218:web:8c98cdccff4f97b3fd660b",
-  measurementId: "G-FQD36DDW6Q",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase App
 const firebaseApp = initializeApp(firebaseConfig);
 
-// Check for `window` before initializing messaging to prevent SSR issues
+// Initialize messaging only on client-side
 export const messaging =
-  typeof window !== "undefined" && "serviceWorker" in navigator
-    ? getMessaging(firebaseApp)
-    : null;
+  typeof window !== "undefined" ? getMessaging(firebaseApp) : null;
 
 // Request permissions and generate FCM token
 export const requestPermissions = async () => {
-  if (!messaging) {
-    console.error("Firebase Messaging is not supported in this environment.");
-    return;
-  }
-
   try {
     const permission = await Notification.requestPermission();
-
     if (permission === "granted") {
+      const messaging = getMessaging(firebaseApp);
       const token = await getToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       });
 
-      if (token) setFcmToken(token);
-    } else {
-      console.error(
-        "Permission for notifications was denied. Please enable it from browser settings."
-      );
+      if (token) {
+        setFcmToken(token);
+        return token;
+      }
     }
+    return null;
   } catch (error) {
-    console.error("FCM Token generation failed:", error);
+    console.error("Notification permission error:", error);
+    return null;
   }
 };
 
-// Listener for incoming messages
+// Listener for incoming messages with proper type safety
 export const onMessageListener = () => {
   return new Promise((resolve, reject) => {
     if (!messaging) {
-      console.error("Firebase Messaging is not initialized.");
-      reject(new Error("Firebase Messaging is not initialized."));
+      reject(new Error("Firebase Messaging is not initialized"));
       return;
     }
 
-    onMessage(messaging, (payload) => {
-      console.log("Message received:", payload);
-      resolve(payload);
-    });
+    try {
+      return onMessage(messaging, (payload) => {
+        resolve(payload);
+      });
+    } catch (error) {
+      reject(error);
+    }
   });
+};
+
+export const initializeFirebaseMessaging = async () => {
+  try {
+    const existingToken = getFcmToken();
+    if (existingToken) return existingToken;
+
+    const currentPermission = await notificationHandler.checkPermission();
+
+    if (currentPermission === "denied") {
+      notificationHandler.showBlockedPermissionDialog();
+      return null;
+    }
+
+    if (currentPermission === "default") {
+      return new Promise((resolve) => {
+        notificationHandler.showPermissionPrompt({
+          onAllow: async () => {
+            const permission = await notificationHandler.requestPermission();
+            if (permission === "granted") {
+              const token = await requestPermissions();
+              resolve(token);
+            } else {
+              resolve(null);
+            }
+          },
+          onDeny: () => {
+            resolve(null);
+          },
+          onDismiss: () => {
+            resolve(null);
+          },
+        });
+      });
+    }
+
+    if (currentPermission === "granted") {
+      return await requestPermissions();
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Firebase messaging initialization error:", error);
+    return null;
+  }
 };

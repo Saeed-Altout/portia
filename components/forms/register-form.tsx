@@ -82,7 +82,7 @@ export const RegisterForm = () => {
     mutate({
       ...values,
       fcm_token: fcmToken ?? "",
-      referred_by: code ?? "",
+      referred_code: code ?? "",
     });
   };
 
