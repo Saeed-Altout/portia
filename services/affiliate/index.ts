@@ -3,7 +3,7 @@ import { filterParams } from "@/utils/filter-params";
 
 export const getAffiliateHistories = async (
   params: Record<string, any>
-): Promise<ApiResponse<IAffiliateHistoriesData>> => {
+): Promise<ApiResponse<IAffiliateHistories>> => {
   const filteredParams = filterParams(params);
   try {
     const response = await apiClient.get(
@@ -17,7 +17,7 @@ export const getAffiliateHistories = async (
 };
 
 export const getAffiliateStatistics = async (): Promise<
-  ApiResponse<IAffiliateStatisticsData>
+  ApiResponse<IAffiliateStatistics>
 > => {
   try {
     const response = await apiClient.get(

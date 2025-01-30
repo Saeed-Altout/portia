@@ -41,7 +41,7 @@ export const useEditAuthProxyMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["edit-auth-proxy"],
-    mutationFn: (values: EditAuthProxyCredentials) => editAuthProxy(values),
+    mutationFn: (values: IEditAuthProxyCredentials) => editAuthProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
       Success({ message: data.message || "Edit auth proxy Success." });
@@ -56,7 +56,7 @@ export const useEditInfoProxyMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["edit-info-proxy"],
-    mutationFn: (values: EditInfoProxyCredentials) => editInfoProxy(values),
+    mutationFn: (values: IEditInfoProxyCredentials) => editInfoProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
       Success({ message: data.message || "Edit info proxy Success." });
@@ -71,7 +71,7 @@ export const useFixProxyMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["fix-proxy"],
-    mutationFn: (values: FixProxyCredentials) => fixProxy(values),
+    mutationFn: (values: IFixProxyCredentials) => fixProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
       Success({ message: data.message || "Fix proxy Success." });
@@ -86,7 +86,7 @@ export const useManageProxyMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["manage-proxy"],
-    mutationFn: (values: ManageProxyCredentials) => manageProxy(values),
+    mutationFn: (values: IManageProxyCredentials) => manageProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
       Success({ message: data.message || "Manage proxy Success." });
@@ -101,7 +101,7 @@ export const useRenewProxyMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["renew-proxy"],
-    mutationFn: (values: RenewProxyCredentials) => renewProxy(values),
+    mutationFn: (values: IRenewProxyCredentials) => renewProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
       Success({ message: data.message || "Renew proxy Success." });
@@ -116,7 +116,7 @@ export const useAddProxyMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["add-proxy"],
-    mutationFn: (values: AddProxyCredentials) => addProxy(values),
+    mutationFn: (values: IAddProxyCredentials) => addProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["proxies"] });
       Success({ message: data.message || "Add proxy Success." });
@@ -132,7 +132,7 @@ export const useActivateProxyMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["activate-proxy"],
-    mutationFn: (values: ActivateProxyCredentials) => activateProxy(values),
+    mutationFn: (values: IActivateProxyCredentials) => activateProxy(values),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["offers"] });
       queryClient.invalidateQueries({ queryKey: ["proxies"] });

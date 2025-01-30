@@ -15,7 +15,7 @@ export const loginWithGoogle = async (referred_by?: string): Promise<void> => {
   }
 };
 
-export const logout = async (): Promise<LogoutResponse> => {
+export const logout = async (): Promise<ILogoutResponse> => {
   try {
     const response = await apiClient.get(ENDPOINTS.LOGOUT);
     return response.data;
@@ -25,8 +25,8 @@ export const logout = async (): Promise<LogoutResponse> => {
 };
 
 export const login = async (
-  values: LoginCredentials
-): Promise<LoginResponse> => {
+  values: ILoginCredentials
+): Promise<ILoginResponse> => {
   try {
     const response = await apiClient.post(ENDPOINTS.LOGIN, values);
     return response.data;
@@ -36,8 +36,8 @@ export const login = async (
 };
 
 export const register = async (
-  values: RegisterCredentials
-): Promise<RegisterResponse> => {
+  values: IRegisterCredentials
+): Promise<RootResponse<null>> => {
   try {
     const response = await apiClient.post(ENDPOINTS.REGISTER, values);
     return response.data;
@@ -47,8 +47,8 @@ export const register = async (
 };
 
 export const resendVerificationCode = async (
-  values: ResendVerificationCodeCredentials
-): Promise<ResendVerificationCodeResponse> => {
+  values: IResendVerificationCodeCredentials
+): Promise<RootResponse<null>> => {
   try {
     const response = await apiClient.post(
       ENDPOINTS.RESEND_VERIFICATION_CODE,
@@ -61,8 +61,8 @@ export const resendVerificationCode = async (
 };
 
 export const sendResetEmail = async (
-  values: SendResetEmailCredentials
-): Promise<SendResetEmailResponse> => {
+  values: ISendResetEmailCredentials
+): Promise<RootResponse<null>> => {
   try {
     const response = await apiClient.post(ENDPOINTS.SEND_RESET_EMAIL, values);
     return response.data;
@@ -72,8 +72,8 @@ export const sendResetEmail = async (
 };
 
 export const setNewPassword = async (
-  values: SetNewPasswordCredentials
-): Promise<SetNewPasswordResponse> => {
+  values: ISetNewPasswordCredentials
+): Promise<ISetNewPasswordResponse> => {
   try {
     const response = await apiClient.post(
       ENDPOINTS.SET_NEW_PASSWORD,
@@ -90,8 +90,8 @@ export const setNewPassword = async (
 };
 
 export const verificationCode = async (
-  values: VerificationCodeCredentials
-): Promise<VerificationCodeResponse> => {
+  values: IVerificationCodeCredentials
+): Promise<IVerificationCodeResponse> => {
   try {
     const response = await apiClient.post(ENDPOINTS.VERIFY_CODE, values);
     return response.data;

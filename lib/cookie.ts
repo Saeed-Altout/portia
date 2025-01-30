@@ -11,7 +11,7 @@ const initialUser: IUser = {
   edit_profile: false,
 };
 
-export const setUser = (user: User, options?: any) => {
+export const setUser = (user: IUser, options?: any) => {
   Cookies.set(USER_KEY, JSON.stringify(user), {
     expires: 10,
     secure: process.env.NODE_ENV === "production",

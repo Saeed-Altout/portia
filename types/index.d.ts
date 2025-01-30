@@ -1,44 +1,44 @@
-// COMMON TYPES
-declare type Root<T> = {
-  status: boolean;
-  data: T;
-};
-
+/**
+ * Base response type for API responses
+ * @template T The type of data contained in the response
+ */
 declare type RootResponse<T> = {
   status: boolean;
   message: string | string[];
   data: T;
 };
 
-declare type User = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  referred_code: string;
+/**
+ * Generic API response type
+ * @template T The type of data contained in the response
+ */
+declare type ApiResponse<T> = {
+  status: boolean;
+  data: T;
 };
 
-// GET TYPES
-declare type Affiliate = {
-  id: number;
-  user_id: number;
-  amount: number;
-  created_at: Date | string;
-  updated_at: Date | string;
-};
-declare type Affiliates = Affiliate[];
-declare type AffiliateStatistics = {
-  this_month_earnings: number;
-  this_year_earnings: number;
-  total_earnings: number;
+/**
+ * Response type specifically for map data
+ * @template T The type of countries data
+ */
+declare type ApiMapResponse<T> = {
+  status: string;
+  countries: T;
 };
 
-// POST TYPES
-declare type LoginCredentials = {
+// Authentication Types
+/**
+ * Credentials required for user login
+ */
+declare type ILoginCredentials = {
   email: string;
   password: string;
 };
-declare type LoginResponse = {
+
+/**
+ * Response structure for successful login
+ */
+declare type ILoginResponse = {
   status: boolean;
   data: IUser;
   message: string;
@@ -46,11 +46,19 @@ declare type LoginResponse = {
   token_type: string;
   expires_in: string;
 };
-declare type LogoutResponse = {
+
+/**
+ * Response structure for logout
+ */
+declare type ILogoutResponse = {
   success: boolean;
   message: string;
 };
-declare type RegisterCredentials = {
+
+/**
+ * Registration credentials structure
+ */
+declare type IRegisterCredentials = {
   first_name: string;
   last_name: string;
   email: string;
@@ -58,33 +66,53 @@ declare type RegisterCredentials = {
   referred_by?: string;
   fcm_token: string;
 };
-declare type RegisterResponse = RootResponse<null>;
-declare type ResendVerificationCodeCredentials = {
-  email: string;
-};
-declare type ResendVerificationCodeResponse = RootResponse<null>;
-declare type SendResetEmailCredentials = {
-  email: string;
-};
-declare type SendResetEmailResponse = RootResponse<null>;
 
-declare type SetNewPasswordCredentials = {
+declare type IRegisterResponse = null;
+
+/**
+ * Credentials for verification code resend
+ */
+declare type IResendVerificationCodeCredentials = {
+  email: string;
+};
+
+declare type IResendVerificationCodeResponse = null;
+
+/**
+ * Credentials for password reset email
+ */
+declare type ISendResetEmailCredentials = {
+  email: string;
+};
+
+declare type ISendResetEmailResponse = null;
+
+/**
+ * Credentials for setting new password
+ */
+declare type ISetNewPasswordCredentials = {
   password: string;
   password_confirmation: string;
   token: string;
 };
-declare type SetNewPasswordResponse = {
+
+declare type ISetNewPasswordResponse = {
   success: boolean;
   message: string | string[];
   access_token: string;
   token_type: string;
   expires_in: Date | string;
 };
-declare type VerificationCodeCredentials = {
+
+/**
+ * Verification code submission structure
+ */
+declare type IVerificationCodeCredentials = {
   email: string;
   code: string;
 };
-declare type VerificationCodeResponse = {
+
+declare type IVerificationCodeResponse = {
   success: boolean;
   message: string | string[];
   access_token: string;
@@ -92,447 +120,10 @@ declare type VerificationCodeResponse = {
   expires_in: string;
 };
 
-declare type DepositCredentials = {
-  payment_method: string;
-  amount: string;
-};
-declare type DepositResponse = RootResponse<{ url: string }>;
-declare type GetWayPaymentResponse = RootResponse<string[]>;
-declare type DepositHistory = {
-  id: number;
-  payment_method: string;
-  amount: string;
-  created_at: Date | string;
-};
-declare type DepositHistories = DepositHistory[];
-declare type DepositStatistics = {
-  monthly_deposits: number;
-  yearly_deposits: number;
-  all_time_deposits: number;
-};
-
-declare type Faq = {
-  id: number;
-  question: string;
-  answer: string;
-  created_at: Date | string;
-  updated_at: Date | string;
-};
-declare type Faqs = Faq[];
-declare type GetFaqsResponse = ApiResponse<Faqs>;
-declare type Location = {
-  id: number;
-  http_port: number;
-  socks_port: number;
-  service_provider_name: string;
-  country_name: string;
-  city_name: string;
-  rotation_time: any;
-  is_available: boolean;
-  service_provider_id: number;
-  country_id: number;
-  city_id: number;
-  status: string;
-  package_id: number;
-  package_name: string;
-};
-declare type Locations = Location[];
-declare type Country = {
-  id: number;
-  name: string;
-  cities_count: number;
-  parents_count: number;
-  latitude: number;
-  longitude: number;
-  country_key: string;
-  flag_url: string;
-};
-declare type Countries = Country[];
-declare type GetDataMapResponse = {
-  status: boolean;
-  message: string | string[];
-  countries: Countries;
-};
-declare type OfferFeature = {
-  id: number;
-  feature_group_id: number;
-  name: string;
-  description: string;
-  value: string | null;
-};
-declare type OfferFeatureGroup = {
-  id: number;
-  name: string;
-  package_id: number;
-  features: OfferFeature[];
-};
-declare type OfferPackage = {
-  id: number;
-  name: string;
-  description: string;
-  feature_groups: OfferFeatureGroup[];
-};
-declare type Offer = {
-  id: number;
-  amount: number;
-  cost: string;
-  is_popular: boolean;
-  plan: string;
-  package: OfferPackage;
-};
-declare type Offers = Offer[];
-declare type OfferFeatures = OfferFeature[];
-declare type OfferFeatureGroups = OfferFeatureGroup[];
-declare type OfferPackages = OfferPackage[];
-
-declare type FeaturesOffer = {
-  id: number;
-  name: string;
-  name: string;
-  packages: {
-    id: number;
-    package_id: number;
-    value: string;
-  }[];
-};
-declare type FeaturesOffers = FeaturesOffer[];
-
-declare type PlanOffer = {
-  id: number;
-  amount: number;
-  cost: string;
-  is_top: number;
-  plan: string;
-  package: {
-    id: number;
-    name: string;
-    description: string;
-    feature_groups: {
-      id: number;
-      name: string;
-      package_id: number;
-      features: {
-        id: number;
-        feature_group_id: number;
-        name: string;
-        description: string;
-        value: string;
-      }[];
-    }[];
-  };
-};
-declare type PlansOffer = PlanOffer[];
-declare type Offer = {
-  id: number;
-  amount: number;
-  cost: string;
-  is_top: number;
-  plan: string;
-  package: OfferPackage;
-};
-declare type Offers = Offer[];
-
-declare type OfferPlan = {
-  id: number;
-  cost: string;
-  description: string;
-  plan_id: number;
-  package_id: number;
-  title: string;
-  is_available: boolean;
-  color: string;
-};
-declare type OffersPlan = OfferPlan[];
-declare type OfferPackage = {
-  package_id: number;
-  package_name: string;
-  plans: {
-    id: number;
-    name: string;
-  }[];
-};
-
-declare type OfferPackages = OfferPackage[];
-declare type Proxy = {
-  id: number;
-  proxy_id: string;
-  plan_id: number;
-  plan_name: string;
-  package_id: string;
-  package_name: string;
-  parent_proxy_id: string;
-  rotation_time: string;
-  is_active: number;
-  re_new: number;
-  protocol: string;
-  protocol_port: number;
-  country_name: string;
-  city_name: string;
-  service_provider: string;
-  username: string;
-  password: string;
-  ip_addr: string | null;
-  amount: number;
-  duration: number;
-  price: string;
-  expire_at: string;
-  created_at: string | null;
-  updated_at: string | null;
-};
-
-declare type Proxies = Proxy[];
-declare type ProxiesCount = {
-  total: number;
-  active: number;
-  inactive: number;
-};
-
-declare type EditAuthProxyCredentials = {
-  proxy_id: string;
-  password: string;
-};
-
-declare type EditInfoProxyCredentials = {
-  parent_proxy_id: string;
-  proxy_id: string;
-  protocol: string;
-};
-
-declare type FixProxyCredentials = {
-  pkg_id: string;
-  proxy_id: string;
-};
-
-declare type ManageProxyCredentials = {
-  proxy_id: string;
-  parent_proxy_id: string;
-  protocol: string;
-  password: string;
-};
-declare type AddProxyCredentials = {
-  parent_proxy_id: any;
-  pkg_id: any;
-  protocol: string;
-  duration: string;
-  username: string;
-  password: string;
-};
-declare type ActivateProxyCredentials = {
-  parent_proxy_id: any;
-  pkg_id: any;
-  protocol: string;
-  duration: string;
-  username: string;
-  password: string;
-};
-
-declare type RenewProxyCredentials = {
-  proxy_id: string;
-  duration: string;
-  parent_proxy_id: string;
-  protocol?: string;
-  password?: string;
-};
-
-declare type Review = {
-  id: number;
-  user_name: string;
-  specialization: string;
-  message: string;
-  rating: number;
-  user_image: string;
-};
-declare type UpdateUserProfileCredentials = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  current_password: string;
-  new_password: string;
-  new_password_confirmation: string;
-};
-declare type SendContactMessageCredentials = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  message: string;
-};
-declare type SocialMediaAccount = {
-  id: number;
-  name: string;
-  icon_url: string;
-  url: string;
-};
-declare type Notification = {
-  id: string;
-  title: string;
-  message: string;
-  type: string;
-  date: Date | string;
-  read_at: string | null;
-};
-
-declare type Notifications = Notification[];
-
-// //////////////////////////////////////////////
-
-declare type ApiResponse<T> = {
-  status: boolean;
-  data: T;
-};
-declare type RootApi<T> = {
-  status: boolean;
-  data: T;
-};
-
-declare type IDepositHistory = {
-  id: number;
-  payment_method: string;
-  amount: string;
-  created_at: string | Date;
-  status: string;
-};
-
-declare type IGetDepositsHistoriesResponse = RootApi<{
-  current_page: number;
-  data: IDepositHistory[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: {
-    url: string;
-    label: string;
-    active: boolean;
-  }[];
-  next_page_url: string;
-  path: string;
-  per_page: number;
-  prev_page_url: string;
-  to: number;
-  total: number;
-}>;
-
-declare type IDepositStatistics = {
-  monthly_deposits: number;
-  yearly_deposits: number;
-  all_time_deposits: number;
-};
-
-declare type IGetDepositStatisticsResponse = RootApi<IDepositStatistics>;
-
-declare type IGetAffiliatesHistoriesResponse = RootApi<{
-  current_page: number;
-  data: IAffiliateHistory[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: {
-    url: string;
-    label: string;
-    active: boolean;
-  }[];
-  next_page_url: string;
-  path: string;
-  per_page: number;
-  prev_page_url: string;
-  to: number;
-  total: number;
-}>;
-
-declare type IAffiliateStatistics = {
-  this_month_earnings: number;
-  this_year_earnings: number;
-  total_earnings: number;
-};
-
-declare type IGetAffiliateStatisticsResponse = RootApi<IAffiliateStatistics>;
-
-declare type IProxy = {};
-declare type IActivateProxy = {
-  parent_proxy_id: string;
-  package_id: number;
-  package_name: string;
-  plan_id: number;
-  plan: string;
-  duration: number;
-  port: string;
-  service_provider_name: string;
-  country_name: string;
-  city_name: string;
-  amount: number;
-  rotation_time: number;
-};
-
-declare type IGetProxyByIdResponse = RootApi<IActivateProxy>;
-
-declare type IOfferPlan = {
-  id: number;
-  cost: string;
-  description: string;
-  title: string;
-  plan_id: number;
-  package_id: number;
-  is_available: boolean;
-  color: string;
-};
-
-declare type IGetOffersPlansResponse = RootApi<IOfferPlan[]>;
-
-declare type IPackagePlan = {
-  package_id: number;
-  package_name: string;
-  plans: {
-    id: number;
-    name: string;
-  }[];
-};
-
-declare type IGetPackagesPlansResponse = RootApi<IPackagePlan[]>;
-
-declare type ICostPlans = {
-  day: {
-    value: number;
-    price: number;
-    duration: number;
-  }[];
-  week: {
-    value: number;
-    price: number;
-    duration: number;
-  }[];
-  month: {
-    value: number;
-    price: number;
-    duration: number;
-  }[];
-  hour: {
-    value: number;
-    price: number;
-    duration: number;
-  }[];
-};
-declare type IGetCostPlansResponse = RootApi<ICostPlans>;
-
-declare type IFaq = {
-  id: number;
-  question: string;
-  answer: string;
-  created_at: Date;
-  updated_at: Date;
-};
-
-declare type IGetFaqsResponse = RootApi<IFaq[]>;
-
-declare type ISocialMediaLink = {
-  id: number;
-  name: string;
-  icon_url: string;
-  url: string;
-};
-declare type IGetSocialMediaLinksResponse = RootApi<ISocialMediaLink[]>;
-
+// User Related Types
+/**
+ * User profile information
+ */
 declare type IUser = {
   id: number;
   first_name: string;
@@ -545,154 +136,22 @@ declare type IUser = {
 
 declare type IGetUserResponse = RootApi<IUser>;
 
-declare type INotification = {
-  id: string;
-  title: string;
-  message: string;
-  type: string;
-  date: string | Data;
-  read_at: string | Data;
+/**
+ * User profile update credentials
+ */
+declare type IUpdateUserProfileCredentials = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  current_password: string;
+  new_password: string;
+  new_password_confirmation: string;
 };
 
-declare type ILink = {
-  id: number;
-  name: string;
-  icon_url: string;
-  url: string;
-};
-
-declare type IAffiliateHistory = {
-  id: number;
-  user_id: number;
-  amount: number;
-  created_at: Date;
-};
-
-declare type PaginationLinks = {
-  url: string | null;
-  label: string;
-  active: boolean;
-};
-
-declare type IAffiliateHistoriesData = {
-  current_page: number;
-  data: IAffiliateHistory[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: PaginationLinks[];
-  next_page_url: string | null;
-  path: string;
-  per_page: number;
-  prev_page_url: string | null;
-  to: number;
-  total: number;
-};
-
-declare type IAffiliateStatisticsData = {
-  this_month_earnings: number;
-  this_year_earnings: number;
-  total_earnings: number;
-};
-
-declare type IDepositHistory = {
-  id: number;
-  payment_method: string;
-  amount: string;
-  created_at: Date;
-  status: string;
-};
-
-declare type IDepositHistoriesData = {
-  current_page: number;
-  data: IDepositHistory[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: PaginationLinks[];
-  next_page_url: string | null;
-  path: string;
-  per_page: number;
-  prev_page_url: string | null;
-  to: number;
-  total: number;
-};
-
-declare type IDepositStatisticsData = {
-  monthly_deposits: number;
-  yearly_deposits: number;
-  all_time_deposits: number;
-};
-
-declare type IFaq = {
-  id: number;
-  question: string;
-  answer: string;
-  created_at: Date;
-  updated_at: Date;
-};
-
-declare type IMapData = {
-  id: number;
-  name: string;
-  cities_count: number;
-  parents_count: number;
-  latitude: number;
-  longitude: number;
-  country_key: string;
-  flag_url: string;
-};
-
-declare type ApiMapResponse<T> = {
-  status: string;
-  countries: T;
-};
-
-declare type IOfferData = {
-  id: number;
-  amount: any;
-  cost: string;
-  is_popular: any;
-  plan: string;
-  package: {
-    id: number;
-    name: string;
-    description: string;
-    feature_groups: {
-      id: number;
-      name: string;
-      features: {
-        id: number;
-        name: string;
-        description: string;
-        value: string;
-      }[];
-    }[];
-  };
-};
-
-declare type IFeatureData = {
-  id: number;
-  name: string;
-  description: string;
-  packages: {
-    id: number;
-    package_id: number;
-    value: string;
-  }[];
-};
-
-declare type IReview = {
-  id: number;
-  user_name: string;
-  specialization: string;
-  message: string;
-  rating: number;
-  user_image: string;
-};
-
+// Proxy Related Types
+/**
+ * Basic proxy information
+ */
 declare type IProxy = {
   id: number;
   proxy_id: string;
@@ -720,6 +179,9 @@ declare type IProxy = {
   updated_at: Date;
 };
 
+/**
+ * Simplified proxy information
+ */
 declare type IShortProxy = {
   parent_proxy_id: string;
   package_id: number;
@@ -735,25 +197,235 @@ declare type IShortProxy = {
   rotation_time: number;
 };
 
-declare type IPackagePlan = {
+/**
+ * Proxy activation details
+ */
+declare type IActivateProxy = {
+  parent_proxy_id: string;
   package_id: number;
   package_name: string;
-  plans: {
-    id: number;
-    name: string;
-  }[];
+  plan_id: number;
+  plan: string;
+  duration: number;
+  port: string;
+  service_provider_name: string;
+  country_name: string;
+  city_name: string;
+  amount: number;
+  rotation_time: number;
 };
 
-declare type IOfferPlan = {
-  id: number;
-  cost: string;
-  description: string;
-  title: string;
-  plan_id: number;
-  package_id: number;
-  is_available: boolean;
-  color: string;
+declare type IGetProxyByIdResponse = RootApi<IActivateProxy>;
+
+/**
+ * Proxy counts statistics
+ */
+declare type IProxiesCount = {
+  total: number;
+  active: number;
+  inactive: number;
 };
+
+// Proxy Management Credentials
+declare type IEditAuthProxyCredentials = {
+  proxy_id: string;
+  password: string;
+};
+
+declare type IEditInfoProxyCredentials = {
+  parent_proxy_id: string;
+  proxy_id: string;
+  protocol: string;
+};
+
+declare type IFixProxyCredentials = {
+  pkg_id: string;
+  proxy_id: string;
+};
+
+declare type IManageProxyCredentials = {
+  proxy_id: string;
+  parent_proxy_id: string;
+  protocol: string;
+  password: string;
+};
+
+declare type IAddProxyCredentials = {
+  parent_proxy_id: any;
+  pkg_id: any;
+  protocol: string;
+  duration: string;
+  username: string;
+  password: string;
+};
+
+declare type IActivateProxyCredentials = {
+  parent_proxy_id: any;
+  pkg_id: any;
+  protocol: string;
+  duration: string;
+  username: string;
+  password: string;
+};
+
+declare type IRenewProxyCredentials = {
+  proxy_id: string;
+  duration: string;
+  parent_proxy_id: string;
+  protocol?: string;
+  password?: string;
+};
+
+// Financial Types
+/**
+ * Deposit transaction information
+ */
+declare type IDepositCredentials = {
+  payment_method: string;
+  amount: string;
+};
+
+declare type IDepositResponse = {
+  url: string;
+};
+
+declare type IDepositHistory = {
+  id: number;
+  payment_method: string;
+  amount: string;
+  created_at: Date;
+  status: string;
+};
+
+declare type IDepositHistories = {
+  current_page: number;
+  data: IDepositHistory[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLinks[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+};
+
+declare type IDepositStatistics = {
+  monthly_deposits: number;
+  yearly_deposits: number;
+  all_time_deposits: number;
+};
+
+// Affiliate Related Types
+/**
+ * Affiliate transaction history
+ */
+declare type IAffiliateHistory = {
+  id: number;
+  user_id: number;
+  amount: number;
+  created_at: Date;
+};
+
+declare type IAffiliateHistories = {
+  current_page: number;
+  data: IAffiliateHistory[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLinks[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+};
+
+declare type IAffiliateStatistics = {
+  this_month_earnings: number;
+  this_year_earnings: number;
+  total_earnings: number;
+};
+
+// Other Types
+/**
+ * FAQ entry structure
+ */
+declare type IFaq = {
+  id: number;
+  question: string;
+  answer: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+declare type IGetFaqsResponse = RootApi<IFaq[]>;
+
+/**
+ * Social media link structure
+ */
+declare type ISocialMediaLink = {
+  id: number;
+  name: string;
+  icon_url: string;
+  url: string;
+};
+
+declare type IGetSocialMediaLinksResponse = RootApi<ISocialMediaLink[]>;
+
+/**
+ * Generic link structure
+ */
+declare type ILink = {
+  id: number;
+  name: string;
+  icon_url: string;
+  url: string;
+};
+
+/**
+ * Notification structure
+ */
+declare type INotification = {
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  date: string | Data;
+  read_at: string | Data;
+};
+
+/**
+ * Pagination link structure
+ */
+declare type PaginationLinks = {
+  url: string | null;
+  label: string;
+  active: boolean;
+};
+
+/**
+ * Map data structure
+ */
+declare type IMapData = {
+  id: number;
+  name: string;
+  cities_count: number;
+  parents_count: number;
+  latitude: number;
+  longitude: number;
+  country_key: string;
+  flag_url: string;
+};
+
+/**
+ * Location information structure
+ */
 declare type ILocation = {
   id: number;
   service_provider_id: number;
@@ -767,4 +439,143 @@ declare type ILocation = {
   status: string;
   package_id: number;
   package_name: string;
+};
+
+/**
+ * Offer plan structure
+ */
+
+declare type IOfferPlan = {
+  id: number;
+  cost: string;
+  description: string;
+  title: string;
+  plan_id: number;
+  package_id: number;
+  is_available: boolean;
+  color: string;
+};
+
+/**
+ * Package plan structure
+ */
+declare type IPackagePlan = {
+  package_id: number;
+  package_name: string;
+  plans: {
+    id: number;
+    name: string;
+  }[];
+};
+
+/**
+ * Cost plans structure
+ */
+declare type ICostPlans = {
+  day: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+  week: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+  month: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+  hour: {
+    value: number;
+    price: number;
+    duration: number;
+  }[];
+};
+
+/**
+ * Offer data structure
+ */
+declare type IOfferData = {
+  id: number;
+  amount: any;
+  cost: string;
+  is_popular: any;
+  plan: string;
+  package: {
+    id: number;
+    name: string;
+    description: string;
+    feature_groups: {
+      id: number;
+      name: string;
+      features: {
+        id: number;
+        name: string;
+        description: string;
+        value: string;
+      }[];
+    }[];
+  };
+};
+
+/**
+ * Feature data structure
+ */
+declare type IFeatureData = {
+  id: number;
+  name: string;
+  description: string;
+  packages: {
+    id: number;
+    package_id: number;
+    value: string;
+  }[];
+};
+
+/**
+ * Review data structure
+ */
+declare type IReview = {
+  id: number;
+  user_name: string;
+  specialization: string;
+  message: string;
+  rating: number;
+  user_image: string;
+};
+
+/**
+ * Package plan structure
+ */
+declare type IPackagePlan = {
+  package_id: number;
+  package_name: string;
+  plans: {
+    id: number;
+    name: string;
+  }[];
+};
+
+/**
+ * Offer plan structure
+ */
+declare type IOfferPlan = {
+  id: number;
+  cost: string;
+  description: string;
+  title: string;
+  plan_id: number;
+  package_id: number;
+  is_available: boolean;
+  color: string;
+};
+
+declare type ISendContactMessageCredentials = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  message: string;
 };

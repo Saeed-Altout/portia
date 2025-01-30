@@ -29,7 +29,7 @@ export const useUpdateUserProfileMutation = () => {
 
   return useMutation({
     mutationKey: ["update-user-profile"],
-    mutationFn: (values: UpdateUserProfileCredentials) =>
+    mutationFn: (values: IUpdateUserProfileCredentials) =>
       updateUserProfile(values),
     onSuccess: async (data) => {
       const user = await getUser();
@@ -49,7 +49,7 @@ export const useSendContactMessageMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["send-contact-message"],
-    mutationFn: (values: SendContactMessageCredentials) =>
+    mutationFn: (values: ISendContactMessageCredentials) =>
       sendContactMessage(values),
     onSuccess: (data) => {
       Success({ message: data.message || "Send your message Success." });

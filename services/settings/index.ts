@@ -1,5 +1,6 @@
 import { ENDPOINTS } from "@/config/constants";
 import { apiClient } from "@/lib/api";
+import { filterParams } from "@/utils/filter-params";
 
 export const getUser = async (): Promise<IGetUserResponse> => {
   try {
@@ -50,7 +51,7 @@ export const getPorts = async (
 };
 
 export const updateUserProfile = async (
-  values: UpdateUserProfileCredentials
+  values: IUpdateUserProfileCredentials
 ): Promise<RootResponse<null>> => {
   try {
     const response = await apiClient.post(
@@ -64,7 +65,7 @@ export const updateUserProfile = async (
 };
 
 export const sendContactMessage = async (
-  values: SendContactMessageCredentials
+  values: ISendContactMessageCredentials
 ): Promise<RootResponse<null>> => {
   try {
     const response = await apiClient.post(
@@ -92,12 +93,8 @@ export const exportTables = async (values: {
 
 export const getCostPlans = async (
   params: Record<string, any>
-): Promise<IGetCostPlansResponse> => {
-  const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(
-      ([, value]) => value !== undefined && value !== null && value !== 0
-    )
-  );
+): Promise<RootResponse<ICostPlans>> => {
+  const filteredParams = filterParams(params);
   try {
     const response = await apiClient.get(ENDPOINTS.GET_COST_PLANS, {
       params: { ...filteredParams },
@@ -120,15 +117,16 @@ export const getSupportLinks = async (): Promise<ApiResponse<ILink[]>> => {
   }
 };
 
-export const getSocialMediaAccounts =
-  async (): Promise<IGetSocialMediaLinksResponse> => {
-    try {
-      const res = await apiClient.get(ENDPOINTS.GET_SOCIAL_MEDIA_ACCOUNTS);
-      return res.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+export const getSocialMediaAccounts = async (): Promise<
+  ApiResponse<ISocialMediaLink[]>
+> => {
+  try {
+    const res = await apiClient.get(ENDPOINTS.GET_SOCIAL_MEDIA_ACCOUNTS);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getUserBalance = async (): Promise<
   RootResponse<{ id: number; user_balance: string }>

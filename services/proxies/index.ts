@@ -16,7 +16,7 @@ export const getProxies = async ({
 };
 
 export const getProxiesCount = async (): Promise<
-  RootResponse<ProxiesCount>
+  RootResponse<IProxiesCount>
 > => {
   try {
     const res = await apiClient.get(
@@ -29,7 +29,7 @@ export const getProxiesCount = async (): Promise<
 };
 
 export const editAuthProxy = async (
-  values: EditAuthProxyCredentials
+  values: IEditAuthProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
     const res = await apiClient.post(
@@ -43,7 +43,7 @@ export const editAuthProxy = async (
 };
 
 export const editInfoProxy = async (
-  values: EditInfoProxyCredentials
+  values: IEditInfoProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
     const res = await apiClient.post(
@@ -57,7 +57,7 @@ export const editInfoProxy = async (
 };
 
 export const fixProxy = async (
-  values: FixProxyCredentials
+  values: IFixProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
     const res = await apiClient.post(
@@ -71,7 +71,7 @@ export const fixProxy = async (
 };
 
 export const manageProxy = async (
-  values: ManageProxyCredentials
+  values: IManageProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
     const response = await apiClient.post(
@@ -85,7 +85,7 @@ export const manageProxy = async (
 };
 
 export const renewProxy = async (
-  values: RenewProxyCredentials
+  values: IRenewProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
     const response = await apiClient.post(
@@ -99,7 +99,7 @@ export const renewProxy = async (
 };
 
 export const addProxy = async (
-  values: AddProxyCredentials
+  values: IAddProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
     const response = await apiClient.post(
@@ -113,7 +113,7 @@ export const addProxy = async (
 };
 
 export const activateProxy = async (
-  values: ActivateProxyCredentials
+  values: IActivateProxyCredentials
 ): Promise<RootResponse<IProxy[]>> => {
   try {
     const response = await apiClient.post(

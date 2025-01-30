@@ -24,7 +24,7 @@ export const useLoginMutation = () => {
 
   return useMutation({
     mutationKey: ["login"],
-    mutationFn: (data: LoginCredentials) => login(data),
+    mutationFn: (data: ILoginCredentials) => login(data),
     onSuccess: (data) => {
       setToken(data.access_token, { expires: +data.expires_in.split(" ")[0] });
       setUser(data.data, { expires: +data.expires_in.split(" ")[0] });
@@ -95,7 +95,7 @@ export const useRegisterMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["register"],
-    mutationFn: (values: RegisterCredentials) => register(values),
+    mutationFn: (values: IRegisterCredentials) => register(values),
     onSuccess(data, req) {
       setEmail(req.email);
       Success({
@@ -113,7 +113,7 @@ export const useResendVerificationCodeMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["resend-verification-code"],
-    mutationFn: (values: ResendVerificationCodeCredentials) =>
+    mutationFn: (values: IResendVerificationCodeCredentials) =>
       resendVerificationCode(values),
     onSuccess: (data) => {
       Success({
@@ -134,7 +134,7 @@ export const useSendResetEmailMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["send-reset-email"],
-    mutationFn: (values: SendResetEmailCredentials) => sendResetEmail(values),
+    mutationFn: (values: ISendResetEmailCredentials) => sendResetEmail(values),
     onSuccess(data, req) {
       Success({
         message: data.message || "Send your email is Success.",
@@ -151,7 +151,7 @@ export const useSetNewPasswordMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["set-new-password"],
-    mutationFn: (values: SetNewPasswordCredentials) => setNewPassword(values),
+    mutationFn: (values: ISetNewPasswordCredentials) => setNewPassword(values),
     onSuccess(data) {
       setToken(data.access_token);
       Success({
@@ -169,7 +169,7 @@ export const useVerifyCodeMutation = () => {
   const { Success, Error } = useResponse();
   return useMutation({
     mutationKey: ["verification-code"],
-    mutationFn: (values: VerificationCodeCredentials) =>
+    mutationFn: (values: IVerificationCodeCredentials) =>
       verificationCode(values),
     onSuccess: async (data) => {
       const token = data.access_token;

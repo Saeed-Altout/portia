@@ -2,8 +2,8 @@ import { apiClient } from "@/lib/api";
 import { filterParams } from "@/utils/filter-params";
 
 export const addDeposit = async (
-  values: DepositCredentials
-): Promise<ApiResponse<{ url: string }>> => {
+  values: IDepositCredentials
+): Promise<ApiResponse<IDepositResponse>> => {
   try {
     const response = await apiClient.post(
       process.env.NEXT_PUBLIC_ADD_DEPOSIT!,
@@ -28,7 +28,7 @@ export const getWayPayment = async (): Promise<ApiResponse<string[]>> => {
 
 export const getDepositsHistories = async (
   params: Record<string, any>
-): Promise<ApiResponse<IDepositHistoriesData>> => {
+): Promise<ApiResponse<IDepositHistories>> => {
   const filteredParams = filterParams(params);
   try {
     const response = await apiClient.get(
@@ -42,7 +42,7 @@ export const getDepositsHistories = async (
 };
 
 export const getDepositStatistics = async (): Promise<
-  ApiResponse<IDepositStatisticsData>
+  ApiResponse<IDepositStatistics>
 > => {
   try {
     const response = await apiClient.get(

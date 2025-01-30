@@ -26,7 +26,7 @@ export const useAddDepositMutation = () => {
   const { Error } = useResponse();
   return useMutation({
     mutationKey: ["add-deposit"],
-    mutationFn: (values: DepositCredentials) => addDeposit(values),
+    mutationFn: (values: IDepositCredentials) => addDeposit(values),
     onSuccess: (data) => {
       window.open(data.data.url, "_blank");
     },
