@@ -132,6 +132,7 @@ declare type IUser = {
   referred_code: string;
   user_balance: string;
   edit_profile: boolean;
+  notification_enable: boolean;
 };
 
 declare type IGetUserResponse = RootApi<IUser>;

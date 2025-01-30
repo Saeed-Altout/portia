@@ -2,7 +2,7 @@ import { ENDPOINTS } from "@/config/constants";
 import { apiClient } from "@/lib/api";
 import { filterParams } from "@/utils/filter-params";
 
-export const getUser = async (): Promise<IGetUserResponse> => {
+export const getUser = async (): Promise<ApiResponse<IUser>> => {
   try {
     const response = await apiClient.get(ENDPOINTS.GET_USER);
     return response.data;
