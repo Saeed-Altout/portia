@@ -11,6 +11,7 @@ import {
   Loader2,
   CheckCheck,
   Circle,
+  InboxIcon,
 } from "lucide-react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
@@ -119,22 +120,24 @@ export const NotificationsPopover = () => {
         <div className="flex justify-between items-center py-2 px-4">
           <h3 className="text-lg font-semibold">Notifications</h3>
           <div className="flex items-center gap-2">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    onClick={handleMarkAllAsRead}
-                    variant="ghost"
-                    size="icon"
-                    className="hover:text-[#03055B]"
-                  >
-                    <CheckCheck className="h-4 w-4" />
-                    <span className="sr-only">Mark all as read</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Mark all as read</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            {notifications?.data && notifications.data.length > 0 && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={handleMarkAllAsRead}
+                      variant="ghost"
+                      size="icon"
+                      className="hover:text-[#03055B]"
+                    >
+                      <CheckCheck className="h-4 w-4" />
+                      <span className="sr-only">Mark all as read</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Mark all as read</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
             <Button
               onClick={() => setIsOpen(false)}
               variant="ghost"
@@ -148,11 +151,24 @@ export const NotificationsPopover = () => {
         <Separator />
         <div
           ref={notificationsRef}
-          className="max-h-[375px] overflow-y-auto p-4"
+          className={cn(
+            "overflow-y-auto p-4",
+            notifications?.data?.length === 0 ? "h-fit" : "max-h-[375px]"
+          )}
         >
           {isLoading ? (
             <div className="flex items-center justify-center h-[30px]">
               <Loader2 className="h-5 w-5 animate-spin" />
+            </div>
+          ) : notifications?.data?.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <InboxIcon className="h-12 w-12 text-gray-300 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900">
+                No notifications
+              </h3>
+              <p className="text-sm text-gray-500">
+                You&apos;re all caught up! Check back later for updates.
+              </p>
             </div>
           ) : (
             <LayoutGroup>
@@ -172,9 +188,9 @@ export const NotificationsPopover = () => {
                 }}
               >
                 <AnimatePresence mode="wait">
-                  {displayedNotifications?.map((notification) => (
+                  {displayedNotifications?.map((notification, key) => (
                     <motion.div
-                      key={notification.id}
+                      key={key}
                       layout
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}

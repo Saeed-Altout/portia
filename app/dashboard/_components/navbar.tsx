@@ -26,11 +26,11 @@ export const Navbar = () => {
           <Image src="/icons/logo.svg" alt="Logo" fill priority />
         </Link>
         <div className="flex justify-start items-center gap-x-2">
-          {dashboardRoutes.map(({ label, href }) => (
+          {dashboardRoutes.map(({ label, href }, key) => (
             <>
               {href != ROUTES.CONTACT_US && (
                 <Button
-                  key={href}
+                  key={key}
                   variant="ghost"
                   size="sm"
                   className={cn(href === pathname && "bg-secondary")}
@@ -78,9 +78,9 @@ const MobileNav = ({ pathname }: { pathname: string }) => {
           <Image src="/icons/logo.svg" alt="Logo" fill priority />
         </Link>
         <div className="w-full mt-10 flex flex-col justify-start items-center gap-y-3">
-          {dashboardRoutes.map(({ label, href }) => (
+          {dashboardRoutes.map(({ label, href }, key) => (
             <Button
-              key={href}
+              key={key}
               variant="ghost"
               className={cn(
                 "w-full justify-start",

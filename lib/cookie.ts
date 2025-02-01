@@ -9,6 +9,7 @@ const initialUser: IUser = {
   referred_code: "",
   user_balance: "",
   edit_profile: false,
+  notification_enable: false,
 };
 
 export const setUser = (user: IUser, options?: any) => {
