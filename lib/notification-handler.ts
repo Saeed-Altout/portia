@@ -4,6 +4,10 @@ import {
   NotificationPrompt,
   NotificationType,
 } from "@/components/notification-prompt";
+import {
+  setNotificationPromptShown,
+  wasNotificationPromptShown,
+} from "./local-storage";
 
 export type NotificationPermissionState = "default" | "granted" | "denied";
 
@@ -97,17 +101,43 @@ class NotificationHandler {
   }
 
   showPermissionPrompt(options: NotificationPromptOptions): void {
+    if (wasNotificationPromptShown()) return;
+
     this.createContainer();
-    const element = this.createPromptElement("request", options);
+    const element = this.createPromptElement("request", {
+      onAllow: () => {
+        setNotificationPromptShown();
+        options.onAllow();
+      },
+      onDeny: () => {
+        setNotificationPromptShown();
+        options.onDeny();
+      },
+      onDismiss: () => {
+        setNotificationPromptShown();
+        options.onDismiss?.();
+      },
+    });
     this.root?.render(element);
   }
 
   showBlockedPermissionDialog(): void {
+    if (wasNotificationPromptShown()) return;
+
     this.createContainer();
     const element = this.createPromptElement("blocked", {
-      onAllow: () => this.cleanup(),
-      onDeny: () => this.cleanup(),
-      onDismiss: () => this.cleanup(),
+      onAllow: () => {
+        setNotificationPromptShown();
+        this.cleanup();
+      },
+      onDeny: () => {
+        setNotificationPromptShown();
+        this.cleanup();
+      },
+      onDismiss: () => {
+        setNotificationPromptShown();
+        this.cleanup();
+      },
     });
     this.root?.render(element);
   }

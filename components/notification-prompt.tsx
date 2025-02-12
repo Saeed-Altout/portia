@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { setNotificationPromptShown } from "@/lib/local-storage";
 
 export type NotificationType = "request" | "blocked";
 
@@ -30,6 +31,11 @@ export function NotificationPrompt({
   onDismiss,
   type,
 }: NotificationPromptProps): React.JSX.Element {
+  const handleGotIt = () => {
+    setNotificationPromptShown();
+    onOpenChange(false);
+  };
+
   if (type === "blocked") {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
@@ -38,20 +44,22 @@ export function NotificationPrompt({
             <DialogTitle className="text-red-600">
               Notifications Blocked
             </DialogTitle>
-            <DialogDescription className="space-y-4">
-              <p>To receive important updates, please enable notifications:</p>
-              <ol className="list-decimal ml-4 space-y-2">
-                <li>
-                  Click the lock/info icon in your browser&apos;s address bar
-                </li>
-                <li>Find &quot;Notifications&quot; in the site settings</li>
-                <li>Change the setting to &quot;Allow&quot;</li>
-                <li>Refresh this page</li>
-              </ol>
+            <DialogDescription>
+              To receive important updates, please enable notifications:
             </DialogDescription>
           </DialogHeader>
+          <div className="space-y-4">
+            <ol className="list-decimal ml-4 space-y-2">
+              <li>
+                Click the lock/info icon in your browser&apos;s address bar
+              </li>
+              <li>Find &quot;Notifications&quot; in the site settings</li>
+              <li>Change the setting to &quot;Allow&quot;</li>
+              <li>Refresh this page</li>
+            </ol>
+          </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
+            <Button variant="outline" onClick={handleGotIt}>
               Got it
             </Button>
           </DialogFooter>

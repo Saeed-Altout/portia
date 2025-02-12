@@ -38,6 +38,7 @@ apiClient.interceptors.response.use(
       case 401:
         clear();
         localStorage.clear();
+        location.assign("/auth/login");
         break;
 
       case 403:
