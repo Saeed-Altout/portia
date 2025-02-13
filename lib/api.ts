@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { clear, getToken } from "@/lib/cookie";
 
 const MESSAGE_ERROR =
-  "Maintenance Mode: The site is currently in maintenance mode";
+  "Maintenance Mode: The site is currently in maintenance mode";
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -72,7 +72,7 @@ apiClient.interceptors.response.use(
         break;
 
       case 500:
-        if (message === MESSAGE_ERROR) {
+        if (message[0] === MESSAGE_ERROR) {
           location.assign("/server-error");
         }
         break;
