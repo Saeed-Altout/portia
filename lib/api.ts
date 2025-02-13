@@ -1,6 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { clear, getToken } from "@/lib/cookie";
 
+const MESSAGE_ERROR =
+  "Notice: Proceeding with approval will result in a charge equivalent to the last renewal of this proxy.";
+
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -26,8 +29,9 @@ apiClient.interceptors.response.use(
     return res;
   },
 
-  async (err: AxiosError) => {
+  async (err: AxiosError<{ message?: string }>) => {
     const status = err.response?.status;
+    const message = err.response?.data?.message as string;
     switch (status) {
       case 400:
         console.error(
@@ -68,7 +72,9 @@ apiClient.interceptors.response.use(
         break;
 
       case 500:
-        location.assign("/server-error");
+        if (message === MESSAGE_ERROR) {
+          location.assign("/server-error");
+        }
         break;
 
       case 502:
