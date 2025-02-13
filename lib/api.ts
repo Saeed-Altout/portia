@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { clear, getToken } from "@/lib/cookie";
 
 const MESSAGE_ERROR =
-  "Notice: Proceeding with approval will result in a charge equivalent to the last renewal of this proxy.";
+  "Maintenance Mode: The site is currently in maintenance mode";
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
