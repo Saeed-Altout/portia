@@ -49,7 +49,7 @@ export default function ServerDownPage() {
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-[150px] md:text-[200px] lg:text-[300px] font-bold text-gray-100 -order-1 md:order-1 dark:text-gray-700"
       >
-        503
+        500
       </motion.span>
     </div>
   );

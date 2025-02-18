@@ -99,9 +99,6 @@ declare type ISetNewPasswordCredentials = {
 declare type ISetNewPasswordResponse = {
   success: boolean;
   message: string | string[];
-  access_token: string;
-  token_type: string;
-  expires_in: Date | string;
 };
 
 /**

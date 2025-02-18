@@ -1,24 +1,29 @@
 "use client";
 
-import Link from "next/link";
-
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Circle, Icon } from "@/components/ui/circle-icon";
-import { BackButton } from "@/components/back-button";
-
 import { ROUTES } from "@/config/constants";
 
 export const PasswordResetForm = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const redirectTimeout = setTimeout(() => {
+      router.push(ROUTES.LOGIN);
+    }, 3000);
+
+    return () => clearTimeout(redirectTimeout);
+  }, [router]);
+
   return (
     <Card className="w-full max-w-[360px] border-none shadow-none pt-24">
       <CardHeader className="flex flex-col items-center justify-center gap-y-3">
@@ -29,18 +34,9 @@ export const PasswordResetForm = () => {
           Password reset
         </CardTitle>
         <CardDescription className="text-center">
-          Your password has been successfully reset. Click below to log in
-          magically
+          Your password has been successfully reset.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Button className="w-full" asChild>
-          <Link href={ROUTES.DASHBOARD_HOME}>Continue to dashboard</Link>
-        </Button>
-      </CardContent>
-      <CardFooter>
-        <BackButton label="Back to home" href={ROUTES.HOME} />
-      </CardFooter>
     </Card>
   );
 };

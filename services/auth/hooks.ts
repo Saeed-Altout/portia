@@ -153,7 +153,6 @@ export const useSetNewPasswordMutation = () => {
     mutationKey: ["set-new-password"],
     mutationFn: (values: ISetNewPasswordCredentials) => setNewPassword(values),
     onSuccess(data) {
-      setToken(data.access_token);
       Success({
         message: data.message || "Set new password is Success.",
         redirectTo: ROUTES.PASSWORD_RESET,
